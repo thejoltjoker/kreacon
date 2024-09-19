@@ -1,3 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap');
+
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
+@layer base {
+	body {
+		@apply bg-white text-black dark:bg-black dark:text-white;
+	}
+	::selection {
+		@apply text-black dark:bg-white;
+	}
+}
+
+@layer components {
+	a {
+		@apply underline decoration-rose-500 decoration-2;
+
+		&:hover {
+			@apply bg-rose-500;
+		}
+	}
+}
