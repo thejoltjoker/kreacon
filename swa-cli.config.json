@@ -1,0 +1,14 @@
+{
+	"configurations": {
+		"kreacon": {
+			"appLocation": "./",
+			"apiLocation": "build/server",
+			"outputLocation": "build/static",
+			"apiLanguage": "node",
+			"apiVersion": "18",
+			"appBuildCommand": "npm run build",
+			"run": "npm run dev",
+			"appDevserverUrl": "http://localhost:5173"
+		}
+	}
+}
