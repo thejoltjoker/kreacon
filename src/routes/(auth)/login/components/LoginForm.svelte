@@ -6,13 +6,6 @@
 	import { enhance } from '$app/forms';
 	let email = '';
 	let password = '';
-
-	const handleSubmit = async (event: Event) => {
-		const formData = new FormData(event.target as HTMLFormElement);
-		const email = formData.get('email');
-		const password = formData.get('password');
-		console.log(email, password);
-	};
 </script>
 
 <div class="wrapper">

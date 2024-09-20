@@ -1,4 +1,5 @@
 <script lang="ts">
+	// TODO run validation with bound value instead of onChange
 	import { enhance } from '$app/forms';
 	import Button from '$lib/components/Button.svelte';
 	import Divider from '$lib/components/Divider.svelte';
