@@ -1,17 +1,17 @@
-import { integer, pgTable, primaryKey, text, timestamp } from 'drizzle-orm/pg-core';
+import { integer, pgEnum, pgTable, primaryKey, text, timestamp } from 'drizzle-orm/pg-core';
 import { createInsertSchema } from 'drizzle-zod';
 import { z } from 'zod';
-
+export const roleEnum = pgEnum('role', ['user', 'admin']);
 export const users = pgTable('user', {
 	id: text('id')
 		.primaryKey()
 		.$defaultFn(() => crypto.randomUUID()),
-	name: text('name'),
+	username: text('username').unique(),
 	email: text('email').unique(),
-	emailVerified: timestamp('emailVerified', { mode: 'date' }),
-	image: text('image'),
+	emailVerifiedAt: timestamp('emailVerifiedAt', { mode: 'date' }),
 	password: text('password'),
-	role: text('role').default('user'),
+	role: roleEnum('role').default('user'),
+	image: text('image'),
 	createdAt: timestamp('createdAt').defaultNow(),
 	updatedAt: timestamp('updatedAt')
 		.defaultNow()
@@ -20,6 +20,7 @@ export const users = pgTable('user', {
 
 export const insertUserSchema = createInsertSchema(users, {
 	email: (schema) => schema.email.email(),
+	password: (schema) => schema.password.min(100),
 	role: z.enum(['user', 'admin'])
 });
 

@@ -1,4 +1,7 @@
-import { register } from '$lib/auth';
+import { insertUserSchema } from '$lib/server/db/schema';
+import { fail } from '@sveltejs/kit';
+import { StatusCodes } from 'http-status-codes';
+import { fromError } from 'zod-validation-error';
 import type { Actions, PageServerLoad } from './$types';
 
 export const load = (async () => {
@@ -6,21 +9,29 @@ export const load = (async () => {
 }) satisfies PageServerLoad;
 
 export const actions: Actions = {
-	register: async ({ request }) => {
+	store: async ({ request }) => {
 		const data = await request.formData();
 		const email = data.get('email');
 		const password = data.get('password');
-		if (!email || !password) {
-			throw new Error('Email and password are required');
-		}
-		try {
-			const user = await register(email.toString(), password.toString());
-			// const user = await db.getUser(email);
-			// cookies.set('sessionid', await db.createSession(user), { path: '/' });
 
-			return { success: true, user: user };
-		} catch (error) {
-			return { error: error };
+		// TODO Validate email and password
+		if (!email) {
+			return fail(StatusCodes.BAD_REQUEST, { email, emailMissing: true });
 		}
+
+		if (!password) {
+			return fail(StatusCodes.BAD_REQUEST, { password, missing: true });
+		}
+
+		try {
+			insertUserSchema.partial({ password: true }).parse({ password });
+		} catch (err) {
+			const validationError = fromError(err);
+			return fail(StatusCodes.BAD_REQUEST, { password: validationError.toString() });
+		}
+		// TODO Create new user
+		// TODO Send email verification
+		// TODO Redirect to login
+		return { success: true };
 	}
 };
