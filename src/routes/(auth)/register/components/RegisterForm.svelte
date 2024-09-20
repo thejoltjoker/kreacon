@@ -35,7 +35,7 @@
 
 	$: {
 		passwordValidationState.isLongEnough = password.length >= minPasswordLength;
-		passwordValidationState.hasSpecialChar = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password);
+		passwordValidationState.hasSpecialChar = /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(password);
 		passwordValidationState.hasNumber = /\d/.test(password);
 		isCommonPassword(password, '10000').then((result) => {
 			passwordValidationState.isUncommonPassword = !result;
