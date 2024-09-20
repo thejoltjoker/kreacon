@@ -9,7 +9,8 @@
 	import PasswordValidationInfo from './PasswordValidationInfo.svelte';
 	import { isCommonPassword } from '$lib/validation/password/commonPassword';
 	import DiscordButton from '$lib/components/DiscordButton.svelte';
-
+	import { redirect } from '@sveltejs/kit';
+	import { StatusCodes } from 'http-status-codes';
 	export let form;
 
 	let email = 'john.doe@example.com';
@@ -25,7 +26,7 @@
 		isUncommonPassword: false
 	};
 
-	let minPasswordLength = 12;
+	let minPasswordLength = 8;
 
 	$: {
 		if (email) {
@@ -69,6 +70,12 @@
 			confirmPassword = '';
 			passwordIsValid = false;
 			confirmPasswordIsValid = false;
+		}
+	}
+
+	$: {
+		if (form?.success) {
+			redirect(StatusCodes.MOVED_TEMPORARILY, '/login');
 		}
 	}
 </script>

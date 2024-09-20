@@ -20,7 +20,7 @@ export const users = pgTable('user', {
 
 export const insertUserSchema = createInsertSchema(users, {
 	email: (schema) => schema.email.email(),
-	password: (schema) => schema.password.min(100),
+	password: (schema) => schema.password.min(8),
 	role: z.enum(['user', 'admin'])
 });
 
