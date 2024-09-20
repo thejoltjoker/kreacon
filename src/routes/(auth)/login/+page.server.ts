@@ -1,4 +1,3 @@
-import { login } from '$lib/auth';
 import type { Actions, PageServerLoad } from './$types';
 
 export const load = (async () => {
@@ -6,19 +5,7 @@ export const load = (async () => {
 }) satisfies PageServerLoad;
 
 export const actions: Actions = {
-	login: async ({ cookies, request }) => {
-		const data = await request.formData();
-		const email = data.get('email');
-		const password = data.get('password');
-		console.log(email, password);
-		try {
-			const user = await login(email, password);
-			// const user = await db.getUser(email);
-			// cookies.set('sessionid', await db.createSession(user), { path: '/' });
-
-			return { success: true, user: user };
-		} catch (error) {
-			return { error: error.message };
-		}
+	login: async () => {
+		return { success: true };
 	}
 };

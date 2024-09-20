@@ -1,8 +1,8 @@
 <script lang="ts">
 	import Button from '$lib/components/Button.svelte';
 	import TextInput from '$lib/components/InputField.svelte';
-	import Divider from '../../../../lib/components/Divider.svelte';
-	import GoogleButton from './GoogleButton.svelte';
+	import Divider from '$lib/components/Divider.svelte';
+	import GoogleButton from '$lib/components/GoogleButton.svelte';
 	import { enhance } from '$app/forms';
 	let email = '';
 	let password = '';
@@ -40,7 +40,7 @@
 	}
 
 	.container {
-		@apply p-xxl flex w-[30rem] flex-col gap-md rounded-md border border-neutral-700;
+		@apply flex w-[30rem] flex-col gap-md rounded-md border border-neutral-700 p-xxl;
 		& form {
 			@apply flex flex-col gap-md;
 		}

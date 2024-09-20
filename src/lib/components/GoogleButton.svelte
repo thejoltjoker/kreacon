@@ -3,7 +3,12 @@
 	import GoogleIcon from '$lib/symbols/GoogleIcon.svg?raw';
 </script>
 
-<Button><span class="icon">{@html GoogleIcon}</span>Sign in with Google</Button>
+<Button>
+	<span class="icon">
+		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+		{@html GoogleIcon}
+	</span>Sign in with Google
+</Button>
 
 <style lang="postcss">
 	.icon {

@@ -3,10 +3,9 @@
 	import { enhance } from '$app/forms';
 	import Button from '$lib/components/Button.svelte';
 	import Divider from '$lib/components/Divider.svelte';
+	import GoogleButton from '$lib/components/GoogleButton.svelte';
 	import TextInput from '$lib/components/InputField.svelte';
-	import { userSchema } from '$lib/validation/RegisterForm.validation';
 	import { z } from 'zod';
-	import GoogleButton from './GoogleButton.svelte';
 	let email = '';
 	let password = '';
 	let confirmPassword = '';
@@ -64,7 +63,7 @@
 	}
 
 	.container {
-		@apply p-xxl flex w-[30rem] flex-col gap-md rounded-md border border-neutral-700;
+		@apply flex w-[30rem] flex-col gap-md rounded-md border border-neutral-700 p-xxl;
 		& form {
 			@apply flex flex-col gap-md;
 		}

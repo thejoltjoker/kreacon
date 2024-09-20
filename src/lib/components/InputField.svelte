@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { createLabel, melt } from '@melt-ui/svelte';
-	import { CheckCircle2Icon, CheckCircleIcon, XCircleIcon } from 'lucide-svelte';
+	import { CheckCircle2Icon, XCircleIcon } from 'lucide-svelte';
 	export let label: string;
 	export let type: 'text' | 'email' | 'password' = 'text';
 	export let placeholder: string = '';
@@ -10,7 +10,7 @@
 	export let onChange: (value: string) => void = () => {};
 	export let isValid: boolean | undefined = undefined;
 
-	const handleInput = (e: any) => {
+	const handleInput = (e) => {
 		value = type.match(/^(number|range)$/) ? +e.target.value : e.target.value;
 		onChange(value);
 	};
