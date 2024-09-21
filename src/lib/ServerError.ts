@@ -2,8 +2,8 @@ import type { StatusCodes } from 'http-status-codes';
 
 class ServerError extends Error {
 	constructor(
-		public message: string,
-		public statusCode: StatusCodes
+		public statusCode: StatusCodes,
+		public message: string
 	) {
 		super(message);
 		this.name = 'ServerError';

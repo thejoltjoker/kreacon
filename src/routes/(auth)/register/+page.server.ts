@@ -1,3 +1,4 @@
+import { createUser } from '$lib/auth/createUser';
 import { db } from '$lib/server/db';
 import { insertUserSchema, users } from '$lib/server/db/schema';
 import {
@@ -7,7 +8,6 @@ import {
 	isLongEnough
 } from '$lib/validation/password/passwordValidation';
 import { error, fail, redirect } from '@sveltejs/kit';
-import bcrypt from 'bcrypt';
 import { eq } from 'drizzle-orm';
 import { StatusCodes } from 'http-status-codes';
 import { fromError } from 'zod-validation-error';
@@ -75,20 +75,23 @@ export const actions: Actions = {
 		}
 
 		// Create user
-		const hashedPassword = await bcrypt.hash(password, 12);
-		const result = await db
-			.insert(users)
-			.values({ email, password: hashedPassword })
-			.returning({ insertedId: users.id });
-
-		console.info('[/register:store]', 'Created new user', result);
-
-		if (result.length === 0) {
+		try {
+			const user = await createUser(email, password);
+			console.info('[/register:store]', 'Created new user', user);
+			if (!user) {
+				return error(StatusCodes.INTERNAL_SERVER_ERROR, {
+					message: 'Failed to create user'
+				});
+			}
+		} catch (err) {
+			console.error('[/register:store]', 'Failed to create user', err);
 			return error(StatusCodes.INTERNAL_SERVER_ERROR, {
 				message: 'Failed to create user'
 			});
 		}
+
 		// TODO Email verification functionality
+
 		// const verifyEmailLink = await createVerifyEmailLink(email);
 		// await sendEmail(
 		// 	email,

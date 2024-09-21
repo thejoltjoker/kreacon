@@ -1,7 +1,9 @@
+import type { InferInsertModel, InferSelectModel } from 'drizzle-orm';
 import { integer, pgEnum, pgTable, primaryKey, text, timestamp } from 'drizzle-orm/pg-core';
 import { createInsertSchema } from 'drizzle-zod';
 import { z } from 'zod';
 export const roleEnum = pgEnum('role', ['user', 'admin']);
+
 export const users = pgTable('user', {
 	id: text('id')
 		.primaryKey()
@@ -17,6 +19,8 @@ export const users = pgTable('user', {
 		.defaultNow()
 		.$onUpdate(() => new Date())
 });
+
+export type User = InferSelectModel<typeof users>;
 
 export const insertUserSchema = createInsertSchema(users, {
 	email: (schema) => schema.email.email(),
@@ -63,3 +67,6 @@ export const sessions = pgTable('session', {
 		.defaultNow()
 		.$onUpdate(() => new Date())
 });
+
+export type Session = InferSelectModel<typeof sessions>;
+export type InsertSession = InferInsertModel<typeof sessions>;
