@@ -1,10 +1,10 @@
 import {
 	AZURE_COMMUNICATION_SERVICES_SENDER_ADDRESS,
-	COMMUNICATION_SERVICES_CONNECTION_STRING
+	AZURE_COMMUNICATION_SERVICES_CONNECTION_STRING
 } from '$env/static/private';
 import { EmailClient } from '@azure/communication-email';
 
-export const emailClient = new EmailClient(COMMUNICATION_SERVICES_CONNECTION_STRING);
+export const emailClient = new EmailClient(AZURE_COMMUNICATION_SERVICES_CONNECTION_STRING);
 
 export const sendEmail = async (to: string, subject: string, body: string) => {
 	console.log('[sendEmail]', to, subject, body);
