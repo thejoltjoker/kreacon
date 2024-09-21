@@ -22,6 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      JWT_SIGNATURE: ${{ secrets.JWT_SIGNATURE }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -36,6 +37,7 @@ jobs:
         run: npm run build
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          JWT_SIGNATURE: ${{ secrets.JWT_SIGNATURE }}
   lint:
     runs-on: ubuntu-latest
     steps:
