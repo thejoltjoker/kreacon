@@ -1,8 +1,8 @@
-import type { User } from '$lib/server/db/schema';
 import type { PageServerLoad } from './$types';
 
 export const load = (async () => {
-	const user: User = {
+	// TODO Get user from database
+	const user = {
 		id: '1',
 		email: 'test@test.com'
 	};

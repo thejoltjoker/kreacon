@@ -12,13 +12,3 @@
 		@apply text-black dark:bg-white;
 	}
 }
-
-@layer components {
-	a {
-		@apply underline decoration-rose-500 decoration-2;
-
-		&:hover {
-			@apply bg-rose-500;
-		}
-	}
-}

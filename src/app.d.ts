@@ -6,7 +6,9 @@ declare global {
 		interface Error {
 			message: string;
 		}
-		// interface Locals {}
+		interface Locals {
+			user: AccessToken | null;
+		}
 		// interface PageData {}
 		// interface PageState {}
 		// interface Platform {}

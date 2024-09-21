@@ -1,5 +1,16 @@
 <script>
 	import '../app.css';
+	import Navbar from './_components/Navbar.svelte';
 </script>
 
-<slot></slot>
+<Navbar />
+<main>
+	<slot />
+</main>
+
+<style lang="postcss">
+	main {
+		@apply px-sm py-xs;
+	}
+
+</style>

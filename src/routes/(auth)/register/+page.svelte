@@ -1,5 +1,5 @@
 <script lang="ts">
-	import RegisterForm from './components/RegisterForm.svelte';
+	import RegisterForm from './_components/RegisterForm.svelte';
 	import type { ActionData } from './$types';
 
 	export let form: ActionData;
