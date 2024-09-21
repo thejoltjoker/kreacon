@@ -22,9 +22,10 @@ jobs:
     runs-on: ubuntu-latest
     env:
       AZURE_COMMUNICATION_SERVICES_CONNECTION_STRING: ${{ secrets.AZURE_COMMUNICATION_SERVICES_CONNECTION_STRING }}
-      AZURE_COMMUNICATION_SERVICES_ENDPOINT: ${{ secrets.AZURE_COMMUNICATION_SERVICES_ENDPOINT }}
+      AZURE_COMMUNICATION_SERVICES_SENDER_ADDRESS: ${{ secrets.AZURE_COMMUNICATION_SERVICES_SENDER_ADDRESS }}
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
       JWT_SIGNATURE: ${{ secrets.JWT_SIGNATURE }}
+      PUBLIC_BASE_URL: ${{ env.PUBLIC_BASE_URL }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -37,11 +38,6 @@ jobs:
         run: npm ci
       - name: Build
         run: npm run build
-        env:
-          AZURE_COMMUNICATION_SERVICES_CONNECTION_STRING: ${{ secrets.AZURE_COMMUNICATION_SERVICES_CONNECTION_STRING }}
-          AZURE_COMMUNICATION_SERVICES_ENDPOINT: ${{ secrets.AZURE_COMMUNICATION_SERVICES_ENDPOINT }}
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          JWT_SIGNATURE: ${{ secrets.JWT_SIGNATURE }}
   lint:
     runs-on: ubuntu-latest
     steps:
