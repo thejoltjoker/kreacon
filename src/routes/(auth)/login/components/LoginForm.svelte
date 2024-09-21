@@ -4,8 +4,22 @@
 	import Divider from '$lib/components/Divider.svelte';
 	import GoogleButton from '$lib/components/GoogleButton.svelte';
 	import { enhance } from '$app/forms';
+	import { z } from 'zod';
+
 	let email = '';
 	let password = '';
+	let emailIsValid: boolean = false;
+	let passwordIsValid: boolean = false;
+
+	$: {
+		if (email) {
+			emailIsValid = z.string().email().safeParse(email).success;
+		}
+	}
+
+	$: {
+		passwordIsValid = password ? true : false;
+	}
 </script>
 
 <form method="POST" action="?/login" use:enhance>
@@ -14,9 +28,10 @@
 	<TextInput
 		label="Email"
 		id="email"
-		placeholder="Username or Email"
+		placeholder="Email"
 		bind:value={email}
 		name="email"
+		required
 	/>
 	<TextInput
 		label="Password"
@@ -25,8 +40,9 @@
 		name="password"
 		placeholder="Password"
 		bind:value={password}
+		required
 	/>
-	<Button variant="rose" type="submit">Login</Button>
+	<Button variant="rose" type="submit" disabled={!emailIsValid || !passwordIsValid}>Login</Button>
 	<p class="text-center">Not a member? <a href="/register">Register</a></p>
 </form>
 

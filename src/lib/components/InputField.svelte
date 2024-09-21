@@ -9,6 +9,7 @@
 	export let name: string = '';
 	export let onChange: (value: string) => void = () => {};
 	export let isValid: boolean | undefined = undefined;
+	export let required: boolean = false;
 
 	const handleInput = (event: Event) => {
 		const inputEvent = event as InputEvent;
@@ -34,6 +35,7 @@
 		{name}
 		on:input={handleInput}
 		class={`input ${isValid === true ? 'valid' : isValid === false ? 'invalid' : ''}`}
+		{required}
 	/>
 	{#if isValid === true}
 		<CheckCircle2Icon class="absolute right-xs top-1/2 size-5 -translate-y-1/2 text-green-500" />

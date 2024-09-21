@@ -12,7 +12,8 @@ import { eq } from 'drizzle-orm';
 import { StatusCodes } from 'http-status-codes';
 import { fromError } from 'zod-validation-error';
 import type { Actions, PageServerLoad } from './$types';
-
+import { createLogger } from '$lib/logger';
+const logger = createLogger('register', import.meta.url);
 export const load = (async () => {
 	return {};
 }) satisfies PageServerLoad;
@@ -25,6 +26,7 @@ export const actions: Actions = {
 
 		// Validate email
 		if (!email) {
+			logger.warn('Registration attempt with missing email');
 			return fail(StatusCodes.BAD_REQUEST, { email, emailMissing: true });
 		}
 
@@ -32,6 +34,7 @@ export const actions: Actions = {
 			insertUserSchema.partial({ email: true }).parse({ email });
 		} catch (err) {
 			const validationError = fromError(err);
+			logger.warn(`Email validation failed: ${validationError.toString()}`, { email });
 			return fail(StatusCodes.BAD_REQUEST, { email: validationError.toString() });
 		}
 
@@ -39,11 +42,13 @@ export const actions: Actions = {
 		const existingUser = await db.query.users.findFirst({ where: eq(users.email, email) });
 
 		if (existingUser) {
-			return fail(StatusCodes.BAD_REQUEST, { email: 'Email already in use' }); // TODO Make more obscure for security purposes
+			logger.info('Registration attempt with existing email', { email });
+			return fail(StatusCodes.BAD_REQUEST, { email: "Couldn't create user" });
 		}
 
 		// Validate password
 		if (!password) {
+			logger.warn('Registration attempt with missing password', { email });
 			return fail(StatusCodes.BAD_REQUEST, { password: 'Password is required' });
 		}
 
@@ -77,14 +82,15 @@ export const actions: Actions = {
 		// Create user
 		try {
 			const user = await createUser(email, password);
-			console.info('[/register:store]', 'Created new user', user);
+			logger.info('Created new user', { userId: user.id, email: user.email });
 			if (!user) {
+				logger.error('Failed to create user - createUser returned null', { email });
 				return error(StatusCodes.INTERNAL_SERVER_ERROR, {
 					message: 'Failed to create user'
 				});
 			}
 		} catch (err) {
-			console.error('[/register:store]', 'Failed to create user', err);
+			logger.error('Failed to create user', { error: err, email });
 			return error(StatusCodes.INTERNAL_SERVER_ERROR, {
 				message: 'Failed to create user'
 			});
@@ -98,7 +104,7 @@ export const actions: Actions = {
 		// 	'Verify your email',
 		// 	'Click the link to verify your email' + verifyEmailLink
 		// );
+		logger.info('User registered successfully, redirecting to login', { email });
 		throw redirect(StatusCodes.MOVED_TEMPORARILY, '/login');
-		// return { success: true };
 	}
 };
