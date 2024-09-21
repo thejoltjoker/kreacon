@@ -11,7 +11,7 @@ import { setCookies } from './setCookies.js';
 import { createLogger } from '$lib/logger';
 import ServerError from '$lib/ServerError.js';
 import { StatusCodes } from 'http-status-codes';
-const logger = createLogger('authenticate', __filename);
+const logger = createLogger('authenticate');
 
 export const authenticate = async (event: RequestEvent): Promise<AccessToken | null> => {
 	if (!JWT_SIGNATURE) {

@@ -15,7 +15,7 @@ import type { Actions, PageServerLoad } from './$types';
 import { createLogger } from '$lib/logger';
 import { sendEmailVerification } from '$lib/auth/verifyEmail';
 
-const logger = createLogger('register', __filename);
+const logger = createLogger('register');
 
 export const load = (async () => {
 	return {};
