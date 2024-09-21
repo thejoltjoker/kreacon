@@ -1,5 +1,4 @@
 import { AZURE_COMMUNICATION_SERVICES_SENDER_ADDRESS, JWT_SIGNATURE } from '$env/static/private';
-import { PUBLIC_BASE_URL } from '$env/static/public';
 import { Email, type EmailMessage } from '$lib/services/email';
 import * as crypto from 'crypto';
 
@@ -16,7 +15,7 @@ export const createVerifyEmailLink = async (email: string) => {
 	try {
 		const token = createVerifyEmailToken(email);
 		const uriEncodedEmail = encodeURIComponent(email);
-		const url = `http://${PUBLIC_BASE_URL ?? 'localhost:5173'}/verify-email/${uriEncodedEmail}/${token}`;
+		const url = `http://${process.env.PUBLIC_BASE_URL ?? 'localhost:5173'}/verify-email/${uriEncodedEmail}/${token}`;
 		return url;
 	} catch (error) {
 		console.error(error);
