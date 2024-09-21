@@ -1,32 +1,34 @@
 <script lang="ts">
-	// TODO run validation with bound value instead of onChange
 	import { enhance } from '$app/forms';
 	import Button from '$lib/components/Button.svelte';
+	import DiscordButton from '$lib/components/DiscordButton.svelte';
 	import Divider from '$lib/components/Divider.svelte';
 	import GoogleButton from '$lib/components/GoogleButton.svelte';
 	import TextInput from '$lib/components/InputField.svelte';
+	import {
+		hasNumber,
+		hasSpecialCharacter,
+		isCommonPassword,
+		isLongEnough,
+		type PasswordValidation
+	} from '$lib/validation/password/passwordValidation';
 	import { z } from 'zod';
 	import PasswordValidationInfo from './PasswordValidationInfo.svelte';
-	import { isCommonPassword } from '$lib/validation/password/commonPassword';
-	import DiscordButton from '$lib/components/DiscordButton.svelte';
-	import { redirect } from '@sveltejs/kit';
-	import { StatusCodes } from 'http-status-codes';
 	export let form;
 
-	let email = 'john.doe@example.com';
-	let password = 'Password123!';
-	let confirmPassword = 'Password123!';
+	let email = '';
+	let password = '';
+	let confirmPassword = '';
 	let emailIsValid: boolean | undefined = undefined;
 	let passwordIsValid: boolean | undefined = undefined;
 	let confirmPasswordIsValid: boolean | undefined = undefined;
-	let passwordValidationState = {
+	let passwordValidationState: PasswordValidation = {
 		isLongEnough: false,
-		hasSpecialChar: false,
+		hasSpecialCharacter: false,
 		hasNumber: false,
-		isUncommonPassword: false
+		isNotCommonPassword: false,
+		isNotUsernameOrEmail: false
 	};
-
-	let minPasswordLength = 8;
 
 	$: {
 		if (email) {
@@ -35,21 +37,23 @@
 	}
 
 	$: {
-		passwordValidationState.isLongEnough = password.length >= minPasswordLength;
-		passwordValidationState.hasSpecialChar = /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(password);
-		passwordValidationState.hasNumber = /\d/.test(password);
+		passwordValidationState.isLongEnough = isLongEnough(password);
+		passwordValidationState.hasSpecialCharacter = hasSpecialCharacter(password);
+		passwordValidationState.hasNumber = hasNumber(password);
 		isCommonPassword(password, '10000').then((result) => {
-			passwordValidationState.isUncommonPassword = !result;
+			passwordValidationState.isNotCommonPassword = !result;
 		});
+		passwordValidationState.isNotUsernameOrEmail = email !== password;
 	}
 
 	$: {
 		if (password) {
 			if (
 				passwordValidationState.isLongEnough &&
-				passwordValidationState.hasSpecialChar &&
+				passwordValidationState.hasSpecialCharacter &&
 				passwordValidationState.hasNumber &&
-				passwordValidationState.isUncommonPassword
+				passwordValidationState.isNotCommonPassword &&
+				passwordValidationState.isNotUsernameOrEmail
 			) {
 				passwordIsValid = true;
 			} else {
@@ -72,18 +76,10 @@
 			confirmPasswordIsValid = false;
 		}
 	}
-
-	$: {
-		if (form?.success) {
-			redirect(StatusCodes.MOVED_TEMPORARILY, '/login');
-		}
-	}
 </script>
 
 {#if form?.success}
-	<!-- this message is ephemeral; it exists because the page was rendered in
-		   response to a form submission. it will vanish if the user reloads -->
-	<p>Successfully logged in! Welcome back</p>
+	<p class="success">Registration successful</p>
 {/if}
 <form method="POST" action="?/store" use:enhance>
 	{#if form?.password}<p class="error">{form?.password}</p>{/if}

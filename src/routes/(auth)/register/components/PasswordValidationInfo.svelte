@@ -1,11 +1,13 @@
 <script lang="ts">
+	import type { PasswordValidation } from '$lib/validation/password/passwordValidation';
 	import { CheckCircle2Icon, XCircleIcon } from 'lucide-svelte';
 
-	export let passwordValidationState = {
+	export let passwordValidationState: PasswordValidation = {
 		isLongEnough: false,
-		hasSpecialChar: false,
+		hasSpecialCharacter: false,
 		hasNumber: false,
-		isUncommonPassword: false
+		isNotCommonPassword: false,
+		isNotUsernameOrEmail: false
 	};
 </script>
 
@@ -20,7 +22,7 @@
 	</li>
 
 	<li>
-		{#if passwordValidationState.hasSpecialChar}
+		{#if passwordValidationState.hasSpecialCharacter}
 			<CheckCircle2Icon class="size-5  text-green-500" />
 		{:else}
 			<XCircleIcon class="size-5  text-red-500" />
@@ -38,7 +40,7 @@
 	</li>
 
 	<li>
-		{#if passwordValidationState.isUncommonPassword}
+		{#if passwordValidationState.isNotCommonPassword}
 			<CheckCircle2Icon class="size-5  text-green-500" />
 		{:else}
 			<XCircleIcon class="size-5  text-red-500" />

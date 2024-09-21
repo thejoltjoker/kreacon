@@ -10,10 +10,13 @@
 	export let onChange: (value: string) => void = () => {};
 	export let isValid: boolean | undefined = undefined;
 
-	const handleInput = (e) => {
-		value = type.match(/^(number|range)$/) ? +e.target.value : e.target.value;
+	const handleInput = (event: Event) => {
+		const inputEvent = event as InputEvent;
+		const target = inputEvent.target as HTMLInputElement;
+		value = target.value;
 		onChange(value);
 	};
+
 	const {
 		elements: { root }
 	} = createLabel();
