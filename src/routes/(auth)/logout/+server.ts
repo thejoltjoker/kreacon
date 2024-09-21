@@ -9,7 +9,7 @@ import { StatusCodes } from 'http-status-codes';
 import jwt from 'jsonwebtoken';
 import type { RequestHandler } from './$types';
 
-const logger = createLogger('logout', import.meta.url);
+const logger = createLogger('logout', __filename);
 
 export const POST: RequestHandler = async ({ cookies, request }) => {
 	try {

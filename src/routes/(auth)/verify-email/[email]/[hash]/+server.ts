@@ -6,7 +6,7 @@ import { error, redirect } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
 import type { RequestHandler } from './$types';
 
-const logger = createLogger('verify-email', import.meta.url);
+const logger = createLogger('verify-email', __filename);
 
 export const GET: RequestHandler = async ({ params }) => {
 	const { email, hash } = params;

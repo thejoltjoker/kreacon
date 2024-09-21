@@ -9,7 +9,7 @@ import { eq } from 'drizzle-orm';
 import { StatusCodes } from 'http-status-codes';
 import type { Actions, PageServerLoad } from './$types';
 import { createLogger } from '$lib/logger';
-const logger = createLogger('login', import.meta.url);
+const logger = createLogger('login', __filename);
 
 export const load = (async ({ locals }) => {
 	if (locals.user) {
