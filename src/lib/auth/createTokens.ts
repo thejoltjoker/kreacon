@@ -9,7 +9,7 @@ export const createTokens = (sessionId: string, userId: string) => {
 		userId
 	};
 	const refreshTokenPayload: RefreshToken = {
-		sessionId
+		sessionToken: sessionId
 	};
 
 	const refreshToken = jwt.sign(refreshTokenPayload, JWT_SIGNATURE);

@@ -1,3 +1,3 @@
 export type RefreshToken = {
-	sessionId: string;
+	sessionToken: string;
 };
