@@ -53,6 +53,7 @@
 	"type": "module",
 	"dependencies": {
 		"@azure/communication-email": "^1.0.0",
+		"@microsoft/applicationinsights-web": "^3.3.2",
 		"@types/bcryptjs": "^2.4.6",
 		"bcryptjs": "^2.4.3",
 		"drizzle-orm": "^0.31.2",
