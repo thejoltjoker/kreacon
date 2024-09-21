@@ -1,8 +1,8 @@
 import { db } from '$lib/server/db';
 import { users } from '$lib/server/db/schema';
 import ServerError from '$lib/ServerError';
-import * as bcrypt from 'bcrypt';
 import { StatusCodes } from 'http-status-codes';
+import bcrypt from 'bcryptjs';
 
 export const createUser = async (email: string, password: string) => {
 	try {

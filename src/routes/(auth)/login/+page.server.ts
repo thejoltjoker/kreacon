@@ -4,7 +4,7 @@ import { setCookies } from '$lib/auth/setCookies';
 import { db } from '$lib/server/db';
 import { users } from '$lib/server/db/schema';
 import { error, fail, redirect } from '@sveltejs/kit';
-import { compare } from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import { eq } from 'drizzle-orm';
 import { StatusCodes } from 'http-status-codes';
 import type { Actions, PageServerLoad } from './$types';
@@ -44,7 +44,7 @@ export const actions: Actions = {
 			return error(StatusCodes.INTERNAL_SERVER_ERROR, { message: 'Something went wrong' });
 		}
 
-		const passwordMatch = await compare(password, user.password);
+		const passwordMatch = await bcrypt.compare(password, user.password);
 
 		if (!passwordMatch) {
 			logger.warn(`Login attempt failed: Incorrect password for user ${user.id}`);
