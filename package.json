@@ -10,25 +10,34 @@
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"db:start": "docker compose up",
 		"db:push": "drizzle-kit push",
+		"db:generate": "drizzle-kit generate",
 		"db:migrate": "drizzle-kit migrate",
 		"db:studio": "drizzle-kit studio",
 		"test:unit": "vitest",
 		"test": "npm run test:unit -- --run",
 		"lint": "eslint . && prettier --check .",
-		"format": "prettier --write ."
+		"format": "prettier --write .",
+		"swa:build": "swa build",
+		"swa:start": "swa start"
 	},
 	"devDependencies": {
 		"@azure/static-web-apps-cli": "^2.0.1",
+		"@melt-ui/pp": "^0.3.2",
+		"@melt-ui/svelte": "^0.83.0",
 		"@sveltejs/adapter-auto": "^3.0.0",
 		"@sveltejs/kit": "^2.0.0",
 		"@sveltejs/vite-plugin-svelte": "^3.0.0",
+		"@tailwindcss/forms": "^0.5.9",
+		"@types/bcrypt": "^5.0.2",
 		"@types/eslint": "^9.6.0",
+		"@types/jsonwebtoken": "^9.0.7",
 		"autoprefixer": "^10.4.20",
 		"drizzle-kit": "^0.22.0",
 		"eslint": "^9.7.0",
 		"eslint-config-prettier": "^9.1.0",
 		"eslint-plugin-svelte": "^2.36.0",
 		"globals": "^15.0.0",
+		"postcss-nesting": "^13.0.0",
 		"prettier": "^3.3.3",
 		"prettier-plugin-svelte": "^3.2.5",
 		"prettier-plugin-tailwindcss": "^0.6.6",
@@ -43,10 +52,21 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@azure/communication-email": "^1.0.0",
+		"bcrypt": "^5.1.1",
 		"drizzle-orm": "^0.31.2",
-		"postgres": "^3.4.4"
+		"drizzle-zod": "^0.5.1",
+		"http-status-codes": "^2.3.0",
+		"jsonwebtoken": "^9.0.2",
+		"lucide-svelte": "^0.441.0",
+		"postgres": "^3.4.4",
+		"zod": "^3.23.8",
+		"zod-validation-error": "^3.4.0"
 	},
 	"engines": {
 		"node": "20"
+	},
+	"optionalDependencies": {
+		"@rollup/rollup-linux-x64-gnu": "^4.22.2"
 	}
 }
