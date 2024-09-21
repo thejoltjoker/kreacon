@@ -12,18 +12,18 @@ vi.mock('$env/static/private', () => ({
 describe('createTokens', () => {
 	it('should create access and refresh tokens', () => {
 		// Arrange
-		const sessionId = 'test_session_id';
+		const sessionToken = 'test_session_token';
 		const userId = 'test_user_id';
 
 		// Act
-		const { accessToken, refreshToken } = createTokens(sessionId, userId);
+		const { accessToken, refreshToken } = createTokens(sessionToken, userId);
 
 		// Assert
 		const decodedRefreshToken = jwt.verify(refreshToken, 'test_signature') as jwt.JwtPayload;
 		const decodedAccessToken = jwt.verify(accessToken, 'test_signature') as jwt.JwtPayload;
 
-		expect(decodedRefreshToken).toHaveProperty('sessionId', sessionId);
-		expect(decodedAccessToken).toHaveProperty('sessionId', sessionId);
+		expect(decodedRefreshToken).toHaveProperty('sessionToken', sessionToken);
+		expect(decodedAccessToken).toHaveProperty('sessionToken', sessionToken);
 		expect(decodedAccessToken).toHaveProperty('userId', userId);
 	});
 });

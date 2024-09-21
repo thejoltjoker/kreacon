@@ -11,7 +11,10 @@ import type { Actions, PageServerLoad } from './$types';
 import { createLogger } from '$lib/logger';
 const logger = createLogger('login', import.meta.url);
 
-export const load = (async () => {
+export const load = (async ({ locals }) => {
+	if (locals.user) {
+		throw redirect(StatusCodes.MOVED_TEMPORARILY, '/profile');
+	}
 	return {};
 }) satisfies PageServerLoad;
 

@@ -3,13 +3,13 @@ import type { AccessToken } from '$lib/types/AccessToken';
 import type { RefreshToken } from '$lib/types/RefreshToken';
 import jwt from 'jsonwebtoken';
 
-export const createTokens = (sessionId: string, userId: string) => {
+export const createTokens = (sessionToken: string, userId: string) => {
 	const accessTokenPayload: AccessToken = {
-		sessionId,
+		sessionToken,
 		userId
 	};
 	const refreshTokenPayload: RefreshToken = {
-		sessionToken: sessionId
+		sessionToken: sessionToken
 	};
 
 	const refreshToken = jwt.sign(refreshTokenPayload, JWT_SIGNATURE);

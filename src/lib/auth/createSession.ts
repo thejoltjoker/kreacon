@@ -6,11 +6,11 @@ import { StatusCodes } from 'http-status-codes';
 
 export const createSession = async (userId: string) => {
 	try {
-		const sessionId = crypto.randomBytes(32).toString('hex');
+		const sessionToken = crypto.randomBytes(32).toString('hex');
 		const sessionPayload: InsertSession = {
-			sessionToken: sessionId,
+			sessionToken,
 			userId,
-			expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000) // 30 days
+			expiresAt: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30) // 30 days
 		};
 		const session = await db.insert(sessions).values(sessionPayload).returning();
 

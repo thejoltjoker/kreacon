@@ -2,8 +2,8 @@
 	import { LockIcon } from 'lucide-svelte';
 	import type { PageData } from './$types';
 	import Button from '$lib/components/Button.svelte';
-
 	export let data: PageData;
+	console.log(data.user);
 </script>
 
 <div class="wrapper">

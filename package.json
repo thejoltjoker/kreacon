@@ -10,12 +10,15 @@
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"db:start": "docker compose up",
 		"db:push": "drizzle-kit push",
+		"db:generate": "drizzle-kit generate",
 		"db:migrate": "drizzle-kit migrate",
 		"db:studio": "drizzle-kit studio",
 		"test:unit": "vitest",
 		"test": "npm run test:unit -- --run",
 		"lint": "eslint . && prettier --check .",
-		"format": "prettier --write ."
+		"format": "prettier --write .",
+		"swa:build": "swa build",
+		"swa:start": "swa start"
 	},
 	"devDependencies": {
 		"@azure/static-web-apps-cli": "^2.0.1",

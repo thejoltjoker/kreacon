@@ -5,6 +5,7 @@
 	import GoogleButton from '$lib/components/GoogleButton.svelte';
 	import { enhance } from '$app/forms';
 	import { z } from 'zod';
+	import Link from '$lib/components/Link.svelte';
 
 	let email = '';
 	let password = '';
@@ -43,7 +44,7 @@
 		required
 	/>
 	<Button variant="rose" type="submit" disabled={!emailIsValid || !passwordIsValid}>Login</Button>
-	<p class="text-center">Not a member? <a href="/register">Register</a></p>
+	<p class="text-center">Not a member? <Link href="/register">Register</Link></p>
 </form>
 
 <style lang="postcss">

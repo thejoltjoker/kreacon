@@ -3,6 +3,10 @@
 	import Navbar from './_components/Navbar.svelte';
 </script>
 
+<svelte:head>
+	<title>Kreacon</title>
+</svelte:head>
+
 <Navbar />
 <main>
 	<slot />
@@ -12,5 +16,4 @@
 	main {
 		@apply px-sm py-xs;
 	}
-
 </style>

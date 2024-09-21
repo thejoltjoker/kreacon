@@ -13,7 +13,10 @@ import { StatusCodes } from 'http-status-codes';
 import { fromError } from 'zod-validation-error';
 import type { Actions, PageServerLoad } from './$types';
 import { createLogger } from '$lib/logger';
+import { sendEmailVerification } from '$lib/auth/verifyEmail';
+
 const logger = createLogger('register', import.meta.url);
+
 export const load = (async () => {
 	return {};
 }) satisfies PageServerLoad;
@@ -97,13 +100,8 @@ export const actions: Actions = {
 		}
 
 		// TODO Email verification functionality
+		await sendEmailVerification(email);
 
-		// const verifyEmailLink = await createVerifyEmailLink(email);
-		// await sendEmail(
-		// 	email,
-		// 	'Verify your email',
-		// 	'Click the link to verify your email' + verifyEmailLink
-		// );
 		logger.info('User registered successfully, redirecting to login', { email });
 		throw redirect(StatusCodes.MOVED_TEMPORARILY, '/login');
 	}

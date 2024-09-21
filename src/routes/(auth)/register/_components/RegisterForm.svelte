@@ -14,6 +14,8 @@
 	} from '$lib/validation/password/passwordValidation';
 	import { z } from 'zod';
 	import PasswordValidationInfo from './PasswordValidationInfo.svelte';
+	import Link from '$lib/components/Link.svelte';
+	import Spinner from '$lib/components/Spinner.svelte';
 	export let form;
 
 	let email = '';
@@ -29,7 +31,7 @@
 		isNotCommonPassword: false,
 		isNotUsernameOrEmail: false
 	};
-
+	let loading: boolean = false;
 	$: {
 		if (email) {
 			emailIsValid = z.string().email().safeParse(email).success;
@@ -81,7 +83,17 @@
 {#if form?.success}
 	<p class="success">Registration successful</p>
 {/if}
-<form method="POST" action="?/store" use:enhance>
+<form
+	method="POST"
+	action="?/store"
+	use:enhance={() => {
+		loading = true;
+		return async ({ update }) => {
+			loading = false;
+			update();
+		};
+	}}
+>
 	{#if form?.password}<p class="error">{form?.password}</p>{/if}
 
 	<GoogleButton />
@@ -119,11 +131,15 @@
 	<Button
 		variant="rose"
 		type="submit"
-		disabled={!(emailIsValid && passwordIsValid && confirmPasswordIsValid)}
+		disabled={!(emailIsValid && passwordIsValid && confirmPasswordIsValid) || loading}
+		on:click={() => (loading = true)}
 	>
+		{#if loading}
+			<Spinner />
+		{/if}
 		Register
 	</Button>
-	<p class="text-center">Already a member? <a href="/login">Log in</a></p>
+	<p class="text-center">Already a member? <Link href="/login">Log in</Link></p>
 </form>
 
 <style lang="postcss">
