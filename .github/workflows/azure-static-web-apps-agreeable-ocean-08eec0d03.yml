@@ -19,7 +19,7 @@ jobs:
       AZURE_COMMUNICATION_SERVICES_SENDER_ADDRESS: ${{ secrets.AZURE_COMMUNICATION_SERVICES_SENDER_ADDRESS }}
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
       JWT_SIGNATURE: ${{ secrets.JWT_SIGNATURE }}
-      PUBLIC_BASE_URL: ${{ env.PUBLIC_BASE_URL }}
+      PUBLIC_BASE_URL: ${{ vars.PUBLIC_BASE_URL }}
     steps:
       - uses: actions/checkout@v3
         with:
