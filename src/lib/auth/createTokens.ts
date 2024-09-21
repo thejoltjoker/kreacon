@@ -3,8 +3,6 @@ import type { AccessToken } from '$lib/types/AccessToken';
 import type { RefreshToken } from '$lib/types/RefreshToken';
 import jwt from 'jsonwebtoken';
 
-
-
 export const createTokens = (sessionId: string, userId: string) => {
 	const accessTokenPayload: AccessToken = {
 		sessionId,
