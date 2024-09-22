@@ -1,4 +1,4 @@
-import { PUBLIC_PASSWORD_MIN_LENGTH } from '$env/static/public';
+import { PASSWORD_MIN_LENGTH } from '$lib/config';
 
 export const isCommonPassword = async (
 	password: string,
@@ -13,19 +13,8 @@ export const isCommonPassword = async (
 	return passwords.includes(password);
 };
 
-export const isLongEnough = (
-	password: string,
-	minLength: number = Number(PUBLIC_PASSWORD_MIN_LENGTH ?? 8)
-): boolean => {
-	return password.length >= minLength;
-};
-
 export const hasSpecialCharacter = (password: string): boolean => {
 	return /[^a-zA-Z0-9\s\u00C0-\u024F]/.test(password);
-};
-
-export const hasNumber = (password: string): boolean => {
-	return /\d/.test(password);
 };
 
 export type PasswordValidation = {

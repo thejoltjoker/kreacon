@@ -7,7 +7,6 @@ import {
 	type EmailMessage as AzureEmailMessage
 } from '@azure/communication-email';
 import { z } from 'zod';
-import { fromError } from 'zod-validation-error';
 
 export const emailClient = new AzureEmailClient(AZURE_COMMUNICATION_SERVICES_CONNECTION_STRING);
 
@@ -49,7 +48,7 @@ export class Email {
 			z.string().email().parse(address);
 			return true;
 		} catch (err) {
-			console.warn(fromError(err));
+			console.warn(err);
 			return false;
 		}
 	}

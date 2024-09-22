@@ -1,19 +1,14 @@
 import { createUser } from '$lib/server/auth/createUser';
 import { db } from '$lib/server/db';
 import { insertUserSchema, users } from '$lib/server/db/schema';
-import {
-	hasNumber,
-	hasSpecialCharacter,
-	isCommonPassword,
-	isLongEnough
-} from '$lib/validation/password/passwordValidation';
 import { error, fail, redirect } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
 import { StatusCodes } from 'http-status-codes';
-import { fromError } from 'zod-validation-error';
 import type { Actions, PageServerLoad } from './$types';
 import { sendEmailVerification } from '$lib/server/auth/verifyEmail';
 import { createLogger } from '$lib/server/logger';
+import { userRegistrationSchema } from '$lib/schemas/userRegistrationSchema';
+import { z } from 'zod';
 
 const logger = createLogger('register');
 
@@ -23,22 +18,27 @@ export const load = (async () => {
 
 export const actions: Actions = {
 	store: async ({ request }) => {
-		const data = await request.formData();
-		const email = data.get('email')?.toString();
-		const password = data.get('password')?.toString();
-
-		// Validate email
-		if (!email) {
-			logger.warn('Registration attempt with missing email');
-			return fail(StatusCodes.BAD_REQUEST, { email, emailMissing: true });
-		}
+		const formData = Object.fromEntries(await request.formData());
+		const { email, password } = formData;
 
 		try {
-			insertUserSchema.partial({ email: true }).parse({ email });
-		} catch (err) {
-			const validationError = fromError(err);
-			logger.warn(`Email validation failed: ${validationError.toString()}`, { email });
-			return fail(StatusCodes.BAD_REQUEST, { email: validationError.toString() });
+			const result = await userRegistrationSchema.parseAsync(formData);
+			logger.info('Form data parsed successfully', { result });
+		} catch (err: unknown) {
+			logger.error('Form data validation error', { error: err });
+
+			// Check if the error object has a structure similar to ZodError
+			if (typeof err === 'object' && err !== null && 'issues' in err) {
+				const zodError = err as z.ZodError;
+				const { fieldErrors: errors } = zodError.flatten();
+				// eslint-disable-next-line @typescript-eslint/no-unused-vars
+				const { password, confirmPassword, ...cleanFormData } = formData;
+				console.log(errors);
+				return fail(StatusCodes.BAD_REQUEST, { data: cleanFormData, errors });
+			} else {
+				// Handle other types of errors
+				return fail(StatusCodes.INTERNAL_SERVER_ERROR, { message: 'An unexpected error occurred' });
+			}
 		}
 
 		// Check for existing user
@@ -49,42 +49,9 @@ export const actions: Actions = {
 			return fail(StatusCodes.BAD_REQUEST, { email: "Couldn't create user" });
 		}
 
-		// Validate password
-		if (!password) {
-			logger.warn('Registration attempt with missing password', { email });
-			return fail(StatusCodes.BAD_REQUEST, { password: 'Password is required' });
-		}
-
-		if (!isLongEnough(password)) {
-			return fail(StatusCodes.BAD_REQUEST, { password: 'Password is too short' });
-		}
-
-		if (!hasSpecialCharacter(password)) {
-			return fail(StatusCodes.BAD_REQUEST, { password: 'Password needs special character' });
-		}
-
-		if (password === email) {
-			return fail(StatusCodes.BAD_REQUEST, { password: 'Password is too similar to email' });
-		}
-
-		if (!hasNumber(password)) {
-			return fail(StatusCodes.BAD_REQUEST, { password: 'Password needs number' });
-		}
-
-		if (!isCommonPassword(password)) {
-			return fail(StatusCodes.BAD_REQUEST, { password: 'Password is too common' });
-		}
-
-		try {
-			insertUserSchema.partial({ password: true }).parse({ password });
-		} catch (err) {
-			const validationError = fromError(err);
-			return fail(StatusCodes.BAD_REQUEST, { password: validationError.toString() });
-		}
-
 		// Create user
 		try {
-			const user = await createUser(email, password);
+			const user = await createUser(email.toString(), password.toString());
 			logger.info('Created new user', { userId: user.id, email: user.email });
 			if (!user) {
 				logger.error('Failed to create user - createUser returned null', { email });
@@ -99,10 +66,10 @@ export const actions: Actions = {
 			});
 		}
 
-		// TODO Email verification functionality
-		await sendEmailVerification(email);
+		// // TODO Email verification functionality
+		// await sendEmailVerification(email);
 
-		logger.info('User registered successfully, redirecting to login', { email });
-		throw redirect(StatusCodes.MOVED_TEMPORARILY, '/login');
+		// logger.info('User registered successfully, redirecting to login', { email });
+		// throw redirect(StatusCodes.MOVED_TEMPORARILY, '/login');
 	}
 };

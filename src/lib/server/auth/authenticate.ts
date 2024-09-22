@@ -65,6 +65,5 @@ export const authenticate = async (event: RequestEvent): Promise<AccessToken | n
 		}
 	}
 
-	logger.info('Authentication failed, no valid tokens found');
 	return null;
 };

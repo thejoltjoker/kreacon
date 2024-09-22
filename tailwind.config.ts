@@ -10,6 +10,7 @@ export default {
 				sans: ['Figtree', 'sans-serif']
 			},
 			spacing: {
+				xxs: '0.3rem',
 				xs: '0.6rem',
 				sm: '1.2rem',
 				md: '1.6rem',
