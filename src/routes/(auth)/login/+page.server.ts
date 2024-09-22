@@ -1,6 +1,6 @@
-import { createSession } from '$lib/auth/createSession';
-import { createTokens } from '$lib/auth/createTokens';
-import { setCookies } from '$lib/auth/setCookies';
+import { createSession } from '$lib/server/auth/createSession';
+import { createTokens } from '$lib/server/auth/createTokens';
+import { setCookies } from '$lib/server/auth/setCookies';
 import { db } from '$lib/server/db';
 import { users } from '$lib/server/db/schema';
 import { error, fail, redirect } from '@sveltejs/kit';
@@ -8,7 +8,7 @@ import bcrypt from 'bcryptjs';
 import { eq } from 'drizzle-orm';
 import { StatusCodes } from 'http-status-codes';
 import type { Actions, PageServerLoad } from './$types';
-import { createLogger } from '$lib/logger';
+import { createLogger } from '$lib/server/logger';
 const logger = createLogger('login');
 
 export const load = (async ({ locals }) => {

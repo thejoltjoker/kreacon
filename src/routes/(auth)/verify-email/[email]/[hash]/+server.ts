@@ -1,10 +1,11 @@
-import { createVerifyEmailToken } from '$lib/auth/verifyEmail';
-import { createLogger } from '$lib/logger';
+import { createVerifyEmailToken } from '$lib/server/auth/verifyEmail';
+
 import { db } from '$lib/server/db';
 import { users } from '$lib/server/db/schema';
 import { error, redirect } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
 import type { RequestHandler } from './$types';
+import { createLogger } from '$lib/server/logger';
 
 const logger = createLogger('verify-email');
 

@@ -1,4 +1,4 @@
-import { createUser } from '$lib/auth/createUser';
+import { createUser } from '$lib/server/auth/createUser';
 import { db } from '$lib/server/db';
 import { insertUserSchema, users } from '$lib/server/db/schema';
 import {
@@ -12,8 +12,8 @@ import { eq } from 'drizzle-orm';
 import { StatusCodes } from 'http-status-codes';
 import { fromError } from 'zod-validation-error';
 import type { Actions, PageServerLoad } from './$types';
-import { createLogger } from '$lib/logger';
-import { sendEmailVerification } from '$lib/auth/verifyEmail';
+import { sendEmailVerification } from '$lib/server/auth/verifyEmail';
+import { createLogger } from '$lib/server/logger';
 
 const logger = createLogger('register');
 

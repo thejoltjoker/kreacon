@@ -1,5 +1,5 @@
 import { JWT_SIGNATURE } from '$env/static/private';
-import { createLogger } from '$lib/logger';
+import { createLogger } from '$lib/server/logger';
 import { db } from '$lib/server/db';
 import { sessions } from '$lib/server/db/schema';
 import type { RefreshToken } from '$lib/types/RefreshToken';
