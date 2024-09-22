@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { ApplicationInsights } from '@microsoft/applicationinsights-web';
-import { getAppInsights } from '$lib/azure/insights';
+import { getAppInsights } from '$lib/server/azure/insights';
 
 let azureAppInsights: ApplicationInsights | undefined = undefined;
 
@@ -50,7 +50,7 @@ class Logger {
 			);
 			if (process.env.AZURE_APP_INSIGHTS_CONNECTION_STRING) {
 				azureAppInsights?.trackTrace({
-					message: `${colors.gray}${new Date().toLocaleTimeString('en-US', { hour12: false })} ${colors.cyan}[${this.id}]${colors[level]} ${message}${resetColor}`,
+					message: `[${this.id}] ${message}`,
 					severityLevel: logLevels[level]
 				});
 			}
@@ -74,4 +74,4 @@ class Logger {
 	}
 }
 
-export const createLogger = (id: string, caller: string) => new Logger(id, caller);
+export const createLogger = (id: string, caller?: string) => new Logger(id, caller);

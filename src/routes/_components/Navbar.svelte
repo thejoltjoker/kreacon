@@ -15,9 +15,9 @@
 
 		<li><a href="/login"><Button>Login</Button></a></li>
 		<li>
-			<form action="/logout" use:enhance method="POST">
-				<Button type="submit">Logout</Button>
-			</form>
+			<a href="/logout">
+				<Button>Logout</Button>
+			</a>
 		</li>
 	</ul>
 </nav>

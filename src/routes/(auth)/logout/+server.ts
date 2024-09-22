@@ -11,7 +11,7 @@ import type { RequestHandler } from './$types';
 
 const logger = createLogger('logout');
 
-export const POST: RequestHandler = async ({ cookies, request }) => {
+export const GET: RequestHandler = async ({ cookies }) => {
 	try {
 		const refreshToken = cookies.get('refreshToken');
 		if (refreshToken) {
@@ -37,6 +37,5 @@ export const POST: RequestHandler = async ({ cookies, request }) => {
 		return error(StatusCodes.INTERNAL_SERVER_ERROR, { message: 'Logout failed' });
 	}
 
-	const referer = request.headers.get('referer') || '/';
-	throw redirect(StatusCodes.MOVED_TEMPORARILY, referer);
+	throw redirect(StatusCodes.MOVED_TEMPORARILY, '/');
 };

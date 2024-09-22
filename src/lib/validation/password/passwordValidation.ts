@@ -1,3 +1,5 @@
+import { PUBLIC_PASSWORD_MIN_LENGTH } from '$env/static/public';
+
 export const isCommonPassword = async (
 	password: string,
 	listSize: '100' | '1000' | '10000' = '100'
@@ -13,7 +15,7 @@ export const isCommonPassword = async (
 
 export const isLongEnough = (
 	password: string,
-	minLength: number = Number(process.env.PUBLIC_PASSWORD_MIN_LENGTH ?? 8)
+	minLength: number = Number(PUBLIC_PASSWORD_MIN_LENGTH ?? 8)
 ): boolean => {
 	return password.length >= minLength;
 };
