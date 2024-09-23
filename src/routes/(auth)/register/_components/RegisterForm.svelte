@@ -9,8 +9,9 @@
 	import Spinner from '$lib/components/Spinner.svelte';
 	import { passwordSchema } from '$lib/schemas/passwordSchema';
 	import { userRegistrationSchema } from '$lib/schemas/userRegistrationSchema';
-	import PasswordTooltip from './PasswordTooltip.svelte';
+	import { onMount } from 'svelte';
 	import PasswordValidationInfo from './PasswordValidationInfo.svelte';
+	import GitHubButton from '$lib/components/GitHubButton.svelte';
 
 	export let form;
 
@@ -19,7 +20,6 @@
 	let confirmPassword = '';
 	let emailIsValid: boolean | undefined = undefined;
 	let passwordIsValid: boolean | undefined = undefined;
-	let confirmPasswordIsValid: boolean | undefined = undefined;
 	let loading: boolean = false;
 	let validationErrorPaths: string[] = ['too_small', 'special', 'number', 'common'];
 
@@ -33,13 +33,19 @@
 				console.warn('Form errors', form?.errors);
 			}
 		}
+		// if (form?.errors && !form?.data?.errors) {
+		// 	password = '';
+		// 	confirmPassword = '';
+		// }
 	}
 
-	$: {
-		if (confirmPassword) {
-			confirmPasswordIsValid = password === confirmPassword;
-		}
-	}
+	// TODO Empty password and confirm password on email error
+	// $: {
+	// 	if (form?.errors?.email) {
+	// 		password = '';
+	// 		confirmPassword = '';
+	// 	}
+	// }
 
 	$: {
 		if (email) {
@@ -65,7 +71,6 @@
 	};
 </script>
 
-{JSON.stringify(form)}
 <form
 	method="POST"
 	action="?/store"
@@ -77,8 +82,9 @@
 		};
 	}}
 >
-	<GoogleButton />
-	<DiscordButton />
+	<!-- <GoogleButton />
+	<DiscordButton /> -->
+	<GitHubButton />
 	<Divider>or use your email</Divider>
 	<TextInput
 		label="Email"
@@ -106,7 +112,7 @@
 		type="password"
 		name="confirmPassword"
 		placeholder="Confirm Password"
-		isValid={confirmPasswordIsValid}
+		isValid={passwordIsValid && confirmPassword === password}
 		errorMessage={form?.errors?.confirmPassword}
 		bind:value={confirmPassword}
 	/>
@@ -121,7 +127,6 @@
 	</Button>
 	<p class="text-center">Already a member? <Link href="/login">Log in</Link></p>
 </form>
-<PasswordTooltip />
 
 <style lang="postcss">
 	form {

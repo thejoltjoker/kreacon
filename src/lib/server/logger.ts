@@ -45,8 +45,8 @@ class Logger {
 
 			console[level](
 				`${colors.gray}${new Date().toLocaleTimeString('en-US', { hour12: false })} ${colors.cyan}[${this.id}]${colors[level]} ${message}${resetColor}`,
-				...args,
-				`${colors.gray}${this.path}${resetColor}`
+				...args
+				// this.path && `${colors.gray}${this.path}${resetColor}`
 			);
 			if (process.env.AZURE_APP_INSIGHTS_CONNECTION_STRING) {
 				azureAppInsights?.trackTrace({

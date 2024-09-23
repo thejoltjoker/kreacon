@@ -42,11 +42,15 @@ export const actions: Actions = {
 		}
 
 		// Check for existing user
-		const existingUser = await db.query.users.findFirst({ where: eq(users.email, email) });
+		const existingUser = await db.query.users.findFirst({
+			where: eq(users.email, email.toString())
+		});
 
 		if (existingUser) {
 			logger.info('Registration attempt with existing email', { email });
-			return fail(StatusCodes.BAD_REQUEST, { email: "Couldn't create user" });
+			return fail(StatusCodes.BAD_REQUEST, {
+				errors: { email: 'Try a different email' }
+			});
 		}
 
 		// Create user
@@ -66,10 +70,10 @@ export const actions: Actions = {
 			});
 		}
 
-		// // TODO Email verification functionality
-		// await sendEmailVerification(email);
+		// TODO Email verification functionality
+		// await sendEmailVerification(email.toString());
 
 		// logger.info('User registered successfully, redirecting to login', { email });
-		// throw redirect(StatusCodes.MOVED_TEMPORARILY, '/login');
+		throw redirect(StatusCodes.MOVED_TEMPORARILY, '/login');
 	}
 };

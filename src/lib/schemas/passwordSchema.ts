@@ -1,5 +1,5 @@
-import { PASSWORD_MIN_LENGTH } from '$lib/config';
-import { hasSpecialCharacter, isCommonPassword } from '$lib/validation/password/passwordValidation';
+import { PASSWORD_MIN_LENGTH } from '../config';
+import { hasSpecialCharacter, isCommonPassword } from '../validation/password/passwordValidation';
 import { z } from 'zod';
 
 export const passwordSchema = z
