@@ -1,17 +1,14 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import Button from '$lib/components/Button.svelte';
-	import DiscordButton from '$lib/components/DiscordButton.svelte';
 	import Divider from '$lib/components/Divider.svelte';
-	import GoogleButton from '$lib/components/GoogleButton.svelte';
 	import TextInput from '$lib/components/InputField.svelte';
 	import Link from '$lib/components/Link.svelte';
 	import Spinner from '$lib/components/Spinner.svelte';
 	import { passwordSchema } from '$lib/schemas/passwordSchema';
 	import { userRegistrationSchema } from '$lib/schemas/userRegistrationSchema';
-	import { onMount } from 'svelte';
+	import OAuthButtons from '../../_components/OAuthButtons.svelte';
 	import PasswordValidationInfo from './PasswordValidationInfo.svelte';
-	import GitHubButton from '$lib/components/GitHubButton.svelte';
 
 	export let form;
 
@@ -82,9 +79,7 @@
 		};
 	}}
 >
-	<!-- <GoogleButton /> -->
-	<DiscordButton />
-	<GitHubButton />
+	<OAuthButtons />
 	<Divider>or use your email</Divider>
 	<TextInput
 		label="Email"

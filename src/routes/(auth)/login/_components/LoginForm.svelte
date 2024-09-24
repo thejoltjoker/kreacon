@@ -1,11 +1,11 @@
 <script lang="ts">
-	import Button from '$lib/components/Button.svelte';
-	import TextInput from '$lib/components/InputField.svelte';
-	import Divider from '$lib/components/Divider.svelte';
-	import GoogleButton from '$lib/components/GoogleButton.svelte';
 	import { enhance } from '$app/forms';
-	import { z } from 'zod';
+	import Button from '$lib/components/Button.svelte';
+	import Divider from '$lib/components/Divider.svelte';
+	import TextInput from '$lib/components/InputField.svelte';
 	import Link from '$lib/components/Link.svelte';
+	import { z } from 'zod';
+	import OAuthButtons from '../../_components/OAuthButtons.svelte';
 
 	let email = '';
 	let password = '';
@@ -24,7 +24,7 @@
 </script>
 
 <form method="POST" action="?/login" use:enhance>
-	<GoogleButton />
+	<OAuthButtons />
 	<Divider>or sign in with email</Divider>
 	<TextInput
 		label="Email"

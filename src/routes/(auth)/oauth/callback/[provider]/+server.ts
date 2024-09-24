@@ -1,6 +1,5 @@
 import { createSession } from '$lib/server/auth/createSession';
 import { createTokens } from '$lib/server/auth/createTokens';
-import { getOAuthClient, isOAuthProvider, type OAuthProvider } from '$lib/server/auth/oauth';
 import { setCookies } from '$lib/server/auth/setCookies';
 import { db } from '$lib/server/db';
 import { accounts, users } from '$lib/server/db/schema';
@@ -8,6 +7,8 @@ import { createLogger } from '$lib/server/logger';
 import { error, redirect } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
 import type { RequestHandler } from './$types';
+import { getOAuthClient } from '$lib/server/auth/oauth/getOAuthClient';
+import { isOAuthProvider, type OAuthProvider } from '$lib/server/auth/oauth/OAuthClient';
 const logger = createLogger('auth/callback');
 
 export const GET: RequestHandler = async ({ url, params, cookies }) => {

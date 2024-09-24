@@ -47,9 +47,3 @@ export interface Plan {
 	collaborators: number;
 	private_repos: number;
 }
-
-export interface GitHubAccessTokenResponse {
-	access_token: string;
-	scope: string;
-	token_type: string;
-}

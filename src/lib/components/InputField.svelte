@@ -73,6 +73,6 @@
 	}
 
 	.error-message {
-		@apply mt-xxs ml-xs text-sm text-amber-500;
+		@apply ml-xs mt-xxs text-sm text-amber-500;
 	}
 </style>
