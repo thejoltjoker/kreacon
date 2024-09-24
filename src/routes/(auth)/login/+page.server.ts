@@ -1,13 +1,14 @@
-import { createSession } from '$lib/auth/createSession';
-import { createTokens } from '$lib/auth/createTokens';
-import { setCookies } from '$lib/auth/setCookies';
-import { createLogger } from '$lib/logger';
+import { createSession } from '$lib/server/auth/createSession';
+import { createTokens } from '$lib/server/auth/createTokens';
+import { setCookies } from '$lib/server/auth/setCookies';
 import { db } from '$lib/server/db';
 import { users } from '$lib/server/db/schema';
-import { error, fail, redirect } from '@sveltejs/kit';
-import bcrypt from 'bcryptjs';
+import { redirect, type Actions, fail, error } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
-import type { Actions, PageServerLoad } from './$types';
+import type { PageServerLoad } from './$types';
+import { createLogger } from '$lib/server/logger';
+import bcrypt from 'bcryptjs';
+
 const logger = createLogger('login');
 
 export const load = (async ({ locals }) => {
@@ -55,7 +56,7 @@ export const actions: Actions = {
 		const session = await createSession(user.id);
 		logger.debug(`Session created for user ${user.id}: ${session.sessionToken}`);
 
-		const { accessToken, refreshToken } = await createTokens(session.sessionToken, user.id);
+		const { accessToken, refreshToken } = createTokens(session.sessionToken, user.id);
 		logger.debug(`Tokens created for user ${user.id}`);
 
 		setCookies(cookies, accessToken, refreshToken);

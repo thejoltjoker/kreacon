@@ -1,12 +1,12 @@
-import { createUser } from '$lib/auth/createUser';
-import { createLogger } from '$lib/logger';
 import { userRegistrationSchema } from '$lib/schemas/userRegistrationSchema';
+import { createUser } from '$lib/server/auth/createUser';
 import { db } from '$lib/server/db';
 import { users } from '$lib/server/db/schema';
-import { error, fail, redirect } from '@sveltejs/kit';
+import { type Actions, fail, error, redirect } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
-import { z } from 'zod';
-import type { Actions, PageServerLoad } from './$types';
+import type { z } from 'zod';
+import type { PageServerLoad } from './$types';
+import { createLogger } from '$lib/server/logger';
 
 const logger = createLogger('register');
 
@@ -21,7 +21,7 @@ export const actions: Actions = {
 
 		try {
 			const result = await userRegistrationSchema.parseAsync(formData);
-			logger.info('Form data parsed successfully', { result });
+			logger.info('Form data parsed successfully', result);
 		} catch (err: unknown) {
 			logger.error('Form data validation error', { error: err });
 

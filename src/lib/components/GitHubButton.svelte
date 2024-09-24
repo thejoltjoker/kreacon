@@ -3,7 +3,7 @@
 	import GitHubIcon from '$lib/symbols/GitHubIcon.svg?raw';
 </script>
 
-<a href="/oauth/login/github" class="flex">
+<a href="/oauth/login/github">
 	<Button>
 		<span class="icon">
 			<!-- eslint-disable-next-line svelte/no-at-html-tags -->
@@ -15,5 +15,8 @@
 <style lang="postcss">
 	.icon {
 		@apply mt-1 h-5 w-5;
+	}
+	a {
+		@apply flex;
 	}
 </style>

@@ -1,4 +1,11 @@
-import { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET, GITHUB_REDIRECT_URI } from '$env/static/private';
+import {
+	DISCORD_CLIENT_ID,
+	DISCORD_CLIENT_SECRET,
+	DISCORD_REDIRECT_URI,
+	GITHUB_CLIENT_ID,
+	GITHUB_CLIENT_SECRET,
+	GITHUB_REDIRECT_URI
+} from '$env/static/private';
 import { redirect } from '@sveltejs/kit';
 import { createLogger } from '../logger';
 import type { DiscordAccessTokenResponse, DiscordUserResponse } from './types/discord';
@@ -38,11 +45,11 @@ const providerConfig: Record<OAuthProvider, OAuthProviderConfig> = {
 		redirectUri: GITHUB_REDIRECT_URI ?? ''
 	},
 	discord: {
-		scopes: ['email'],
+		scopes: ['identify', 'email'],
 		urls: {
 			auth: 'https://discord.com/oauth2/authorize',
 			token: 'https://discord.com/api/oauth2/token',
-			user: 'https://api.github.com/user'
+			user: 'https://discord.com/api/v10/users/@me'
 		},
 		clientId: DISCORD_CLIENT_ID ?? '',
 		clientSecret: DISCORD_CLIENT_SECRET ?? '',
@@ -53,20 +60,18 @@ const providerConfig: Record<OAuthProvider, OAuthProviderConfig> = {
 export class OAuthBase {
 	constructor(
 		public providerConfig: OAuthProviderConfig,
-		public clientId: string = '',
-		public clientSecret: string = '',
-		public redirectUri: string = '',
 		public state: string = crypto.randomUUID()
 	) {}
 
 	getAuthUrl() {
 		const params = new URLSearchParams({
-			client_id: this.clientId,
-			redirect_uri: this.redirectUri,
-			scope: this.providerConfig.scopes.join(' '),
-			state: this.state
+			client_id: this.providerConfig.clientId,
+			redirect_uri: this.providerConfig.redirectUri,
+			scope: this.providerConfig.scopes.join(' ')
 		});
-		return `${this.providerConfig.urls.auth}?${params.toString()}`;
+		const url = `${this.providerConfig.urls.auth}?${params.toString()}`;
+		logger.info('Generated auth URL', { url });
+		return url;
 	}
 
 	authorize() {
@@ -93,10 +98,10 @@ export class GithubOAuth extends OAuthBase {
 	async getAccessToken(code: string): Promise<GitHubAccessTokenResponse> {
 		try {
 			const params = new URLSearchParams({
-				client_id: this.clientId,
-				client_secret: this.clientSecret,
+				client_id: this.providerConfig.clientId,
+				client_secret: this.providerConfig.clientSecret,
 				code,
-				redirect_uri: this.redirectUri
+				redirect_uri: this.providerConfig.redirectUri
 			});
 
 			const headers = { Accept: 'application/json' };
@@ -131,27 +136,41 @@ export class DiscordOAuth extends OAuthBase {
 		super(providerConfig['discord']);
 	}
 
+	getAuthUrl() {
+		const params = new URLSearchParams({
+			client_id: this.providerConfig.clientId,
+			redirect_uri: this.providerConfig.redirectUri,
+			scope: this.providerConfig.scopes.join(' '),
+			response_type: 'code'
+		});
+		const url = `${this.providerConfig.urls.auth}?${params.toString()}`;
+		logger.info('Generated auth URL', { url });
+		return url;
+	}
+
 	async getAccessToken(code: string): Promise<DiscordAccessTokenResponse> {
 		try {
-			const body = new URLSearchParams({
+			const params = new URLSearchParams({
+				client_id: this.providerConfig.clientId,
+				client_secret: this.providerConfig.clientSecret,
 				grant_type: 'authorization_code',
 				code: code,
-				redirect_uri: this.redirectUri
+				redirect_uri: this.providerConfig.redirectUri
 			});
-
-			const authHeader = btoa(`${this.clientId}:${this.clientSecret}`);
 
 			const headers = {
 				'Content-Type': 'application/x-www-form-urlencoded',
-				Authorization: `Basic ${authHeader}`
+				Accept: 'application/json'
 			};
 
 			const url = `${this.providerConfig.urls.token}`;
 
+			logger.info('Fetching access token from Discord', { url, params, headers });
+
 			const response = await fetch(url, {
 				method: 'POST',
-				headers: headers,
-				body: body
+				body: params,
+				headers: headers
 			});
 
 			if (!response.ok) {
@@ -160,6 +179,7 @@ export class DiscordOAuth extends OAuthBase {
 			}
 
 			const data = await response.json();
+			logger.info('Discord access token response', { data });
 			return data;
 		} catch (error) {
 			logger.error('Error fetching access token:', { error });

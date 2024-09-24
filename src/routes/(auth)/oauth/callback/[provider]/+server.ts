@@ -13,10 +13,12 @@ const logger = createLogger('auth/callback');
 export const GET: RequestHandler = async ({ url, params, cookies }) => {
 	const provider = params.provider;
 	const code = url.searchParams.get('code');
-	const state = url.searchParams.get('state');
+	// const state = url.searchParams.get('state'); // TODO: Implement state verification
+	console.log('OAuth callback', { provider, code });
+	logger.info('OAuth callback', { provider, code });
 
-	if (!provider || !code || !state) {
-		return error(400, 'Missing provider, code, or state');
+	if (!provider || !code) {
+		return error(400, 'Missing provider or code');
 	}
 
 	if (!isOAuthProvider(provider)) {
@@ -25,30 +27,36 @@ export const GET: RequestHandler = async ({ url, params, cookies }) => {
 
 	const client = getOAuthClient(provider as OAuthProvider);
 	logger.info('OAuth client', { client });
-	const oauthToken = await client._getAccessToken(code);
+	const oauthToken = await client.getAccessToken(code);
+	logger.info('OAuth token', { oauthToken });
 
 	// Get user info
 	const userInfo = await client.getUser(oauthToken.access_token);
+	logger.info('User info', { userInfo });
 
 	let user = await db.query.users.findFirst({
 		where: eq(users.email, userInfo.email)
 	});
 
 	if (!user) {
-		user = await db.insert(users).values({
-			email: userInfo.email
-		});
+		const inserted = await db
+			.insert(users)
+			.values({
+				email: userInfo.email
+			})
+			.returning();
+		user = inserted[0];
 	}
 
 	await db
 		.insert(accounts)
-		.values({ userId: user.id, provider: provider, providerAccountId: userInfo.id })
+		.values({ userId: user.id, provider: provider, providerAccountId: String(userInfo.id) })
 		.onConflictDoNothing();
 
 	const session = await createSession(user.id);
 	logger.debug(`Session created for user ${user.id}: ${session.sessionToken}`);
 
-	const { accessToken, refreshToken } = await createTokens(session.sessionToken, user.id);
+	const { accessToken, refreshToken } = createTokens(session.sessionToken, user.id);
 	logger.debug(`Tokens created for user ${user.id}`);
 
 	setCookies(cookies, accessToken, refreshToken);

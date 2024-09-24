@@ -82,8 +82,8 @@
 		};
 	}}
 >
-	<!-- <GoogleButton />
-	<DiscordButton /> -->
+	<!-- <GoogleButton /> -->
+	<DiscordButton />
 	<GitHubButton />
 	<Divider>or use your email</Divider>
 	<TextInput

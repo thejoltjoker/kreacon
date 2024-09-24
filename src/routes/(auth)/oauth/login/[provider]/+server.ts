@@ -1,7 +1,8 @@
 import { getOAuthClient, isOAuthProvider, type OAuthProvider } from '$lib/server/auth/oauth';
 import { redirect } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-
+import { createLogger } from '$lib/server/logger';
+const logger = createLogger('auth/login');
 export const GET: RequestHandler = async ({ params }) => {
 	const { provider } = params;
 	// Authorize on provider
@@ -22,5 +23,7 @@ export const GET: RequestHandler = async ({ params }) => {
 	}
 
 	const client = getOAuthClient(provider as OAuthProvider);
+	logger.info('OAuth client', { client });
+
 	return client.authorize();
 };
