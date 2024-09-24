@@ -1,5 +1,4 @@
 <script lang="ts">
-	import type { PasswordValidation } from '$lib/validation/password/passwordValidation';
 	import { CheckCircle2Icon, XCircleIcon } from 'lucide-svelte';
 
 	export let validationErrorPaths: string[] = [];

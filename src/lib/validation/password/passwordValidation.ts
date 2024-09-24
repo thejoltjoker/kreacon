@@ -1,5 +1,3 @@
-import { PASSWORD_MIN_LENGTH } from '$lib/config';
-
 export const isCommonPassword = async (
 	password: string,
 	listSize: '100' | '1000' | '10000' = '100'

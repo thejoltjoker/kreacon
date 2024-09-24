@@ -1,11 +1,10 @@
-import { PASSWORD_MIN_LENGTH } from '../config';
-import { hasSpecialCharacter, isCommonPassword } from '../validation/password/passwordValidation';
 import { z } from 'zod';
+import { hasSpecialCharacter, isCommonPassword } from '../validation/password/passwordValidation';
 
 export const passwordSchema = z
 	.string()
-	.min(PASSWORD_MIN_LENGTH, {
-		message: `Password must be at least ${PASSWORD_MIN_LENGTH} characters long`
+	.min(8, {
+		message: `Password must be at least ${8} characters long`
 	})
 	.max(64, { message: 'Password must be at most 64 characters long' })
 	// .refine((password) => /[A-Z]/.test(password), {
