@@ -10,6 +10,7 @@
 	export let onChange: (value: string) => void = () => {};
 	export let isValid: boolean | undefined = undefined;
 	export let required: boolean = false;
+	export let errorMessage: string | undefined = undefined;
 
 	const handleInput = (event: Event) => {
 		const inputEvent = event as InputEvent;
@@ -24,34 +25,40 @@
 </script>
 
 <div class="container">
-	<label use:melt={$root} for={id} data-melt-part="root">
-		<span class="hidden">{label}</span>
-	</label>
-	<input
-		{type}
-		{id}
-		{placeholder}
-		{value}
-		{name}
-		on:input={handleInput}
-		class={`input ${isValid === true ? 'valid' : isValid === false ? 'invalid' : ''}`}
-		{required}
-	/>
-	{#if isValid === true}
-		<CheckCircle2Icon class="absolute right-xs top-1/2 size-5 -translate-y-1/2 text-green-500" />
-	{:else if isValid === false}
-		<XCircleIcon class="absolute right-xs top-1/2 size-5 -translate-y-1/2 text-red-500" />
+	<div class="relative flex flex-col">
+		<label use:melt={$root} for={id} data-melt-part="root">
+			<span class="hidden">{label}</span>
+		</label>
+		<input
+			{type}
+			{id}
+			{placeholder}
+			{value}
+			{name}
+			on:input={handleInput}
+			class:valid={isValid === true}
+			class:invalid={isValid === false}
+			{required}
+		/>
+
+		{#if isValid === true}
+			<div class="icon text-green-500"><CheckCircle2Icon class="size-5" /></div>
+		{:else if isValid === false}
+			<div class="icon text-red-500"><XCircleIcon class="size-5" /></div>
+		{/if}
+	</div>
+	{#if errorMessage}
+		<p class="error-message">{errorMessage}</p>
 	{/if}
 </div>
 
 <style lang="postcss">
 	.container {
-		@apply relative flex flex-col items-start justify-center;
+		@apply relative flex w-full flex-col justify-center;
 	}
 
 	input {
 		@apply h-form w-full rounded-sm border border-white bg-transparent px-3 py-2 focus:border-violet-500 focus:outline-none focus:ring-violet-500;
-
 		&.valid {
 			@apply border-green-500 focus:ring-green-500;
 		}
@@ -59,5 +66,13 @@
 		&.invalid {
 			@apply border-red-500 focus:ring-red-500;
 		}
+	}
+
+	.icon {
+		@apply absolute right-xs top-1/2 size-5 -translate-y-1/2;
+	}
+
+	.error-message {
+		@apply mt-xxs ml-xs text-sm text-amber-500;
 	}
 </style>

@@ -1,7 +1,7 @@
 import { db } from '$lib/server/db';
 import { sessions, type InsertSession } from '$lib/server/db/schema';
 import ServerError from '$lib/ServerError';
-import * as crypto from 'crypto';
+import crypto from 'crypto';
 
 export const createSession = async (userId: string) => {
 	try {

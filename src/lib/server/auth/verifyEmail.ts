@@ -1,7 +1,7 @@
 import { AZURE_COMMUNICATION_SERVICES_SENDER_ADDRESS, JWT_SIGNATURE } from '$env/static/private';
 import { Email, EmailBase, type EmailMessage } from '$lib/server/services/email';
 import crypto from 'crypto';
-import template from '../../assets/verify-email-template.html?raw';
+import template from '../../../assets/verify-email-template.html?raw';
 
 export const createVerifyEmailToken = (email: string) => {
 	const authString = `${JWT_SIGNATURE}:${email}`;

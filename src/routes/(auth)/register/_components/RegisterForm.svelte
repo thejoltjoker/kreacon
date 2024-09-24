@@ -5,17 +5,14 @@
 	import Divider from '$lib/components/Divider.svelte';
 	import GoogleButton from '$lib/components/GoogleButton.svelte';
 	import TextInput from '$lib/components/InputField.svelte';
-	import {
-		hasNumber,
-		hasSpecialCharacter,
-		isCommonPassword,
-		isLongEnough,
-		type PasswordValidation
-	} from '$lib/validation/password/passwordValidation';
-	import { z } from 'zod';
-	import PasswordValidationInfo from './PasswordValidationInfo.svelte';
 	import Link from '$lib/components/Link.svelte';
 	import Spinner from '$lib/components/Spinner.svelte';
+	import { passwordSchema } from '$lib/schemas/passwordSchema';
+	import { userRegistrationSchema } from '$lib/schemas/userRegistrationSchema';
+	import { onMount } from 'svelte';
+	import PasswordValidationInfo from './PasswordValidationInfo.svelte';
+	import GitHubButton from '$lib/components/GitHubButton.svelte';
+
 	export let form;
 
 	let email = '';
@@ -23,81 +20,71 @@
 	let confirmPassword = '';
 	let emailIsValid: boolean | undefined = undefined;
 	let passwordIsValid: boolean | undefined = undefined;
-	let confirmPasswordIsValid: boolean | undefined = undefined;
-	let passwordValidationState: PasswordValidation = {
-		isLongEnough: false,
-		hasSpecialCharacter: false,
-		hasNumber: false,
-		isNotCommonPassword: false,
-		isNotUsernameOrEmail: false
-	};
 	let loading: boolean = false;
-	$: {
-		if (email) {
-			emailIsValid = z.string().email().safeParse(email).success;
-		}
-	}
+	let validationErrorPaths: string[] = ['too_small', 'special', 'number', 'common'];
 
+	// On form error
 	$: {
-		passwordValidationState.isLongEnough = isLongEnough(password);
-		passwordValidationState.hasSpecialCharacter = hasSpecialCharacter(password);
-		passwordValidationState.hasNumber = hasNumber(password);
-		isCommonPassword(password, '10000').then((result) => {
-			passwordValidationState.isNotCommonPassword = !result;
-		});
-		passwordValidationState.isNotUsernameOrEmail = email !== password;
-	}
-
-	$: {
-		if (password) {
-			if (
-				passwordValidationState.isLongEnough &&
-				passwordValidationState.hasSpecialCharacter &&
-				passwordValidationState.hasNumber &&
-				passwordValidationState.isNotCommonPassword &&
-				passwordValidationState.isNotUsernameOrEmail
-			) {
-				passwordIsValid = true;
-			} else {
-				passwordIsValid = false;
-			}
-		}
-	}
-
-	$: {
-		if (confirmPassword) {
-			confirmPasswordIsValid = password === confirmPassword;
-		}
-	}
-
-	$: {
-		if (form?.password) {
+		if (form?.data?.errors) {
+			email = form?.data?.email ?? '';
 			password = '';
 			confirmPassword = '';
-			passwordIsValid = false;
-			confirmPasswordIsValid = false;
+			if (form?.errors) {
+				console.warn('Form errors', form?.errors);
+			}
+		}
+		// if (form?.errors && !form?.data?.errors) {
+		// 	password = '';
+		// 	confirmPassword = '';
+		// }
+	}
+
+	// TODO Empty password and confirm password on email error
+	// $: {
+	// 	if (form?.errors?.email) {
+	// 		password = '';
+	// 		confirmPassword = '';
+	// 	}
+	// }
+
+	$: {
+		if (email) {
+			emailIsValid = userRegistrationSchema.innerType().shape.email.safeParse(email).success;
 		}
 	}
+
+	const handlePasswordValidation = () => {
+		passwordSchema.spa(password).then((result) => {
+			if (result.error) {
+				validationErrorPaths = result.error.errors.map((error) => {
+					if (error.code === 'custom') {
+						return error?.params?.code ? error.params.code : 'unknown';
+					}
+					return error.code;
+				});
+				passwordIsValid = false;
+			} else {
+				validationErrorPaths = [];
+				passwordIsValid = true;
+			}
+		});
+	};
 </script>
 
-{#if form?.success}
-	<p class="success">Registration successful</p>
-{/if}
 <form
 	method="POST"
 	action="?/store"
 	use:enhance={() => {
 		loading = true;
 		return async ({ update }) => {
+			await update();
 			loading = false;
-			update();
 		};
 	}}
 >
-	{#if form?.password}<p class="error">{form?.password}</p>{/if}
-
-	<GoogleButton />
-	<DiscordButton />
+	<!-- <GoogleButton />
+	<DiscordButton /> -->
+	<GitHubButton />
 	<Divider>or use your email</Divider>
 	<TextInput
 		label="Email"
@@ -106,6 +93,7 @@
 		placeholder="Email"
 		bind:value={email}
 		isValid={emailIsValid}
+		errorMessage={form?.errors?.email}
 	/>
 	<TextInput
 		label="Password"
@@ -113,8 +101,10 @@
 		type="password"
 		name="password"
 		placeholder={form?.password ? 'Invalid password' : 'Password'}
-		bind:value={password}
 		isValid={passwordIsValid}
+		errorMessage={form?.errors?.password}
+		bind:value={password}
+		onChange={handlePasswordValidation}
 	/>
 	<TextInput
 		label="Confirm Password"
@@ -122,18 +112,14 @@
 		type="password"
 		name="confirmPassword"
 		placeholder="Confirm Password"
+		isValid={passwordIsValid && confirmPassword === password}
+		errorMessage={form?.errors?.confirmPassword}
 		bind:value={confirmPassword}
-		isValid={confirmPasswordIsValid}
 	/>
 	<div class="origin-top transition-all duration-500">
-		<PasswordValidationInfo bind:passwordValidationState />
+		<PasswordValidationInfo bind:validationErrorPaths />
 	</div>
-	<Button
-		variant="rose"
-		type="submit"
-		disabled={!(emailIsValid && passwordIsValid && confirmPasswordIsValid) || loading}
-		on:click={() => (loading = true)}
-	>
+	<Button variant="rose" type="submit">
 		{#if loading}
 			<Spinner />
 		{/if}

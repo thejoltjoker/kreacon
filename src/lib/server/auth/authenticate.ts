@@ -4,7 +4,7 @@ import { db } from '$lib/server/db';
 import { sessions } from '$lib/server/db/schema.js';
 import ServerError from '$lib/ServerError.js';
 import type { AccessToken } from '$lib/types/AccessToken';
-import type { RefreshToken } from '$lib/types/RefreshToken.js';
+import type { RefreshToken } from '$lib/types/RefreshToken';
 import type { RequestEvent } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
 import jwt from 'jsonwebtoken';
@@ -64,6 +64,5 @@ export const authenticate = async (event: RequestEvent): Promise<AccessToken | n
 		}
 	}
 
-	logger.info('Authentication failed, no valid tokens found');
 	return null;
 };
