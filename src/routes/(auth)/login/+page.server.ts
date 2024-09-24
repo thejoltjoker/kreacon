@@ -1,19 +1,18 @@
 import { createSession } from '$lib/auth/createSession';
 import { createTokens } from '$lib/auth/createTokens';
 import { setCookies } from '$lib/auth/setCookies';
+import { createLogger } from '$lib/logger';
 import { db } from '$lib/server/db';
 import { users } from '$lib/server/db/schema';
 import { error, fail, redirect } from '@sveltejs/kit';
 import bcrypt from 'bcryptjs';
 import { eq } from 'drizzle-orm';
-import { StatusCodes } from 'http-status-codes';
 import type { Actions, PageServerLoad } from './$types';
-import { createLogger } from '$lib/logger';
 const logger = createLogger('login');
 
 export const load = (async ({ locals }) => {
 	if (locals.user) {
-		throw redirect(StatusCodes.MOVED_TEMPORARILY, '/profile');
+		throw redirect(302, '/profile');
 	}
 	return {};
 }) satisfies PageServerLoad;
@@ -27,7 +26,7 @@ export const actions: Actions = {
 
 		if (!email || !password) {
 			logger.warn('Login attempt failed: Missing email or password');
-			return fail(StatusCodes.BAD_REQUEST, { email, password, emailMissing: true });
+			return fail(400, { email, password, emailMissing: true });
 		}
 
 		const user = await db.query.users.findFirst({
@@ -36,19 +35,19 @@ export const actions: Actions = {
 
 		if (!user) {
 			logger.warn(`Login attempt failed: User not found for email ${email}`);
-			return fail(StatusCodes.UNAUTHORIZED, { message: 'Invalid email or password' });
+			return fail(401, { message: 'Invalid email or password' });
 		}
 
 		if (!user.password) {
 			logger.error(`User ${user.id} has no password set`);
-			return error(StatusCodes.INTERNAL_SERVER_ERROR, { message: 'Something went wrong' });
+			return error(500, { message: 'Something went wrong' });
 		}
 
 		const passwordMatch = await bcrypt.compare(password, user.password);
 
 		if (!passwordMatch) {
 			logger.warn(`Login attempt failed: Incorrect password for user ${user.id}`);
-			return fail(StatusCodes.UNAUTHORIZED, { message: 'Invalid email or password' });
+			return fail(401, { message: 'Invalid email or password' });
 		}
 
 		logger.info(`User ${user.id} authenticated successfully`);
@@ -63,6 +62,6 @@ export const actions: Actions = {
 		logger.debug(`Cookies set for user ${user.id}`);
 
 		logger.info(`User ${user.id} logged in successfully`);
-		throw redirect(StatusCodes.MOVED_TEMPORARILY, '/profile');
+		throw redirect(302, '/profile');
 	}
 };

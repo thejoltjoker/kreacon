@@ -1,6 +1,8 @@
 import { JWT_SIGNATURE } from '$env/static/private';
+import { createLogger } from '$lib/logger';
 import { db } from '$lib/server/db';
 import { sessions } from '$lib/server/db/schema.js';
+import ServerError from '$lib/ServerError.js';
 import type { AccessToken } from '$lib/types/AccessToken';
 import type { RefreshToken } from '$lib/types/RefreshToken.js';
 import type { RequestEvent } from '@sveltejs/kit';
@@ -8,15 +10,12 @@ import { eq } from 'drizzle-orm';
 import jwt from 'jsonwebtoken';
 import { createTokens } from './createTokens.js';
 import { setCookies } from './setCookies.js';
-import { createLogger } from '$lib/logger';
-import ServerError from '$lib/ServerError.js';
-import { StatusCodes } from 'http-status-codes';
 const logger = createLogger('authenticate');
 
 export const authenticate = async (event: RequestEvent): Promise<AccessToken | null> => {
 	if (!JWT_SIGNATURE) {
 		logger.error('JWT_SIGNATURE is not set');
-		throw new ServerError(StatusCodes.INTERNAL_SERVER_ERROR, 'JWT_SIGNATURE is not set');
+		throw new ServerError(500, 'JWT_SIGNATURE is not set');
 	}
 
 	const cookieAccessToken = event.cookies.get('accessToken');

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { ApplicationInsights } from '@microsoft/applicationinsights-web';
-import { getAppInsights } from '$lib/server/azure/insights';
+import { getAppInsights } from '$lib/server/azure/insights'
 
 let azureAppInsights: ApplicationInsights | undefined = undefined;
 

@@ -1,14 +1,13 @@
-import { createLogger } from '$lib/server/logger';
-import { error, json, redirect } from '@sveltejs/kit';
-import type { RequestHandler } from './$types';
+import { createSession } from '$lib/server/auth/createSession';
+import { createTokens } from '$lib/server/auth/createTokens';
 import { getOAuthClient, isOAuthProvider, type OAuthProvider } from '$lib/server/auth/oauth';
-import { StatusCodes } from 'http-status-codes';
+import { setCookies } from '$lib/server/auth/setCookies';
 import { db } from '$lib/server/db';
 import { accounts, users } from '$lib/server/db/schema';
+import { createLogger } from '$lib/server/logger';
+import { error, redirect } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
-import { createSession } from '$lib/server/auth/createSession';
-import { setCookies } from '$lib/server/auth/setCookies';
-import { createTokens } from '$lib/server/auth/createTokens';
+import type { RequestHandler } from './$types';
 const logger = createLogger('auth/callback');
 
 export const GET: RequestHandler = async ({ url, params, cookies }) => {
@@ -17,16 +16,16 @@ export const GET: RequestHandler = async ({ url, params, cookies }) => {
 	const state = url.searchParams.get('state');
 
 	if (!provider || !code || !state) {
-		return error(StatusCodes.BAD_REQUEST, 'Missing provider, code, or state');
+		return error(400, 'Missing provider, code, or state');
 	}
 
 	if (!isOAuthProvider(provider)) {
-		return error(StatusCodes.BAD_REQUEST, 'Invalid provider');
+		return error(400, 'Invalid provider');
 	}
 
 	const client = getOAuthClient(provider as OAuthProvider);
 	logger.info('OAuth client', { client });
-	const oauthToken = await client.getAccessToken(code);
+	const oauthToken = await client._getAccessToken(code);
 
 	// Get user info
 	const userInfo = await client.getUser(oauthToken.access_token);
@@ -56,5 +55,5 @@ export const GET: RequestHandler = async ({ url, params, cookies }) => {
 	logger.debug(`Cookies set for user ${user.id}`);
 
 	logger.info(`User ${user.id} logged in successfully`);
-	throw redirect(StatusCodes.MOVED_TEMPORARILY, '/profile');
+	throw redirect(302, '/profile');
 };

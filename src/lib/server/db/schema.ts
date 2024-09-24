@@ -1,4 +1,3 @@
-import { passwordSchema } from '../../schemas/passwordSchema';
 import type { InferInsertModel, InferSelectModel } from 'drizzle-orm';
 import { pgEnum, pgTable, primaryKey, text, timestamp } from 'drizzle-orm/pg-core';
 import { createInsertSchema } from 'drizzle-zod';

@@ -1,8 +1,6 @@
-import type { StatusCodes } from 'http-status-codes';
-
 class ServerError extends Error {
 	constructor(
-		public statusCode: StatusCodes,
+		public statusCode: number,
 		public message: string
 	) {
 		super(message);
