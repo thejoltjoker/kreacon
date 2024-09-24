@@ -14,12 +14,24 @@ const logger = createLogger('auth/callback');
 export const GET: RequestHandler = async ({ url, params, cookies }) => {
 	const provider = params.provider;
 	const code = url.searchParams.get('code');
-	// const state = url.searchParams.get('state'); // TODO: Implement state verification
+	const state = url.searchParams.get('state');
 	console.log('OAuth callback', { provider, code });
 	logger.info('OAuth callback', { provider, code });
 
-	if (!provider || !code) {
-		return error(400, 'Missing provider or code');
+	if (!provider) {
+		return error(400, 'Missing provider');
+	}
+
+	if (!code) {
+		return error(400, 'Missing code');
+	}
+
+	if (!state) {
+		return error(400, 'Missing state');
+	}
+
+	if (cookies.get('oauth_state') !== state) {
+		return error(400, 'Invalid state');
 	}
 
 	if (!isOAuthProvider(provider)) {
@@ -64,5 +76,8 @@ export const GET: RequestHandler = async ({ url, params, cookies }) => {
 	logger.debug(`Cookies set for user ${user.id}`);
 
 	logger.info(`User ${user.id} logged in successfully`);
+
+	cookies.delete('oauth_state', { path: '/oauth/callback' });
+
 	throw redirect(302, '/profile');
 };

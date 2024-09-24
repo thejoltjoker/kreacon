@@ -87,20 +87,22 @@ export class OAuthBase {
 		return Promise.resolve({ code } as unknown as OAuthAccessTokenResponse); // TODO Make this better
 	}
 
-	authUrl(additionalParams: Record<string, string> = {}): string {
-		const params = new URLSearchParams({
+	authUrl(params: Record<string, string> = {}): string {
+		const urlParams = new URLSearchParams({
 			client_id: this.providerConfig.clientId,
 			redirect_uri: this.providerConfig.redirectUri,
 			scope: this.providerConfig.scopes.join(' '),
-			...additionalParams
+			state: this.state,
+			...params
 		});
 
-		const url = `${this.providerConfig.urls.auth}?${params}`;
+		const url = `${this.providerConfig.urls.auth}?${urlParams}`;
 		logger.info('Generated auth URL', url);
 		return url;
 	}
 
-	authorize() {
+	authorize(state?: string) {
+		if (state) this.state = state;
 		return redirect(302, this.authUrl());
 	}
 
