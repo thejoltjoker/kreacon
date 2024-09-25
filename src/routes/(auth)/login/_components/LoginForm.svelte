@@ -4,26 +4,13 @@
 	import Divider from '$lib/components/Divider.svelte';
 	import TextInput from '$lib/components/InputField.svelte';
 	import Link from '$lib/components/Link.svelte';
-	import { z } from 'zod';
-	import OAuthButtons from '../../_components/OAuthButtons.svelte';
 	import type { PageData } from '../$types';
+	import OAuthButtons from '../../_components/OAuthButtons.svelte';
 
 	export let data: PageData;
 
 	let email = '';
 	let password = '';
-	let emailIsValid: boolean = false;
-	let passwordIsValid: boolean = false;
-
-	$: {
-		if (email) {
-			emailIsValid = z.string().email().safeParse(email).success;
-		}
-	}
-
-	$: {
-		passwordIsValid = password ? true : false;
-	}
 </script>
 
 <form method="POST" action="?/login" use:enhance>
