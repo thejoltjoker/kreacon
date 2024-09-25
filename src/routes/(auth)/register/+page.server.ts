@@ -7,11 +7,15 @@ import { eq } from 'drizzle-orm';
 import type { z } from 'zod';
 import type { PageServerLoad } from './$types';
 import { createLogger } from '$lib/server/logger';
+import { availableOAuthProviders } from '$lib/server/auth/oauth/getOAuthClient';
+import { sendEmailVerification } from '$lib/server/auth/verifyEmail';
 
 const logger = createLogger('register');
 
 export const load = (async () => {
-	return {};
+	const providers = availableOAuthProviders();
+	logger.info('Available OAuth providers', { providers });
+	return { providers };
 }) satisfies PageServerLoad;
 
 export const actions: Actions = {
@@ -19,22 +23,20 @@ export const actions: Actions = {
 		const formData = Object.fromEntries(await request.formData());
 		const { email, password } = formData;
 
+		// Validate form data
 		try {
 			const result = await userRegistrationSchema.parseAsync(formData);
 			logger.info('Form data parsed successfully', result);
 		} catch (err: unknown) {
 			logger.error('Form data validation error', { error: err });
 
-			// Check if the error object has a structure similar to ZodError
 			if (typeof err === 'object' && err !== null && 'issues' in err) {
 				const zodError = err as z.ZodError;
 				const { fieldErrors: errors } = zodError.flatten();
 				// eslint-disable-next-line @typescript-eslint/no-unused-vars
 				const { password, confirmPassword, ...cleanFormData } = formData;
-				console.log(errors);
 				return fail(400, { data: cleanFormData, errors });
 			} else {
-				// Handle other types of errors
 				return fail(500, { message: 'An unexpected error occurred' });
 			}
 		}
@@ -68,8 +70,7 @@ export const actions: Actions = {
 			});
 		}
 
-		// TODO Email verification functionality
-		// await sendEmailVerification(email.toString());
+		await sendEmailVerification(email.toString());
 
 		logger.info('User registered successfully, redirecting to login', { email });
 		throw redirect(302, '/login');

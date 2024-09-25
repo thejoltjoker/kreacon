@@ -25,27 +25,29 @@
 </script>
 
 <div class="container">
-	<div class="relative flex flex-col">
-		<label use:melt={$root} for={id} data-melt-part="root" class="mb-1 ms-xs">
+	<div class="flex flex-col">
+		<label use:melt={$root} for={id} data-melt-part="root" class="mb-xs font-bold">
 			{label}
 		</label>
-		<input
-			{type}
-			{id}
-			{placeholder}
-			{value}
-			{name}
-			on:input={handleInput}
-			class:valid={isValid === true}
-			class:invalid={isValid === false}
-			{required}
-		/>
+		<div class="relative">
+			<input
+				{type}
+				{id}
+				{placeholder}
+				{value}
+				{name}
+				on:input={handleInput}
+				class:valid={isValid === true}
+				class:invalid={isValid === false}
+				{required}
+			/>
 
-		{#if isValid === true}
-			<div class="icon text-green-500"><CheckCircle2Icon class="size-5" /></div>
-		{:else if isValid === false}
-			<div class="icon text-red-500"><XCircleIcon class="size-5" /></div>
-		{/if}
+			{#if isValid === true}
+				<div class="icon text-green-500"><CheckCircle2Icon class="size-5" /></div>
+			{:else if isValid === false}
+				<div class="icon text-red-500"><XCircleIcon class="size-5" /></div>
+			{/if}
+		</div>
 	</div>
 	{#if errorMessage}
 		<p class="error-message">{errorMessage}</p>

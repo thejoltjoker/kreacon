@@ -7,10 +7,12 @@
 	import Spinner from '$lib/components/Spinner.svelte';
 	import { passwordSchema } from '$lib/schemas/passwordSchema';
 	import { userRegistrationSchema } from '$lib/schemas/userRegistrationSchema';
+	import type { PageData } from '../$types';
 	import OAuthButtons from '../../_components/OAuthButtons.svelte';
 	import PasswordValidationInfo from './PasswordValidationInfo.svelte';
 
 	export let form;
+	export let data: PageData;
 
 	let email = '';
 	let password = '';
@@ -79,8 +81,10 @@
 		};
 	}}
 >
-	<OAuthButtons />
-	<Divider>or use your email</Divider>
+	{#if data.providers.length > 0}
+		<OAuthButtons providers={data.providers} />
+		<Divider>or use your email</Divider>
+	{/if}
 	<TextInput
 		label="Email"
 		id="email"

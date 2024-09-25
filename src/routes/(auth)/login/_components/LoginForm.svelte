@@ -27,7 +27,7 @@
 </script>
 
 <form method="POST" action="?/login" use:enhance>
-	{#if data.providers.length > 0 && false}
+	{#if data.providers.length > 0}
 		<OAuthButtons providers={data.providers} />
 		<Divider>or sign in with email</Divider>
 	{/if}
