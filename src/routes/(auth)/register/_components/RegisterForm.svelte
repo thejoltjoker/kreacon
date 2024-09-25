@@ -16,7 +16,7 @@
 
 	let email = '';
 	let password = '';
-	let confirmPassword = '';
+
 	let emailIsValid: boolean | undefined = undefined;
 	let passwordIsValid: boolean | undefined = undefined;
 	let loading: boolean = false;
@@ -27,28 +27,22 @@
 		if (form?.data?.errors) {
 			email = form?.data?.email ?? '';
 			password = '';
-			confirmPassword = '';
 			if (form?.errors) {
 				console.warn('Form errors', form?.errors);
 			}
 		}
-		// if (form?.errors && !form?.data?.errors) {
-		// 	password = '';
-		// 	confirmPassword = '';
-		// }
 	}
 
-	// TODO Empty password and confirm password on email error
+	// TODO Empty password on email error
 	// $: {
 	// 	if (form?.errors?.email) {
 	// 		password = '';
-	// 		confirmPassword = '';
 	// 	}
 	// }
 
 	$: {
 		if (email) {
-			emailIsValid = userRegistrationSchema.innerType().shape.email.safeParse(email).success;
+			emailIsValid = userRegistrationSchema.shape.email.safeParse(email).success;
 		}
 	}
 
@@ -105,16 +99,7 @@
 		bind:value={password}
 		onChange={handlePasswordValidation}
 	/>
-	<TextInput
-		label="Confirm Password"
-		id="confirmPassword"
-		type="password"
-		name="confirmPassword"
-		placeholder="Confirm Password"
-		isValid={passwordIsValid && confirmPassword === password}
-		errorMessage={form?.errors?.confirmPassword}
-		bind:value={confirmPassword}
-	/>
+
 	<div class="origin-top transition-all duration-500">
 		<PasswordValidationInfo bind:validationErrorPaths />
 	</div>

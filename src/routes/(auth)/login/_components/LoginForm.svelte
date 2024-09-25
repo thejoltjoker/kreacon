@@ -48,7 +48,8 @@
 		bind:value={password}
 		required
 	/>
-	<Button variant="rose" type="submit" disabled={!emailIsValid || !passwordIsValid}>Login</Button>
+	<Button variant="rose" type="submit">Login</Button>
+	<!-- TODO Form validation -->
 	<p class="text-center">Not a member? <Link href="/register">Register</Link></p>
 </form>
 

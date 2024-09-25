@@ -3,12 +3,13 @@ import { createTokens } from '$lib/server/auth/createTokens';
 import { setCookies } from '$lib/server/auth/setCookies';
 import { db } from '$lib/server/db';
 import { accounts, users } from '$lib/server/db/schema';
-import { createLogger } from '$lib/server/logger';
 import { error, redirect } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
 import type { RequestHandler } from './$types';
 import { getOAuthClient } from '$lib/server/auth/oauth/getOAuthClient';
 import { isOAuthProvider, type OAuthProvider } from '$lib/server/auth/oauth/OAuthClient';
+import { createLogger } from '$lib/server/logger';
+
 const logger = createLogger('auth/callback');
 
 export const GET: RequestHandler = async ({ url, params, cookies }) => {

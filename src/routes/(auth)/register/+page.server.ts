@@ -1,14 +1,14 @@
 import { userRegistrationSchema } from '$lib/schemas/userRegistrationSchema';
 import { createUser } from '$lib/server/auth/createUser';
+import { availableOAuthProviders } from '$lib/server/auth/oauth/getOAuthClient';
+import { sendEmailVerification } from '$lib/server/auth/verifyEmail';
 import { db } from '$lib/server/db';
 import { users } from '$lib/server/db/schema';
-import { type Actions, fail, error, redirect } from '@sveltejs/kit';
+import { createLogger } from '$lib/server/logger';
+import { type Actions, error, fail, redirect } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
 import type { z } from 'zod';
 import type { PageServerLoad } from './$types';
-import { createLogger } from '$lib/server/logger';
-import { availableOAuthProviders } from '$lib/server/auth/oauth/getOAuthClient';
-import { sendEmailVerification } from '$lib/server/auth/verifyEmail';
 
 const logger = createLogger('register');
 
@@ -34,7 +34,7 @@ export const actions: Actions = {
 				const zodError = err as z.ZodError;
 				const { fieldErrors: errors } = zodError.flatten();
 				// eslint-disable-next-line @typescript-eslint/no-unused-vars
-				const { password, confirmPassword, ...cleanFormData } = formData;
+				const { password, ...cleanFormData } = formData;
 				return fail(400, { data: cleanFormData, errors });
 			} else {
 				return fail(500, { message: 'An unexpected error occurred' });
