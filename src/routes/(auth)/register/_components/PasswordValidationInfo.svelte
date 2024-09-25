@@ -1,49 +1,42 @@
 <script lang="ts">
-	import type { PasswordValidation } from '$lib/validation/password/passwordValidation';
 	import { CheckCircle2Icon, XCircleIcon } from 'lucide-svelte';
 
-	export let passwordValidationState: PasswordValidation = {
-		isLongEnough: false,
-		hasSpecialCharacter: false,
-		hasNumber: false,
-		isNotCommonPassword: false,
-		isNotUsernameOrEmail: false
-	};
+	export let validationErrorPaths: string[] = [];
 </script>
 
 <ul>
 	<li>
-		{#if passwordValidationState.isLongEnough}
-			<CheckCircle2Icon class="size-5  text-green-500" />
-		{:else}
+		{#if validationErrorPaths.includes('too_small')}
 			<XCircleIcon class="size-5  text-red-500" />
+		{:else}
+			<CheckCircle2Icon class="size-5  text-green-500" />
 		{/if}
 		<p>Password is long enough</p>
 	</li>
 
 	<li>
-		{#if passwordValidationState.hasSpecialCharacter}
-			<CheckCircle2Icon class="size-5  text-green-500" />
-		{:else}
+		{#if validationErrorPaths.includes('special')}
 			<XCircleIcon class="size-5  text-red-500" />
+		{:else}
+			<CheckCircle2Icon class="size-5  text-green-500" />
 		{/if}
 		<p>Password has special character</p>
 	</li>
 
 	<li>
-		{#if passwordValidationState.hasNumber}
-			<CheckCircle2Icon class="size-5  text-green-500" />
-		{:else}
+		{#if validationErrorPaths.includes('number')}
 			<XCircleIcon class="size-5  text-red-500" />
+		{:else}
+			<CheckCircle2Icon class="size-5  text-green-500" />
 		{/if}
 		<p>Password has number</p>
 	</li>
 
 	<li>
-		{#if passwordValidationState.isNotCommonPassword}
-			<CheckCircle2Icon class="size-5  text-green-500" />
-		{:else}
+		{#if validationErrorPaths.includes('common')}
 			<XCircleIcon class="size-5  text-red-500" />
+		{:else}
+			<CheckCircle2Icon class="size-5  text-green-500" />
 		{/if}
 		<p>Password is uncommon</p>
 	</li>
@@ -51,6 +44,7 @@
 
 <style lang="postcss">
 	ul {
+		@apply flex flex-col;
 		& li {
 			@apply inline-flex items-center gap-xs transition-all duration-500;
 		}

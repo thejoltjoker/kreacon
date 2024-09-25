@@ -1,5 +1,4 @@
 <script>
-	import { enhance } from '$app/forms';
 	import Button from '$lib/components/Button.svelte';
 	import Link from '$lib/components/Link.svelte';
 </script>

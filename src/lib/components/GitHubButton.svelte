@@ -1,14 +1,14 @@
 <script lang="ts">
 	import Button from '$lib/components/Button.svelte';
-	import DiscordIcon from '$lib/symbols/DiscordIcon.svg?raw';
+	import GitHubIcon from '$lib/symbols/GitHubIcon.svg?raw';
 </script>
 
-<a href="/oauth/login/discord">
+<a href="/oauth/login/github">
 	<Button>
 		<span class="icon">
 			<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-			{@html DiscordIcon}
-		</span>Sign in with Discord
+			{@html GitHubIcon}
+		</span>Sign in with GitHub
 	</Button>
 </a>
 

@@ -1,11 +1,10 @@
 import { JWT_SIGNATURE } from '$env/static/private';
-import { createLogger } from '$lib/logger';
+import { createLogger } from '$lib/server/logger';
 import { db } from '$lib/server/db';
 import { sessions } from '$lib/server/db/schema';
 import type { RefreshToken } from '$lib/types/RefreshToken';
 import { error, redirect } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
-import { StatusCodes } from 'http-status-codes';
 import jwt from 'jsonwebtoken';
 import type { RequestHandler } from './$types';
 
@@ -34,8 +33,8 @@ export const GET: RequestHandler = async ({ cookies }) => {
 		logger.info('Logout successful');
 	} catch (err) {
 		logger.error('Logout failed', { error: (err as Error).message });
-		return error(StatusCodes.INTERNAL_SERVER_ERROR, { message: 'Logout failed' });
+		return error(500, { message: 'Logout failed' });
 	}
 
-	throw redirect(StatusCodes.MOVED_TEMPORARILY, '/');
+	throw redirect(302, '/');
 };

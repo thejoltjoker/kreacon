@@ -1,104 +1,84 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import Button from '$lib/components/Button.svelte';
-	import DiscordButton from '$lib/components/DiscordButton.svelte';
 	import Divider from '$lib/components/Divider.svelte';
-	import GoogleButton from '$lib/components/GoogleButton.svelte';
 	import TextInput from '$lib/components/InputField.svelte';
-	import {
-		hasNumber,
-		hasSpecialCharacter,
-		isCommonPassword,
-		isLongEnough,
-		type PasswordValidation
-	} from '$lib/validation/password/passwordValidation';
-	import { z } from 'zod';
-	import PasswordValidationInfo from './PasswordValidationInfo.svelte';
 	import Link from '$lib/components/Link.svelte';
 	import Spinner from '$lib/components/Spinner.svelte';
+	import { passwordSchema } from '$lib/schemas/passwordSchema';
+	import { userRegistrationSchema } from '$lib/schemas/userRegistrationSchema';
+	import type { PageData } from '../$types';
+	import OAuthButtons from '../../_components/OAuthButtons.svelte';
+	import PasswordValidationInfo from './PasswordValidationInfo.svelte';
+
 	export let form;
+	export let data: PageData;
 
 	let email = '';
 	let password = '';
-	let confirmPassword = '';
+
 	let emailIsValid: boolean | undefined = undefined;
 	let passwordIsValid: boolean | undefined = undefined;
-	let confirmPasswordIsValid: boolean | undefined = undefined;
-	let passwordValidationState: PasswordValidation = {
-		isLongEnough: false,
-		hasSpecialCharacter: false,
-		hasNumber: false,
-		isNotCommonPassword: false,
-		isNotUsernameOrEmail: false
-	};
 	let loading: boolean = false;
-	$: {
-		if (email) {
-			emailIsValid = z.string().email().safeParse(email).success;
-		}
-	}
+	let validationErrorPaths: string[] = ['too_small', 'special', 'number', 'common'];
 
+	// On form error
 	$: {
-		passwordValidationState.isLongEnough = isLongEnough(password);
-		passwordValidationState.hasSpecialCharacter = hasSpecialCharacter(password);
-		passwordValidationState.hasNumber = hasNumber(password);
-		isCommonPassword(password, '10000').then((result) => {
-			passwordValidationState.isNotCommonPassword = !result;
-		});
-		passwordValidationState.isNotUsernameOrEmail = email !== password;
-	}
-
-	$: {
-		if (password) {
-			if (
-				passwordValidationState.isLongEnough &&
-				passwordValidationState.hasSpecialCharacter &&
-				passwordValidationState.hasNumber &&
-				passwordValidationState.isNotCommonPassword &&
-				passwordValidationState.isNotUsernameOrEmail
-			) {
-				passwordIsValid = true;
-			} else {
-				passwordIsValid = false;
+		if (form?.data?.errors) {
+			email = form?.data?.email ?? '';
+			password = '';
+			if (form?.errors) {
+				console.warn('Form errors', form?.errors);
 			}
 		}
 	}
 
+	// TODO Empty password on email error
+	// $: {
+	// 	if (form?.errors?.email) {
+	// 		password = '';
+	// 	}
+	// }
+
 	$: {
-		if (confirmPassword) {
-			confirmPasswordIsValid = password === confirmPassword;
+		if (email) {
+			emailIsValid = userRegistrationSchema.shape.email.safeParse(email).success;
 		}
 	}
 
-	$: {
-		if (form?.password) {
-			password = '';
-			confirmPassword = '';
-			passwordIsValid = false;
-			confirmPasswordIsValid = false;
-		}
-	}
+	const handlePasswordValidation = () => {
+		passwordSchema.spa(password).then((result) => {
+			if (result.error) {
+				validationErrorPaths = result.error.errors.map((error) => {
+					if (error.code === 'custom') {
+						return error?.params?.code ? error.params.code : 'unknown';
+					}
+					return error.code;
+				});
+				passwordIsValid = false;
+			} else {
+				validationErrorPaths = [];
+				passwordIsValid = true;
+			}
+		});
+	};
 </script>
 
-{#if form?.success}
-	<p class="success">Registration successful</p>
-{/if}
 <form
 	method="POST"
 	action="?/store"
 	use:enhance={() => {
 		loading = true;
 		return async ({ update }) => {
+			await update();
 			loading = false;
-			update();
 		};
 	}}
 >
-	{#if form?.password}<p class="error">{form?.password}</p>{/if}
-
-	<GoogleButton />
-	<DiscordButton />
-	<Divider>or use your email</Divider>
+	{#if data.providers.length > 0}
+		<OAuthButtons providers={data.providers} />
+		<Divider>or use your email</Divider>
+	{/if}
 	<TextInput
 		label="Email"
 		id="email"
@@ -106,6 +86,7 @@
 		placeholder="Email"
 		bind:value={email}
 		isValid={emailIsValid}
+		errorMessage={form?.errors?.email}
 	/>
 	<TextInput
 		label="Password"
@@ -113,27 +94,16 @@
 		type="password"
 		name="password"
 		placeholder={form?.password ? 'Invalid password' : 'Password'}
-		bind:value={password}
 		isValid={passwordIsValid}
+		errorMessage={form?.errors?.password}
+		bind:value={password}
+		onChange={handlePasswordValidation}
 	/>
-	<TextInput
-		label="Confirm Password"
-		id="confirmPassword"
-		type="password"
-		name="confirmPassword"
-		placeholder="Confirm Password"
-		bind:value={confirmPassword}
-		isValid={confirmPasswordIsValid}
-	/>
+
 	<div class="origin-top transition-all duration-500">
-		<PasswordValidationInfo bind:passwordValidationState />
+		<PasswordValidationInfo bind:validationErrorPaths />
 	</div>
-	<Button
-		variant="rose"
-		type="submit"
-		disabled={!(emailIsValid && passwordIsValid && confirmPasswordIsValid) || loading}
-		on:click={() => (loading = true)}
-	>
+	<Button variant="rose" type="submit">
 		{#if loading}
 			<Spinner />
 		{/if}

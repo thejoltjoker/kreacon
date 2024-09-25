@@ -17,6 +17,6 @@
 
 <style lang="postcss">
 	button {
-		@apply relative inline-flex h-button items-center justify-center gap-xs rounded-full border px-md py-xs font-bold transition-colors disabled:cursor-default disabled:opacity-50;
+		@apply relative inline-flex h-button flex-1 items-center justify-center gap-xs rounded-full border px-md py-xs font-bold transition-colors disabled:cursor-default disabled:opacity-50;
 	}
 </style>

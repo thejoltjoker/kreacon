@@ -1,7 +1,6 @@
-import { db } from '$lib/server/db';
-import { users } from '$lib/server/db/schema';
-import ServerError from '$lib/ServerError';
-import { StatusCodes } from 'http-status-codes';
+import { db } from '../db';
+import { users } from '../db/schema';
+import ServerError from '../ServerError';
 import bcrypt from 'bcryptjs';
 
 export const createUser = async (email: string, password: string) => {
@@ -11,6 +10,6 @@ export const createUser = async (email: string, password: string) => {
 		return result[0];
 	} catch (error) {
 		console.error('Error creating user:', error);
-		throw new ServerError(StatusCodes.INTERNAL_SERVER_ERROR, 'Failed to create user');
+		throw new ServerError(500, 'Failed to create user');
 	}
 };

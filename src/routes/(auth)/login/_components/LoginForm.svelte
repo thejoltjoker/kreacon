@@ -1,31 +1,23 @@
 <script lang="ts">
-	import Button from '$lib/components/Button.svelte';
-	import TextInput from '$lib/components/InputField.svelte';
-	import Divider from '$lib/components/Divider.svelte';
-	import GoogleButton from '$lib/components/GoogleButton.svelte';
 	import { enhance } from '$app/forms';
-	import { z } from 'zod';
+	import Button from '$lib/components/Button.svelte';
+	import Divider from '$lib/components/Divider.svelte';
+	import TextInput from '$lib/components/InputField.svelte';
 	import Link from '$lib/components/Link.svelte';
+	import type { PageData } from '../$types';
+	import OAuthButtons from '../../_components/OAuthButtons.svelte';
+
+	export let data: PageData;
 
 	let email = '';
 	let password = '';
-	let emailIsValid: boolean = false;
-	let passwordIsValid: boolean = false;
-
-	$: {
-		if (email) {
-			emailIsValid = z.string().email().safeParse(email).success;
-		}
-	}
-
-	$: {
-		passwordIsValid = password ? true : false;
-	}
 </script>
 
 <form method="POST" action="?/login" use:enhance>
-	<GoogleButton />
-	<Divider>or sign in with email</Divider>
+	{#if data.providers.length > 0}
+		<OAuthButtons providers={data.providers} />
+		<Divider>or sign in with email</Divider>
+	{/if}
 	<TextInput
 		label="Email"
 		id="email"
@@ -43,7 +35,8 @@
 		bind:value={password}
 		required
 	/>
-	<Button variant="rose" type="submit" disabled={!emailIsValid || !passwordIsValid}>Login</Button>
+	<Button variant="rose" type="submit">Login</Button>
+	<!-- TODO Form validation -->
 	<p class="text-center">Not a member? <Link href="/register">Register</Link></p>
 </form>
 

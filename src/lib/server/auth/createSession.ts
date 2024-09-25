@@ -1,8 +1,8 @@
 import { db } from '$lib/server/db';
 import { sessions, type InsertSession } from '$lib/server/db/schema';
-import ServerError from '$lib/ServerError';
-import * as crypto from 'crypto';
-import { StatusCodes } from 'http-status-codes';
+
+import crypto from 'crypto';
+import ServerError from '../ServerError';
 
 export const createSession = async (userId: string) => {
 	try {
@@ -21,6 +21,6 @@ export const createSession = async (userId: string) => {
 		return session[0];
 	} catch (error) {
 		console.error('Error creating session:', error);
-		throw new ServerError(StatusCodes.INTERNAL_SERVER_ERROR, 'Failed to create session');
+		throw new ServerError(500, 'Failed to create session');
 	}
 };
