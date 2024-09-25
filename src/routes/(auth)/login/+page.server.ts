@@ -6,8 +6,9 @@ import { users } from '$lib/server/db/schema';
 import { redirect, type Actions, fail, error } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
 import type { PageServerLoad } from './$types';
-import { createLogger } from '$lib/server/logger';
 import bcrypt from 'bcryptjs';
+import { availableOAuthProviders } from '$lib/server/auth/oauth/getOAuthClient';
+import { createLogger } from '$lib/server/logger';
 
 const logger = createLogger('login');
 
@@ -15,7 +16,10 @@ export const load = (async ({ locals }) => {
 	if (locals.user) {
 		throw redirect(302, '/profile');
 	}
-	return {};
+
+	const providers = availableOAuthProviders();
+	logger.info('Available OAuth providers', { providers });
+	return { providers };
 }) satisfies PageServerLoad;
 
 export const actions: Actions = {

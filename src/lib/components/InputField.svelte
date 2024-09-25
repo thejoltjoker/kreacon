@@ -26,8 +26,8 @@
 
 <div class="container">
 	<div class="relative flex flex-col">
-		<label use:melt={$root} for={id} data-melt-part="root">
-			<span class="hidden">{label}</span>
+		<label use:melt={$root} for={id} data-melt-part="root" class="mb-1 ms-xs">
+			{label}
 		</label>
 		<input
 			{type}

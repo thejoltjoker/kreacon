@@ -38,10 +38,10 @@ export interface GitHubUserResponse {
 	disk_usage: number;
 	collaborators: number;
 	two_factor_authentication: boolean;
-	plan: Plan;
+	plan: GitHubPlan;
 }
 
-export interface Plan {
+export interface GitHubPlan {
 	name: string;
 	space: number;
 	collaborators: number;

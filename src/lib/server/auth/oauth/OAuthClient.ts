@@ -1,14 +1,7 @@
-import {
-	DISCORD_CLIENT_ID,
-	DISCORD_CLIENT_SECRET,
-	DISCORD_REDIRECT_URI,
-	GITHUB_CLIENT_ID,
-	GITHUB_CLIENT_SECRET,
-	GITHUB_REDIRECT_URI
-} from '$env/static/private';
+import { env } from '$env/dynamic/private';
+import { createLogger } from '$lib/server/logger';
 import { redirect } from '@sveltejs/kit';
-import { createLogger } from '../../logger';
-import type { OAuthAccessTokenResponse } from '../types/OAuthAccessTokenResponse';
+import type { OAuthAccessTokenResponse } from '../../../types/OAuthAccessTokenResponse';
 
 const logger = createLogger('oauth');
 
@@ -24,7 +17,7 @@ export interface OAuthProviderConfig {
 	redirectUri: string;
 }
 
-export const providers = ['github', 'discord'] as const; // TODO: Add Discord and Google
+export const providers = ['github', 'discord'] as const; // TODO Add Google
 export type OAuthProvider = (typeof providers)[number];
 
 export const isOAuthProvider = (value: string): value is OAuthProvider => {
@@ -39,9 +32,9 @@ export const providerConfig: Record<OAuthProvider, OAuthProviderConfig> = {
 			token: 'https://github.com/login/oauth/access_token',
 			user: 'https://api.github.com/user'
 		},
-		clientId: GITHUB_CLIENT_ID ?? '',
-		clientSecret: GITHUB_CLIENT_SECRET ?? '',
-		redirectUri: GITHUB_REDIRECT_URI ?? ''
+		clientId: env.OAUTH_GITHUB_CLIENT_ID ?? '',
+		clientSecret: env.OAUTH_GITHUB_CLIENT_SECRET ?? '',
+		redirectUri: env.OAUTH_GITHUB_REDIRECT_URI ?? ''
 	},
 	discord: {
 		scopes: ['identify', 'email'],
@@ -50,9 +43,9 @@ export const providerConfig: Record<OAuthProvider, OAuthProviderConfig> = {
 			token: 'https://discord.com/api/oauth2/token',
 			user: 'https://discord.com/api/v10/users/@me'
 		},
-		clientId: DISCORD_CLIENT_ID ?? '',
-		clientSecret: DISCORD_CLIENT_SECRET ?? '',
-		redirectUri: DISCORD_REDIRECT_URI ?? ''
+		clientId: env.OAUTH_DISCORD_CLIENT_ID ?? '',
+		clientSecret: env.OAUTH_DISCORD_CLIENT_SECRET ?? '',
+		redirectUri: env.OAUTH_DISCORD_REDIRECT_URI ?? ''
 	}
 };
 

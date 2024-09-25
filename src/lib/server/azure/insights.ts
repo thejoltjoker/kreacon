@@ -1,15 +1,19 @@
 import { ApplicationInsights } from '@microsoft/applicationinsights-web';
+import { env } from '$env/dynamic/private';
+let appInsights: ApplicationInsights | undefined = undefined;
 
 export const getAppInsights = () => {
-	if (!process.env.AZURE_APP_INSIGHTS_CONNECTION_STRING) {
-		return;
-	}
-	const appInsights = new ApplicationInsights({
+	if (!env.AZURE_APP_INSIGHTS_CONNECTION_STRING) return;
+
+	if (appInsights) return appInsights;
+
+	appInsights = new ApplicationInsights({
 		config: {
-			connectionString: process.env.AZURE_APP_INSIGHTS_CONNECTION_STRING
+			connectionString: env.AZURE_APP_INSIGHTS_CONNECTION_STRING
 		}
 	});
 	appInsights.loadAppInsights();
 	appInsights.trackPageView();
+
 	return appInsights;
 };

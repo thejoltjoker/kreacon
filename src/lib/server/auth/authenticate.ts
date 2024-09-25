@@ -6,10 +6,11 @@ import type { RefreshToken } from '$lib/types/RefreshToken';
 import type { RequestEvent } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
 import jwt from 'jsonwebtoken';
-import { createTokens } from './createTokens.js';
-import { setCookies } from './setCookies.js';
-import { createLogger } from '../logger.js';
-import ServerError from '../ServerError.js';
+import { createTokens } from './createTokens';
+import { setCookies } from './setCookies';
+import ServerError from '../ServerError';
+import { createLogger } from '../logger';
+
 const logger = createLogger('authenticate');
 
 export const authenticate = async (event: RequestEvent): Promise<AccessToken | null> => {

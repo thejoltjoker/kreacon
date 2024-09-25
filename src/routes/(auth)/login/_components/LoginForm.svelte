@@ -6,6 +6,9 @@
 	import Link from '$lib/components/Link.svelte';
 	import { z } from 'zod';
 	import OAuthButtons from '../../_components/OAuthButtons.svelte';
+	import type { PageData } from '../$types';
+
+	export let data: PageData;
 
 	let email = '';
 	let password = '';
@@ -24,8 +27,10 @@
 </script>
 
 <form method="POST" action="?/login" use:enhance>
-	<OAuthButtons />
-	<Divider>or sign in with email</Divider>
+	{#if data.providers.length > 0 && false}
+		<OAuthButtons providers={data.providers} />
+		<Divider>or sign in with email</Divider>
+	{/if}
 	<TextInput
 		label="Email"
 		id="email"

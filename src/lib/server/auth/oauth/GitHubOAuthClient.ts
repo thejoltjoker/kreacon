@@ -1,6 +1,6 @@
-import type { GitHubUserResponse } from '../types/github';
-import type { GitHubAccessTokenRequestParams } from '../types/OAuthAccessTokenRequest';
-import type { GitHubAccessTokenResponse } from '../types/OAuthAccessTokenResponse';
+import type { GitHubUserResponse } from '../../../types/GitHubUserResponse';
+import type { GitHubAccessTokenRequestParams } from '../../../types/OAuthAccessTokenRequest';
+import type { GitHubAccessTokenResponse } from '../../../types/OAuthAccessTokenResponse';
 import { OAuthBase, providerConfig } from './OAuthClient';
 
 export class GithubOAuth extends OAuthBase {

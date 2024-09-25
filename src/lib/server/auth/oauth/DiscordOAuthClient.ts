@@ -1,6 +1,6 @@
-import type { DiscordUserResponse } from '../types/discord';
-import type { DiscordAccessTokenRequestBody } from '../types/OAuthAccessTokenRequest';
-import type { DiscordAccessTokenResponse } from '../types/OAuthAccessTokenResponse';
+import type { DiscordUserResponse } from '../../../types/DiscordUserResponse';
+import type { DiscordAccessTokenRequestBody } from '../../../types/OAuthAccessTokenRequest';
+import type { DiscordAccessTokenResponse } from '../../../types/OAuthAccessTokenResponse';
 import { OAuthBase, providerConfig } from './OAuthClient';
 
 export class DiscordOAuth extends OAuthBase {
