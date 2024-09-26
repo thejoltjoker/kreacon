@@ -1,257 +1,549 @@
 {
-	"id": "cf9d7fa5-5a91-4458-b48a-3217c07b5182",
-	"prevId": "00000000-0000-0000-0000-000000000000",
-	"version": "7",
-	"dialect": "postgresql",
-	"tables": {
-		"public.account": {
-			"name": "account",
-			"schema": "",
-			"columns": {
-				"userId": {
-					"name": "userId",
-					"type": "text",
-					"primaryKey": false,
-					"notNull": true
-				},
-				"type": {
-					"name": "type",
-					"type": "text",
-					"primaryKey": false,
-					"notNull": true
-				},
-				"provider": {
-					"name": "provider",
-					"type": "text",
-					"primaryKey": false,
-					"notNull": true
-				},
-				"providerAccountId": {
-					"name": "providerAccountId",
-					"type": "text",
-					"primaryKey": false,
-					"notNull": true
-				},
-				"refresh_token": {
-					"name": "refresh_token",
-					"type": "text",
-					"primaryKey": false,
-					"notNull": false
-				},
-				"access_token": {
-					"name": "access_token",
-					"type": "text",
-					"primaryKey": false,
-					"notNull": false
-				},
-				"expires_at": {
-					"name": "expires_at",
-					"type": "integer",
-					"primaryKey": false,
-					"notNull": false
-				},
-				"token_type": {
-					"name": "token_type",
-					"type": "text",
-					"primaryKey": false,
-					"notNull": false
-				},
-				"scope": {
-					"name": "scope",
-					"type": "text",
-					"primaryKey": false,
-					"notNull": false
-				},
-				"id_token": {
-					"name": "id_token",
-					"type": "text",
-					"primaryKey": false,
-					"notNull": false
-				},
-				"session_state": {
-					"name": "session_state",
-					"type": "text",
-					"primaryKey": false,
-					"notNull": false
-				},
-				"createdAt": {
-					"name": "createdAt",
-					"type": "timestamp",
-					"primaryKey": false,
-					"notNull": false,
-					"default": "now()"
-				},
-				"updatedAt": {
-					"name": "updatedAt",
-					"type": "timestamp",
-					"primaryKey": false,
-					"notNull": false,
-					"default": "now()"
-				}
-			},
-			"indexes": {},
-			"foreignKeys": {
-				"account_userId_user_id_fk": {
-					"name": "account_userId_user_id_fk",
-					"tableFrom": "account",
-					"tableTo": "user",
-					"columnsFrom": ["userId"],
-					"columnsTo": ["id"],
-					"onDelete": "cascade",
-					"onUpdate": "no action"
-				}
-			},
-			"compositePrimaryKeys": {
-				"account_provider_providerAccountId_pk": {
-					"name": "account_provider_providerAccountId_pk",
-					"columns": ["provider", "providerAccountId"]
-				}
-			},
-			"uniqueConstraints": {}
-		},
-		"public.session": {
-			"name": "session",
-			"schema": "",
-			"columns": {
-				"sessionToken": {
-					"name": "sessionToken",
-					"type": "text",
-					"primaryKey": true,
-					"notNull": true
-				},
-				"userId": {
-					"name": "userId",
-					"type": "text",
-					"primaryKey": false,
-					"notNull": true
-				},
-				"expiresAt": {
-					"name": "expiresAt",
-					"type": "timestamp",
-					"primaryKey": false,
-					"notNull": true
-				},
-				"createdAt": {
-					"name": "createdAt",
-					"type": "timestamp",
-					"primaryKey": false,
-					"notNull": false,
-					"default": "now()"
-				},
-				"updatedAt": {
-					"name": "updatedAt",
-					"type": "timestamp",
-					"primaryKey": false,
-					"notNull": false,
-					"default": "now()"
-				}
-			},
-			"indexes": {},
-			"foreignKeys": {
-				"session_userId_user_id_fk": {
-					"name": "session_userId_user_id_fk",
-					"tableFrom": "session",
-					"tableTo": "user",
-					"columnsFrom": ["userId"],
-					"columnsTo": ["id"],
-					"onDelete": "cascade",
-					"onUpdate": "no action"
-				}
-			},
-			"compositePrimaryKeys": {},
-			"uniqueConstraints": {}
-		},
-		"public.user": {
-			"name": "user",
-			"schema": "",
-			"columns": {
-				"id": {
-					"name": "id",
-					"type": "text",
-					"primaryKey": true,
-					"notNull": true
-				},
-				"username": {
-					"name": "username",
-					"type": "text",
-					"primaryKey": false,
-					"notNull": false
-				},
-				"email": {
-					"name": "email",
-					"type": "text",
-					"primaryKey": false,
-					"notNull": false
-				},
-				"emailVerifiedAt": {
-					"name": "emailVerifiedAt",
-					"type": "timestamp",
-					"primaryKey": false,
-					"notNull": false
-				},
-				"password": {
-					"name": "password",
-					"type": "text",
-					"primaryKey": false,
-					"notNull": false
-				},
-				"role": {
-					"name": "role",
-					"type": "role",
-					"typeSchema": "public",
-					"primaryKey": false,
-					"notNull": false,
-					"default": "'user'"
-				},
-				"image": {
-					"name": "image",
-					"type": "text",
-					"primaryKey": false,
-					"notNull": false
-				},
-				"createdAt": {
-					"name": "createdAt",
-					"type": "timestamp",
-					"primaryKey": false,
-					"notNull": false,
-					"default": "now()"
-				},
-				"updatedAt": {
-					"name": "updatedAt",
-					"type": "timestamp",
-					"primaryKey": false,
-					"notNull": false,
-					"default": "now()"
-				}
-			},
-			"indexes": {},
-			"foreignKeys": {},
-			"compositePrimaryKeys": {},
-			"uniqueConstraints": {
-				"user_username_unique": {
-					"name": "user_username_unique",
-					"nullsNotDistinct": false,
-					"columns": ["username"]
-				},
-				"user_email_unique": {
-					"name": "user_email_unique",
-					"nullsNotDistinct": false,
-					"columns": ["email"]
-				}
-			}
-		}
-	},
-	"enums": {
-		"public.role": {
-			"name": "role",
-			"schema": "public",
-			"values": ["user", "admin"]
-		}
-	},
-	"schemas": {},
-	"_meta": {
-		"columns": {},
-		"schemas": {},
-		"tables": {}
-	}
+  "id": "4aa91963-ec2e-4ce0-8333-b9ef3d8b9ffa",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.account": {
+      "name": "account",
+      "schema": "",
+      "columns": {
+        "userId": {
+          "name": "userId",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "provider": {
+          "name": "provider",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "providerAccountId": {
+          "name": "providerAccountId",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        },
+        "updatedAt": {
+          "name": "updatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "account_userId_user_id_fk": {
+          "name": "account_userId_user_id_fk",
+          "tableFrom": "account",
+          "tableTo": "user",
+          "columnsFrom": [
+            "userId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "account_provider_providerAccountId_pk": {
+          "name": "account_provider_providerAccountId_pk",
+          "columns": [
+            "provider",
+            "providerAccountId"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "public.category": {
+      "name": "category",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        },
+        "updatedAt": {
+          "name": "updatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.categories_to_events": {
+      "name": "categories_to_events",
+      "schema": "",
+      "columns": {
+        "category_id": {
+          "name": "category_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "event_id": {
+          "name": "event_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "categories_to_events_category_id_category_id_fk": {
+          "name": "categories_to_events_category_id_category_id_fk",
+          "tableFrom": "categories_to_events",
+          "tableTo": "category",
+          "columnsFrom": [
+            "category_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "categories_to_events_event_id_event_id_fk": {
+          "name": "categories_to_events_event_id_event_id_fk",
+          "tableFrom": "categories_to_events",
+          "tableTo": "event",
+          "columnsFrom": [
+            "event_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "categories_to_events_event_id_category_id_pk": {
+          "name": "categories_to_events_event_id_category_id_pk",
+          "columns": [
+            "event_id",
+            "category_id"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "public.event": {
+      "name": "event",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "submissionsOpenAt": {
+          "name": "submissionsOpenAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "submissionsCloseAt": {
+          "name": "submissionsCloseAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "votingOpenAt": {
+          "name": "votingOpenAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "votingCloseAt": {
+          "name": "votingCloseAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        },
+        "updatedAt": {
+          "name": "updatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.reaction": {
+      "name": "reaction",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "submission_id": {
+          "name": "submission_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        },
+        "updatedAt": {
+          "name": "updatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.session": {
+      "name": "session",
+      "schema": "",
+      "columns": {
+        "sessionToken": {
+          "name": "sessionToken",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "userId": {
+          "name": "userId",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "expiresAt": {
+          "name": "expiresAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        },
+        "updatedAt": {
+          "name": "updatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "session_userId_user_id_fk": {
+          "name": "session_userId_user_id_fk",
+          "tableFrom": "session",
+          "tableTo": "user",
+          "columnsFrom": [
+            "userId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.submission": {
+      "name": "submission",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "category_id": {
+          "name": "category_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "event_id": {
+          "name": "event_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        },
+        "updatedAt": {
+          "name": "updatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.user": {
+      "name": "user",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "username": {
+          "name": "username",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "email": {
+          "name": "email",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "emailVerifiedAt": {
+          "name": "emailVerifiedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "password": {
+          "name": "password",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "role": {
+          "name": "role",
+          "type": "role",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'user'"
+        },
+        "image": {
+          "name": "image",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ticket": {
+          "name": "ticket",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        },
+        "updatedAt": {
+          "name": "updatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "user_username_unique": {
+          "name": "user_username_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "username"
+          ]
+        },
+        "user_email_unique": {
+          "name": "user_email_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "email"
+          ]
+        }
+      }
+    },
+    "public.vote": {
+      "name": "vote",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "submission_id": {
+          "name": "submission_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        },
+        "updatedAt": {
+          "name": "updatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    }
+  },
+  "enums": {
+    "public.role": {
+      "name": "role",
+      "schema": "public",
+      "values": [
+        "user",
+        "admin"
+      ]
+    }
+  },
+  "schemas": {},
+  "sequences": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
 }
