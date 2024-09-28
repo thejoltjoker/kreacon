@@ -7,7 +7,6 @@
 	import { superForm } from 'sveltekit-superforms/client';
 	export let data: PageData;
 	const { form, errors, constraints, message } = superForm(data.form);
-	console.log(data);
 </script>
 
 <SuperDebug data={$form} />

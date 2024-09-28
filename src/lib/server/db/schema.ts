@@ -158,10 +158,10 @@ export const categoriesToEvents = pgTable(
 	{
 		categoryId: integer('category_id')
 			.notNull()
-			.references(() => categories.id),
+			.references(() => categories.id, { onDelete: 'cascade' }),
 		eventId: integer('event_id')
 			.notNull()
-			.references(() => events.id)
+			.references(() => events.id, { onDelete: 'cascade' })
 	},
 	(t) => ({
 		pk: primaryKey({ columns: [t.eventId, t.categoryId] })

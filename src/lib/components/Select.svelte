@@ -51,15 +51,24 @@
 		use:melt={$trigger}
 		aria-label="Food"
 	>
-		{$selectedLabel || 'Select one'}
+		{$selectedLabel}
+		{!$selectedLabel && options.length < 1 ? 'No options available' : 'Select one'}
 		<ChevronDownIcon class="size-5" />
 	</button>
+
 	{#if $open}
 		<div
 			class="flex flex-col rounded-sm border border-white bg-black px-sm py-4"
 			use:melt={$menu}
 			transition:fade={{ duration: 150 }}
 		>
+			{#if options.length < 1}
+				<div class="flex flex-col" use:melt={$group('no-options')}>
+					<div class="font-bold text-neutral-500" use:melt={$groupLabel('no-options')}>
+						No options available
+					</div>
+				</div>
+			{/if}
 			{#each Object.entries(options) as [key, arr]}
 				<div class="flex flex-col" use:melt={$group(key)}>
 					<div class="font-bold text-neutral-500" use:melt={$groupLabel(key)}>

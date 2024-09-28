@@ -12,55 +12,72 @@ export const load = (async ({ cookies, locals }) => {
 	if (!locals.user) {
 		throw redirect(302, '/login');
 	}
+	const form = await superValidate(zod(createSubmissionSchema));
 
 	const { userId } = locals.user;
+	const result = await db.query.events.findFirst({
+		where: (event, { and, gte, lte }) =>
+			and(
+				lte(event.submissionsOpenAt, new Date()), // event.submissionsOpenAt >= new Date()
+				gte(event.submissionsCloseAt, new Date()) // event.submissionsCloseAt <= new Date()
+			)
+	});
 
-	// Get user based on cookie
-	const user = await db.query.users.findFirst({
-		where: eq(users.id, locals.user.userId),
-		with: {
-			tickets: {
-				with: {
-					event: {
-						with: {
-							submissions: {
-								where: (submissions, { eq }) => eq(submissions.userId, userId)
-							},
-							categoriesToEvents: {
-								with: {
-									category: true
+	console.log(result);
+
+	try {
+		// Get user based on cookie
+		const user = await db.query.users.findFirst({
+			where: eq(users.id, locals.user.userId),
+			with: {
+				tickets: {
+					with: {
+						event: {
+							where: (event, { and, gte, lte }) =>
+								and(
+									lte(event.submissionsOpenAt, new Date()), // event.submissionsOpenAt >= new Date()
+									gte(event.submissionsCloseAt, new Date()) // event.submissionsCloseAt <= new Date()
+								),
+							with: {
+								submissions: {
+									where: eq(submissions.userId, userId)
+								},
+								categoriesToEvents: {
+									with: {
+										category: true
+									}
 								}
 							}
 						}
 					}
 				}
 			}
-		}
-	});
-	const categoriesOptions: SelectOptions = [];
-	const events = user?.tickets.map((ticket) => ticket.event);
-	for (const event of events) {
-		const submissions = event.submissions;
-		const submittedCategoryIds = submissions?.map((submission) => submission.categoryId);
-		const categories = event.categoriesToEvents.map((cte) => ({
-			value: cte.category.id,
-			label: cte.category.name,
-			isDisabled: submittedCategoryIds?.includes(cte.category.id)
-		}));
-		categoriesOptions.push({
-			groupLabel: event.name,
-			options: categories
 		});
+		const categoriesOptions: SelectOptions = [];
+		const events = user?.tickets.map((ticket) => ticket.event);
+		for (const event of events) {
+			const submissions = event.submissions;
+			const submittedCategoryIds = submissions?.map((submission) => submission.categoryId);
+			const categories = event.categoriesToEvents.map((cte) => ({
+				value: cte.category.id,
+				label: cte.category.name,
+				isDisabled: submittedCategoryIds?.includes(cte.category.id)
+			}));
+			categoriesOptions.push({
+				groupLabel: event.name,
+				options: categories
+			});
+		}
+
+		if (!user) {
+			throw redirect(302, '/login');
+		}
+
+		return { form, categoriesOptions };
+	} catch (error) {
+		console.error(error);
+		return { form, categoriesOptions: [] };
 	}
-
-	// console.log(categoriesOptions);
-
-	if (!user) {
-		throw redirect(302, '/login');
-	}
-
-	const form = await superValidate(zod(createSubmissionSchema));
-	return { form, categoriesOptions };
 }) satisfies PageServerLoad;
 
 export const actions = {

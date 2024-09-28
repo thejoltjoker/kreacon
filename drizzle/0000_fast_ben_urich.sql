@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS "event" (
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "media" (
 	"id" serial PRIMARY KEY NOT NULL,
-	"submission_id" integer,
+	"submission_id" text,
 	"type" "mediaType" NOT NULL,
 	"url" text NOT NULL,
 	"alt" text,
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS "reaction" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"name" text,
 	"user_id" text,
-	"submission_id" integer,
+	"submission_id" text,
 	"created_at" timestamp DEFAULT now(),
 	"updated_at" timestamp DEFAULT now()
 );
@@ -85,8 +85,7 @@ CREATE TABLE IF NOT EXISTS "submission" (
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "tickets" (
-	"id" serial PRIMARY KEY NOT NULL,
-	"content" text,
+	"id" text PRIMARY KEY NOT NULL,
 	"user_id" text,
 	"event_id" integer,
 	"created_at" timestamp DEFAULT now(),
@@ -110,7 +109,7 @@ CREATE TABLE IF NOT EXISTS "user" (
 CREATE TABLE IF NOT EXISTS "vote" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"name" text,
-	"submission_id" integer,
+	"submission_id" text,
 	"user_id" text,
 	"created_at" timestamp DEFAULT now(),
 	"updated_at" timestamp DEFAULT now()
@@ -123,13 +122,13 @@ EXCEPTION
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "categories_to_events" ADD CONSTRAINT "categories_to_events_category_id_category_id_fk" FOREIGN KEY ("category_id") REFERENCES "public"."category"("id") ON DELETE no action ON UPDATE no action;
+ ALTER TABLE "categories_to_events" ADD CONSTRAINT "categories_to_events_category_id_category_id_fk" FOREIGN KEY ("category_id") REFERENCES "public"."category"("id") ON DELETE cascade ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "categories_to_events" ADD CONSTRAINT "categories_to_events_event_id_event_id_fk" FOREIGN KEY ("event_id") REFERENCES "public"."event"("id") ON DELETE no action ON UPDATE no action;
+ ALTER TABLE "categories_to_events" ADD CONSTRAINT "categories_to_events_event_id_event_id_fk" FOREIGN KEY ("event_id") REFERENCES "public"."event"("id") ON DELETE cascade ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
