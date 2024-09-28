@@ -1,6 +1,6 @@
 {
-	"id": "a380b1b4-b71f-4242-b6f7-da2f1ac4d9cd",
-	"prevId": "cf9d7fa5-5a91-4458-b48a-3217c07b5182",
+	"id": "94bf5cb5-a3c6-46f9-9e2d-8c513f07ebaa",
+	"prevId": "ba74edcd-fc50-499a-b279-07ce48ff08f1",
 	"version": "7",
 	"dialect": "postgresql",
 	"tables": {
@@ -8,8 +8,8 @@
 			"name": "account",
 			"schema": "",
 			"columns": {
-				"userId": {
-					"name": "userId",
+				"user_id": {
+					"name": "user_id",
 					"type": "text",
 					"primaryKey": false,
 					"notNull": true
@@ -20,21 +20,21 @@
 					"primaryKey": false,
 					"notNull": true
 				},
-				"providerAccountId": {
-					"name": "providerAccountId",
+				"provider_account_id": {
+					"name": "provider_account_id",
 					"type": "text",
 					"primaryKey": false,
 					"notNull": true
 				},
-				"createdAt": {
-					"name": "createdAt",
+				"created_at": {
+					"name": "created_at",
 					"type": "timestamp",
 					"primaryKey": false,
 					"notNull": false,
 					"default": "now()"
 				},
-				"updatedAt": {
-					"name": "updatedAt",
+				"updated_at": {
+					"name": "updated_at",
 					"type": "timestamp",
 					"primaryKey": false,
 					"notNull": false,
@@ -43,55 +43,319 @@
 			},
 			"indexes": {},
 			"foreignKeys": {
-				"account_userId_user_id_fk": {
-					"name": "account_userId_user_id_fk",
+				"account_user_id_user_id_fk": {
+					"name": "account_user_id_user_id_fk",
 					"tableFrom": "account",
 					"tableTo": "user",
-					"columnsFrom": ["userId"],
+					"columnsFrom": ["user_id"],
 					"columnsTo": ["id"],
 					"onDelete": "cascade",
 					"onUpdate": "no action"
 				}
 			},
 			"compositePrimaryKeys": {
-				"account_provider_providerAccountId_pk": {
-					"name": "account_provider_providerAccountId_pk",
-					"columns": ["provider", "providerAccountId"]
+				"account_provider_provider_account_id_pk": {
+					"name": "account_provider_provider_account_id_pk",
+					"columns": ["provider", "provider_account_id"]
 				}
 			},
+			"uniqueConstraints": {}
+		},
+		"public.category": {
+			"name": "category",
+			"schema": "",
+			"columns": {
+				"id": {
+					"name": "id",
+					"type": "serial",
+					"primaryKey": true,
+					"notNull": true
+				},
+				"name": {
+					"name": "name",
+					"type": "text",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"description": {
+					"name": "description",
+					"type": "text",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"allowed_media_type": {
+					"name": "allowed_media_type",
+					"type": "mediaType",
+					"typeSchema": "public",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"created_at": {
+					"name": "created_at",
+					"type": "timestamp",
+					"primaryKey": false,
+					"notNull": false,
+					"default": "now()"
+				},
+				"updated_at": {
+					"name": "updated_at",
+					"type": "timestamp",
+					"primaryKey": false,
+					"notNull": false,
+					"default": "now()"
+				}
+			},
+			"indexes": {},
+			"foreignKeys": {},
+			"compositePrimaryKeys": {},
+			"uniqueConstraints": {}
+		},
+		"public.categories_to_events": {
+			"name": "categories_to_events",
+			"schema": "",
+			"columns": {
+				"category_id": {
+					"name": "category_id",
+					"type": "integer",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"event_id": {
+					"name": "event_id",
+					"type": "integer",
+					"primaryKey": false,
+					"notNull": true
+				}
+			},
+			"indexes": {},
+			"foreignKeys": {
+				"categories_to_events_category_id_category_id_fk": {
+					"name": "categories_to_events_category_id_category_id_fk",
+					"tableFrom": "categories_to_events",
+					"tableTo": "category",
+					"columnsFrom": ["category_id"],
+					"columnsTo": ["id"],
+					"onDelete": "no action",
+					"onUpdate": "no action"
+				},
+				"categories_to_events_event_id_event_id_fk": {
+					"name": "categories_to_events_event_id_event_id_fk",
+					"tableFrom": "categories_to_events",
+					"tableTo": "event",
+					"columnsFrom": ["event_id"],
+					"columnsTo": ["id"],
+					"onDelete": "no action",
+					"onUpdate": "no action"
+				}
+			},
+			"compositePrimaryKeys": {
+				"categories_to_events_event_id_category_id_pk": {
+					"name": "categories_to_events_event_id_category_id_pk",
+					"columns": ["event_id", "category_id"]
+				}
+			},
+			"uniqueConstraints": {}
+		},
+		"public.event": {
+			"name": "event",
+			"schema": "",
+			"columns": {
+				"id": {
+					"name": "id",
+					"type": "serial",
+					"primaryKey": true,
+					"notNull": true
+				},
+				"name": {
+					"name": "name",
+					"type": "text",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"description": {
+					"name": "description",
+					"type": "text",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"submissions_open_at": {
+					"name": "submissions_open_at",
+					"type": "timestamp",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"submissions_close_at": {
+					"name": "submissions_close_at",
+					"type": "timestamp",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"voting_open_at": {
+					"name": "voting_open_at",
+					"type": "timestamp",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"voting_close_at": {
+					"name": "voting_close_at",
+					"type": "timestamp",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"created_at": {
+					"name": "created_at",
+					"type": "timestamp",
+					"primaryKey": false,
+					"notNull": false,
+					"default": "now()"
+				},
+				"updated_at": {
+					"name": "updated_at",
+					"type": "timestamp",
+					"primaryKey": false,
+					"notNull": false,
+					"default": "now()"
+				}
+			},
+			"indexes": {},
+			"foreignKeys": {},
+			"compositePrimaryKeys": {},
+			"uniqueConstraints": {}
+		},
+		"public.media": {
+			"name": "media",
+			"schema": "",
+			"columns": {
+				"id": {
+					"name": "id",
+					"type": "serial",
+					"primaryKey": true,
+					"notNull": true
+				},
+				"submission_id": {
+					"name": "submission_id",
+					"type": "text",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"type": {
+					"name": "type",
+					"type": "mediaType",
+					"typeSchema": "public",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"url": {
+					"name": "url",
+					"type": "text",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"alt": {
+					"name": "alt",
+					"type": "text",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"created_at": {
+					"name": "created_at",
+					"type": "timestamp",
+					"primaryKey": false,
+					"notNull": false,
+					"default": "now()"
+				},
+				"updated_at": {
+					"name": "updated_at",
+					"type": "timestamp",
+					"primaryKey": false,
+					"notNull": false,
+					"default": "now()"
+				}
+			},
+			"indexes": {},
+			"foreignKeys": {},
+			"compositePrimaryKeys": {},
+			"uniqueConstraints": {}
+		},
+		"public.reaction": {
+			"name": "reaction",
+			"schema": "",
+			"columns": {
+				"id": {
+					"name": "id",
+					"type": "serial",
+					"primaryKey": true,
+					"notNull": true
+				},
+				"name": {
+					"name": "name",
+					"type": "text",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"user_id": {
+					"name": "user_id",
+					"type": "text",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"submission_id": {
+					"name": "submission_id",
+					"type": "text",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"created_at": {
+					"name": "created_at",
+					"type": "timestamp",
+					"primaryKey": false,
+					"notNull": false,
+					"default": "now()"
+				},
+				"updated_at": {
+					"name": "updated_at",
+					"type": "timestamp",
+					"primaryKey": false,
+					"notNull": false,
+					"default": "now()"
+				}
+			},
+			"indexes": {},
+			"foreignKeys": {},
+			"compositePrimaryKeys": {},
 			"uniqueConstraints": {}
 		},
 		"public.session": {
 			"name": "session",
 			"schema": "",
 			"columns": {
-				"sessionToken": {
-					"name": "sessionToken",
+				"session_token": {
+					"name": "session_token",
 					"type": "text",
 					"primaryKey": true,
 					"notNull": true
 				},
-				"userId": {
-					"name": "userId",
+				"user_id": {
+					"name": "user_id",
 					"type": "text",
 					"primaryKey": false,
 					"notNull": true
 				},
-				"expiresAt": {
-					"name": "expiresAt",
+				"expires_at": {
+					"name": "expires_at",
 					"type": "timestamp",
 					"primaryKey": false,
 					"notNull": true
 				},
-				"createdAt": {
-					"name": "createdAt",
+				"created_at": {
+					"name": "created_at",
 					"type": "timestamp",
 					"primaryKey": false,
 					"notNull": false,
 					"default": "now()"
 				},
-				"updatedAt": {
-					"name": "updatedAt",
+				"updated_at": {
+					"name": "updated_at",
 					"type": "timestamp",
 					"primaryKey": false,
 					"notNull": false,
@@ -100,16 +364,124 @@
 			},
 			"indexes": {},
 			"foreignKeys": {
-				"session_userId_user_id_fk": {
-					"name": "session_userId_user_id_fk",
+				"session_user_id_user_id_fk": {
+					"name": "session_user_id_user_id_fk",
 					"tableFrom": "session",
 					"tableTo": "user",
-					"columnsFrom": ["userId"],
+					"columnsFrom": ["user_id"],
 					"columnsTo": ["id"],
 					"onDelete": "cascade",
 					"onUpdate": "no action"
 				}
 			},
+			"compositePrimaryKeys": {},
+			"uniqueConstraints": {}
+		},
+		"public.submission": {
+			"name": "submission",
+			"schema": "",
+			"columns": {
+				"id": {
+					"name": "id",
+					"type": "text",
+					"primaryKey": true,
+					"notNull": true
+				},
+				"user_id": {
+					"name": "user_id",
+					"type": "text",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"category_id": {
+					"name": "category_id",
+					"type": "integer",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"event_id": {
+					"name": "event_id",
+					"type": "integer",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"title": {
+					"name": "title",
+					"type": "text",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"media_id": {
+					"name": "media_id",
+					"type": "integer",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"created_at": {
+					"name": "created_at",
+					"type": "timestamp",
+					"primaryKey": false,
+					"notNull": false,
+					"default": "now()"
+				},
+				"updated_at": {
+					"name": "updated_at",
+					"type": "timestamp",
+					"primaryKey": false,
+					"notNull": false,
+					"default": "now()"
+				}
+			},
+			"indexes": {},
+			"foreignKeys": {},
+			"compositePrimaryKeys": {},
+			"uniqueConstraints": {}
+		},
+		"public.tickets": {
+			"name": "tickets",
+			"schema": "",
+			"columns": {
+				"id": {
+					"name": "id",
+					"type": "serial",
+					"primaryKey": true,
+					"notNull": true
+				},
+				"content": {
+					"name": "content",
+					"type": "text",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"user_id": {
+					"name": "user_id",
+					"type": "text",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"event_id": {
+					"name": "event_id",
+					"type": "integer",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"created_at": {
+					"name": "created_at",
+					"type": "timestamp",
+					"primaryKey": false,
+					"notNull": false,
+					"default": "now()"
+				},
+				"updated_at": {
+					"name": "updated_at",
+					"type": "timestamp",
+					"primaryKey": false,
+					"notNull": false,
+					"default": "now()"
+				}
+			},
+			"indexes": {},
+			"foreignKeys": {},
 			"compositePrimaryKeys": {},
 			"uniqueConstraints": {}
 		},
@@ -135,8 +507,8 @@
 					"primaryKey": false,
 					"notNull": false
 				},
-				"emailVerifiedAt": {
-					"name": "emailVerifiedAt",
+				"email_verified_at": {
+					"name": "email_verified_at",
 					"type": "timestamp",
 					"primaryKey": false,
 					"notNull": false
@@ -161,15 +533,15 @@
 					"primaryKey": false,
 					"notNull": false
 				},
-				"createdAt": {
-					"name": "createdAt",
+				"created_at": {
+					"name": "created_at",
 					"type": "timestamp",
 					"primaryKey": false,
 					"notNull": false,
 					"default": "now()"
 				},
-				"updatedAt": {
-					"name": "updatedAt",
+				"updated_at": {
+					"name": "updated_at",
 					"type": "timestamp",
 					"primaryKey": false,
 					"notNull": false,
@@ -191,9 +563,62 @@
 					"columns": ["email"]
 				}
 			}
+		},
+		"public.vote": {
+			"name": "vote",
+			"schema": "",
+			"columns": {
+				"id": {
+					"name": "id",
+					"type": "serial",
+					"primaryKey": true,
+					"notNull": true
+				},
+				"name": {
+					"name": "name",
+					"type": "text",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"submission_id": {
+					"name": "submission_id",
+					"type": "text",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"user_id": {
+					"name": "user_id",
+					"type": "text",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"created_at": {
+					"name": "created_at",
+					"type": "timestamp",
+					"primaryKey": false,
+					"notNull": false,
+					"default": "now()"
+				},
+				"updated_at": {
+					"name": "updated_at",
+					"type": "timestamp",
+					"primaryKey": false,
+					"notNull": false,
+					"default": "now()"
+				}
+			},
+			"indexes": {},
+			"foreignKeys": {},
+			"compositePrimaryKeys": {},
+			"uniqueConstraints": {}
 		}
 	},
 	"enums": {
+		"public.mediaType": {
+			"name": "mediaType",
+			"schema": "public",
+			"values": ["image", "video", "audio"]
+		},
 		"public.role": {
 			"name": "role",
 			"schema": "public",
@@ -201,6 +626,7 @@
 		}
 	},
 	"schemas": {},
+	"sequences": {},
 	"_meta": {
 		"columns": {},
 		"schemas": {},

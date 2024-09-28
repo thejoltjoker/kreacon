@@ -11,6 +11,8 @@
 		<li><Link href="/">Home</Link></li>
 		<li><Link href="/profile">Profile</Link></li>
 		<li><Link href="/restricted">Restricted</Link></li>
+		<li><Link href="/admin">Admin</Link></li>
+		<li><Link href="/db/seed">Seed</Link></li>
 
 		<li><a href="/login"><Button>Login</Button></a></li>
 		<li>
