@@ -1,6 +1,6 @@
 {
-  "id": "ba74edcd-fc50-499a-b279-07ce48ff08f1",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "94bf5cb5-a3c6-46f9-9e2d-8c513f07ebaa",
+  "prevId": "ba74edcd-fc50-499a-b279-07ce48ff08f1",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -252,7 +252,7 @@
         },
         "submission_id": {
           "name": "submission_id",
-          "type": "integer",
+          "type": "text",
           "primaryKey": false,
           "notNull": false
         },
@@ -319,7 +319,7 @@
         },
         "submission_id": {
           "name": "submission_id",
-          "type": "integer",
+          "type": "text",
           "primaryKey": false,
           "notNull": false
         },
@@ -608,7 +608,7 @@
         },
         "submission_id": {
           "name": "submission_id",
-          "type": "integer",
+          "type": "text",
           "primaryKey": false,
           "notNull": false
         },

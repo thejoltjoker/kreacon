@@ -9,6 +9,15 @@ export default {
 			fontFamily: {
 				sans: ['Figtree', 'sans-serif']
 			},
+			fontSize: {
+				sm: '1rem',
+				base: '1rem',
+				xl: '1.25rem',
+				'2xl': '1.563rem',
+				'3xl': '1.953rem',
+				'4xl': '2.441rem',
+				'5xl': '3.052rem'
+			},
 			spacing: {
 				xxs: '0.3rem',
 				xs: '0.6rem',
@@ -18,7 +27,14 @@ export default {
 				xl: '2.4rem',
 				xxl: '4.8rem',
 				form: '3.2rem',
-				button: '3.2rem'
+				button: '3.2rem',
+				thumbnail: '10rem'
+			},
+			width: {
+				sidebar: '20rem'
+			},
+			gridTemplateColumns: {
+				'admin-submissions-list-item': '10rem minmax(900px, 1fr) repeat(16, minmax(0, 1fr))'
 			},
 			borderRadius: {
 				sm: '.8rem',
@@ -103,7 +119,9 @@ export default {
 		'focus:ring-green-500',
 		'focus:ring-violet-500',
 		'invalid',
-		'valid'
+		'valid',
+		'bg-white',
+		'bg-black'
 	],
 
 	plugins: [twForms]

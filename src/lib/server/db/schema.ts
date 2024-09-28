@@ -1,3 +1,4 @@
+import { randomString } from '../../helpers/randomString';
 import { relations, type InferInsertModel, type InferSelectModel } from 'drizzle-orm';
 import { integer, pgEnum, pgTable, primaryKey, serial, text, timestamp } from 'drizzle-orm/pg-core';
 
@@ -31,7 +32,7 @@ export const usersRelations = relations(users, ({ many }) => ({
 }));
 
 export type User = InferSelectModel<typeof users>;
-
+export type InsertUser = InferInsertModel<typeof users>;
 // Accounts
 
 export const accounts = pgTable(
@@ -53,6 +54,9 @@ export const accounts = pgTable(
 		})
 	})
 );
+
+export type Account = InferSelectModel<typeof accounts>;
+export type InsertAccount = InferInsertModel<typeof accounts>;
 
 export const accountsRelations = relations(accounts, ({ one }) => ({
 	user: one(users, {
@@ -93,7 +97,7 @@ export const events = pgTable('event', {
 });
 
 export type Event = InferSelectModel<typeof events>;
-
+export type InsertEvent = InferInsertModel<typeof events>;
 export const eventsRelations = relations(events, ({ many }) => ({
 	categoriesToEvents: many(categoriesToEvents),
 	submissions: many(submissions),
@@ -110,6 +114,9 @@ export const tickets = pgTable('tickets', {
 		.defaultNow()
 		.$onUpdate(() => new Date())
 });
+
+export type Ticket = InferSelectModel<typeof tickets>;
+export type InsertTicket = InferInsertModel<typeof tickets>;
 
 export const ticketsRelations = relations(tickets, ({ one }) => ({
 	user: one(users, {
@@ -174,7 +181,9 @@ export const categoriesToEventsRelations = relations(categoriesToEvents, ({ one 
 // Submissions
 
 export const submissions = pgTable('submission', {
-	id: serial('id').primaryKey(),
+	id: text('id')
+		.primaryKey()
+		.$defaultFn(() => randomString()),
 	userId: text('user_id'),
 	categoryId: integer('category_id'),
 	eventId: integer('event_id'),
@@ -208,18 +217,30 @@ export const submissionsRelations = relations(submissions, ({ one, many }) => ({
 }));
 
 export type Submission = InferSelectModel<typeof submissions>;
+export type InsertSubmission = InferInsertModel<typeof submissions>;
+export type SubmissionWithCategoryMediaReactionsUserVotes = InferSelectModel<typeof submissions> & {
+	category: Category;
+	media: Media[];
+	reactions: Reaction[];
+	user: User;
+	votes: Vote[];
+};
+
 // Votes
 
 export const votes = pgTable('vote', {
 	id: serial('id').primaryKey(),
 	name: text('name'),
-	submissionId: integer('submission_id'),
+	submissionId: text('submission_id'),
 	userId: text('user_id'),
 	createdAt: timestamp('created_at').defaultNow(),
 	updatedAt: timestamp('updated_at')
 		.defaultNow()
 		.$onUpdate(() => new Date())
 });
+
+export type Vote = InferSelectModel<typeof votes>;
+export type InsertVote = InferInsertModel<typeof votes>;
 
 export const votesRelations = relations(votes, ({ one }) => ({
 	user: one(users, { fields: [votes.userId], references: [users.id] }),
@@ -235,12 +256,15 @@ export const reactions = pgTable('reaction', {
 	id: serial('id').primaryKey(),
 	value: text('name'),
 	userId: text('user_id'),
-	submissionId: integer('submission_id'),
+	submissionId: text('submission_id'),
 	createdAt: timestamp('created_at').defaultNow(),
 	updatedAt: timestamp('updated_at')
 		.defaultNow()
 		.$onUpdate(() => new Date())
 });
+
+export type Reaction = InferSelectModel<typeof reactions>;
+export type InsertReaction = InferInsertModel<typeof reactions>;
 
 export const reactionsRelations = relations(reactions, ({ one }) => ({
 	user: one(users, {
@@ -257,7 +281,7 @@ export const reactionsRelations = relations(reactions, ({ one }) => ({
 
 export const media = pgTable('media', {
 	id: serial('id').primaryKey(),
-	submissionId: integer('submission_id'),
+	submissionId: text('submission_id'),
 	type: mediaTypeEnum('type').notNull(),
 	url: text('url').notNull(),
 	alt: text('alt'),
@@ -266,6 +290,9 @@ export const media = pgTable('media', {
 		.defaultNow()
 		.$onUpdate(() => new Date())
 });
+
+export type Media = InferSelectModel<typeof media>;
+export type InsertMedia = InferInsertModel<typeof media>;
 
 export const mediaRelations = relations(media, ({ one }) => ({
 	submission: one(submissions, {
