@@ -105,8 +105,9 @@ export const eventsRelations = relations(events, ({ many }) => ({
 }));
 
 export const tickets = pgTable('tickets', {
-	id: serial('id').primaryKey(),
-	content: text('content'),
+	id: text('id')
+		.primaryKey()
+		.$defaultFn(() => crypto.randomUUID()),
 	userId: text('user_id'),
 	eventId: integer('event_id'),
 	createdAt: timestamp('created_at').defaultNow(),

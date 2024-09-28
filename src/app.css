@@ -12,3 +12,14 @@
 		@apply text-black dark:bg-white;
 	}
 }
+@layer utilities {
+	.debug-red {
+		@apply !border !border-red-500/50;
+	}
+	.debug-blue {
+		@apply !border !border-blue-500/50;
+	}
+	.debug-green {
+		@apply !border !border-green-500/50;
+	}
+}
