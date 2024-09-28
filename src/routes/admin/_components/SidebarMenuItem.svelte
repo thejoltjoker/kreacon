@@ -1,15 +1,16 @@
 <script lang="ts">
-	import { SvelteComponent } from 'svelte';
+	import { InfoIcon, type Icon } from 'lucide-svelte';
+	import { SvelteComponent, type ComponentType } from 'svelte';
 	export let label: string;
 	export let href: string;
-	export let icon: SvelteComponent | undefined = undefined;
+	export let icon: ComponentType<Icon> = InfoIcon;
 	export let active: boolean = false;
 	export let count: number | undefined = undefined;
 </script>
 
 <li class:active>
 	<a {href}>
-		<svelte:component this={icon} />
+		<svelte:component this={icon} class="w-full" />
 		{label}
 		{#if count}
 			<div class="count">{count}</div>

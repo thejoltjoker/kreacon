@@ -19,4 +19,4 @@ export const seed = async () => {
 	logger.info('Seeding completed');
 };
 
-seed();
+// seed();

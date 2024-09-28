@@ -1,8 +1,7 @@
 <script lang="ts">
-	import type { User } from '$lib/server/db/schema';
-	import type { LayoutData, PageData } from '../(entity)/$types';
+	import type { PageData } from './$types';
 
-	export let data: LayoutData;
+	export let data: PageData;
 	const users = data.users ?? [];
 </script>
 

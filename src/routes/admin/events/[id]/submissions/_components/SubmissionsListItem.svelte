@@ -8,7 +8,7 @@
 <li class="flex-1">
 	<div class="flex flex-row items-center gap-md">
 		<div
-			class="image size-thumbnail basis-thumbnail aspect-square shrink-0 overflow-hidden rounded-md"
+			class="image aspect-square size-thumbnail shrink-0 basis-thumbnail overflow-hidden rounded-md"
 		>
 			{#if media}
 				<img src={media[0]?.url} alt={submission?.title} />

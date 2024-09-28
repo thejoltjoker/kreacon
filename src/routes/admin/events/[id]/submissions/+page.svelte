@@ -8,7 +8,18 @@
 
 <ul class="flex w-full flex-col gap-md">
 	{#each data.submissions as submission}
-		<SubmissionsListItem {submission} />
-		<Separator color="white" />
+		{#if submission.category && submission.media && submission.reactions && submission.user && submission.votes}
+			<SubmissionsListItem
+				submission={{
+					...submission,
+					category: submission.category,
+					media: [submission.media],
+					reactions: submission.reactions,
+					user: submission.user,
+					votes: submission.votes
+				}}
+			/>
+			<Separator color="white" />
+		{/if}
 	{/each}
 </ul>

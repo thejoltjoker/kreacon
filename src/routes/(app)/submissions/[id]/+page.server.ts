@@ -1,12 +1,12 @@
 import { db } from '$lib/server/db';
-import { events } from '$lib/server/db/schema';
+import { submissions } from '$lib/server/db/schema';
 import { eq } from 'drizzle-orm/pg-core/expressions';
 import type { PageServerLoad } from './$types';
 
 export const load = (async ({ params }) => {
-	const submission = await db.query.submissions.findFirst({
-		where: eq(events.id, params.id)
+	const result = await db.query.submissions.findFirst({
+		where: eq(submissions.eventId, +params.id)
 	});
-	console.log(submission);
-	return { submission };
+	console.log(result);
+	return { submission: result };
 }) satisfies PageServerLoad;

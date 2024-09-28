@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { createSeparator, melt, type CreateSeparatorProps } from '@melt-ui/svelte';
+	import { createSeparator, melt } from '@melt-ui/svelte';
 	export let color: 'white' | 'black' = 'white';
 	const {
 		elements: { root: horizontal }

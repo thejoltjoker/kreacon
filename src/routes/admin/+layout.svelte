@@ -1,9 +1,6 @@
 <script lang="ts">
 	import AdminNavbar from './_components/AdminNavbar.svelte';
 	import SidebarMenu from './_components/SidebarMenu.svelte';
-	import type { LayoutData } from './[entity]/$types';
-
-	export let data: LayoutData;
 </script>
 
 <AdminNavbar />
