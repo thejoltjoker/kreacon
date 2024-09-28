@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { InfoIcon, type Icon } from 'lucide-svelte';
-	import { SvelteComponent, type ComponentType } from 'svelte';
+	import { type ComponentType } from 'svelte';
 	export let label: string;
 	export let href: string;
 	export let icon: ComponentType<Icon> = InfoIcon;
