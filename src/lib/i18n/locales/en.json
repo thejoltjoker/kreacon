@@ -1,0 +1,93 @@
+{
+	"page": {
+		"home": "Home",
+		"profile": "Profile",
+		"restricted": "Restricted",
+		"admin": "Admin",
+		"login": "Login",
+		"logout": "Logout",
+		"register": "Register",
+		"reset_password": "Reset Password",
+		"verify_email": "Verify Email"
+	},
+	"entity": {
+		"category": {
+			"singular": "Category",
+			"plural": "Categories"
+		},
+		"vote": {
+			"singular": "Vote",
+			"plural": "Votes"
+		},
+		"reaction": {
+			"singular": "Reaction",
+			"plural": "Reactions"
+		},
+		"event": {
+			"singular": "Event",
+			"plural": "Events"
+		},
+		"user": {
+			"singular": "User",
+			"plural": "Users"
+		},
+		"submission": {
+			"singular": "Submission",
+			"plural": "Submissions"
+		}
+	},
+	"title": {
+		"home": "Kreacon",
+		"profile": "Profile",
+		"restricted": "Restricted",
+		"admin": "Admin",
+		"register": "Register",
+		"reset_password": "Reset Password",
+		"verify_email": "Verify Email"
+	},
+	"nav": {
+		"home": "Home",
+		"profile": "Profile",
+		"restricted": "Restricted",
+		"admin": "Admin",
+		"login": "Login",
+		"logout": "Logout",
+		"register": "Register",
+		"seed": "Seed",
+		"events": "Events",
+		"users": "Users"
+	},
+	"button": {
+		"login": "Login",
+		"login_github": "Sign in with GitHub",
+		"login_discord": "Sign in with Discord",
+		"login_google": "Sign in with Google",
+		"logout": "Logout",
+		"register": "Register",
+		"reset_password": "Reset Password",
+		"verify_email": "Verify Email"
+	},
+	"auth": {
+		"password": "Password",
+		"confirm_password": "Confirm password",
+		"not_member": "Not a member?",
+		"already_member": "Already a member?",
+		"login_divider": "or sign in with email",
+		"verification_token": "Verification token",
+		"verify_email": "Verify Email",
+		"reset_password": "Reset Password",
+		"invalid_password": "Invalid password",
+		"new_password": "New password",
+		"login": "Log in",
+		"email": "Email",
+		"register": "Register"
+	},
+	"validation": {
+		"password_too_short": "Password is too short",
+		"password_long_enough": "Password is long enough",
+		"password_special": "Password has special character",
+		"password_number": "Password has number",
+		"password_common": "Password is common",
+		"password_uncommon": "Password is uncommon"
+	}
+}

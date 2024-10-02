@@ -63,6 +63,7 @@
 		"jsonwebtoken": "^9.0.2",
 		"lucide-svelte": "^0.445.0",
 		"postgres": "^3.4.4",
+		"svelte-i18n": "^4.0.0",
 		"zod": "^3.23.8"
 	},
 	"engines": {

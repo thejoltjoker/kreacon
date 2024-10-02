@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { CheckCircle2Icon, XCircleIcon } from 'lucide-svelte';
-
+	import { _ } from 'svelte-i18n';
 	export let validationErrorPaths: string[] = [];
 </script>
 
@@ -11,7 +11,9 @@
 		{:else}
 			<CheckCircle2Icon class="size-5  text-green-500" />
 		{/if}
-		<p>Password is long enough</p>
+		<p>
+			{$_('validation.password_long_enough', { default: 'Password is long enough' })}
+		</p>
 	</li>
 
 	<li>
@@ -20,7 +22,9 @@
 		{:else}
 			<CheckCircle2Icon class="size-5  text-green-500" />
 		{/if}
-		<p>Password has special character</p>
+		<p>
+			{$_('validation.password_special', { default: 'Password has special character' })}
+		</p>
 	</li>
 
 	<li>
@@ -29,7 +33,9 @@
 		{:else}
 			<CheckCircle2Icon class="size-5  text-green-500" />
 		{/if}
-		<p>Password has number</p>
+		<p>
+			{$_('validation.password_number', { default: 'Password has number' })}
+		</p>
 	</li>
 
 	<li>
@@ -38,7 +44,9 @@
 		{:else}
 			<CheckCircle2Icon class="size-5  text-green-500" />
 		{/if}
-		<p>Password is uncommon</p>
+		<p>
+			{$_('validation.password_uncommon', { default: 'Password is uncommon' })}
+		</p>
 	</li>
 </ul>
 

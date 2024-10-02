@@ -1,12 +1,20 @@
 <script>
 	import Button from '$lib/components/Button.svelte';
 	import InputField from '$lib/components/InputField.svelte';
+	import { _ } from 'svelte-i18n';
 </script>
 
-<h1>Reset Password</h1>
+<h1>{$_('auth.reset_password', { default: 'Reset Password' })}</h1>
 <form class="flex flex-col gap-sm">
-	<InputField label="New Password" type="password" name="password" placeholder="New Password" />
-	<Button type="submit" variant="rose">Reset Password</Button>
+	<InputField
+		label={$_('auth.new_password', { default: 'New Password' })}
+		type="password"
+		name="password"
+		placeholder={$_('auth.new_password', { default: 'New Password' })}
+	/>
+	<Button type="submit" variant="rose">
+		{$_('button.reset_password', { default: 'Reset Password' })}
+	</Button>
 </form>
 
 <style lang="postcss">
