@@ -10,7 +10,8 @@ export const handle: Handle = async ({ event, resolve }) => {
 	}
 
 	// auth
-	event.locals.user = await authenticate(event);
+	const user = await authenticate(event);
+	event.locals.userId = user?.userId;
 
 	const response = await resolve(event);
 

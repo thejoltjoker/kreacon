@@ -7,6 +7,6 @@ export const load = (async ({ params }) => {
 	const result = await db.query.submissions.findFirst({
 		where: eq(submissions.eventId, +params.id)
 	});
-	console.log(result);
+
 	return { submission: result };
 }) satisfies PageServerLoad;
