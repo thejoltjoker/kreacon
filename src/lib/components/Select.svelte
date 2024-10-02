@@ -4,6 +4,7 @@
 	import { createSelect, melt } from '@melt-ui/svelte';
 	import { CheckIcon, ChevronDownIcon } from 'lucide-svelte';
 	import { fade } from 'svelte/transition';
+	import { _ } from 'svelte-i18n';
 	let labelText: string;
 	export { labelText as label };
 	export let options: SelectOptions;
@@ -52,7 +53,11 @@
 		aria-label="Food"
 	>
 		{$selectedLabel}
-		{!$selectedLabel && options.length < 1 ? 'No options available' : 'Select one'}
+		{!$selectedLabel
+			? options.length < 1
+				? $_('form.no_options_available')
+				: $_('form.select_one')
+			: ''}
 		<ChevronDownIcon class="size-5" />
 	</button>
 

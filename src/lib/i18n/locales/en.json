@@ -8,7 +8,13 @@
 		"logout": "Logout",
 		"register": "Register",
 		"reset_password": "Reset Password",
-		"verify_email": "Verify Email"
+		"verify_email": "Verify Email",
+		"create_submission": "Create Submission",
+		"select_category": "Select Category"
+	},
+	"form": {
+		"select_one": "Select one",
+		"no_options_available": "No options available"
 	},
 	"entity": {
 		"category": {

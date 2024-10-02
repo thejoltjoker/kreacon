@@ -12,17 +12,18 @@ export const load = (async ({ cookies, locals }) => {
 	if (!locals.user) {
 		throw redirect(302, '/login');
 	}
+
 	const form = await superValidate(zod(createSubmissionSchema));
 
 	const { userId } = locals.user;
-	const result = await db.query.events.findFirst({
-		where: (event, { and, gte, lte }) =>
-			and(
-				lte(event.submissionsOpenAt, new Date()), // event.submissionsOpenAt >= new Date()
-				gte(event.submissionsCloseAt, new Date()) // event.submissionsCloseAt <= new Date()
-			)
+	const result = await db.query.users.findFirst({
+		where: eq(users.id, userId),
+		with: {
+			tickets: true
+		}
 	});
 
+	// TODO Show register ticket link if no tickets
 	console.log(result);
 
 	try {
