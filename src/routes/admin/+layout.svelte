@@ -1,6 +1,7 @@
 <script lang="ts">
 	import AdminNavbar from './_components/AdminNavbar.svelte';
 	import SidebarMenu from './_components/SidebarMenu.svelte';
+	import { _ } from 'svelte-i18n';
 </script>
 
 <AdminNavbar />

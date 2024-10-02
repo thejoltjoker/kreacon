@@ -6,7 +6,7 @@
 	import Link from '$lib/components/Link.svelte';
 	import type { PageData } from '../$types';
 	import OAuthButtons from '../../_components/OAuthButtons.svelte';
-
+	import { _ } from 'svelte-i18n';
 	export let data: PageData;
 
 	let email = '';
@@ -16,28 +16,31 @@
 <form method="POST" action="?/login" use:enhance>
 	{#if data.providers.length > 0}
 		<OAuthButtons providers={data.providers} />
-		<Divider>or sign in with email</Divider>
+		<Divider>{$_('auth.login_divider', { default: 'or sign in with email' })}</Divider>
 	{/if}
 	<TextInput
-		label="Email"
+		label={$_('auth.email', { default: 'Email' })}
 		id="email"
-		placeholder="Email"
+		placeholder={$_('auth.email', { default: 'Email' })}
 		bind:value={email}
 		name="email"
 		required
 	/>
 	<TextInput
-		label="Password"
+		label={$_('auth.password', { default: 'Password' })}
 		id="password"
 		type="password"
 		name="password"
-		placeholder="Password"
+		placeholder={$_('auth.password', { default: 'Password' })}
 		bind:value={password}
 		required
 	/>
-	<Button variant="rose" type="submit">Login</Button>
+	<Button variant="rose" type="submit">{$_('button.login.login', { default: 'Login' })}</Button>
 	<!-- TODO Form validation -->
-	<p class="text-center">Not a member? <Link href="/register">Register</Link></p>
+	<p class="text-center">
+		{$_('auth.not_member', { default: 'Not a member?' })}
+		<Link href="/register">{$_('auth.register', { default: 'Register' })}</Link>
+	</p>
 </form>
 
 <style lang="postcss">
