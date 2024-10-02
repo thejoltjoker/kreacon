@@ -10,7 +10,7 @@
 	import type { PageData } from '../$types';
 	import OAuthButtons from '../../_components/OAuthButtons.svelte';
 	import PasswordValidationInfo from './PasswordValidationInfo.svelte';
-
+	import { _ } from 'svelte-i18n';
 	export let form;
 	export let data: PageData;
 
@@ -80,20 +80,22 @@
 		<Divider>or use your email</Divider>
 	{/if}
 	<TextInput
-		label="Email"
+		label={$_('auth.email', { default: 'Email' })}
 		id="email"
 		name="email"
-		placeholder="Email"
+		placeholder={$_('auth.email', { default: 'Email' })}
 		bind:value={email}
 		isValid={emailIsValid}
 		errorMessage={form?.errors?.email}
 	/>
 	<TextInput
-		label="Password"
+		label={$_('auth.password', { default: 'Password' })}
 		id="password"
 		type="password"
 		name="password"
-		placeholder={form?.password ? 'Invalid password' : 'Password'}
+		placeholder={form?.password
+			? $_('auth.invalid_password')
+			: $_('auth.password', { default: 'Password' })}
 		isValid={passwordIsValid}
 		errorMessage={form?.errors?.password}
 		bind:value={password}
@@ -107,9 +109,12 @@
 		{#if loading}
 			<Spinner />
 		{/if}
-		Register
+		{$_('button.register', { default: 'Register' })}
 	</Button>
-	<p class="text-center">Already a member? <Link href="/login">Log in</Link></p>
+	<p class="text-center">
+		{$_('auth.not_member', { default: 'Already a member?' })}
+		<Link href="/login">{$_('auth.login', { default: 'Log in' })}</Link>
+	</p>
 </form>
 
 <style lang="postcss">

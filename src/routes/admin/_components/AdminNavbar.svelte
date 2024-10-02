@@ -1,21 +1,22 @@
 <script>
 	import Button from '$lib/components/Button.svelte';
 	import Link from '$lib/components/Link.svelte';
+	import { _ } from 'svelte-i18n';
 </script>
 
 <nav>
 	<ul class="left">
-		<li><a href="/" id="title">Kreacon</a></li>
+		<li><a href="/" id="title">{$_('nav.home', { default: 'Kreacon' })}</a></li>
 	</ul>
 	<ul class="right">
-		<li><Link href="/">Home</Link></li>
-		<li><Link href="/profile">Profile</Link></li>
-		<li><Link href="/restricted">Restricted</Link></li>
-		<li><Link href="/db/seed">Seed</Link></li>
-		<li><a href="/login"><Button>Login</Button></a></li>
+		<li><Link href="/">{$_('nav.home', { default: 'Home' })}</Link></li>
+		<li><Link href="/profile">{$_('nav.profile', { default: 'Profile' })}</Link></li>
+		<li><Link href="/restricted">{$_('nav.restricted', { default: 'Restricted' })}</Link></li>
+		<li><Link href="/db/seed">{$_('nav.seed', { default: 'Seed' })}</Link></li>
+		<li><a href="/login"><Button>{$_('button.login', { default: 'Login' })}</Button></a></li>
 		<li>
 			<a href="/logout">
-				<Button>Logout</Button>
+				<Button>{$_('button.logout', { default: 'Logout' })}</Button>
 			</a>
 		</li>
 	</ul>
