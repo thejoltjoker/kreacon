@@ -55,7 +55,11 @@
 		"register": "Register",
 		"seed": "Seed",
 		"events": "Events",
-		"users": "Users"
+		"users": "Users",
+		"submissions": "Submissions",
+		"categories": "Categories",
+		"rules": "Rules",
+		"submit": "Submit"
 	},
 	"button": {
 		"login": "Login",

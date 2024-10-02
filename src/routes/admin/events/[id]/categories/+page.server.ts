@@ -9,7 +9,7 @@ export const load = (async ({ params }) => {
 
 	if (!id) {
 		const result = await db.query.categories.findMany();
-		console.log(result);
+
 		return { categories: result };
 	}
 
@@ -19,6 +19,6 @@ export const load = (async ({ params }) => {
 		},
 		where: eq(categoriesToEvents.eventId, id)
 	});
-	console.log(result);
+
 	return { categories: result.map((item) => item.category) };
 }) satisfies PageServerLoad;

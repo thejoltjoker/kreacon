@@ -1,26 +1,37 @@
-<script>
+<script lang="ts">
+	import Avatar from '$lib/components/Avatar.svelte';
 	import Button from '$lib/components/Button.svelte';
 	import Link from '$lib/components/Link.svelte';
+	import { userStore } from '$lib/stores/userStore';
 	import { _ } from 'svelte-i18n';
 </script>
 
 <nav>
 	<ul class="left">
 		<li><a href="/" id="title">Kreacon</a></li>
+		<li><Link href="/submissions">{$_('nav.submissions', { default: 'Submissions' })}</Link></li>
+		<li><Link href="/categories">{$_('nav.categories', { default: 'Categories' })}</Link></li>
+		<li><Link href="/rules">{$_('nav.rules', { default: 'Rules' })}</Link></li>
 	</ul>
 	<ul class="right">
-		<li><Link href="/">{$_('page.home.nav', { default: 'Home' })}</Link></li>
-		<li><Link href="/profile">{$_('page.profile.nav', { default: 'Profile' })}</Link></li>
-		<li><Link href="/restricted">{$_('page.restricted.nav', { default: 'Restricted' })}</Link></li>
-		<li><Link href="/admin">{$_('page.admin.nav', { default: 'Admin' })}</Link></li>
-		<li><Link href="/db/seed">Seed</Link></li>
-
-		<li><a href="/login"><Button>{$_('page.login.nav', { default: 'Login' })}</Button></a></li>
-		<li>
-			<a href="/logout">
-				<Button>{$_('page.logout.nav', { default: 'Logout' })}</Button>
-			</a>
-		</li>
+		{#if $userStore}
+			<li>
+				<a href="/submissions/create">
+					<Button>{$_('nav.submit', { default: 'Submit' })}</Button>
+				</a>
+			</li>
+			<li>
+				<a href="/profile">
+					<Avatar
+						image={$userStore.image ?? ''}
+						fallback={$userStore.username ?? 'N/A'}
+						size="sm"
+					/>
+				</a>
+			</li>
+		{:else}
+			<li><a href="/login"><Button>{$_('nav.login', { default: 'Login' })}</Button></a></li>
+		{/if}
 	</ul>
 </nav>
 
