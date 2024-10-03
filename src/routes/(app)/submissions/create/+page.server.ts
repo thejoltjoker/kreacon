@@ -8,27 +8,27 @@ import { submissions, users } from '$lib/server/db/schema';
 import { eq } from 'drizzle-orm/pg-core/expressions';
 import type { SelectOptions } from '$lib/types/SelectOptions';
 
-export const load = (async ({ cookies, locals }) => {
-	if (!locals.userId) {
+export const load = (async ({ locals }) => {
+	if (!locals.user) {
 		throw redirect(302, '/login');
 	}
 
 	const form = await superValidate(zod(createSubmissionSchema));
 
-	const { userId } = locals;
-	const result = await db.query.users.findFirst({
-		where: eq(users.id, userId),
-		with: {
-			tickets: true
-		}
-	});
+	const { user } = locals;
+	// const result = await db.query.users.findFirst({
+	// 	where: eq(users.id, user.id),
+	// 	with: {
+	// 		tickets: true
+	// 	}
+	// });
 
 	// TODO Show register ticket link if no tickets
 
 	try {
 		// Get user based on cookie
-		const user = await db.query.users.findFirst({
-			where: eq(users.id, userId),
+		const result = await db.query.users.findFirst({
+			where: eq(users.id, user.id),
 			with: {
 				tickets: {
 					with: {
@@ -40,7 +40,7 @@ export const load = (async ({ cookies, locals }) => {
 								),
 							with: {
 								submissions: {
-									where: eq(submissions.userId, userId)
+									where: eq(submissions.userId, user.id)
 								},
 								categoriesToEvents: {
 									with: {
@@ -54,7 +54,7 @@ export const load = (async ({ cookies, locals }) => {
 			}
 		});
 		const categoriesOptions: SelectOptions = [];
-		const events = user?.tickets.map((ticket) => ticket.event);
+		const events = result?.tickets.map((ticket) => ticket.event);
 		for (const event of events) {
 			const submissions = event.submissions;
 			const submittedCategoryIds = submissions?.map((submission) => submission.categoryId);
@@ -69,7 +69,7 @@ export const load = (async ({ cookies, locals }) => {
 			});
 		}
 
-		if (!user) {
+		if (!result) {
 			throw redirect(302, '/login');
 		}
 

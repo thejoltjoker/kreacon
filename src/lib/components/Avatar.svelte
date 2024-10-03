@@ -1,10 +1,9 @@
 <script lang="ts">
 	import { createAvatar, melt } from '@melt-ui/svelte';
 	let imageUrl: string;
-	let fallbackString: string;
 
 	export { imageUrl as image };
-	export { fallbackString as fallback };
+
 	import { UserRoundIcon } from 'lucide-svelte';
 
 	const {
