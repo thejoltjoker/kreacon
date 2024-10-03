@@ -19,10 +19,14 @@
 		"lint": "eslint . && prettier --check .",
 		"format": "prettier --write .",
 		"swa:build": "swa build",
-		"swa:start": "swa start"
+		"swa:start": "swa start",
+		"prepare": "husky",
+		"commitlint": "commitlint --edit"
 	},
 	"devDependencies": {
 		"@azure/static-web-apps-cli": "^2.0.1",
+		"@commitlint/cli": "^19.5.0",
+		"@commitlint/config-conventional": "^19.5.0",
 		"@melt-ui/pp": "^0.3.2",
 		"@melt-ui/svelte": "^0.83.0",
 		"@sveltejs/adapter-auto": "^3.2.5",
@@ -39,6 +43,7 @@
 		"eslint-config-prettier": "^9.1.0",
 		"eslint-plugin-svelte": "^2.44.0",
 		"globals": "^15.9.0",
+		"husky": "^9.1.6",
 		"postcss-nesting": "^13.0.0",
 		"prettier": "^3.3.3",
 		"prettier-plugin-svelte": "^3.2.6",
