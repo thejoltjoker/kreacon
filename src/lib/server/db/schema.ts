@@ -184,7 +184,7 @@ export const submissions = pgTable('submission', {
 	id: text('id')
 		.primaryKey()
 		.$defaultFn(() => randomString()),
-	userId: text('user_id'),
+	userId: text('user_id').references(() => users.id, { onDelete: 'cascade' }),
 	categoryId: integer('category_id'),
 	eventId: integer('event_id'),
 	title: text('title'),

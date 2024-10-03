@@ -10,6 +10,7 @@ export const seedUsers = async () => {
 			username: 'john.doe',
 			password: await bcrypt.hash('password', 10),
 			emailVerifiedAt: new Date(),
+			image: 'john.doe.webp',
 			role: 'user'
 		},
 		{
@@ -18,6 +19,7 @@ export const seedUsers = async () => {
 			username: 'jane.doe',
 			password: await bcrypt.hash('password', 10),
 			emailVerifiedAt: new Date(),
+			image: 'jane.doe.webp',
 			role: 'admin'
 		},
 		{
@@ -26,6 +28,7 @@ export const seedUsers = async () => {
 			username: 'alice.smith',
 			password: await bcrypt.hash('password', 10),
 			emailVerifiedAt: new Date(),
+			image: 'alice.smith.webp',
 			role: 'user'
 		},
 		{
@@ -34,6 +37,7 @@ export const seedUsers = async () => {
 			username: 'bob.jones',
 			password: await bcrypt.hash('password', 10),
 			emailVerifiedAt: new Date(),
+			image: 'bob.jones.webp',
 			role: 'user'
 		}
 	];

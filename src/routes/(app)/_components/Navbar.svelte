@@ -22,11 +22,7 @@
 			</li>
 			<li>
 				<a href="/profile">
-					<Avatar
-						image={$userStore.image ?? ''}
-						fallback={$userStore.username ?? 'N/A'}
-						size="sm"
-					/>
+					<Avatar image={$userStore.image ?? ''} fallback={$userStore.username ?? 'N/A'} />
 				</a>
 			</li>
 		{:else}
