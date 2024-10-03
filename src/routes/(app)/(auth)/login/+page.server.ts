@@ -13,7 +13,7 @@ import { createLogger } from '$lib/server/logger';
 const logger = createLogger('login');
 
 export const load = (async ({ locals }) => {
-	if (locals.userId) {
+	if (locals.user) {
 		throw redirect(302, '/profile');
 	}
 

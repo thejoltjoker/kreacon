@@ -7,7 +7,7 @@ declare global {
 			message: string;
 		}
 		interface Locals {
-			userId: AccessToken | null;
+			user: User | null;
 		}
 		// interface PageData {}
 		// interface PageState {}

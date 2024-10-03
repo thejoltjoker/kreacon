@@ -14,8 +14,11 @@
 	};
 
 	export let data: LayoutData;
+
 	if (data.user) {
 		userStore.set(data.user);
+	} else {
+		userStore.set(null);
 	}
 </script>
 
