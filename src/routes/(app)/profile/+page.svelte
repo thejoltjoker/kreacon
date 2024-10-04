@@ -1,10 +1,9 @@
 <script lang="ts">
-	import SuperDebug, { superForm } from 'sveltekit-superforms';
-	import Avatar from '$lib/components/Avatar.svelte';
-	import InputField from '$lib/components/InputField.svelte';
-	import type { PageData } from './$types';
-	import { _ } from 'svelte-i18n';
 	import Button from '$lib/components/Button.svelte';
+	import InputField from '$lib/components/InputField.svelte';
+	import { _ } from 'svelte-i18n';
+	import SuperDebug, { superForm } from 'sveltekit-superforms';
+	import type { PageData } from './$types';
 	import ImageUpload from './_components/ImageUpload.svelte';
 	export let data: PageData;
 
@@ -13,8 +12,6 @@
 	});
 
 	let imageUrl = data.user?.image ?? 'https://placehold.co/100x100';
-
-	let selectedImage: File | null = null;
 
 	const handleFile = (file: File) => {
 		if (file.type.match('image.*')) {
@@ -27,7 +24,7 @@
 			throw new Error('Invalid file type, only images allowed');
 		}
 	};
-	const onFileChange = (event: Event) => {
+	export const onFileChange = (event: Event) => {
 		const input = event.target as HTMLInputElement;
 		console.log(input);
 		if (input.files && input.files.length > 0) {

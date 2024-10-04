@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { createLabel, melt } from '@melt-ui/svelte';
 	import { CheckCircle2Icon, XCircleIcon } from 'lucide-svelte';
-	import { array } from 'zod';
+
 	export let label: string;
 	export let type: 'text' | 'email' | 'password' = 'text';
 	export let placeholder: string = '';

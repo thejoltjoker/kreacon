@@ -1,12 +1,11 @@
 import { userUpdateSchema } from '$lib/schemas/userRegistrationSchema';
-import { fail, redirect } from '@sveltejs/kit';
-import type { PageServerLoad } from './$types';
-import { setError, superValidate } from 'sveltekit-superforms';
-import { zod } from 'sveltekit-superforms/adapters';
-import { message } from 'sveltekit-superforms';
 import { db } from '$lib/server/db';
 import { users } from '$lib/server/db/schema';
+import { fail, redirect } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm/pg-core/expressions';
+import { message, setError, superValidate } from 'sveltekit-superforms';
+import { zod } from 'sveltekit-superforms/adapters';
+import type { PageServerLoad } from './$types';
 
 export const load = (async ({ locals }) => {
 	if (!locals.user) {
@@ -38,7 +37,7 @@ export const actions = {
 			return setError(form, 'email', 'Email unavailable.');
 		}
 
-		const result = await db
+		await db
 			.insert(users)
 			.values({ id: form.data.id })
 			.onConflictDoUpdate({

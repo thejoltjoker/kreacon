@@ -1,7 +1,5 @@
 /// <reference types="svelte-adapter-azure-swa" />
 
-import type { PublicUser } from '$lib/types/PublicUser';
-
 // See https://kit.svelte.dev/docs/types#app
 // for information about these interfaces
 declare global {
