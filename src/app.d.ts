@@ -1,4 +1,7 @@
 /// <reference types="svelte-adapter-azure-swa" />
+
+import type { UserWithoutPassword } from '$lib/server/db/schema';
+
 // See https://kit.svelte.dev/docs/types#app
 // for information about these interfaces
 declare global {
@@ -7,7 +10,7 @@ declare global {
 			message: string;
 		}
 		interface Locals {
-			user: User | null;
+			user: UserWithoutPassword | null | undefined;
 		}
 		// interface PageData {}
 		// interface PageState {}

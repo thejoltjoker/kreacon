@@ -2,7 +2,7 @@
 	import Avatar from '$lib/components/Avatar.svelte';
 	import Button from '$lib/components/Button.svelte';
 	import Link from '$lib/components/Link.svelte';
-	import { userStore } from '$lib/stores/userStore';
+	import { user } from '$lib/stores/userStore';
 	import { _ } from 'svelte-i18n';
 </script>
 
@@ -14,7 +14,7 @@
 		<li><Link href="/rules">{$_('nav.rules', { default: 'Rules' })}</Link></li>
 	</ul>
 	<ul class="right">
-		{#if $userStore}
+		{#if $user}
 			<li>
 				<a href="/submissions/create">
 					<Button>{$_('nav.submit', { default: 'Submit' })}</Button>
@@ -22,7 +22,7 @@
 			</li>
 			<li>
 				<a href="/profile">
-					<Avatar image={$userStore.image ?? ''} fallback={$userStore.username ?? 'N/A'} />
+					<Avatar image={$user.image ?? ''} />
 				</a>
 			</li>
 		{:else}

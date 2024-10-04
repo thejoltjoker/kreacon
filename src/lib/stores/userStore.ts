@@ -1,4 +1,13 @@
-import type { PublicUser } from '$lib/types/PublicUser';
 import { writable } from 'svelte/store';
 
-export const userStore = writable<PublicUser | null>(null);
+const createUserStore = () => {
+	const { subscribe, set } = writable<UserWithoutPassword | null>(null);
+
+	return {
+		subscribe,
+		set,
+		reset: () => set(null)
+	};
+};
+
+export const user = createUserStore();

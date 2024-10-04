@@ -32,6 +32,7 @@ export const usersRelations = relations(users, ({ many }) => ({
 }));
 
 export type User = InferSelectModel<typeof users>;
+export type UserWithoutPassword = Omit<User, 'password'>;
 export type InsertUser = InferInsertModel<typeof users>;
 // Accounts
 
