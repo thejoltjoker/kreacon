@@ -1,3 +1,4 @@
+import type { UserWithoutPassword } from '$lib/server/db/schema';
 import { writable } from 'svelte/store';
 
 const createUserStore = () => {

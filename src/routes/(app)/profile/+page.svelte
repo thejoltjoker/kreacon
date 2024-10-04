@@ -15,6 +15,9 @@
 
 	let imageUrl = data.user?.image ?? 'https://placehold.co/100x100';
 
+	const setImageUrl = (url: string) => {
+		imageUrl = url;
+	};
 	const handleFile = (file: File) => {
 		if (file.type.match('image.*')) {
 			const reader = new FileReader();
@@ -26,7 +29,7 @@
 			throw new Error('Invalid file type, only images allowed');
 		}
 	};
-	
+
 	export const onFileChange = (event: Event) => {
 		const input = event.target as HTMLInputElement;
 		console.log(input);
@@ -46,41 +49,41 @@
 
 {#if $message}<h3>{$message}</h3>{/if}
 
-<SuperDebug data={$form} />
-<div class="flex h-screen flex-col items-center">
-	<h1 class="text-4xl font-bold">Profile</h1>
-	<ImageUpload />
-	<form method="POST" class="flex w-full flex-col gap-sm" use:enhance>
-		<div class="flex items-center justify-center">
-			<!-- <img src={imageUrl} alt="Profile" class="h-32 w-32 rounded-full" on:click={}/>
+<div class="mx-auto max-w-screen-sm">
+	<!-- <SuperDebug data={$form} /> -->
+	<div class="flex h-screen flex-col items-center">
+		<h1 class="text-4xl font-bold">Profile</h1>
+		<ImageUpload bind:imageUrl {setImageUrl} />
+		<form method="POST" class="flex w-full flex-col gap-sm" use:enhance>
+			<div class="flex items-center justify-center">
+				<!-- TODO File upload -->
+				<!-- <input type="file" name="image" id="image" on:change={onFileChange} accept="image/*" /> -->
+			</div>
+			<label for="id">ID</label>
+			<input type="text" name="id" id="id" bind:value={$form.id} />
+			<InputField
+				id="email"
+				name="email"
+				label={$_('page.user_email')}
+				bind:value={$form.email}
+				errorMessage={$errors.email}
+				{...$constraints.email}
+			/>
 
-			<!-- TODO File upload -->
-			<!-- <input type="file" name="image" id="image" on:change={onFileChange} accept="image/*" /> -->
-		</div>
-		<label for="id">ID</label>
-		<input type="text" name="id" id="id" bind:value={$form.id} />
-		<InputField
-			id="email"
-			name="email"
-			label={$_('page.user_email')}
-			bind:value={$form.email}
-			errorMessage={$errors.email}
-			{...$constraints.email}
-		/>
-
-		<InputField
-			id="username"
-			name="username"
-			label={$_('page.user_username')}
-			bind:value={$form.username}
-			errorMessage={$errors.username}
-			{...$constraints.username}
-		/>
-		<div class="flex gap-sm">
-			<Button>{$_('page.user_cancel', { default: 'Cancel' })}</Button>
-			<Button type="submit" variant="rose">{$_('page.user_save', { default: 'Save' })}</Button>
-		</div>
-	</form>
+			<InputField
+				id="username"
+				name="username"
+				label={$_('page.user_username')}
+				bind:value={$form.username}
+				errorMessage={$errors.username}
+				{...$constraints.username}
+			/>
+			<div class="flex gap-sm">
+				<Button>{$_('page.user_cancel', { default: 'Cancel' })}</Button>
+				<Button type="submit" variant="rose">{$_('page.user_save', { default: 'Save' })}</Button>
+			</div>
+		</form>
+	</div>
 </div>
 
 <style lang="postcss">

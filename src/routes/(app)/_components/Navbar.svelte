@@ -21,8 +21,8 @@
 				</a>
 			</li>
 			<li>
-				<a href="/profile">
-					<Avatar image={$user.image ?? ''} />
+				<a href="/profile" class="">
+					<Avatar imageUrl={$user.image ?? ''} size="sm" />
 				</a>
 			</li>
 		{:else}
