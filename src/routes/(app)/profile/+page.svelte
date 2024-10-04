@@ -5,6 +5,8 @@
 	import SuperDebug, { superForm } from 'sveltekit-superforms';
 	import type { PageData } from './$types';
 	import ImageUpload from './_components/ImageUpload.svelte';
+	import { user } from '$lib/stores/userStore';
+
 	export let data: PageData;
 
 	const { form, errors, constraints, message, enhance } = superForm(data.form, {
@@ -24,6 +26,7 @@
 			throw new Error('Invalid file type, only images allowed');
 		}
 	};
+	
 	export const onFileChange = (event: Event) => {
 		const input = event.target as HTMLInputElement;
 		console.log(input);
@@ -33,6 +36,8 @@
 	};
 	$: console.error($errors);
 	$: console.log(imageUrl);
+
+	user.set(data.user);
 </script>
 
 <svelte:head>
