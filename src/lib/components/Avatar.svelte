@@ -1,10 +1,9 @@
 <script lang="ts">
 	import { createAvatar, melt } from '@melt-ui/svelte';
-	let imageUrl: string;
-
-	export { imageUrl as image };
-
 	import { UserRoundIcon } from 'lucide-svelte';
+	export let size: 'sm' | 'md' | 'lg' = 'md';
+	export let imageUrl: string;
+	$: console.log('Avatar:imageUrl', imageUrl);
 
 	const {
 		elements: { image, fallback }
@@ -14,7 +13,9 @@
 </script>
 
 <div
-	class="flex h-button w-button items-center justify-center rounded-full border border-white bg-zinc-800"
+	class="flex aspect-square items-center justify-center rounded-full border border-white bg-zinc-800"
+	class:size-button={size === 'sm'}
+	class:size-64={size === 'lg'}
 >
 	<img use:melt={$image} alt="Avatar" class="h-full w-full rounded-[inherit]" />
 	<span use:melt={$fallback} class="text-3xl font-medium text-zinc-200">

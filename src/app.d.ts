@@ -1,4 +1,7 @@
 /// <reference types="svelte-adapter-azure-swa" />
+
+import type { PublicUser } from '$lib/types/PublicUser';
+
 // See https://kit.svelte.dev/docs/types#app
 // for information about these interfaces
 declare global {
@@ -7,9 +10,11 @@ declare global {
 			message: string;
 		}
 		interface Locals {
-			user: User | null;
+			user: Omit<User, 'password'> | null;
 		}
-		// interface PageData {}
+		interface PageData {
+			user: Omit<User, 'password'> | null;
+		}
 		// interface PageState {}
 		// interface Platform {}
 	}

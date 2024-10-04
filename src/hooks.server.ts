@@ -15,9 +15,16 @@ export const handle: Handle = async ({ event, resolve }) => {
 	// auth
 	const accessToken = await authenticate(event);
 	if (accessToken) {
-		event.locals.user = await db.query.users.findFirst({
-			where: eq(users.id, accessToken.userId)
-		});
+		event.locals.user =
+			(await db.query.users.findFirst({
+				where: eq(users.id, accessToken.userId),
+				columns: {
+					password: false
+				},
+				with: {
+					accounts: true
+				}
+			})) ?? null;
 	}
 
 	const response = await resolve(event);

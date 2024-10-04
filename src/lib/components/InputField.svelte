@@ -1,16 +1,17 @@
 <script lang="ts">
 	import { createLabel, melt } from '@melt-ui/svelte';
 	import { CheckCircle2Icon, XCircleIcon } from 'lucide-svelte';
+	import { array } from 'zod';
 	export let label: string;
 	export let type: 'text' | 'email' | 'password' = 'text';
 	export let placeholder: string = '';
 	export let id: string = '';
-	export let value: string = '';
+	export let value: string | null | undefined = '';
 	export let name: string = '';
 	export let onChange: (value: string) => void = () => {};
 	export let isValid: boolean | undefined = undefined;
 	export let required: boolean = false;
-	export let errorMessage: string | undefined = undefined;
+	export let errorMessage: string | string[] | undefined = undefined;
 
 	const handleInput = (event: Event) => {
 		const inputEvent = event as InputEvent;
@@ -51,6 +52,10 @@
 	</div>
 	{#if errorMessage}
 		<p class="error-message">{errorMessage}</p>
+	{:else if errorMessage && Array.isArray(errorMessage)}
+		{#each errorMessage as message}
+			<p class="error-message">{message}</p>
+		{/each}
 	{/if}
 </div>
 
