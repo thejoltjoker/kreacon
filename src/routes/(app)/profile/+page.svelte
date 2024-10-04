@@ -60,6 +60,7 @@
 			label={$_('page.user_email')}
 			bind:value={$form.email}
 			errorMessage={$errors.email}
+			{...$constraints.email}
 		/>
 
 		<InputField
@@ -68,6 +69,7 @@
 			label={$_('page.user_username')}
 			bind:value={$form.username}
 			errorMessage={$errors.username}
+			{...$constraints.username}
 		/>
 		<div class="flex gap-sm">
 			<Button>{$_('page.user_cancel', { default: 'Cancel' })}</Button>

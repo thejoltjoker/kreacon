@@ -41,6 +41,7 @@
 				class:valid={isValid === true}
 				class:invalid={isValid === false}
 				{required}
+				{...$$restProps}
 			/>
 
 			{#if isValid === true}
@@ -52,7 +53,7 @@
 	</div>
 	{#if errorMessage}
 		<p class="error-message">{errorMessage}</p>
-	{:else if errorMessage && Array.isArray(errorMessage)}
+	{:else if Array.isArray(errorMessage)}
 		{#each errorMessage as message}
 			<p class="error-message">{message}</p>
 		{/each}
