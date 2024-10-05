@@ -4,7 +4,7 @@
 	import { UserRoundIcon } from 'lucide-svelte';
 
 	export let src: string;
-	export let size: 'sm' | 'md' | 'lg' = 'md';
+	export let size: 'sm' | 'md' | 'lg' | 'xl' = 'md';
 
 	const {
 		elements: { image, fallback }
@@ -15,17 +15,19 @@
 	const sizeClasses = {
 		sm: 'size-avatar-sm',
 		md: 'size-avatar-md',
-		lg: 'size-avatar-lg'
+		lg: 'size-avatar-lg',
+		xl: 'size-avatar-xl'
 	};
 
 	const iconSizeClasses = {
 		sm: 'size-4',
 		md: 'size-6',
-		lg: 'size-8'
+		lg: 'size-8',
+		xl: 'size-10'
 	};
 
 	$: containerClasses = twMerge(
-		'flex items-center justify-center rounded-full border border-white bg-zinc-800',
+		'flex items-center justify-center rounded-full border border-white bg-zinc-800 overflow-hidden',
 		sizeClasses[size]
 	);
 

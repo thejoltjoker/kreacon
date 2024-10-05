@@ -6,7 +6,7 @@
 	import { _ } from 'svelte-i18n';
 
 	const {
-		elements: { trigger, menu, item, separator },
+		elements: { trigger, menu, item, separator, arrow },
 		states: { open }
 	} = createDropdownMenu({
 		forceVisible: true,
@@ -21,7 +21,15 @@
 </button>
 
 {#if $open}
-	<div class="menu" use:melt={$menu} transition:fly={{ duration: 150, x: 10 }}>
+	<div class="menu" use:melt={$menu} transition:fly={{ duration: 150, y: -10 }}>
+		<div class="flex items-center gap-xs px-sm">
+			<Avatar src={$user?.image ?? ''} size="xl" />
+			<div class="flex flex-col">
+				<p class="text-sm font-bold">{$user?.username}</p>
+				<p class="text-sm text-zinc-500">{$user?.email}</p>
+			</div>
+		</div>
+		<div class="separator" use:melt={$separator} />
 		<div class="item" use:melt={$item}>
 			<a href="/profile">{$_('page.profile')}</a>
 		</div>
@@ -30,16 +38,20 @@
 		<div class="item" use:melt={$item}>
 			<a href="/logout">{$_('page.logout')}</a>
 		</div>
+		<div use:melt={$arrow} />
 	</div>
 {/if}
 
 <style lang="postcss">
 	.menu {
-		@apply w-64 rounded-sm border border-white bg-black p-sm text-white;
+		@apply w-80 rounded-sm border border-white bg-white p-sm pt-lg text-black;
 	}
 
 	.item {
-		@apply rounded-full px-md py-xs hover:bg-white hover:text-black;
+		@apply flex w-full;
+		& a {
+			@apply w-full rounded-full px-md py-xs transition hover:bg-black hover:text-white;
+		}
 	}
 
 	.separator {

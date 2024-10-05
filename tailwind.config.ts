@@ -34,7 +34,8 @@ export default {
 				thumbnail: defaultTheme.spacing['40'],
 				'avatar-sm': defaultTheme.spacing['10'],
 				'avatar-md': defaultTheme.spacing['12'],
-				'avatar-lg': defaultTheme.spacing['14']
+				'avatar-lg': defaultTheme.spacing['14'],
+				'avatar-xl': defaultTheme.spacing['16']
 			},
 			width: {
 				sidebar: '20rem'
