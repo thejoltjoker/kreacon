@@ -12,6 +12,7 @@ export default {
 			fontSize: {
 				sm: '1rem',
 				base: '1rem',
+				lg: '1.125rem',
 				xl: '1.25rem',
 				'2xl': '1.563rem',
 				'3xl': '1.953rem',
@@ -28,10 +29,12 @@ export default {
 				xxl: '4.8rem',
 				form: '3.2rem',
 				button: '3.2rem',
-				thumbnail: '10rem'
-			},
-			width: {
-				sidebar: '20rem'
+				thumbnail: '10rem',
+				sidebar: '20rem',
+				'sidebar-xs': '12rem',
+				'sidebar-sm': '16rem',
+				'sidebar-md': '24rem',
+				'sidebar-lg': '36rem'
 			},
 			gridTemplateColumns: {
 				'admin-submissions-list-item': '10rem minmax(900px, 1fr) repeat(16, minmax(0, 1fr))'

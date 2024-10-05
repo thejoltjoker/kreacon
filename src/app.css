@@ -11,4 +11,8 @@
 	::selection {
 		@apply text-black dark:bg-white;
 	}
+
+	.debug {
+		@apply border border-red-500;
+	}
 }

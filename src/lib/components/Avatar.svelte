@@ -2,13 +2,12 @@
 	import { createAvatar, melt } from '@melt-ui/svelte';
 	import { UserRoundIcon } from 'lucide-svelte';
 	export let size: 'sm' | 'md' | 'lg' = 'md';
-	export let imageUrl: string;
-	$: console.log('Avatar:imageUrl', imageUrl);
+	export let src: string;
 
 	const {
 		elements: { image, fallback }
 	} = createAvatar({
-		src: imageUrl
+		src: src
 	});
 </script>
 
