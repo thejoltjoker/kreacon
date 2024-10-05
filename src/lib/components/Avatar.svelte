@@ -1,26 +1,40 @@
 <script lang="ts">
 	import { createAvatar, melt } from '@melt-ui/svelte';
-	let imageUrl: string;
-
-	export { imageUrl as image };
-
+	import { twMerge } from 'tailwind-merge';
 	import { UserRoundIcon } from 'lucide-svelte';
+
+	export let src: string;
+	export let size: 'sm' | 'md' | 'lg' = 'md';
 
 	const {
 		elements: { image, fallback }
 	} = createAvatar({
-		src: imageUrl
+		src: src
 	});
+
+	const sizeClasses = {
+		sm: 'size-avatar-sm',
+		md: 'size-avatar-md',
+		lg: 'size-avatar-lg'
+	};
+
+	const iconSizeClasses = {
+		sm: 'size-4',
+		md: 'size-6',
+		lg: 'size-8'
+	};
+
+	$: containerClasses = twMerge(
+		'flex items-center justify-center rounded-full border border-white bg-zinc-800',
+		sizeClasses[size]
+	);
+
+	$: imageClasses = twMerge('rounded-full', sizeClasses[size]);
 </script>
 
-<div
-	class="flex h-button w-button items-center justify-center rounded-full border border-white bg-zinc-800"
->
-	<img use:melt={$image} alt="Avatar" class="h-full w-full rounded-[inherit]" />
-	<span use:melt={$fallback} class="text-3xl font-medium text-zinc-200">
-		<UserRoundIcon class="size-6" />
+<div class={containerClasses}>
+	<img use:melt={$image} alt="Avatar" class={imageClasses} />
+	<span use:melt={$fallback} class="text-zinc-200">
+		<UserRoundIcon class={iconSizeClasses[size]} />
 	</span>
 </div>
-
-<style lang="postcss">
-</style>
