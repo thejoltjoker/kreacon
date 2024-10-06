@@ -1,6 +1,7 @@
 import { createLogger } from '$lib/server/logger';
 import { seedCategories } from './seedCategories';
 import { seedEvents } from './seedEvents';
+import { seedMedia } from './seedMedia';
 import { seedSubmissions } from './seedSubmissions';
 import { seedUsers } from './seedUsers';
 
@@ -16,6 +17,8 @@ export const seed = async () => {
 	await seedCategories();
 	logger.info('Seeding submissions...');
 	await seedSubmissions();
+	logger.info('Seeding media...');
+	await seedMedia();
 	logger.info('Seeding completed');
 };
 

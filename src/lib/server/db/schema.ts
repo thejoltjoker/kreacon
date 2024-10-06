@@ -229,16 +229,24 @@ export type SubmissionWithCategoryMediaReactionsUserVotes = InferSelectModel<typ
 
 // Votes
 
-export const votes = pgTable('vote', {
-	id: serial('id').primaryKey(),
-	name: text('name'),
-	submissionId: text('submission_id'),
-	userId: text('user_id'),
-	createdAt: timestamp('created_at').defaultNow(),
-	updatedAt: timestamp('updated_at')
-		.defaultNow()
-		.$onUpdate(() => new Date())
-});
+export const votes = pgTable(
+	'vote',
+	{
+		submissionId: text('submission_id')
+			.notNull()
+			.references(() => submissions.id, { onDelete: 'cascade' }),
+		userId: text('user_id')
+			.notNull()
+			.references(() => users.id, { onDelete: 'cascade' }),
+		createdAt: timestamp('created_at').defaultNow(),
+		updatedAt: timestamp('updated_at')
+			.defaultNow()
+			.$onUpdate(() => new Date())
+	},
+	(t) => ({
+		pk: primaryKey({ columns: [t.submissionId, t.userId] })
+	})
+);
 
 export type Vote = InferSelectModel<typeof votes>;
 export type InsertVote = InferInsertModel<typeof votes>;
@@ -282,7 +290,7 @@ export const reactionsRelations = relations(reactions, ({ one }) => ({
 
 export const media = pgTable('media', {
 	id: serial('id').primaryKey(),
-	submissionId: text('submission_id'),
+	submissionId: text('submission_id').references(() => submissions.id),
 	type: mediaTypeEnum('type').notNull(),
 	url: text('url').notNull(),
 	alt: text('alt'),

@@ -41,7 +41,8 @@ export default {
 				sidebar: '20rem'
 			},
 			gridTemplateColumns: {
-				'admin-submissions-list-item': '10rem minmax(900px, 1fr) repeat(16, minmax(0, 1fr))'
+				'admin-submissions-list-item': '10rem minmax(900px, 1fr) repeat(16, minmax(0, 1fr))',
+				submissions: 'repeat(auto-fill, minmax(300px, 1fr))'
 			},
 			borderRadius: {
 				sm: '.8rem',
