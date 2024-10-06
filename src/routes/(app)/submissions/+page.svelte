@@ -17,7 +17,7 @@
 			<div class="flex grow basis-[300px] flex-col gap-sm">
 				<div class="w-full overflow-hidden rounded-md">
 					<img
-						src={`${submission?.media?.url}`}
+						src={`mock/${submission?.media?.url}`}
 						alt={submission?.media?.alt}
 						class="w-full object-cover object-center"
 					/>
