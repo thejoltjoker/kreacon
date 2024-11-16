@@ -8,7 +8,7 @@ import { timestamps } from './shared';
 export const events = pgTable('event', {
 	id: serial('id').primaryKey(),
 	name: varchar({ length: 255 }).notNull(),
-	description: varchar({ length: 255 }),
+	description: varchar({ length: 512 }),
 	submissionsOpenAt: timestamp('submissions_open_at', { mode: 'string' }).notNull(),
 	submissionsCloseAt: timestamp('submissions_close_at', { mode: 'string' }).notNull(),
 	votingOpenAt: timestamp('voting_open_at', { mode: 'string' }).notNull(),
