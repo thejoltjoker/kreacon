@@ -1,5 +1,5 @@
 import { randomTestString } from '$lib/helpers/randomString';
-import { seed } from '../../../lib/server/seeders/seed';
+import { seed } from '../../../lib/server/db/seed';
 import type { RequestHandler } from './$types';
 
 export const GET: RequestHandler = async () => {
