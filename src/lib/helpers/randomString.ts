@@ -15,3 +15,7 @@ export const randomString = (): string => {
 		capitalize(randomAnimal())
 	].join('');
 };
+
+export const randomTestString = (): string => {
+	return [capitalize('Strong'), capitalize('Curious'), capitalize(randomAnimal())].join('');
+};
