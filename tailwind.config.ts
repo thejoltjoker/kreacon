@@ -1,5 +1,6 @@
 import type { Config } from 'tailwindcss';
 import twForms from '@tailwindcss/forms';
+import defaultTheme from 'tailwindcss/defaultTheme';
 
 export default {
 	content: ['./src/**/*.{html,js,svelte,ts}'],
@@ -12,35 +13,55 @@ export default {
 			fontSize: {
 				sm: '1rem',
 				base: '1rem',
+				lg: '1.125rem',
 				xl: '1.25rem',
 				'2xl': '1.563rem',
 				'3xl': '1.953rem',
 				'4xl': '2.441rem',
 				'5xl': '3.052rem'
 			},
+			scale: {
+				98: '.98'
+			},
+			maxWidth: {
+				xxs: defaultTheme.spacing['2'],
+				xs: defaultTheme.spacing['3'],
+				sm: defaultTheme.spacing['4'],
+				md: defaultTheme.spacing['6'],
+				lg: defaultTheme.spacing['8'],
+				xl: defaultTheme.spacing['10'],
+				xxl: defaultTheme.spacing['12']
+			},
 			spacing: {
-				xxs: '0.3rem',
-				xs: '0.6rem',
-				sm: '1.2rem',
-				md: '1.6rem',
-				lg: '2rem',
-				xl: '2.4rem',
-				xxl: '4.8rem',
-				form: '3.2rem',
-				button: '3.2rem',
-				thumbnail: '10rem'
+				xxs: defaultTheme.spacing['2'],
+				xs: defaultTheme.spacing['3'],
+				sm: defaultTheme.spacing['4'],
+				md: defaultTheme.spacing['6'],
+				lg: defaultTheme.spacing['8'],
+				xl: defaultTheme.spacing['10'],
+				xxl: defaultTheme.spacing['12'],
+				form: defaultTheme.spacing['12'],
+				'button-sm': defaultTheme.spacing['10'],
+				'button-md': defaultTheme.spacing['12'],
+				'button-lg': defaultTheme.spacing['16'],
+				thumbnail: defaultTheme.spacing['40'],
+				'avatar-sm': defaultTheme.spacing['10'],
+				'avatar-md': defaultTheme.spacing['12'],
+				'avatar-lg': defaultTheme.spacing['14'],
+				'avatar-xl': defaultTheme.spacing['16']
 			},
 			width: {
 				sidebar: '20rem'
 			},
 			gridTemplateColumns: {
-				'admin-submissions-list-item': '10rem minmax(900px, 1fr) repeat(16, minmax(0, 1fr))'
+				'admin-submissions-list-item': '10rem minmax(900px, 1fr) repeat(16, minmax(0, 1fr))',
+				submissions: 'repeat(auto-fill, minmax(400px, 1fr))'
 			},
 			borderRadius: {
-				sm: '.8rem',
-				md: '1.6rem',
-				lg: '2.4rem',
-				xl: '3.2rem'
+				sm: defaultTheme.spacing['4'],
+				md: defaultTheme.spacing['8'],
+				lg: defaultTheme.spacing['10'],
+				xl: defaultTheme.spacing['12']
 			},
 			colors: {
 				amber: {

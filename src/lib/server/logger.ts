@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { ApplicationInsights } from '@microsoft/applicationinsights-web';
-import { getAppInsights } from '$lib/server/azure/insights';
+import { getAppInsights } from '../server/azure/insights';
 
 let azureAppInsights: ApplicationInsights | undefined = undefined;
 
@@ -75,52 +75,3 @@ class Logger {
 }
 
 export const createLogger = (id: string, caller?: string) => new Logger(id, caller);
-
-// import { ApplicationInsights } from '@microsoft/applicationinsights-web';
-// import { getAppInsights } from './azure/insights';
-
-// class Logger {
-// 	private static instance: Logger;
-// 	private appInsights: ApplicationInsights | undefined;
-
-// 	private constructor() {
-// 		this.appInsights = getAppInsights();
-// 	}
-
-// 	// Singleton pattern to get the logger instance
-// 	public static getInstance(): Logger {
-// 		if (!Logger.instance) {
-// 			Logger.instance = new Logger();
-// 		}
-// 		return Logger.instance;
-// 	}
-
-// 	// Method to log regular messages
-// 	public log(message: string): void {
-// 		console.log(`[LOG]: ${message}`);
-// 		if (this.appInsights) {
-// 			this.appInsights.trackTrace({ message: `[LOG]: ${message}` });
-// 		}
-// 	}
-
-// 	// Method to log errors
-// 	public error(message: string, exception?: Error): void {
-// 		console.error(`[ERROR]: ${message}`);
-// 		if (this.appInsights) {
-// 			this.appInsights.trackException({ exception, properties: { message } });
-// 		}
-// 	}
-
-// 	// Method to log warnings
-// 	public warn(message: string): void {
-// 		console.warn(`[WARN]: ${message}`);
-// 		if (this.appInsights) {
-// 			this.appInsights.trackTrace({ message: `[WARN]: ${message}`, severityLevel: 2 });
-// 		}
-// 	}
-// }
-
-// // Usage example
-// export const logger = Logger.getInstance();
-
-// export default Logger;

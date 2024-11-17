@@ -5,10 +5,19 @@
 @import 'tailwindcss/utilities';
 
 @layer base {
-	body {
-		@apply bg-white text-black dark:bg-black dark:text-white;
+	html {
+		@apply h-full;
 	}
+
+	body {
+		@apply h-full bg-white text-black dark:bg-black dark:text-white;
+	}
+
 	::selection {
 		@apply text-black dark:bg-white;
+	}
+
+	.debug {
+		@apply border border-red-500;
 	}
 }

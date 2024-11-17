@@ -1,27 +1,27 @@
 <script lang="ts">
-	import { createAvatar, melt } from '@melt-ui/svelte';
+	import { Avatar, type AvatarImageLoadingStatus } from 'bits-ui';
 	import { UserRoundIcon } from 'lucide-svelte';
-	export let size: 'sm' | 'md' | 'lg' = 'md';
-	export let imageUrl: string;
-	$: console.log('Avatar:imageUrl', imageUrl);
+	import { twMerge } from 'tailwind-merge';
 
-	const {
-		elements: { image, fallback }
-	} = createAvatar({
-		src: imageUrl
-	});
+	interface AvatarProps extends Avatar.RootProps {
+		src: string;
+	}
+
+	let { src, loadingStatus = undefined }: AvatarProps = $props();
+
+	let rootClasses = $derived(
+		twMerge(
+			'w-full rounded-full border bg-zinc-900 aspect-square max-w-xxl',
+			loadingStatus === 'loaded' ? 'border-white' : 'border-white'
+		)
+	);
 </script>
 
-<div
-	class="flex aspect-square items-center justify-center rounded-full border border-white bg-zinc-800"
-	class:size-button={size === 'sm'}
-	class:size-64={size === 'lg'}
->
-	<img use:melt={$image} alt="Avatar" class="h-full w-full rounded-[inherit]" />
-	<span use:melt={$fallback} class="text-3xl font-medium text-zinc-200">
-		<UserRoundIcon class="size-6" />
-	</span>
-</div>
-
-<style lang="postcss">
-</style>
+<Avatar.Root {loadingStatus} class={rootClasses}>
+	<div
+		class="flex h-full w-full items-center justify-center overflow-hidden rounded-full border-2 border-transparent"
+	>
+		<Avatar.Image {src} alt="Avatar" />
+		<Avatar.Fallback><UserRoundIcon /></Avatar.Fallback>
+	</div>
+</Avatar.Root>

@@ -17,6 +17,5 @@ export const load = (async ({ params }) => {
 		}
 	});
 
-	// console.log(result);
 	return { submissions: result };
 }) satisfies PageServerLoad;

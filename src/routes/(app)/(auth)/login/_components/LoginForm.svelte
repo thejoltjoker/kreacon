@@ -45,6 +45,6 @@
 
 <style lang="postcss">
 	form {
-		@apply flex flex-col gap-md;
+		@apply flex w-full flex-col gap-md;
 	}
 </style>

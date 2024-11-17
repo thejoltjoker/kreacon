@@ -1,5 +1,6 @@
+import env from '../../env';
 import { ApplicationInsights } from '@microsoft/applicationinsights-web';
-import { env } from '$env/dynamic/private';
+
 let appInsights: ApplicationInsights | undefined = undefined;
 
 export const getAppInsights = () => {
