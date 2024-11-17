@@ -5,7 +5,9 @@
 	import SuperDebug, { superForm } from 'sveltekit-superforms';
 	import type { PageData } from './$types';
 	import ImageUpload from './_components/ImageUpload.svelte';
-	import { user } from '$lib/stores/userStore';
+	import { userProvider } from '$lib/providers/userProvider.svelte';
+
+	const user = userProvider.user;
 
 	export let data: PageData;
 
@@ -37,7 +39,7 @@
 		}
 	};
 
-	user.set(data.user);
+	userProvider.user = data.user;
 </script>
 
 <svelte:head>

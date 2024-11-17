@@ -48,9 +48,9 @@
 
 <style lang="postcss">
 	li {
-		@apply h-button-md flex items-center justify-center rounded-full px-md transition;
+		@apply h-input-md flex items-center justify-center rounded-full px-md transition;
 	}
 	.pill {
-		@apply h-button-md flex items-center justify-center rounded-full bg-white px-md text-black;
+		@apply h-input-md flex items-center justify-center rounded-full bg-white px-md text-black;
 	}
 </style>

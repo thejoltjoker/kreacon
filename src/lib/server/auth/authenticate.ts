@@ -47,7 +47,7 @@ export const authenticate = async (event: RequestEvent): Promise<AccessToken | n
 				return null;
 			}
 
-			if (session.expiresAt < new Date()) {
+			if (new Date(session.expiresAt) < new Date()) {
 				logger.info('Session expired, deleting session and cookies');
 				await db.delete(sessions).where(eq(sessions.sessionToken, session.sessionToken));
 				event.cookies.delete('refreshToken', { path: '/' });
@@ -57,7 +57,7 @@ export const authenticate = async (event: RequestEvent): Promise<AccessToken | n
 
 			logger.info('Creating new tokens for valid session');
 			const { accessToken, refreshToken } = createTokens(session.sessionToken, session.userId);
-			setCookies(event.cookies, accessToken, refreshToken, session.expiresAt);
+			setCookies(event.cookies, accessToken, refreshToken, new Date(session.expiresAt));
 
 			return { sessionToken: session.sessionToken, userId: session.userId };
 		} catch (error) {

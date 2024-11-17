@@ -41,9 +41,9 @@ export default {
 				xl: defaultTheme.spacing['10'],
 				xxl: defaultTheme.spacing['12'],
 				form: defaultTheme.spacing['12'],
-				'button-sm': defaultTheme.spacing['10'],
-				'button-md': defaultTheme.spacing['12'],
-				'button-lg': defaultTheme.spacing['16'],
+				'input-sm': defaultTheme.spacing['10'],
+				'input-md': defaultTheme.spacing['12'],
+				'input-lg': defaultTheme.spacing['16'],
 				thumbnail: defaultTheme.spacing['40'],
 				'avatar-sm': defaultTheme.spacing['10'],
 				'avatar-md': defaultTheme.spacing['12'],
@@ -58,6 +58,7 @@ export default {
 				submissions: 'repeat(auto-fill, minmax(400px, 1fr))'
 			},
 			borderRadius: {
+				xs: defaultTheme.spacing['3.5'],
 				sm: defaultTheme.spacing['4'],
 				md: defaultTheme.spacing['8'],
 				lg: defaultTheme.spacing['10'],

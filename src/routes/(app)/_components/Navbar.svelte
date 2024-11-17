@@ -2,7 +2,10 @@
 	import AccountMenu from '$lib/components/AccountMenu.svelte';
 	import Button from '$lib/components/Button.svelte';
 	import Link from '$lib/components/Link.svelte';
-	import { user } from '$lib/stores/userStore';
+	import { userProvider } from '$lib/providers/userProvider.svelte';
+
+	const user = userProvider.user;
+
 	import { AlignJustifyIcon, PlusIcon } from 'lucide-svelte';
 	import { _ } from 'svelte-i18n';
 	import { fly } from 'svelte/transition';
@@ -23,12 +26,12 @@
 		{/each}
 	</ul>
 	<div class="md:hidden">
-		<Button square on:click={() => (isMenuOpen = !isMenuOpen)} class="z-20">
+		<Button on:click={() => (isMenuOpen = !isMenuOpen)} class="z-20">
 			<AlignJustifyIcon class="size-5" />
 		</Button>
 	</div>
 	<ul class="right">
-		{#if $user}
+		{#if userProvider.user}
 			<li>
 				<div class="hidden md:block">
 					<Button href="/submit" size="md">
@@ -36,7 +39,7 @@
 					</Button>
 				</div>
 				<div class="md:hidden">
-					<Button square size="md">
+					<Button on:click={() => (isMenuOpen = !isMenuOpen)} size="md">
 						<PlusIcon class="h-4 w-4" />
 					</Button>
 				</div>
@@ -46,7 +49,9 @@
 			</li>
 		{:else}
 			<li><Button href="/login" size="md">{$_('nav.login', { default: 'Login' })}</Button></li>
-			<li><Button href="/register" size="md">{$_('nav.register', { default: 'Register' })}</Button></li>
+			<li>
+				<Button href="/register" size="md">{$_('nav.register', { default: 'Register' })}</Button>
+			</li>
 		{/if}
 	</ul>
 </nav>

@@ -1,19 +1,15 @@
 <script lang="ts">
+	import { Button } from 'bits-ui';
 	import { twMerge } from 'tailwind-merge';
-	import { createEventDispatcher } from 'svelte';
+	import type { Snippet } from 'svelte';
+	type Props = Button.RootProps & {
+		variant?: 'rose' | 'transparent';
+		class?: string | undefined;
+		children: Snippet;
+		size?: 'sm' | 'md' | 'lg';
+	};
 
-	export let type: 'button' | 'submit' = 'button';
-	export let disabled: boolean = false;
-	export let variant: 'rose' | 'transparent' = 'transparent';
-	export let size: 'sm' | 'md' | 'lg' = 'md';
-	export let square: boolean = false;
-	export let href: string | undefined = undefined;
-	let className: string | undefined = undefined;
-	export { className as class };
-
-	const dispatch = createEventDispatcher();
-
-	const dispatch = createEventDispatcher();
+	let { variant, size, class: className, children, ...restProps }: Props = $props();
 
 	const variants = {
 		rose: 'bg-rose-500 text-white border-rose-600 hover:enabled:bg-rose-900/20 transition hover:enabled:border hover:enabled:border-rose-500',
@@ -22,26 +18,19 @@
 	};
 
 	const sizeClasses = {
-		sm: 'h-button-sm text-sm px-md',
-		md: 'h-button-md text-base px-5',
-		lg: 'h-button-lg text-lg px-5'
+		sm: 'h-input-sm text-sm px-md',
+		md: 'h-input-md text-base px-5',
+		lg: 'h-input-lg text-lg px-5'
 	};
 
-	$: classes = twMerge(
-		'relative inline-flex flex-grow items-center justify-center gap-xs rounded-full border font-bold transition-colors disabled:cursor-default disabled:opacity-50',
-		variants[variant],
-		sizeClasses[size],
-		square && 'aspect-square p-0 flex-grow-0',
-		className
+	let classes = $derived(
+		twMerge(
+			'relative inline-flex flex-grow items-center justify-center gap-xs rounded-full border font-bold transition-colors disabled:cursor-default disabled:opacity-50',
+			variants[variant ?? 'transparent'],
+			sizeClasses[size ?? 'md'],
+			className
+		)
 	);
 </script>
 
-{#if href}
-	<a {href} class={classes}>
-		<slot />
-	</a>
-{:else}
-	<button {type} {disabled} on:click={(e) => dispatch('click', e)} class={classes}>
-		<slot />
-	</button>
-{/if}
+<Button.Root {...restProps} class={classes}>{@render children()}</Button.Root>
