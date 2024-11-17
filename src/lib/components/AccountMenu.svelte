@@ -16,14 +16,14 @@
 
 <!-- Avatar -->
 <button type="button" class="trigger" use:melt={$trigger} aria-label="Update dimensions">
-	<Avatar src={$user?.image ?? ''} size="md" />
+	<Avatar src={$user?.image ?? ''} />
 	<span class="sr-only">Open account menu</span>
 </button>
 
 {#if $open}
 	<div class="menu" use:melt={$menu} transition:fly={{ duration: 150, y: -10 }}>
 		<div class="flex items-center gap-xs px-sm">
-			<Avatar src={$user?.image ?? ''} size="xl" />
+			<Avatar src={$user?.image ?? ''} />
 			<div class="flex flex-col">
 				<p class="text-sm font-bold">{$user?.username}</p>
 				<p class="text-sm text-zinc-500">{$user?.email}</p>

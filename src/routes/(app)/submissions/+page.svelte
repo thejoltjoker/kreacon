@@ -30,7 +30,7 @@
 					<div
 						class="inline-flex w-fit -translate-y-sm items-center gap-sm rounded-full p-xs pr-md opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:bg-black/75 group-hover:opacity-100 group-hover:backdrop-blur"
 					>
-						<Avatar src={`/${submission.user?.picture}`} size="sm" />
+						<Avatar src={`/${submission.user?.picture}`} />
 						<p>{submission.user?.username}</p>
 					</div>
 					<div

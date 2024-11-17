@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Card from '$lib/components/Card.svelte';
 	import type { PageData } from './$types';
 	import ReactionsList from './_components/ReactionsList.svelte';
 	import SubmissionActions from './_components/SubmissionActions.svelte';
@@ -16,10 +17,15 @@
 	<section class="media">
 		<SubmissionMedia {media} />
 	</section>
+
 	<aside class="info">
-		<SubmissionDetails {submission} />
-		<SubmissionActions {submission} />
-		<ReactionsList {reactions} />
+		<Card>
+			<SubmissionDetails {submission} />
+			<SubmissionActions {submission} />
+		</Card>
+		<Card>
+			<ReactionsList {reactions} />
+		</Card>
 	</aside>
 </div>
 
@@ -29,10 +35,10 @@
 	}
 
 	.media {
-		@apply w-fit;
+		@apply flex w-full items-center justify-center;
 	}
 
 	.info {
-		@apply lg:min-w-sidebar-lg lg:max-w-sidebar-lg flex w-full flex-col gap-sm;
+		@apply flex w-full max-w-[35rem] flex-col gap-md;
 	}
 </style>

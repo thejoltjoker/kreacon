@@ -5,34 +5,59 @@ import type { PageServerLoad } from './$types';
 
 export const load = (async ({ params, locals }) => {
 	const { user } = locals;
-	// console.log(user);
+	const { id } = params;
+	console.log(id);
 
+	// const result = await db.query.submissions.findFirst({
+	// 	where: eq(submissions.id, id),
+	// 	with: {
+	// 		media: true,
+	// 		reactions: {
+	// 			with: {
+	// 				user: {
+	// 					columns: {
+	// 						username: true,
+	// 						image: true
+	// 					}
+	// 				}
+	// 			}
+	// 		},
+	// 		category: true,
+	// 		user: {
+	// 			columns: {
+	// 				username: true,
+	// 				image: true
+	// 			}
+	// 		},
+	// 		votes: {
+	// 			where: and(eq(votes.submissionId, id), eq(votes.userId, user!.id))
+	// 		}
+	// 	}
+	// });
 	const result = await db.query.submissions.findFirst({
-		where: eq(submissions.id, params.id),
+		where: eq(submissions.id, id),
 		with: {
 			media: true,
-			reactions: {
-				with: {
-					user: {
-						columns: {
-							username: true,
-							image: true
-						}
-					}
-				}
-			},
 			category: true,
 			user: {
 				columns: {
 					username: true,
-					image: true
+					picture: true
 				}
 			},
-			votes: {
-				where: and(eq(votes.submissionId, params.id), eq(votes.userId, user!.id))
+			reactions: {
+				user: {
+					columns: {
+						username: true,
+						picture: true
+					}
+				}
 			}
+			// votes: {
+			// 	where: and(eq(votes.submissionId, id), eq(votes.userId, user!.id))
+			// }
 		}
 	});
-	console.log(result);
+
 	return { submission: result };
 }) satisfies PageServerLoad;

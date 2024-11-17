@@ -31,7 +31,7 @@
 
 <li class="flex items-center gap-2">
 	<div>
-		<Avatar src={`/${reaction.user?.image}`} size="sm" />
+		<Avatar src={`/${reaction.user?.image}`} />
 	</div>
 	<div class="flex w-full flex-col">
 		<p class="text-sm font-bold">{reaction.user?.username}</p>

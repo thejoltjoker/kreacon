@@ -5,7 +5,7 @@
 	export let media: Media | null | undefined;
 </script>
 
-<section class="media debug">
+<section class="media">
 	<img src={`/${media?.url}`} alt={media?.alt} />
 </section>
 
@@ -13,7 +13,7 @@
 	.media {
 		@apply w-fit;
 		& img {
-			@apply max-h-[90vh] max-w-full rounded-lg;
+			@apply max-h-[90vh] max-w-full rounded-md;
 		}
 	}
 </style>
