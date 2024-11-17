@@ -6,8 +6,11 @@ export const load = (async () => {
 		with: {
 			user: true,
 			media: true,
-			reactions: true
+			reactions: true,
+			category: true
 		}
 	});
-	return { submissions: submissions };
+	const categories = await db.query.categories.findMany();
+	console.log(submissions);
+	return { submissions: submissions, categories: categories };
 }) satisfies PageServerLoad;

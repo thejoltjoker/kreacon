@@ -1,18 +1,21 @@
 <script lang="ts">
-	import type { SelectOptions } from '$lib/components/Select/Select.types';
-	import { createSelect, melt } from '@melt-ui/svelte';
+	import { createSelect, melt, type SelectOption } from '@melt-ui/svelte';
 	import { CheckIcon, ChevronDownIcon } from 'lucide-svelte';
-	import { _ } from 'svelte-i18n';
-	import { fade } from 'svelte/transition';
-	let labelText: string;
-	export { labelText as label };
+	import { fly, fade, slide } from 'svelte/transition';
+	import type { SelectOptions } from './Select.types';
+
 	export let options: SelectOptions;
+	let selectLabel: string;
+	export { selectLabel as label };
+	export let selectedLabelPrefix: string;
+	export let defaultSelected: SelectOption<string> | undefined = undefined;
 
 	const {
 		elements: { trigger, menu, option, group, groupLabel, label },
 		states: { selectedLabel, open },
 		helpers: { isSelected }
 	} = createSelect<string>({
+		defaultSelected: defaultSelected,
 		forceVisible: true,
 		positioning: {
 			placement: 'bottom',
@@ -24,67 +27,42 @@
 
 <div class="flex flex-col gap-1">
 	<!-- svelte-ignore a11y-label-has-associated-control - $label contains the 'for' attribute -->
-	<label class="debug-green font-bold" use:melt={$label}>{labelText}</label>
-	<button
-		class="flex items-center justify-between rounded-sm border border-white px-sm py-xs"
-		use:melt={$trigger}
-		aria-label="Food"
-	>
-		{$selectedLabel}
-		{!$selectedLabel
-			? options.length < 1
-				? $_('form.no_options_available')
-				: $_('form.select_one')
-			: ''}
-		<ChevronDownIcon class="size-5" />
+	<label class="label hidden" use:melt={$label}>{selectLabel}</label>
+	<button class="trigger" use:melt={$trigger} aria-label="Food">
+		{`${selectedLabelPrefix ?? ''} ${$selectedLabel}` || 'Select one'}
+		<ChevronDownIcon class="-mr-1 ms-2 size-5" />
 	</button>
-
 	{#if $open}
-		<div
-			class="flex flex-col rounded-sm border border-white bg-black px-sm py-4"
-			use:melt={$menu}
-			transition:fade={{ duration: 150 }}
-		>
-			{#if options.length < 1}
-				<div class="flex flex-col" use:melt={$group('no-options')}>
-					<div class="font-bold text-neutral-500" use:melt={$groupLabel('no-options')}>
-						No options available
-					</div>
-				</div>
-			{/if}
-			{#each Object.entries(options) as [key, arr]}
-				{#if arr.options}
-					<div class="flex flex-col" use:melt={$group(key)}>
-						<div class="font-bold text-neutral-500" use:melt={$groupLabel(key)}>
-							{arr.label}
+	<div class="container" use:melt={$menu} transition:fly={{ y: -20, duration: 150 }}>
+			{#each options as opt}
+				{#if typeof opt.value !== 'string' && opt.label}
+					<div use:melt={$group(opt.label)}>
+						<div class="group" use:melt={$groupLabel(opt.label)}>
+							{opt.label}
 						</div>
-					</div>
-					<div class="flex flex-col">
-						{#each arr.options as { value, label, isDisabled }}
+						{#each opt.value as item}
 							<div
-								class="relative cursor-pointer rounded-sm px-xs py-xs pl-8 text-white focus:z-10 hover:enabled:bg-white data-[highlighted]:bg-neutral-200 data-[highlighted]:text-neutral-900 data-[disabled]:opacity-50"
-								use:melt={$option({ value, label, disabled: isDisabled })}
+								class="item"
+								use:melt={$option({ value: item.label, label: item.label })}
+								class:underline={$isSelected(item.label)}
 							>
-								<div class="check {$isSelected(value) ? 'block' : 'hidden'}">
+								<div class="check {$isSelected(item.label) ? 'block' : 'hidden'}">
 									<CheckIcon class="size-4" />
 								</div>
-
-								{label}
+								{item.label}
 							</div>
 						{/each}
 					</div>
 				{:else}
-					<div class="flex flex-col">
-						<div
-							class="relative cursor-pointer rounded-sm px-xs py-xs pl-8 text-white focus:z-10 hover:enabled:bg-white data-[highlighted]:bg-neutral-200 data-[highlighted]:text-neutral-900 data-[disabled]:opacity-50"
-							use:melt={$option({ value: arr.value, label: arr.label, disabled: arr.isDisabled })}
-						>
-							<div class="check {$isSelected(arr.value) ? 'block' : 'hidden'}">
-								<CheckIcon class="size-4" />
-							</div>
-
-							{label}
-						</div>
+					<div
+						class="item"
+						use:melt={$option({ value: opt.label, label: opt.label })}
+						class:underline={$isSelected(opt.label)}
+					>
+						<!-- <div class="check {$isSelected(opt.label) ? 'block' : 'hidden'}">
+							<CheckIcon class="size-4" />
+						</div> -->
+						{opt.label}
 					</div>
 				{/if}
 			{/each}
@@ -93,7 +71,28 @@
 </div>
 
 <style lang="postcss">
+	.label {
+		@apply text-white;
+	}
+	.trigger {
+		@apply h-button-md flex min-w-48 items-center justify-between rounded-full border border-white bg-black px-md py-2 text-white;
+	}
+	.container {
+		@apply z-10 flex flex-col overflow-y-auto rounded-sm bg-white p-1 shadow focus:!ring-0;
+	}
+	.group {
+		@apply py-1 pl-4 pr-4 font-semibold capitalize text-neutral-800;
+	}
+
+	.item {
+		@apply h-button-md relative flex cursor-pointer items-center rounded-sm px-md text-neutral-800 hover:bg-black hover:text-white focus:z-10 focus:text-zinc-700 data-[highlighted]:bg-black data-[highlighted]:text-white data-[disabled]:opacity-50;
+	}
 	.check {
-		@apply absolute left-2 top-1/2 z-20 -translate-y-1/2 text-neutral-500;
+		position: absolute;
+		left: theme(spacing.2);
+		top: 50%;
+		z-index: theme(zIndex.20);
+		translate: 0 calc(-50% + 1px);
+		color: theme(colors.zinc.500);
 	}
 </style>

@@ -1,4 +1,3 @@
-import { randomString } from '@/lib/helpers/randomString';
 import { relations, type InferInsertModel, type InferSelectModel } from 'drizzle-orm';
 import { integer, pgTable, uuid, varchar } from 'drizzle-orm/pg-core';
 import type { User, Vote } from 'lucide-svelte';
@@ -9,6 +8,7 @@ import reactions, { type Reaction } from './reaction';
 import { timestamps } from './shared';
 import users from './user';
 import { votes } from './vote';
+import { randomString } from '../../../helpers/randomString';
 
 export const submissions = pgTable('submission', {
 	id: varchar('id')

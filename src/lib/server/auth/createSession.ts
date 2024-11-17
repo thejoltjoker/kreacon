@@ -10,7 +10,7 @@ export const createSession = async (userId: string) => {
 		const sessionPayload: InsertSession = {
 			sessionToken,
 			userId,
-			expiresAt: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30) // 30 days
+			expiresAt: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30).toISOString() // 30 days
 		};
 		const session = await db.insert(sessions).values(sessionPayload).returning();
 

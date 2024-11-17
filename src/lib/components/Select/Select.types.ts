@@ -1,8 +1,10 @@
-export type SelectOptions = SelectOption[];
+import type { SelectOption as MeltSelectOption } from '@melt-ui/svelte';
 
-export interface SelectOption {
+export type SelectOption = MeltSelectOption<string>;
+
+export interface SelectGroup {
+	value: SelectOption[];
 	label: string;
-	value?: string;
-	isDisabled?: boolean;
-	options?: SelectOption[];
 }
+
+export type SelectOptions = (SelectGroup | SelectOption)[];
