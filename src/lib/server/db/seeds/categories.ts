@@ -8,8 +8,7 @@ export const seed = async (db: db) => {
 			await db
 				.insert(schema.categories)
 				.values({
-					...category,
-					event: new Date().toISOString()
+					...category
 				})
 				.onConflictDoNothing()
 				.returning();

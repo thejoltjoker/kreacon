@@ -16,7 +16,13 @@ async function resetTable(db: db, table: Table) {
 }
 
 logger.info('Resetting tables...');
-for (const table of [schema.users, schema.events, schema.categories, schema.categoriesToEvents]) {
+for (const table of [
+	schema.users,
+	schema.events,
+	schema.events,
+	schema.categoriesToEvents
+	// schema.submissions
+]) {
 	await resetTable(db, table);
 }
 
@@ -28,6 +34,9 @@ await seeds.categories(db);
 
 logger.info('Seeding events...');
 await seeds.events(db);
+
+// logger.info('Seeding submissions...');
+// await seeds.submissions(db);
 
 logger.info('Seeding completed');
 await db.$client.end();

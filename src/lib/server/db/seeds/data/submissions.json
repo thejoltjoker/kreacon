@@ -1,0 +1,14 @@
+[
+	{
+		"id": "StrongCuriousChihuahua",
+		"user": { "email": "john.doe@example.com" },
+		"title": "Whispers of the Forgotten Forest",
+		"category": { "name": "Combined Demo" },
+		"event": { "name": "Beacon Summer 1991" },
+		"media": {
+			"type": "image",
+			"url": "images/StrongCuriousChihuahua.png",
+			"alt": "Whispers of the Forgotten Forest"
+		}
+	}
+]
