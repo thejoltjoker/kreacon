@@ -9,6 +9,8 @@ import type { RequestHandler } from './$types';
 import { getOAuthClient } from '$lib/server/auth/oauth/getOAuthClient';
 import { isOAuthProvider, type OAuthProvider } from '$lib/server/auth/oauth/OAuthClient';
 import { createLogger } from '$lib/server/logger';
+import { randomString } from '$lib/helpers/randomString';
+import bcrypt from 'bcryptjs';
 
 const logger = createLogger('auth/callback');
 
@@ -53,13 +55,14 @@ export const GET: RequestHandler = async ({ url, params, cookies }) => {
 	});
 
 	if (!user) {
-		const inserted = await db
+		[user] = await db
 			.insert(users)
 			.values({
+				username: randomString(),
+				password: await bcrypt.hash(crypto.randomUUID(), 12),
 				email: userInfo.email
 			})
 			.returning();
-		user = inserted[0];
 	}
 
 	await db

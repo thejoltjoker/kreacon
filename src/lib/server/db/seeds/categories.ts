@@ -1,5 +1,5 @@
-import { db } from '@/lib/server/db';
-import * as schema from '@/lib/server/db/schema';
+import { db } from '../../db';
+import * as schema from '../../db/schema';
 import data from './data/categories.json';
 
 export const seed = async (db: db) => {
@@ -10,7 +10,6 @@ export const seed = async (db: db) => {
 				.values({
 					...category
 				})
-				.onConflictDoNothing()
 				.returning();
 		})
 	);

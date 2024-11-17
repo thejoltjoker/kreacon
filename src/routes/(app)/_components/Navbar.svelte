@@ -8,13 +8,19 @@
 	import { fly } from 'svelte/transition';
 
 	let isMenuOpen = false;
+
+	const menuItems = [
+		{ label: $_('nav.home', { default: 'Home' }), href: '/' },
+		{ label: $_('nav.submissions', { default: 'Submissions' }), href: '/submissions' }
+	];
 </script>
 
 <nav>
 	<ul class="left">
 		<li><a href="/" id="title">Kreacon</a></li>
-		<li><Link href="/submissions">{$_('nav.submissions', { default: 'Submissions' })}</Link></li>
-		<li><Link href="/categories">{$_('nav.categories', { default: 'Categories' })}</Link></li>
+		{#each menuItems as item}
+			<li><Link href={item.href}>{item.label}</Link></li>
+		{/each}
 	</ul>
 	<div class="md:hidden">
 		<Button square on:click={() => (isMenuOpen = !isMenuOpen)} class="z-20">
@@ -40,6 +46,7 @@
 			</li>
 		{:else}
 			<li><Button href="/login" size="md">{$_('nav.login', { default: 'Login' })}</Button></li>
+			<li><Button href="/register" size="md">{$_('nav.register', { default: 'Register' })}</Button></li>
 		{/if}
 	</ul>
 </nav>
@@ -53,31 +60,18 @@
 		</div> -->
 		<div class="flex h-full items-center justify-center">
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
+			<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 			<ul class="flex flex-col gap-lg text-2xl" on:click={() => (isMenuOpen = false)}>
-				<li
-					in:fly={{
-						delay: 50,
-						y: -20
-					}}
-				>
-					<Link href="/">{$_('nav.home', { default: 'Home' })}</Link>
-				</li>
-				<li
-					in:fly={{
-						delay: 100,
-						y: -20
-					}}
-				>
-					<Link href="/submissions">{$_('nav.submissions', { default: 'Submissions' })}</Link>
-				</li>
-				<li
-					in:fly={{
-						delay: 150,
-						y: -20
-					}}
-				>
-					<Link href="/categories">{$_('nav.categories', { default: 'Categories' })}</Link>
-				</li>
+				{#each menuItems as item}
+					<li
+						in:fly={{
+							delay: 50,
+							y: -20
+						}}
+					>
+						<Link href={item.href}>{item.label}</Link>
+					</li>
+				{/each}
 			</ul>
 		</div>
 	</div>

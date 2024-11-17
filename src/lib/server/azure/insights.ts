@@ -1,4 +1,4 @@
-import env from '@/lib/env';
+import env from '../../env';
 import { ApplicationInsights } from '@microsoft/applicationinsights-web';
 
 let appInsights: ApplicationInsights | undefined = undefined;

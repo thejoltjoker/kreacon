@@ -1,5 +1,5 @@
-import { db } from '@/lib/server/db';
-import * as schema from '@/lib/server/db/schema';
+import { db } from '../../db';
+import * as schema from '../../db/schema';
 import data from './data/media.json';
 import { eq } from 'drizzle-orm';
 

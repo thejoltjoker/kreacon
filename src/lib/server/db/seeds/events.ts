@@ -1,5 +1,5 @@
-import { db } from '@/lib/server/db';
-import * as schema from '@/lib/server/db/schema';
+import { db } from '../../db';
+import * as schema from '../../db/schema';
 import data from './data/events.json';
 import { eq } from 'drizzle-orm';
 
@@ -21,7 +21,6 @@ export const seed = async (db: db) => {
 				.values({
 					...event
 				})
-				.onConflictDoNothing()
 				.returning();
 
 			await Promise.all(

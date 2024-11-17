@@ -1,5 +1,5 @@
-import { db } from '@/lib/server/db';
-import * as schema from '@/lib/server/db/schema';
+import { db } from '../../db';
+import * as schema from '../../db/schema';
 import users from './data/users.json';
 import bcrypt from 'bcryptjs';
 

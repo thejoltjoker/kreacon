@@ -13,7 +13,7 @@ export const categories = pgTable('category', {
 });
 
 export const categoriesRelations = relations(categories, ({ many }) => ({
-	categoriesToEvents: many(categoriesToEvents, { relationName: 'categories_to_events' }),
+	categoriesToEvents: many(categoriesToEvents),
 	submissions: many(submissions)
 }));
 

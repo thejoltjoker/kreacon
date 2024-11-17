@@ -10,5 +10,377 @@
 			"url": "images/StrongCuriousChihuahua.png",
 			"alt": "Whispers of the Forgotten Forest"
 		}
+	},
+	{
+		"id": "StrongCuriousHerring",
+		"user": { "email": "john.doe@example.com" },
+		"category": { "name": "Prerendered Music" },
+		"event": { "name": "Beacon Summer 1991" },
+		"title": "Echoes in the Urban Labyrinth",
+		"media": {
+			"type": "image",
+			"url": "images/StrongCuriousHerring.png",
+			"alt": "Echoes in the Urban Labyrinth"
+		}
+	},
+	{
+		"id": "StrongCuriousBloodhound",
+		"user": { "email": "john.doe@example.com" },
+		"category": { "name": "Tracked Music" },
+		"event": { "name": "Beacon Summer 1991" },
+		"title": "Fragments of a Shattered Dream",
+		"media": {
+			"type": "image",
+			"url": "images/StrongCuriousBloodhound.png",
+			"alt": "Fragments of a Shattered Dream"
+		}
+	},
+	{
+		"id": "StrongCuriousDuck",
+		"user": { "email": "john.doe@example.com" },
+		"category": { "name": "Freestyle Graphics" },
+		"event": { "name": "Beacon Summer 1991" },
+		"title": "The Dancer's Last Pirouette",
+		"media": {
+			"type": "image",
+			"url": "images/StrongCuriousDuck.png",
+			"alt": "The Dancer's Last Pirouette"
+		}
+	},
+	{
+		"id": "StrongCuriousGoat",
+		"user": { "email": "john.doe@example.com" },
+		"category": { "name": "Oldschool Graphics" },
+		"event": { "name": "Beacon Summer 1991" },
+		"title": "Nebula's Lullaby",
+		"media": {
+			"type": "image",
+			"url": "images/StrongCuriousGoat.png",
+			"alt": "Nebula's Lullaby"
+		}
+	},
+	{
+		"id": "StrongCuriousMacaw",
+		"user": { "email": "john.doe@example.com" },
+		"category": { "name": "Freestyle Photo" },
+		"event": { "name": "Beacon Summer 1991" },
+		"title": "Shadows of Yesterday's Tomorrow",
+		"media": {
+			"type": "image",
+			"url": "images/StrongCuriousMacaw.png",
+			"alt": "Shadows of Yesterday's Tomorrow"
+		}
+	},
+	{
+		"id": "StrongCuriousOctopus",
+		"user": { "email": "john.doe@example.com" },
+		"category": { "name": "Stop Motion" },
+		"event": { "name": "Beacon Summer 1991" },
+		"title": "The Clockwork Heart",
+		"media": {
+			"type": "image",
+			"url": "images/StrongCuriousOctopus.png",
+			"alt": "The Clockwork Heart"
+		}
+	},
+	{
+		"id": "StrongCuriousVole",
+		"user": { "email": "john.doe@example.com" },
+		"category": { "name": "Wild / Animation" },
+		"event": { "name": "Beacon Summer 1991" },
+		"title": "Melodies from a Rusty Piano",
+		"media": {
+			"type": "image",
+			"url": "images/StrongCuriousVole.png",
+			"alt": "Melodies from a Rusty Piano"
+		}
+	},
+	{
+		"id": "StrongCuriousWolffish",
+		"user": { "email": "john.doe@example.com" },
+		"category": { "name": "Combined Demo" },
+		"event": { "name": "Beacon Winter 1991" },
+		"title": "Reflections in a Broken Mirror",
+		"media": {
+			"type": "image",
+			"url": "images/StrongCuriousWolffish.png",
+			"alt": "Reflections in a Broken Mirror"
+		}
+	},
+	{
+		"id": "StrongCuriousStoat",
+		"user": { "email": "john.doe@example.com" },
+		"category": { "name": "Prerendered Music" },
+		"event": { "name": "Beacon Winter 1991" },
+		"title": "The Lighthouse at the Edge of Time",
+		"media": {
+			"type": "image",
+			"url": "images/StrongCuriousStoat.png",
+			"alt": "The Lighthouse at the Edge of Time"
+		}
+	},
+	{
+		"id": "StrongCuriousMongrel",
+		"user": { "email": "john.doe@example.com" },
+		"category": { "name": "Tracked Music" },
+		"event": { "name": "Beacon Winter 1991" },
+		"title": "Autumn's Fiery Embrace",
+		"media": {
+			"type": "image",
+			"url": "images/StrongCuriousMongrel.png",
+			"alt": "Autumn's Fiery Embrace"
+		}
+	},
+	{
+		"id": "StrongCuriousCivet",
+		"user": { "email": "john.doe@example.com" },
+		"category": { "name": "Freestyle Graphics" },
+		"event": { "name": "Beacon Winter 1991" },
+		"title": "Secrets of the Deep Blue",
+		"media": {
+			"type": "image",
+			"url": "images/StrongCuriousCivet.png",
+			"alt": "Secrets of the Deep Blue"
+		}
+	},
+	{
+		"id": "StrongCuriousCentipede",
+		"user": { "email": "john.doe@example.com" },
+		"category": { "name": "Oldschool Graphics" },
+		"event": { "name": "Beacon Winter 1991" },
+		"title": "The Alchemist's Final Experiment",
+		"media": {
+			"type": "image",
+			"url": "images/StrongCuriousCentipede.png",
+			"alt": "The Alchemist's Final Experiment"
+		}
+	},
+	{
+		"id": "StrongCuriousLlama",
+		"user": { "email": "john.doe@example.com" },
+		"category": { "name": "Freestyle Photo" },
+		"event": { "name": "Beacon Winter 1991" },
+		"title": "Whispers in the Wind Chimes",
+		"media": {
+			"type": "image",
+			"url": "images/StrongCuriousLlama.png",
+			"alt": "Whispers in the Wind Chimes"
+		}
+	},
+	{
+		"id": "StrongCuriousSwan",
+		"user": { "email": "john.doe@example.com" },
+		"category": { "name": "Stop Motion" },
+		"event": { "name": "Beacon Winter 1991" },
+		"title": "Neon Dreams in Tokyo",
+		"media": {
+			"type": "image",
+			"url": "images/StrongCuriousSwan.png",
+			"alt": "Neon Dreams in Tokyo"
+		}
+	},
+	{
+		"id": "StrongCuriousMonkfish",
+		"user": { "email": "john.doe@example.com" },
+		"category": { "name": "Wild / Animation" },
+		"event": { "name": "Beacon Winter 1991" },
+		"title": "The Butterfly Effect",
+		"media": {
+			"type": "image",
+			"url": "images/StrongCuriousMonkfish.png",
+			"alt": "The Butterfly Effect"
+		}
+	},
+	{
+		"id": "StrongCuriousYak",
+		"user": { "email": "alice.smith@example.com" },
+		"category": { "name": "Combined Demo" },
+		"event": { "name": "Beacon Summer 1991" },
+		"title": "The Physical Impossibility of Death in the Mind of Someone Living",
+		"media": {
+			"type": "image",
+			"url": "images/StrongCuriousYak.png",
+			"alt": "The Physical Impossibility of Death in the Mind of Someone Living"
+		}
+	},
+	{
+		"id": "StrongCuriousTamarin",
+		"user": { "email": "alice.smith@example.com" },
+		"category": { "name": "Prerendered Music" },
+		"event": { "name": "Beacon Summer 1991" },
+		"title": "Balloon Dog",
+		"media": {
+			"type": "image",
+			"url": "images/StrongCuriousTamarin.png",
+			"alt": "Balloon Dog"
+		}
+	},
+	{
+		"id": "StrongCuriousOkapi",
+		"user": { "email": "alice.smith@example.com" },
+		"category": { "name": "Tracked Music" },
+		"event": { "name": "Beacon Summer 1991" },
+		"title": "My Bed",
+		"media": {
+			"type": "image",
+			"url": "images/StrongCuriousOkapi.png",
+			"alt": "My Bed"
+		}
+	},
+	{
+		"id": "StrongCuriousMuskrat",
+		"user": { "email": "alice.smith@example.com" },
+		"category": { "name": "Freestyle Graphics" },
+		"event": { "name": "Beacon Summer 1991" },
+		"title": "Girl with Balloon",
+		"media": {
+			"type": "image",
+			"url": "images/StrongCuriousMuskrat.png",
+			"alt": "Girl with Balloon"
+		}
+	},
+	{
+		"id": "StrongCuriousGrouse",
+		"user": { "email": "alice.smith@example.com" },
+		"category": { "name": "Oldschool Graphics" },
+		"event": { "name": "Beacon Summer 1991" },
+		"title": "99 Cent",
+		"media": {
+			"type": "image",
+			"url": "images/StrongCuriousGrouse.png",
+			"alt": "99 Cent"
+		}
+	},
+	{
+		"id": "StrongCuriousGrasshopper",
+		"user": { "email": "alice.smith@example.com" },
+		"category": { "name": "Freestyle Photo" },
+		"event": { "name": "Beacon Summer 1991" },
+		"title": "Untitled Film Stills",
+		"media": {
+			"type": "image",
+			"url": "images/StrongCuriousGrasshopper.png",
+			"alt": "Untitled Film Stills"
+		}
+	},
+	{
+		"id": "StrongCuriousBongo",
+		"user": { "email": "alice.smith@example.com" },
+		"category": { "name": "Stop Motion" },
+		"event": { "name": "Beacon Summer 1991" },
+		"title": "The Cremaster Cycle",
+		"media": {
+			"type": "image",
+			"url": "images/StrongCuriousBongo.png",
+			"alt": "The Cremaster Cycle"
+		}
+	},
+	{
+		"id": "StrongCuriousRockfish",
+		"user": { "email": "alice.smith@example.com" },
+		"category": { "name": "Wild / Animation" },
+		"event": { "name": "Beacon Summer 1991" },
+		"title": "Truisms",
+		"media": {
+			"type": "image",
+			"url": "images/StrongCuriousRockfish.png",
+			"alt": "Truisms"
+		}
+	},
+	{
+		"id": "StrongCuriousOlm",
+		"user": { "email": "alice.smith@example.com" },
+		"category": { "name": "Combined Demo" },
+		"event": { "name": "Beacon Winter 1991" },
+		"title": "And Then, And Then And Then And Then And Then",
+		"media": {
+			"type": "image",
+			"url": "images/StrongCuriousOlm.png",
+			"alt": "And Then, And Then And Then And Then And Then"
+		}
+	},
+	{
+		"id": "StrongCuriousChicken",
+		"user": { "email": "alice.smith@example.com" },
+		"category": { "name": "Prerendered Music" },
+		"event": { "name": "Beacon Winter 1991" },
+		"title": "Crack is Wack",
+		"media": {
+			"type": "image",
+			"url": "images/StrongCuriousChicken.png",
+			"alt": "Crack is Wack"
+		}
+	},
+	{
+		"id": "StrongCuriousGorilla",
+		"user": { "email": "alice.smith@example.com" },
+		"category": { "name": "Tracked Music" },
+		"event": { "name": "Beacon Winter 1991" },
+		"title": "Riding with Death",
+		"media": {
+			"type": "image",
+			"url": "images/StrongCuriousGorilla.png",
+			"alt": "Riding with Death"
+		}
+	},
+	{
+		"id": "StrongCuriousLynx",
+		"user": { "email": "alice.smith@example.com" },
+		"category": { "name": "Freestyle Graphics" },
+		"event": { "name": "Beacon Winter 1991" },
+		"title": "The Ballad of Sexual Dependency",
+		"media": {
+			"type": "image",
+			"url": "images/StrongCuriousLynx.png",
+			"alt": "The Ballad of Sexual Dependency"
+		}
+	},
+	{
+		"id": "StrongCuriousMastiff",
+		"user": { "email": "alice.smith@example.com" },
+		"category": { "name": "Oldschool Graphics" },
+		"event": { "name": "Beacon Winter 1991" },
+		"title": "La Nona Ora",
+		"media": {
+			"type": "image",
+			"url": "images/StrongCuriousMastiff.png",
+			"alt": "La Nona Ora"
+		}
+	},
+	{
+		"id": "StrongCuriousOtter",
+		"user": { "email": "alice.smith@example.com" },
+		"category": { "name": "Freestyle Photo" },
+		"event": { "name": "Beacon Winter 1991" },
+		"title": "Infinity Mirror Room - Phalli's Field",
+		"media": {
+			"type": "image",
+			"url": "images/StrongCuriousOtter.png",
+			"alt": "Infinity Mirror Room - Phalli's Field"
+		}
+	},
+	{
+		"id": "StrongCuriousPanther",
+		"user": { "email": "alice.smith@example.com" },
+		"category": { "name": "Stop Motion" },
+		"event": { "name": "Beacon Winter 1991" },
+		"title": "Cloud Gate",
+		"media": {
+			"type": "image",
+			"url": "images/StrongCuriousPanther.png",
+			"alt": "Cloud Gate"
+		}
+	},
+	{
+		"id": "StrongCuriousWolfhound",
+		"user": { "email": "alice.smith@example.com" },
+		"category": { "name": "Wild / Animation" },
+		"event": { "name": "Beacon Winter 1991" },
+		"title": "Your Body is a Battleground",
+		"media": {
+			"type": "image",
+			"url": "images/StrongCuriousWolfhound.png",
+			"alt": "Your Body is a Battleground"
+		}
 	}
 ]

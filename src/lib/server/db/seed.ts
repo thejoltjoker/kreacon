@@ -1,5 +1,5 @@
-import env from '@/lib/env';
-import { createLogger } from '@/lib/server/logger';
+import env from '$lib/env';
+import { createLogger } from '$lib/server/logger';
 import { Table, getTableName, sql } from 'drizzle-orm';
 import { db } from './index';
 import * as schema from './schema';
@@ -19,9 +19,9 @@ logger.info('Resetting tables...');
 for (const table of [
 	schema.users,
 	schema.events,
-	schema.events,
-	schema.categoriesToEvents
-	// schema.submissions
+	schema.categories,
+	schema.categoriesToEvents,
+	schema.submissions
 ]) {
 	await resetTable(db, table);
 }
@@ -35,8 +35,8 @@ await seeds.categories(db);
 logger.info('Seeding events...');
 await seeds.events(db);
 
-// logger.info('Seeding submissions...');
-// await seeds.submissions(db);
+logger.info('Seeding submissions...');
+await seeds.submissions(db);
 
 logger.info('Seeding completed');
 await db.$client.end();
