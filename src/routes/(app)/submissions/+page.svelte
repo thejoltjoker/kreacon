@@ -49,7 +49,6 @@
 	.wrapper {
 		display: grid;
 		& > * {
-			grid-row: 1;
 			grid-column: 1;
 		}
 	}
