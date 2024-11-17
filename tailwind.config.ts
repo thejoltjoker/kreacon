@@ -1,5 +1,6 @@
 import type { Config } from 'tailwindcss';
 import twForms from '@tailwindcss/forms';
+import defaultTheme from 'tailwindcss/defaultTheme';
 
 export default {
 	content: ['./src/**/*.{html,js,svelte,ts}'],
@@ -20,24 +21,29 @@ export default {
 				'5xl': '3.052rem'
 			},
 			spacing: {
-				xxs: '0.3rem',
-				xs: '0.6rem',
-				sm: '1.2rem',
-				md: '1.6rem',
-				lg: '2rem',
-				xl: '2.4rem',
-				xxl: '4.8rem',
-				form: '3.2rem',
-				button: '3.2rem',
-				thumbnail: '10rem',
-				sidebar: '20rem',
-				'sidebar-xs': '12rem',
-				'sidebar-sm': '16rem',
-				'sidebar-md': '24rem',
-				'sidebar-lg': '36rem'
+				xxs: defaultTheme.spacing['2'],
+				xs: defaultTheme.spacing['3'],
+				sm: defaultTheme.spacing['3.5'],
+				md: defaultTheme.spacing['5'],
+				lg: defaultTheme.spacing['8'],
+				xl: defaultTheme.spacing['10'],
+				xxl: defaultTheme.spacing['12'],
+				form: defaultTheme.spacing['12'],
+				'button-sm': defaultTheme.spacing['10'],
+				'button-md': defaultTheme.spacing['12'],
+				'button-lg': defaultTheme.spacing['16'],
+				thumbnail: defaultTheme.spacing['40'],
+				'avatar-sm': defaultTheme.spacing['10'],
+				'avatar-md': defaultTheme.spacing['12'],
+				'avatar-lg': defaultTheme.spacing['14'],
+				'avatar-xl': defaultTheme.spacing['16']
+			},
+			width: {
+				sidebar: '20rem'
 			},
 			gridTemplateColumns: {
-				'admin-submissions-list-item': '10rem minmax(900px, 1fr) repeat(16, minmax(0, 1fr))'
+				'admin-submissions-list-item': '10rem minmax(900px, 1fr) repeat(16, minmax(0, 1fr))',
+				submissions: 'repeat(auto-fill, minmax(300px, 1fr))'
 			},
 			borderRadius: {
 				sm: '.8rem',

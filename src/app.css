@@ -5,8 +5,11 @@
 @import 'tailwindcss/utilities';
 
 @layer base {
+	html {
+		@apply h-full;
+	}
 	body {
-		@apply bg-white text-black dark:bg-black dark:text-white;
+		@apply h-full bg-white text-black dark:bg-black dark:text-white;
 	}
 	::selection {
 		@apply text-black dark:bg-white;
