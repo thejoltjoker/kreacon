@@ -8,9 +8,11 @@
 	html {
 		@apply h-full;
 	}
+
 	body {
 		@apply h-full bg-white text-black dark:bg-black dark:text-white;
 	}
+
 	::selection {
 		@apply text-black dark:bg-white;
 	}

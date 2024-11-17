@@ -32,13 +32,10 @@
 
 	export const onFileChange = (event: Event) => {
 		const input = event.target as HTMLInputElement;
-		console.log(input);
 		if (input.files && input.files.length > 0) {
 			handleFile(input.files[0]);
 		}
 	};
-	$: console.error($errors);
-	$: console.log(imageUrl);
 
 	user.set(data.user);
 </script>

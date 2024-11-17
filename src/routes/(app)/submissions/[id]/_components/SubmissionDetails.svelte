@@ -15,7 +15,7 @@
 		>
 	</p>
 	<div class="author">
-		<Avatar src={`/${submission?.user?.image}`} />
+		<Avatar src={`${submission?.user?.picture}`} />
 		<p class="w-full font-bold">{submission?.user?.username}</p>
 		<a href={`/users/${submission?.user?.username}`}>
 			<Button>Profile</Button>

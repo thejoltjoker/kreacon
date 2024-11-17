@@ -11,7 +11,7 @@
 
 	let rootClasses = $derived(
 		twMerge(
-			'h-12 w-12 rounded-full border bg-zinc-900 aspect-square',
+			'w-full rounded-full border bg-zinc-900 aspect-square max-w-xxl',
 			loadingStatus === 'loaded' ? 'border-white' : 'border-white'
 		)
 	);
@@ -22,9 +22,6 @@
 		class="flex h-full w-full items-center justify-center overflow-hidden rounded-full border-2 border-transparent"
 	>
 		<Avatar.Image {src} alt="Avatar" />
-		<Avatar.Fallback
-			class="border border-zinc-700 rounded-full w-full h-full flex items-center justify-center"
-			><UserRoundIcon /></Avatar.Fallback
-		>
+		<Avatar.Fallback><UserRoundIcon /></Avatar.Fallback>
 	</div>
 </Avatar.Root>

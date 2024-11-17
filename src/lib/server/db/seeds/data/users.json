@@ -5,7 +5,7 @@
 		"username": "john.doe",
 		"password": "password",
 		"emailVerifiedAt": "2024-03-20T00:00:00.000Z",
-		"image": "john.doe.webp",
+		"picture": "/images/john.doe.webp",
 		"role": "user"
 	},
 	{
@@ -14,7 +14,7 @@
 		"username": "jane.doe",
 		"password": "password",
 		"emailVerifiedAt": "2024-03-20T00:00:00.000Z",
-		"image": "jane.doe.webp",
+		"picture": "/images/jane.doe.webp",
 		"role": "admin"
 	},
 	{
@@ -23,7 +23,7 @@
 		"username": "alice.smith",
 		"password": "password",
 		"emailVerifiedAt": "2024-03-20T00:00:00.000Z",
-		"image": "alice.smith.webp",
+		"picture": "/images/alice.smith.webp",
 		"role": "user"
 	},
 	{
@@ -32,7 +32,7 @@
 		"username": "bob.jones",
 		"password": "password",
 		"emailVerifiedAt": "2024-03-20T00:00:00.000Z",
-		"image": "bob.jones.webp",
+		"picture": "/images/bob.jones.webp",
 		"role": "user"
 	}
 ]

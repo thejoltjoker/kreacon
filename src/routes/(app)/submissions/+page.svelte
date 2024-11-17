@@ -17,31 +17,32 @@
 </div>
 <div class="grid grid-cols-submissions gap-sm">
 	{#each submissions as submission}
-		<a href={`/submissions/${submission.id}`}>
-			<div class="wrapper group overflow-hidden rounded-md">
-				<div class="w-full overflow-hidden rounded-md">
+		<div class="wrapper group overflow-hidden rounded-md grid">
+			<div class="w-full overflow-hidden rounded-md h-full">
+				<a href={`/submissions/${submission.id}`}>
 					<img
 						src={`${submission?.media?.url}`}
 						alt={submission?.media?.alt}
 						class="w-full object-cover object-center"
 					/>
-				</div>
-				<div class="items-left m-sm flex flex-col justify-between">
-					<div
-						class="inline-flex w-fit -translate-y-sm items-center gap-sm rounded-full p-xs pr-md opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:bg-black/75 group-hover:opacity-100 group-hover:backdrop-blur"
-					>
-						<Avatar src={`/${submission.user?.picture}`} />
-						<p>{submission.user?.username}</p>
-					</div>
-					<div
-						class="translate-y-sm rounded-md p-sm opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:bg-black/75 group-hover:opacity-100 group-hover:backdrop-blur"
-					>
-						<h2 class="text-lg font-bold">{submission.title}</h2>
-						<p class="text-zinc-400">{submission.category?.name}</p>
-					</div>
+				</a>
+			</div>
+			<div class="items-left flex flex-col justify-between w-full h-full p-sm pointer-events-none">
+				<a
+					href={`/users/${submission.user?.username}`}
+					class="inline-flex w-fit -translate-y-sm items-center gap-sm rounded-full pr-md opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:bg-black/75 group-hover:opacity-100 group-hover:backdrop-blur p-xs pointer-events-auto"
+				>
+					<Avatar src={`/${submission.user?.picture}`} />
+					<p>{submission.user?.username}</p>
+				</a>
+				<div
+					class="translate-y-sm rounded-md p-sm opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:bg-black/75 group-hover:opacity-100 group-hover:backdrop-blur"
+				>
+					<h2 class="text-lg font-bold">{submission.title}</h2>
+					<p class="text-zinc-400">{submission.category?.name}</p>
 				</div>
 			</div>
-		</a>
+		</div>
 	{/each}
 </div>
 
@@ -50,6 +51,7 @@
 		display: grid;
 		& > * {
 			grid-column: 1;
+			grid-row: 1;
 		}
 	}
 </style>
