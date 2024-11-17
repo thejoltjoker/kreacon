@@ -12,7 +12,6 @@ declare global {
 		interface Locals {
 			user: UserWithoutPassword | null | undefined;
 		}
-		// interface PageData {}
 		// interface PageState {}
 		// interface Platform {}
 	}

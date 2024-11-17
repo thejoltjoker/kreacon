@@ -8,7 +8,12 @@
 		"logout": "Log out",
 		"register": "Register",
 		"reset_password": "Reset Password",
-		"verify_email": "Verify Email"
+		"verify_email": "Verify Email",
+		"user_email": "Email",
+		"user_username": "Username",
+		"user_image": "Image",
+		"user_save": "Save",
+		"user_cancel": "Cancel"
 	},
 	"entity": {
 		"category": {
@@ -84,7 +89,9 @@
 		"new_password": "New password",
 		"login": "Log in",
 		"email": "Email",
-		"register": "Register"
+		"register": "Register",
+		"username": "Username",
+		"image": "Image"
 	},
 	"validation": {
 		"password_too_short": "Password is too short",

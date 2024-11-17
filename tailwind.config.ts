@@ -13,6 +13,7 @@ export default {
 			fontSize: {
 				sm: '1rem',
 				base: '1rem',
+				lg: '1.125rem',
 				xl: '1.25rem',
 				'2xl': '1.563rem',
 				'3xl': '1.953rem',
@@ -22,11 +23,20 @@ export default {
 			scale: {
 				98: '.98'
 			},
+			maxWidth: {
+				xxs: defaultTheme.spacing['2'],
+				xs: defaultTheme.spacing['3'],
+				sm: defaultTheme.spacing['4'],
+				md: defaultTheme.spacing['6'],
+				lg: defaultTheme.spacing['8'],
+				xl: defaultTheme.spacing['10'],
+				xxl: defaultTheme.spacing['12']
+			},
 			spacing: {
 				xxs: defaultTheme.spacing['2'],
 				xs: defaultTheme.spacing['3'],
-				sm: defaultTheme.spacing['3.5'],
-				md: defaultTheme.spacing['5'],
+				sm: defaultTheme.spacing['4'],
+				md: defaultTheme.spacing['6'],
 				lg: defaultTheme.spacing['8'],
 				xl: defaultTheme.spacing['10'],
 				xxl: defaultTheme.spacing['12'],
@@ -48,10 +58,10 @@ export default {
 				submissions: 'repeat(auto-fill, minmax(400px, 1fr))'
 			},
 			borderRadius: {
-				sm: '.8rem',
-				md: '1.6rem',
-				lg: '2.4rem',
-				xl: '3.2rem'
+				sm: defaultTheme.spacing['4'],
+				md: defaultTheme.spacing['8'],
+				lg: defaultTheme.spacing['10'],
+				xl: defaultTheme.spacing['12']
 			},
 			colors: {
 				amber: {

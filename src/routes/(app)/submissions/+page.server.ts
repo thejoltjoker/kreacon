@@ -11,6 +11,5 @@ export const load = (async () => {
 		}
 	});
 	const categories = await db.query.categories.findMany();
-	console.log(submissions);
 	return { submissions: submissions, categories: categories };
 }) satisfies PageServerLoad;

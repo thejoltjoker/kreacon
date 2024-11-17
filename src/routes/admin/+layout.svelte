@@ -26,7 +26,7 @@
 
 <style lang="postcss">
 	aside {
-		@apply w-sidebar border border-red-500;
+		@apply w-sidebar;
 		& ul {
 			@apply flex flex-col gap-y-2;
 		}
