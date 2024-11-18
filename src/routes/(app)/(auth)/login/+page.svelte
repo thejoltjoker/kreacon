@@ -1,24 +1,19 @@
 <script lang="ts">
-	import TextInput from '$lib/components/InputField.svelte';
+	import Button from '$lib/components/Button.svelte';
+	import Divider from '$lib/components/Divider.svelte';
 	import Link from '$lib/components/Link.svelte';
 	import { Label } from 'bits-ui';
-	import { CheckCircle2Icon, XCircleIcon } from 'lucide-svelte';
+	import { XCircleIcon } from 'lucide-svelte';
 	import { _ } from 'svelte-i18n';
-	import SuperDebug, { superForm } from 'sveltekit-superforms';
-	import type { PageData } from './$types';
-	import Button from '$lib/components/Button.svelte';
+	import { superForm } from 'sveltekit-superforms';
 	import OAuthButtons from '../_components/OAuthButtons.svelte';
-	import Divider from '$lib/components/Divider.svelte';
+	import type { PageData } from './$types';
 
 	const { data }: { data: PageData } = $props();
 
 	const { form, errors, constraints, message, enhance } = superForm(data.form);
-	$effect(() => {
-		console.log($message);
-	});
 </script>
 
-<SuperDebug data={$form} />
 <div class="flex w-full flex-col gap-md">
 	{#if data.providers.length > 0}
 		<OAuthButtons providers={data.providers} />
