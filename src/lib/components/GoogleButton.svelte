@@ -8,7 +8,7 @@
 	<span class="icon">
 		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 		{@html GoogleIcon}
-	</span>{$_('button.login.google', { default: 'Sign in with Google' })}
+	</span>{$_('sign_in_google', { default: 'Sign in with Google' })}
 </Button>
 
 <style lang="postcss">

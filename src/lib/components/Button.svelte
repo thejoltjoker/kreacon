@@ -9,7 +9,7 @@
 		size?: 'sm' | 'md' | 'lg';
 	};
 
-	let { variant, size, class: className, children, ...restProps }: Props = $props();
+	let { variant, size, class: className, children, type, ...restProps }: Props = $props();
 
 	const variants = {
 		rose: 'bg-rose-500 text-white border-rose-600 hover:enabled:bg-rose-900/20 transition hover:enabled:border hover:enabled:border-rose-500',
@@ -33,4 +33,6 @@
 	);
 </script>
 
-<Button.Root {...restProps} class={classes}>{@render children()}</Button.Root>
+<Button.Root {...restProps} class={classes}>
+	{@render children()}
+</Button.Root>

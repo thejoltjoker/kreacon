@@ -1,40 +1,41 @@
-import { authenticate } from '$lib/server/auth/authenticate';
-import { db } from '$lib/server/db';
-import { users } from '$lib/server/db/schema';
-import { redirect, type Handle } from '@sveltejs/kit';
-import { eq } from 'drizzle-orm/pg-core/expressions';
+import {
+	deleteSessionTokenCookie,
+	sessionCookieName,
+	setSessionTokenCookie,
+	validateSessionToken
+} from '$lib/server/auth';
+import { type Handle } from '@sveltejs/kit';
 import { locale } from 'svelte-i18n';
+import { sequence } from '@sveltejs/kit/hooks';
 
-export const handle: Handle = async ({ event, resolve }) => {
+const handleAuth: Handle = async ({ event, resolve }) => {
+	const sessionToken = event.cookies.get(sessionCookieName);
+	if (!sessionToken) {
+		event.locals.user = null;
+		event.locals.session = null;
+		return resolve(event);
+	}
+
+	const { session, user } = await validateSessionToken(sessionToken);
+	if (session) {
+		setSessionTokenCookie(event, sessionToken, session.expiresAt);
+	} else {
+		deleteSessionTokenCookie(event);
+	}
+
+	event.locals.user = user;
+	event.locals.session = session;
+
+	return resolve(event);
+};
+
+const handleI18n: Handle = async ({ event, resolve }) => {
 	// i18n
 	const lang = event.request.headers.get('accept-language')?.split(',')[0];
 	if (lang) {
 		locale.set(lang);
 	}
-
-	// auth
-	const accessToken = await authenticate(event);
-	if (accessToken) {
-		event.locals.user = await db.query.users.findFirst({
-			where: eq(users.id, accessToken.userId),
-			columns: {
-				password: false
-			}
-		});
-	}
-
-	// RBAC
-	if (event.url.pathname.startsWith('/admin')) {
-		if (!event.locals.user) {
-			return redirect(302, '/login');
-		}
-
-		if (event.locals.user?.role !== 'admin') {
-			return new Response('Unauthorized', { status: 401 });
-		}
-	}
-
-	const response = await resolve(event);
-
-	return response;
+	return resolve(event);
 };
+
+export const handle = sequence(handleI18n, handleAuth);

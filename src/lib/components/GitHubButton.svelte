@@ -5,11 +5,11 @@
 </script>
 
 <a href="/oauth/login/github">
-	<Button>
+	<Button type="button">
 		<span class="icon">
 			<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 			{@html GitHubIcon}
-		</span>{$_('button.login_github', { default: 'Sign in with GitHub' })}
+		</span>{$_('sign_in_github', { default: 'Sign in with GitHub' })}
 	</Button>
 </a>
 

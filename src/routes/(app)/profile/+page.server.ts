@@ -11,14 +11,19 @@ export const load = (async ({ locals }) => {
 	if (!locals.user) {
 		return redirect(302, '/login');
 	}
-	const user = await db.query.users.findFirst({ where: eq(users.id, locals.user.id) });
+	const user = await db.query.users.findFirst({
+		where: eq(users.id, locals.user.id),
+		columns: {
+			password: false
+		}
+	});
 
 	if (!user) {
 		return redirect(302, '/login');
 	}
 	const form = await superValidate(user, zod(userUpdateSchema));
 
-	return { form, user: locals.user };
+	return { form, user };
 }) satisfies PageServerLoad;
 
 export const actions = {

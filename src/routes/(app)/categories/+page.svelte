@@ -2,4 +2,4 @@
 	import { _ } from 'svelte-i18n';
 </script>
 
-<h1>{$_('entity.category.plural', { default: 'Categories' })}</h1>
+<h1>{$_('categories', { default: 'Categories' })}</h1>

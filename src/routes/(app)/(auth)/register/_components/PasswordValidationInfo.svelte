@@ -12,7 +12,7 @@
 			<CheckCircle2Icon class="size-5  text-green-500" />
 		{/if}
 		<p>
-			{$_('validation.password_long_enough', { default: 'Password is long enough' })}
+			{$_('password_long_enough', { default: 'Password is long enough' })}
 		</p>
 	</li>
 
@@ -23,7 +23,7 @@
 			<CheckCircle2Icon class="size-5  text-green-500" />
 		{/if}
 		<p>
-			{$_('validation.password_special', { default: 'Password has special character' })}
+			{$_('password_special', { default: 'Password has special character' })}
 		</p>
 	</li>
 
@@ -34,7 +34,7 @@
 			<CheckCircle2Icon class="size-5  text-green-500" />
 		{/if}
 		<p>
-			{$_('validation.password_number', { default: 'Password has number' })}
+			{$_('password_number', { default: 'Password has number' })}
 		</p>
 	</li>
 
@@ -45,7 +45,7 @@
 			<CheckCircle2Icon class="size-5  text-green-500" />
 		{/if}
 		<p>
-			{$_('validation.password_uncommon', { default: 'Password is uncommon' })}
+			{$_('password_uncommon', { default: 'Password is uncommon' })}
 		</p>
 	</li>
 </ul>

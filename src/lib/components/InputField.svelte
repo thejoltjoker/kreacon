@@ -1,17 +1,34 @@
 <script lang="ts">
 	import { createLabel, melt } from '@melt-ui/svelte';
+	import { Label } from 'bits-ui';
 	import { CheckCircle2Icon, XCircleIcon } from 'lucide-svelte';
 
-	export let label: string;
-	export let type: 'text' | 'email' | 'password' = 'text';
-	export let placeholder: string = '';
-	export let id: string = '';
-	export let value: string | null | undefined = '';
-	export let name: string = '';
-	export let onChange: (value: string) => void = () => {};
-	export let isValid: boolean | undefined = undefined;
-	export let required: boolean = false;
-	export let errorMessage: string | string[] | undefined = undefined;
+	interface Props {
+		label: string;
+		type: 'text' | 'email' | 'password';
+		placeholder: string;
+		id: string;
+		value: string | null | undefined;
+		name: string;
+		onChange: (value: string) => void;
+		isValid: boolean | undefined;
+		required: boolean;
+		errorMessage: string | string[] | undefined;
+	}
+
+	let {
+		label,
+		type = 'text',
+		placeholder = '',
+		id = '',
+		value = '',
+		name = '',
+		onChange = () => {},
+		isValid = undefined,
+		required = false,
+		errorMessage = undefined,
+		...restProps
+	}: Props = $props();
 
 	const handleInput = (event: Event) => {
 		const inputEvent = event as InputEvent;
@@ -19,17 +36,13 @@
 		value = target.value;
 		onChange(value);
 	};
-
-	const {
-		elements: { root }
-	} = createLabel();
 </script>
 
 <div class="container">
 	<div class="flex flex-col">
-		<label use:melt={$root} for={id} data-melt-part="root" class="mb-xs font-bold">
+		<Label.Root for={id} class="mb-xs font-bold">
 			{label}
-		</label>
+		</Label.Root>
 		<div class="relative">
 			<input
 				{type}
@@ -41,7 +54,7 @@
 				class:valid={isValid === true}
 				class:invalid={isValid === false}
 				{required}
-				{...$$restProps}
+				{...restProps}
 			/>
 
 			{#if isValid === true}

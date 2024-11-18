@@ -1,25 +1,24 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
 	import '$lib/i18n';
-
 	import { locale, waitLocale } from 'svelte-i18n';
 	import '../app.css';
-	import type { LayoutData, LayoutLoad } from './$types';
-	import { userProvider } from '$lib/providers/userProvider.svelte';
+	import type { LayoutData } from './$types';
 
-	export let data: LayoutData;
-	export const load: LayoutLoad = async () => {
+	let { children } = $props();
+
+	$effect(() => {
 		if (browser) {
 			locale.set(window.navigator.language);
 		}
-		await waitLocale();
-	};
-
-	userProvider.user = data.user;
+		waitLocale().then(() => {
+			console.log('Locale loaded');
+		});
+	});
 </script>
 
 <svelte:head>
 	<title>Kreacon</title>
 </svelte:head>
 
-<slot />
+{@render children()}

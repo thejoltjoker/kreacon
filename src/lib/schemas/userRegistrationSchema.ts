@@ -2,6 +2,12 @@ import { z } from 'zod';
 import { passwordSchema } from './passwordSchema';
 
 export const userRegistrationSchema = z.object({
+	username: z
+		.string()
+		.min(1, { message: 'Username is required' })
+		.refine((value) => /^[a-zA-Z0-9_]+$/.test(value), {
+			message: 'Username can only contain letters, numbers, and underscores'
+		}),
 	email: z.string().email({ message: 'Invalid email address' }),
 	password: passwordSchema
 });

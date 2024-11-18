@@ -11,10 +11,10 @@
 		<p>{'Event name'}</p>
 		<ul>
 			<li>
-				<a href="/admin/events/1/categories">{$_('entity.category.plural')}</a>
+				<a href="/admin/events/1/categories">{$_('categories')}</a>
 			</li>
 			<li>
-				<a href="/admin/events/1/submissions">{$_('entity.submission.plural')}</a>
+				<a href="/admin/events/1/submissions">{$_('submissions')}</a>
 			</li>
 		</ul>
 	</aside>

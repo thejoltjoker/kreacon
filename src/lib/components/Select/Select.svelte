@@ -75,7 +75,7 @@
 		@apply text-white;
 	}
 	.trigger {
-		@apply h-input-md flex min-w-48 items-center justify-between rounded-full border border-white bg-black px-md py-2 text-white;
+		@apply flex h-input-md min-w-48 items-center justify-between rounded-full border border-white bg-black px-md py-2 text-white;
 	}
 	.container {
 		@apply z-10 flex flex-col overflow-y-auto rounded-sm bg-white p-1 shadow focus:!ring-0;
@@ -85,7 +85,7 @@
 	}
 
 	.item {
-		@apply h-input-md relative flex cursor-pointer items-center rounded-sm px-md text-neutral-800 hover:bg-black hover:text-white focus:z-10 focus:text-zinc-700 data-[highlighted]:bg-black data-[highlighted]:text-white data-[disabled]:opacity-50;
+		@apply relative flex h-input-md cursor-pointer items-center rounded-sm px-md text-neutral-800 hover:bg-black hover:text-white focus:z-10 focus:text-zinc-700 data-[highlighted]:bg-black data-[highlighted]:text-white data-[disabled]:opacity-50;
 	}
 	.check {
 		position: absolute;

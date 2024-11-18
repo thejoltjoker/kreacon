@@ -10,7 +10,7 @@
 	console.log(submissions);
 </script>
 
-<h1 class="text-2xl font-bold">{$_('entity.submission.plural', { default: 'Submissions' })}</h1>
+<h1 class="text-2xl font-bold">{$_('submissions', { default: 'Submissions' })}</h1>
 
 <div class="py-sm">
 	<FilterBar {categories} />

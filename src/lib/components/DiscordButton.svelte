@@ -5,12 +5,12 @@
 </script>
 
 <a href="/oauth/login/discord">
-	<Button>
+	<Button type="button">
 		<span class="icon">
 			<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 			{@html DiscordIcon}
 		</span>
-		{$_('button.login_discord', { default: 'Sign in with Discord' })}
+		{$_('sign_in_discord', { default: 'Sign in with Discord' })}
 	</Button>
 </a>
 

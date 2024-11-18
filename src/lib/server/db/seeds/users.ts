@@ -10,7 +10,7 @@ export const seed = async (db: db) => {
 				.insert(schema.users)
 				.values({
 					...user,
-					emailVerifiedAt: new Date().toISOString(),
+					emailVerifiedAt: new Date(user.emailVerifiedAt),
 					password: await bcrypt.hash(user.password, 12)
 				})
 				.returning();

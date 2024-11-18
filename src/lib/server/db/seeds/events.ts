@@ -19,7 +19,11 @@ export const seed = async (db: db) => {
 			const [insertedEvent] = await db
 				.insert(schema.events)
 				.values({
-					...event
+					...event,
+					submissionsOpenAt: new Date(event.submissionsOpenAt),
+					submissionsCloseAt: new Date(event.submissionsCloseAt),
+					votingOpenAt: new Date(event.votingOpenAt),
+					votingCloseAt: new Date(event.votingCloseAt)
 				})
 				.returning();
 

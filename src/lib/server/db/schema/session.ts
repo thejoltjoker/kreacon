@@ -4,12 +4,13 @@ import users from './user';
 import { timestamps } from './shared';
 
 export const sessions = pgTable('session', {
-	sessionToken: varchar({ length: 255 }).primaryKey(),
+	id: varchar({ length: 255 })
+		.primaryKey()
+		.$defaultFn(() => crypto.randomUUID()),
 	userId: uuid('user_id')
 		.notNull()
-		.references(() => users.id, { onDelete: 'cascade' })
-		.notNull(),
-	expiresAt: timestamp('expires_at', { mode: 'string' }).notNull(),
+		.references(() => users.id, { onDelete: 'cascade' }),
+	expiresAt: timestamp('expires_at', { mode: 'date' }).notNull(),
 	...timestamps
 });
 
@@ -19,5 +20,4 @@ export const sessionsRelations = relations(sessions, ({ one }) => ({
 
 export type Session = InferSelectModel<typeof sessions>;
 export type InsertSession = InferInsertModel<typeof sessions>;
-
 export default sessions;

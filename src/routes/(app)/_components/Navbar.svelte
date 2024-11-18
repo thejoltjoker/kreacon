@@ -13,8 +13,8 @@
 	let isMenuOpen = false;
 
 	const menuItems = [
-		{ label: $_('nav.home', { default: 'Home' }), href: '/' },
-		{ label: $_('nav.submissions', { default: 'Submissions' }), href: '/submissions' }
+		{ label: $_('home', { default: 'Home' }), href: '/' },
+		{ label: $_('submissions', { default: 'Submissions' }), href: '/submissions' }
 	];
 </script>
 
@@ -35,7 +35,7 @@
 			<li>
 				<div class="hidden md:block">
 					<Button href="/submit" size="md">
-						{$_('nav.submit', { default: 'Submit' })}
+						{$_('submit', { default: 'Submit' })}
 					</Button>
 				</div>
 				<div class="md:hidden">
@@ -48,9 +48,9 @@
 				<AccountMenu />
 			</li>
 		{:else}
-			<li><Button href="/login" size="md">{$_('nav.login', { default: 'Login' })}</Button></li>
+			<li><Button href="/login" size="md">{$_('login', { default: 'Login' })}</Button></li>
 			<li>
-				<Button href="/register" size="md">{$_('nav.register', { default: 'Register' })}</Button>
+				<Button href="/register" size="md">{$_('register', { default: 'Register' })}</Button>
 			</li>
 		{/if}
 	</ul>
