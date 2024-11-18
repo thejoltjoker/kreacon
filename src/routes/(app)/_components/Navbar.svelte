@@ -2,9 +2,9 @@
 	import AccountMenu from '$lib/components/AccountMenu.svelte';
 	import Button from '$lib/components/Button.svelte';
 	import Link from '$lib/components/Link.svelte';
-	import { userProvider } from '$lib/providers/userProvider.svelte';
+	import type { UserWithoutPassword } from '$lib/server/db/schema/user';
 
-	const user = userProvider.user;
+	let { user }: { user: UserWithoutPassword | null } = $props();
 
 	import { AlignJustifyIcon, PlusIcon } from 'lucide-svelte';
 	import { _ } from 'svelte-i18n';
@@ -31,7 +31,7 @@
 		</Button>
 	</div>
 	<ul class="right">
-		{#if userProvider.user}
+		{#if user}
 			<li>
 				<div class="hidden md:block">
 					<Button href="/submit" size="md">
@@ -45,7 +45,7 @@
 				</div>
 			</li>
 			<li>
-				<AccountMenu />
+				<AccountMenu {user} />
 			</li>
 		{:else}
 			<li><Button href="/login" size="md">{$_('login', { default: 'Login' })}</Button></li>

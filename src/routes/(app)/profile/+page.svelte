@@ -6,6 +6,8 @@
 	import type { PageData } from './$types';
 	import ImageUpload from './_components/ImageUpload.svelte';
 	import { userProvider } from '$lib/providers/userProvider.svelte';
+	import { Label } from 'bits-ui';
+	import { XCircleIcon } from 'lucide-svelte';
 
 	const user = userProvider.user;
 
@@ -60,23 +62,53 @@
 			</div>
 			<label for="id">ID</label>
 			<input type="text" name="id" id="id" bind:value={$form.id} />
-			<InputField
-				id="email"
-				name="email"
-				label={$_('email')}
-				bind:value={$form.email}
-				errorMessage={$errors.email}
-				{...$constraints.email}
-			/>
+			<Label.Root for="email" class="mb-xs flex flex-col gap-xs font-bold">
+				{$_('email', { default: 'Email' })}
+				<div class="relative">
+					<input
+						type="text"
+						name="email"
+						aria-invalid={$errors.email ? 'true' : undefined}
+						bind:value={$form.email}
+						class:input-valid={$errors.email === undefined}
+						class:input-invalid={$errors.email !== undefined}
+						{...$constraints.email}
+					/>
 
-			<InputField
-				id="username"
-				name="username"
-				label={$_('username')}
-				bind:value={$form.username}
-				errorMessage={$errors.username}
-				{...$constraints.username}
-			/>
+					{#if $errors.email !== undefined}
+						<div class="absolute right-xs top-1/2 size-5 -translate-y-1/2 text-red-500">
+							<XCircleIcon class="size-5" />
+						</div>
+					{/if}
+				</div>
+				{#if $errors.email}
+					<p class="error-message">{$errors.email}</p>
+				{/if}
+			</Label.Root>
+
+			<Label.Root for="username" class="mb-xs flex flex-col gap-xs font-bold">
+				{$_('username', { default: 'Username' })}
+				<div class="relative">
+					<input
+						type="text"
+						name="username"
+						aria-invalid={$errors.username ? 'true' : undefined}
+						bind:value={$form.username}
+						class:input-valid={$errors.username === undefined}
+						class:input-invalid={$errors.username !== undefined}
+						{...$constraints.username}
+					/>
+
+					{#if $errors.username !== undefined}
+						<div class="absolute right-xs top-1/2 size-5 -translate-y-1/2 text-red-500">
+							<XCircleIcon class="size-5" />
+						</div>
+					{/if}
+				</div>
+				{#if $errors.username}
+					<p class="error-message">{$errors.username}</p>
+				{/if}
+			</Label.Root>
 			<div class="flex gap-sm">
 				<Button>{$_('cancel', { default: 'Cancel' })}</Button>
 				<Button type="submit" variant="rose">{$_('save')}</Button>

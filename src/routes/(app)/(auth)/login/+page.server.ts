@@ -8,6 +8,7 @@ import { message, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import { z } from 'zod';
 import type { Actions, PageServerLoad } from './$types';
+import { providers } from '$lib/server/auth/oauth/OAuthClient';
 const schema = z.object({
 	email: z.string().email(),
 	password: z.string()
@@ -19,7 +20,7 @@ export const load = (async (event) => {
 
 	const form = await superValidate(zod(schema));
 
-	return { form };
+	return { form, providers };
 }) satisfies PageServerLoad;
 
 export const actions = {
@@ -33,17 +34,15 @@ export const actions = {
 
 		const { email, password } = form.data;
 
-		// const results = await db.select().from(table.user).where(eq(table.user.username, username));
 		const existingUser = await db.query.users.findFirst({ where: eq(users.email, email) });
 
 		if (!existingUser) {
 			return message(form, { status: 'error', text: 'Incorrect username or password' });
-			// return fail(400, { message: 'Incorrect username or password', form });
 		}
 
 		const validPassword = await bcrypt.compare(password, existingUser.password);
 		if (!validPassword) {
-			return fail(400, { message: 'Incorrect username or password', form });
+			return message(form, { status: 'error', text: 'Incorrect username or password' });
 		}
 
 		const sessionToken = generateSessionToken();

@@ -1,12 +1,10 @@
 <script lang="ts">
-	import { userProvider } from '$lib/providers/userProvider.svelte';
-
-	const user = userProvider.user;
-
+	import type { UserWithoutPassword } from '$lib/server/db/schema/user';
 	import Avatar from './Avatar.svelte';
-
 	import { DropdownMenu } from 'bits-ui';
 	import { LogOutIcon, SettingsIcon, UserCircle } from 'lucide-svelte';
+
+	let { user }: { user: UserWithoutPassword } = $props();
 </script>
 
 <DropdownMenu.Root>
@@ -23,10 +21,10 @@
 			<DropdownMenu.Item
 				class="flex h-10 select-none items-center rounded-xs py-3 pl-3 pr-1.5 text-sm font-medium !ring-0 !ring-transparent data-[highlighted]:bg-zinc-500"
 			>
-				<div class="flex items-center">
+				<a href="/profile" class="flex items-center">
 					<UserCircle class="text-foreground-alt mr-2 size-5" />
 					Profile
-				</div>
+				</a>
 			</DropdownMenu.Item>
 
 			<DropdownMenu.Item
@@ -34,7 +32,7 @@
 			>
 				<div class="flex items-center">
 					<SettingsIcon class="text-foreground-alt mr-2 size-5" />
-					Settings
+					Submissions
 				</div>
 			</DropdownMenu.Item>
 			<DropdownMenu.Separator class="my-1 -ml-1 -mr-1 block h-px bg-zinc-500" />
