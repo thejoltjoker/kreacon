@@ -20,6 +20,7 @@ export const submissions = pgTable('submission', {
 	categoryId: integer('category_id').notNull(),
 	eventId: integer('event_id').notNull(),
 	title: varchar('title').notNull(),
+	views: integer().notNull().default(0),
 	mediaId: integer('media_id').notNull(),
 	...timestamps
 });

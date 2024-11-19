@@ -6,13 +6,13 @@ export const passwordSchema = z
 	.min(8, {
 		message: `Password must be at least ${8} characters long`
 	})
-	.max(64, { message: 'Password must be at most 64 characters long' })
-	// .refine((password) => /[A-Z]/.test(password), {
-	// 	message: 'Password must contain at least one uppercase letter',
-	// 	params: {
-	// 		code: 'uppercase'
-	// 	}
-	// })
+	.max(128, { message: 'Password must be at most 128 characters long' })
+	.refine((password) => /[A-Z]/.test(password), {
+		message: 'Password must contain at least one uppercase letter',
+		params: {
+			code: 'uppercase'
+		}
+	})
 	.refine((password) => /[a-z]/.test(password), {
 		message: 'Password must contain at least one lowercase letter',
 		params: {

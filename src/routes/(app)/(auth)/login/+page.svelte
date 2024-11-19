@@ -24,7 +24,7 @@
 			{$_('email', { default: 'Email' })}
 			<div class="relative">
 				<input
-					type="text"
+				type="text"
 					name="email"
 					aria-invalid={$errors.email ? 'true' : undefined}
 					bind:value={$form.email}

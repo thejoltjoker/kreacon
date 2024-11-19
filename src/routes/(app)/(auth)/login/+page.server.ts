@@ -1,14 +1,14 @@
 import { createSession, generateSessionToken, setSessionTokenCookie } from '$lib/server/auth';
+import { providers } from '$lib/server/auth/oauth/OAuthClient';
 import db from '$lib/server/db';
 import users from '$lib/server/db/schema/user';
+import { verify } from '@node-rs/argon2';
 import { fail, redirect } from '@sveltejs/kit';
-import bcrypt from 'bcryptjs';
 import { eq } from 'drizzle-orm';
 import { message, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import { z } from 'zod';
 import type { Actions, PageServerLoad } from './$types';
-import { providers } from '$lib/server/auth/oauth/OAuthClient';
 const schema = z.object({
 	email: z.string().email(),
 	password: z.string()
@@ -36,12 +36,13 @@ export const actions = {
 
 		const existingUser = await db.query.users.findFirst({ where: eq(users.email, email) });
 
-		if (!existingUser) {
-			return message(form, { status: 'error', text: 'Incorrect username or password' });
-		}
-
-		const validPassword = await bcrypt.compare(password, existingUser.password);
-		if (!validPassword) {
+		const validPassword = await verify(existingUser?.password ?? '', password, {
+			memoryCost: 19456,
+			timeCost: 2,
+			outputLen: 32,
+			parallelism: 1
+		});
+		if (!validPassword || !existingUser) {
 			return message(form, { status: 'error', text: 'Incorrect username or password' });
 		}
 

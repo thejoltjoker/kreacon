@@ -15,7 +15,7 @@
 
 <style lang="postcss">
 	.icon {
-		@apply mt-1 h-5 w-5;
+		@apply h-5 w-5;
 	}
 	a {
 		@apply flex;
