@@ -8,32 +8,17 @@ export const passwordSchema = z
 	})
 	.max(128, { message: 'Password must be at most 128 characters long' })
 	.refine((password) => /[A-Z]/.test(password), {
-		message: 'Password must contain at least one uppercase letter',
-		params: {
-			code: 'uppercase'
-		}
+		message: 'Password must contain at least one uppercase letter'
 	})
 	.refine((password) => /[a-z]/.test(password), {
-		message: 'Password must contain at least one lowercase letter',
-		params: {
-			code: 'lowercase'
-		}
+		message: 'Password must contain at least one lowercase letter'
 	})
 	.refine((password) => /[0-9]/.test(password), {
-		message: 'Password must contain at least one number',
-		params: {
-			code: 'number'
-		}
+		message: 'Password must contain at least one number'
 	})
 	.refine((password) => hasSpecialCharacter(password), {
-		message: 'Password must contain at least one special character',
-		params: {
-			code: 'special'
-		}
+		message: 'Password must contain at least one special character'
 	})
 	.refine(async (password) => !(await isCommonPassword(password, '10000')), {
-		message: 'Password is too common',
-		params: {
-			code: 'common'
-		}
+		message: 'Password is too common'
 	});

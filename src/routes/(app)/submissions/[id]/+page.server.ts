@@ -6,7 +6,6 @@ import type { PageServerLoad } from './$types';
 export const load = (async ({ params, locals }) => {
 	const { user } = locals;
 	const { id } = params;
-	console.log(id);
 
 	// const result = await db.query.submissions.findFirst({
 	// 	where: eq(submissions.id, id),

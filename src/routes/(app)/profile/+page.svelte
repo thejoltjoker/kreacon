@@ -5,11 +5,9 @@
 	import SuperDebug, { superForm } from 'sveltekit-superforms';
 	import type { PageData } from './$types';
 	import ImageUpload from './_components/ImageUpload.svelte';
-	import { userProvider } from '$lib/providers/userProvider.svelte';
+
 	import { Label } from 'bits-ui';
 	import { XCircleIcon } from 'lucide-svelte';
-
-	const user = userProvider.user;
 
 	export let data: PageData;
 
@@ -17,7 +15,9 @@
 		invalidateAll: 'force'
 	});
 
-	let imageUrl = data.user?.image ?? 'https://placehold.co/100x100';
+	const user = data.user;
+
+	let imageUrl = user?.picture ?? 'https://placehold.co/100x100';
 
 	const setImageUrl = (url: string) => {
 		imageUrl = url;
@@ -40,8 +40,6 @@
 			handleFile(input.files[0]);
 		}
 	};
-
-	userProvider.user = data.user;
 </script>
 
 <svelte:head>

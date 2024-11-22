@@ -1,4 +1,3 @@
-import { passwordSchema } from '$lib/schemas/passwordSchema';
 import { relations, type InferInsertModel, type InferSelectModel } from 'drizzle-orm';
 import { pgTable, timestamp, uuid, varchar } from 'drizzle-orm/pg-core';
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
@@ -8,6 +7,7 @@ import { roleEnum, timestamps } from './shared';
 import submissions from './submission';
 import tickets from './ticket';
 import votes from './vote';
+import { registerUserSchema } from '$lib/schemas/user';
 
 export const users = pgTable('user', {
 	id: uuid('id').defaultRandom().primaryKey(),
@@ -28,20 +28,7 @@ export const usersRelations = relations(users, ({ many }) => ({
 	tickets: many(tickets)
 }));
 
-export const insertUserSchema = createInsertSchema(users, {
-	username: (schema) =>
-		schema.username
-			.min(1, { message: 'Username is required' })
-			.max(255, { message: 'Username is too long' })
-			.refine((value) => /^[a-zA-Z0-9_]+$/.test(value), {
-				message: 'Username can only contain letters, numbers, and underscores'
-			}),
-	email: (schema) =>
-		schema.email
-			.email({ message: 'Invalid email address' })
-			.max(255, { message: 'Email is too long' }),
-	password: passwordSchema
-}).pick({
+export const insertUserSchema = createInsertSchema(users).merge(registerUserSchema).pick({
 	username: true,
 	email: true,
 	password: true,

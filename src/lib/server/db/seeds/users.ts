@@ -1,7 +1,7 @@
+import { hash } from '@node-rs/argon2';
 import { db } from '../../db';
 import * as schema from '../../db/schema';
 import users from './data/users.json';
-import bcrypt from 'bcryptjs';
 
 export const seed = async (db: db) => {
 	await Promise.all(
@@ -11,7 +11,12 @@ export const seed = async (db: db) => {
 				.values({
 					...user,
 					emailVerifiedAt: new Date(user.emailVerifiedAt),
-					password: await bcrypt.hash(user.password, 12)
+					password: await hash(user.password, {
+						memoryCost: 19456,
+						timeCost: 2,
+						outputLen: 32,
+						parallelism: 1
+					})
 				})
 				.returning();
 		})

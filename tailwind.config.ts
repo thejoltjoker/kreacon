@@ -23,6 +23,12 @@ export default {
 			scale: {
 				98: '.98'
 			},
+			strokeWidth: {
+				1: '1',
+				2: '2',
+				3: '3',
+				4: '4'
+			},
 			maxWidth: {
 				xxs: defaultTheme.spacing['2'],
 				xs: defaultTheme.spacing['3'],
@@ -143,7 +149,9 @@ export default {
 		'invalid',
 		'valid',
 		'bg-white',
-		'bg-black'
+		'bg-black',
+		'input-valid',
+		'input-invalid'
 	],
 
 	plugins: [twForms]

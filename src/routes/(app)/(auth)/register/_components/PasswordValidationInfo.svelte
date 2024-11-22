@@ -1,12 +1,18 @@
 <script lang="ts">
 	import { CheckCircle2Icon, XCircleIcon } from 'lucide-svelte';
 	import { _ } from 'svelte-i18n';
-	export let validationErrorPaths: string[] = [];
+
+	interface Props {
+		errors?: string[] | undefined;
+	}
+
+	const { errors }: Props = $props();
+	console.log(errors);
 </script>
 
-<ul>
+<!-- <ul>
 	<li>
-		{#if validationErrorPaths.includes('too_small')}
+		{#if errors.short}
 			<XCircleIcon class="size-5  text-red-500" />
 		{:else}
 			<CheckCircle2Icon class="size-5  text-green-500" />
@@ -17,7 +23,7 @@
 	</li>
 
 	<li>
-		{#if validationErrorPaths.includes('special')}
+		{#if errors.special}
 			<XCircleIcon class="size-5  text-red-500" />
 		{:else}
 			<CheckCircle2Icon class="size-5  text-green-500" />
@@ -28,7 +34,7 @@
 	</li>
 
 	<li>
-		{#if validationErrorPaths.includes('number')}
+		{#if errors.number}
 			<XCircleIcon class="size-5  text-red-500" />
 		{:else}
 			<CheckCircle2Icon class="size-5  text-green-500" />
@@ -39,7 +45,7 @@
 	</li>
 
 	<li>
-		{#if validationErrorPaths.includes('common')}
+		{#if errors.common}
 			<XCircleIcon class="size-5  text-red-500" />
 		{:else}
 			<CheckCircle2Icon class="size-5  text-green-500" />
@@ -57,4 +63,4 @@
 			@apply inline-flex items-center gap-xs transition-all duration-500;
 		}
 	}
-</style>
+</style> -->

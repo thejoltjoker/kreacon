@@ -1,0 +1,1 @@
+ALTER TABLE "submission" ADD COLUMN "views" integer DEFAULT 0 NOT NULL;
