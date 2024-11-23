@@ -8,7 +8,7 @@ export const categories = pgTable('category', {
 	id: serial().primaryKey(),
 	name: text().notNull(),
 	description: varchar({ length: 512 }),
-	allowedMediaType: mediaTypeEnum('allowed_media_type'),
+	mediaType: mediaTypeEnum('media_type'),
 	...timestamps
 });
 

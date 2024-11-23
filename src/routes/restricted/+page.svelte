@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { LockIcon } from 'lucide-svelte';
 	import type { PageData } from './$types';
-	import Button from '$lib/components/Button.svelte';
+	import Button from '$lib/components/OldButton.svelte';
 	export let data: PageData;
 </script>
 

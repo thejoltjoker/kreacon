@@ -10,15 +10,15 @@
 	console.log(submissions);
 </script>
 
-<h1 class="text-2xl font-bold">{$_('entity.submission.plural', { default: 'Submissions' })}</h1>
+<h1 class="text-2xl font-bold">{$_('submissions', { default: 'Submissions' })}</h1>
 
 <div class="py-sm">
 	<FilterBar {categories} />
 </div>
 <div class="grid grid-cols-submissions gap-sm">
 	{#each submissions as submission}
-		<div class="wrapper group overflow-hidden rounded-md grid">
-			<div class="w-full overflow-hidden rounded-md h-full">
+		<div class="wrapper group grid overflow-hidden rounded-md">
+			<div class="h-full w-full overflow-hidden rounded-md">
 				<a href={`/submissions/${submission.id}`}>
 					<img
 						src={`${submission?.media?.url}`}
@@ -27,10 +27,10 @@
 					/>
 				</a>
 			</div>
-			<div class="items-left flex flex-col justify-between w-full h-full p-sm pointer-events-none">
+			<div class="items-left pointer-events-none flex h-full w-full flex-col justify-between p-sm">
 				<a
 					href={`/users/${submission.user?.username}`}
-					class="inline-flex w-fit -translate-y-sm items-center gap-sm rounded-full pr-md opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:bg-black/75 group-hover:opacity-100 group-hover:backdrop-blur p-xs pointer-events-auto"
+					class="pointer-events-auto inline-flex w-fit -translate-y-sm items-center gap-sm rounded-full p-xs pr-md opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:bg-black/75 group-hover:opacity-100 group-hover:backdrop-blur"
 				>
 					<Avatar src={`/${submission.user?.picture}`} />
 					<p>{submission.user?.username}</p>

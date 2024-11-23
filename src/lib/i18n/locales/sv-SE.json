@@ -1,93 +1,55 @@
 {
-	"page": {
-		"home": "Hem",
-		"profile": "Profil",
-		"restricted": "Begränsad",
-		"admin": "Admin",
-		"login": "Logga in",
-		"logout": "Logga ut",
-		"register": "Registrera",
-		"reset_password": "Återställ lösenord",
-		"verify_email": "Verifiera e-post"
-	},
-	"entity": {
-		"category": {
-			"singular": "Kategori",
-			"plural": "Kategorier"
-		},
-		"vote": {
-			"singular": "Röst",
-			"plural": "Röster"
-		},
-		"reaction": {
-			"singular": "Reaktion",
-			"plural": "Reaktioner"
-		},
-		"event": {
-			"singular": "Evenemang",
-			"plural": "Evenemang"
-		},
-		"user": {
-			"singular": "Användare",
-			"plural": "Användare"
-		},
-		"submission": {
-			"singular": "Bidrag",
-			"plural": "Bidrag"
-		}
-	},
-	"title": {
-		"home": "Kreacon",
-		"profile": "Profil",
-		"restricted": "Begränsad",
-		"admin": "Admin",
-		"register": "Registrera",
-		"reset_password": "Återställ lösenord",
-		"verify_email": "Verifiera e-post"
-	},
-	"nav": {
-		"home": "Hem",
-		"profile": "Profil",
-		"restricted": "Begränsad",
-		"admin": "Admin",
-		"login": "Logga in",
-		"logout": "Logga ut",
-		"register": "Registrera",
-		"seed": "Så",
-		"events": "Evenemang",
-		"users": "Användare"
-	},
-	"button": {
-		"login": "Logga in",
-		"login_github": "Logga in med GitHub",
-		"login_discord": "Logga in med Discord",
-		"login_google": "Logga in med Google",
-		"logout": "Logga ut",
-		"register": "Registrera",
-		"reset_password": "Återställ lösenord",
-		"verify_email": "Verifiera e-post"
-	},
-	"auth": {
-		"password": "Lösenord",
-		"confirm_password": "Bekräfta lösenord",
-		"not_member": "Inte medlem?",
-		"already_member": "Redan medlem?",
-		"login_divider": "eller logga in med e-post",
-		"verification_token": "Verifieringskod",
-		"verify_email": "Verifiera e-post",
-		"reset_password": "Återställ lösenord",
-		"invalid_password": "Ogiltigt lösenord",
-		"new_password": "Nytt lösenord",
-		"login": "Logga in",
-		"email": "E-post",
-		"register": "Registrera"
-	},
-	"validation": {
-		"password_too_short": "Lösenordet är för kort",
-		"password_long_enough": "Lösenordet är tillräckligt långt",
-		"password_special": "Lösenordet har specialtecken",
-		"password_number": "Lösenordet har siffror",
-		"password_common": "Lösenordet är vanligt",
-		"password_uncommon": "Lösenordet är ovanligt"
-	}
+	"home": "Hem",
+	"profile": "Profil",
+	"restricted": "Begränsad",
+	"admin": "Admin",
+	"login": "Logga in",
+	"logout": "Logga ut",
+	"register": "Registrera",
+	"reset_password": "Återställ lösenord",
+	"verify_email": "Verifiera e-post",
+	"email": "E-post",
+	"username": "Användarnamn",
+	"image": "Bild",
+	"save": "Spara",
+	"cancel": "Avbryt",
+
+	"category": "Kategori",
+	"categories": "Kategorier",
+	"vote": "Rösta",
+	"votes": "Röster",
+	"reaction": "Reaktion",
+	"reactions": "Reaktioner",
+	"event": "Evenemang",
+	"events": "Evenemang",
+	"user": "Användare",
+	"users": "Användare",
+	"submission": "Bidrag",
+	"submissions": "Bidrag",
+
+	"site_name": "Kreacon",
+
+	"seed": "Frö",
+	"rules": "Regler",
+	"submit": "Skicka in",
+
+	"sign_in_github": "Logga in med GitHub",
+	"sign_in_discord": "Logga in med Discord",
+	"sign_in_google": "Logga in med Google",
+
+	"password": "Lösenord",
+	"confirm_password": "Bekräfta lösenord",
+	"not_member": "Inte medlem?",
+	"already_member": "Redan medlem?",
+	"login_divider": "eller logga in med e-post",
+	"verification_token": "Verifieringskod",
+	"invalid_password": "Ogiltigt lösenord",
+	"new_password": "Nytt lösenord",
+
+	"password_too_short": "Lösenordet är för kort",
+	"password_long_enough": "Lösenordet är tillräckligt långt",
+	"password_special": "Lösenordet har specialtecken",
+	"password_number": "Lösenordet har siffror",
+	"password_common": "Lösenordet är för vanligt",
+	"password_uncommon": "Lösenordet är tillräckligt unikt"
 }

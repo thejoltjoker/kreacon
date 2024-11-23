@@ -1,12 +1,11 @@
 <script lang="ts">
-	import Select from '$lib/components/Select/Select.svelte';
-	import type { SelectOptions } from '$lib/components/Select/Select.types';
+	import Select from '$lib/components/Select.svelte';
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
 	import { browser } from '$app/environment';
-	import type { Category } from '$lib/server/db/schema';
+	import type { Category } from '$lib/server/db/schema/category';
 
-	const options: SelectOptions = [
+	const options: { label: string; value: string }[] = [
 		{ label: 'Date', value: 'date' },
 		{ label: 'Random', value: 'random' },
 		{ label: 'Reactions', value: 'reactions' }
@@ -24,7 +23,7 @@
 
 <div class="flex items-center justify-stretch gap-sm">
 	<div class="grow basis-1">
-		<Select label="Event" options={[]} selectedLabelPrefix="Event:" />
+		<Select label="Event" items={[]} />
 	</div>
 	<div class="grow">
 		<ul class="flex items-center justify-center gap-xs text-lg font-bold">
@@ -42,15 +41,15 @@
 	</div>
 
 	<div class="shrink grow basis-1">
-		<Select label="Sort by" {options} selectedLabelPrefix="Sort by:" />
+		<Select label="Sort by" items={options} />
 	</div>
 </div>
 
 <style lang="postcss">
 	li {
-		@apply h-button-md flex items-center justify-center rounded-full px-md transition;
+		@apply flex h-input-md items-center justify-center rounded-full px-md transition;
 	}
 	.pill {
-		@apply h-button-md flex items-center justify-center rounded-full bg-white px-md text-black;
+		@apply flex h-input-md items-center justify-center rounded-full bg-white px-md text-black;
 	}
 </style>

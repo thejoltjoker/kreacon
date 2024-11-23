@@ -1,10 +1,11 @@
 import { pgEnum, timestamp } from 'drizzle-orm/pg-core';
-
-export const roleEnum = pgEnum('role', ['user', 'admin']);
+import { userRoles } from '../../../types/userRoles';
+export const roleEnum = pgEnum('role', userRoles);
 export const timestamps = {
-	createdAt: timestamp('created_at', { mode: 'string' }).defaultNow(),
-	updatedAt: timestamp('updated_at', { mode: 'string' })
+	createdAt: timestamp('created_at', { mode: 'date' }).notNull().defaultNow(),
+	updatedAt: timestamp('updated_at', { mode: 'date' })
+		.notNull()
 		.defaultNow()
-		.$onUpdate(() => new Date().toISOString())
+		.$onUpdate(() => new Date())
 };
-export const mediaTypeEnum = pgEnum('mediaType', ['image', 'video', 'audio']);
+export const mediaTypeEnum = pgEnum('media_type', ['image', 'video', 'audio']);

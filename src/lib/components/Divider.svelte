@@ -1,7 +1,7 @@
 <div class="divider">
 	<div class="line"></div>
 	<slot />
-	<div class="line" />
+	<div class="line"></div>
 </div>
 
 <style lang="postcss">

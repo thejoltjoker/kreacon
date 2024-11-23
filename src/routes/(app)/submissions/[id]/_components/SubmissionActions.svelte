@@ -1,8 +1,5 @@
 <script lang="ts">
-	import type { PageData } from '../$types';
-	import Button from '$lib/components/Button.svelte';
-	type Submission = PageData['submission'];
-	export let submission: Submission;
+	import Button from '$lib/components/OldButton.svelte';
 </script>
 
 <div class="flex gap-sm">

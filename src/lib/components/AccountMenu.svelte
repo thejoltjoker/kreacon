@@ -1,60 +1,49 @@
 <script lang="ts">
-	import { user } from '$lib/stores/userStore';
-	import { createDropdownMenu, melt } from '@melt-ui/svelte';
-	import { fly } from 'svelte/transition';
+	import type { UserWithoutPassword } from '$lib/server/db/schema/user';
 	import Avatar from './Avatar.svelte';
-	import { _ } from 'svelte-i18n';
+	import { DropdownMenu } from 'bits-ui';
+	import { LogOutIcon, SettingsIcon, UserCircle } from 'lucide-svelte';
 
-	const {
-		elements: { trigger, menu, item, separator, arrow },
-		states: { open }
-	} = createDropdownMenu({
-		forceVisible: true,
-		loop: true
-	});
+	let { user }: { user: UserWithoutPassword } = $props();
 </script>
 
-<!-- Avatar -->
-<button type="button" class="trigger" use:melt={$trigger} aria-label="Update dimensions">
-	<Avatar src={$user?.picture ?? ''} />
-	<span class="sr-only">Open account menu</span>
-</button>
+<DropdownMenu.Root>
+	<DropdownMenu.Trigger
+		class="focus-visible border-border-input bg-background-alt text-foreground focus-visible:ring-foreground focus-visible:ring-offset-background inline-flex h-input-md w-input-md items-end justify-center rounded-full border text-sm font-medium hover:bg-zinc-500 focus-visible:ring-2 focus-visible:ring-offset-2 active:scale-98"
+	>
+		<Avatar src={user?.picture ?? ''} />
+	</DropdownMenu.Trigger>
+	<div class="p-2">
+		<DropdownMenu.Content
+			class="bg-background shadow-popover w-full max-w-[20rem] rounded-sm border border-zinc-500 bg-black px-1 py-1.5"
+			sideOffset={8}
+		>
+			<DropdownMenu.Item
+				class="flex h-10 select-none items-center rounded-xs py-3 pl-3 pr-1.5 text-sm font-medium !ring-0 !ring-transparent data-[highlighted]:bg-zinc-500"
+			>
+				<a href="/profile" class="flex items-center">
+					<UserCircle class="text-foreground-alt mr-2 size-5" />
+					Profile
+				</a>
+			</DropdownMenu.Item>
 
-{#if $open}
-	<div class="menu" use:melt={$menu} transition:fly={{ duration: 150, y: -10 }}>
-		<div class="flex items-center gap-xs px-sm">
-			<Avatar src={$user?.picture ?? ''} />
-			<div class="flex flex-col">
-				<p class="text-sm font-bold">{$user?.username}</p>
-				<p class="text-sm text-zinc-500">{$user?.email}</p>
-			</div>
-		</div>
-		<div class="separator" use:melt={$separator} />
-		<div class="item" use:melt={$item}>
-			<a href="/profile">{$_('page.profile')}</a>
-		</div>
-
-		<div class="separator" use:melt={$separator} />
-		<div class="item" use:melt={$item}>
-			<a href="/logout">{$_('page.logout')}</a>
-		</div>
-		<div use:melt={$arrow} />
+			<DropdownMenu.Item
+				class="flex h-10 select-none items-center rounded-xs py-3 pl-3 pr-1.5 text-sm font-medium !ring-0 !ring-transparent data-[highlighted]:bg-zinc-500"
+			>
+				<div class="flex items-center">
+					<SettingsIcon class="text-foreground-alt mr-2 size-5" />
+					Submissions
+				</div>
+			</DropdownMenu.Item>
+			<DropdownMenu.Separator class="my-1 -ml-1 -mr-1 block h-px bg-zinc-500" />
+			<DropdownMenu.Item
+				class="flex h-10 select-none items-center rounded-xs py-3 pl-3 pr-1.5 text-sm font-medium !ring-0 !ring-transparent data-[highlighted]:bg-zinc-500"
+			>
+				<a href="/logout" class="flex items-center">
+					<LogOutIcon class="text-foreground-alt mr-2 size-5" />
+					Sign out
+				</a>
+			</DropdownMenu.Item>
+		</DropdownMenu.Content>
 	</div>
-{/if}
-
-<style lang="postcss">
-	.menu {
-		@apply w-80 rounded-sm border border-white bg-white p-sm pt-lg text-black;
-	}
-
-	.item {
-		@apply flex w-full;
-		& a {
-			@apply w-full rounded-full px-md py-xs transition hover:bg-black hover:text-white;
-		}
-	}
-
-	.separator {
-		@apply m-xs h-[1px] bg-zinc-200;
-	}
-</style>
+</DropdownMenu.Root>

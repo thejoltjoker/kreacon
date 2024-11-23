@@ -1,6 +1,3 @@
-import { createSession } from '$lib/server/auth/createSession';
-import { createTokens } from '$lib/server/auth/createTokens';
-import { setCookies } from '$lib/server/auth/setCookies';
 import { db } from '$lib/server/db';
 import { accounts, users } from '$lib/server/db/schema';
 import { error, redirect } from '@sveltejs/kit';
@@ -11,10 +8,12 @@ import { isOAuthProvider, type OAuthProvider } from '$lib/server/auth/oauth/OAut
 import { createLogger } from '$lib/server/logger';
 import { randomString } from '$lib/helpers/randomString';
 import bcrypt from 'bcryptjs';
+import { createSession, generateSessionToken, setSessionTokenCookie } from '$lib/server/auth';
 
 const logger = createLogger('auth/callback');
 
-export const GET: RequestHandler = async ({ url, params, cookies }) => {
+export const GET: RequestHandler = async (event) => {
+	const { url, params, cookies } = event;
 	const provider = params.provider;
 	const code = url.searchParams.get('code');
 	const state = url.searchParams.get('state');
@@ -70,16 +69,9 @@ export const GET: RequestHandler = async ({ url, params, cookies }) => {
 		.values({ userId: user.id, provider: provider, providerAccountId: String(userInfo.id) })
 		.onConflictDoNothing();
 
-	const session = await createSession(user.id);
-	logger.debug(`Session created for user ${user.id}: ${session.sessionToken}`);
-
-	const { accessToken, refreshToken } = createTokens(session.sessionToken, user.id);
-	logger.debug(`Tokens created for user ${user.id}`);
-
-	setCookies(cookies, accessToken, refreshToken);
-	logger.debug(`Cookies set for user ${user.id}`);
-
-	logger.info(`User ${user.id} logged in successfully`);
+	const sessionToken = generateSessionToken();
+	const session = await createSession(sessionToken, user.id);
+	setSessionTokenCookie(event, sessionToken, session.expiresAt);
 
 	cookies.delete('oauth_state', { path: '/oauth/callback' });
 

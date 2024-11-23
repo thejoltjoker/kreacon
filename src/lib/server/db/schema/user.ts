@@ -1,20 +1,22 @@
 import { relations, type InferInsertModel, type InferSelectModel } from 'drizzle-orm';
 import { pgTable, timestamp, uuid, varchar } from 'drizzle-orm/pg-core';
-
-import { roleEnum, timestamps } from './shared';
+import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
 import accounts from './account';
 import reactions from './reaction';
+import { roleEnum, timestamps } from './shared';
 import submissions from './submission';
 import tickets from './ticket';
 import votes from './vote';
+import { registerUserSchema } from '../../../schemas/user';
+import events from './event';
 
 export const users = pgTable('user', {
 	id: uuid('id').defaultRandom().primaryKey(),
 	username: varchar({ length: 255 }).notNull().unique(),
 	email: varchar({ length: 255 }).notNull().unique(),
-	emailVerifiedAt: timestamp('email_verified_at', { mode: 'string' }),
+	emailVerifiedAt: timestamp('email_verified_at', { mode: 'date' }),
 	password: varchar({ length: 255 }).notNull(),
-	role: roleEnum('role').default('user'),
+	role: roleEnum('role').notNull().default('user'),
 	picture: varchar({ length: 255 }),
 	...timestamps
 });
@@ -26,6 +28,17 @@ export const usersRelations = relations(users, ({ many }) => ({
 	reactions: many(reactions),
 	tickets: many(tickets)
 }));
+
+export const insertUserSchema = createInsertSchema(users).merge(registerUserSchema).pick({
+	username: true,
+	email: true,
+	password: true,
+	picture: true
+});
+
+export const updateUserSchema = insertUserSchema.partial();
+
+export const selectUserSchema = createSelectSchema(users);
 
 export type User = InferSelectModel<typeof users>;
 export type UserWithoutPassword = Omit<User, 'password'>;

@@ -1,23 +1,57 @@
 <script lang="ts">
-	import Button from '$lib/components/Button.svelte';
-	import InputField from '$lib/components/InputField.svelte';
+	import Button from '$lib/components/OldButton.svelte';
+	import Card from '$lib/components/Card.svelte';
+	import { updateUserSchema } from '$lib/schemas/user';
+	import { Label } from 'bits-ui';
+	import { XCircleIcon } from 'lucide-svelte';
 	import { _ } from 'svelte-i18n';
 	import SuperDebug, { superForm } from 'sveltekit-superforms';
-	import type { PageData } from './$types';
+	import { zodClient } from 'sveltekit-superforms/adapters';
+	import { debounce } from 'throttle-debounce';
 	import ImageUpload from './_components/ImageUpload.svelte';
-	import { user } from '$lib/stores/userStore';
+	import Sidebar from './_components/Sidebar.svelte';
 
-	export let data: PageData;
+	interface PageProps {
+		data: import('./$types').PageData;
+		imageUrl: string;
+	}
 
-	const { form, errors, constraints, message, enhance } = superForm(data.form, {
+	let { data, imageUrl }: PageProps = $props();
+
+	const { form, errors, message, enhance, constraints, allErrors } = superForm(data.form, {
+		validators: zodClient(updateUserSchema),
 		invalidateAll: 'force'
 	});
 
-	let imageUrl = data.user?.image ?? 'https://placehold.co/100x100';
+	const {
+		delayed,
+		submit: submitCheckUsername,
+		enhance: submitEnhance
+	} = superForm(
+		{ username: '' },
+		{
+			invalidateAll: false,
+			applyAction: false,
+			multipleSubmits: 'abort',
+			onSubmit({ cancel }) {
+				if (!$form.username) cancel();
+			},
+			onUpdated({ form }) {
+				$errors.username = form.errors.username;
+			}
+		}
+	);
+
+	const checkUsername = debounce(500, submitCheckUsername);
+
+	const user = data.user;
+
+	imageUrl = user?.picture ?? 'https://placehold.co/100x100';
 
 	const setImageUrl = (url: string) => {
 		imageUrl = url;
 	};
+
 	const handleFile = (file: File) => {
 		if (file.type.match('image.*')) {
 			const reader = new FileReader();
@@ -36,55 +70,77 @@
 			handleFile(input.files[0]);
 		}
 	};
-
-	user.set(data.user);
 </script>
 
 <svelte:head>
 	<title>Profile</title>
 </svelte:head>
+<div class="w-full p-sm">
+	{#if $message}<h3>{$message}</h3>{/if}
 
-{#if $message}<h3>{$message}</h3>{/if}
+	<h1 class="text-xl font-bold">General settings</h1>
+	<ImageUpload bind:imageUrl {setImageUrl} />
+	<form method="POST" class="flex w-full flex-col gap-sm" use:enhance>
+		<div class="flex items-center justify-center">
+			<!-- TODO File upload -->
+			<!-- <input type="file" name="image" id="image" on:change={onFileChange} accept="image/*" /> -->
+		</div>
+		<Label.Root for="email" class="mb-xs flex flex-col gap-xs font-bold">
+			{$_('email', { default: 'Email' })}
+			<div class="relative">
+				<input
+					type="text"
+					name="email"
+					aria-invalid={$errors.email ? 'true' : undefined}
+					bind:value={$form.email}
+					class:input-valid={$errors.email === undefined}
+					class:input-invalid={$errors.email !== undefined}
+					{...$constraints.email}
+				/>
 
-<div class="mx-auto max-w-screen-sm">
-	<!-- <SuperDebug data={$form} /> -->
-	<div class="flex h-screen flex-col items-center">
-		<h1 class="text-4xl font-bold">Profile</h1>
-		<ImageUpload bind:imageUrl {setImageUrl} />
-		<form method="POST" class="flex w-full flex-col gap-sm" use:enhance>
-			<div class="flex items-center justify-center">
-				<!-- TODO File upload -->
-				<!-- <input type="file" name="image" id="image" on:change={onFileChange} accept="image/*" /> -->
+				{#if $errors.email !== undefined}
+					<div class="absolute right-xs top-1/2 size-5 -translate-y-1/2 text-red-500">
+						<XCircleIcon class="size-5" />
+					</div>
+				{/if}
 			</div>
-			<label for="id">ID</label>
-			<input type="text" name="id" id="id" bind:value={$form.id} />
-			<InputField
-				id="email"
-				name="email"
-				label={$_('page.user_email')}
-				bind:value={$form.email}
-				errorMessage={$errors.email}
-				{...$constraints.email}
-			/>
+			{#if $errors.email}
+				<p class="error-message">{$errors.email}</p>
+			{/if}
+		</Label.Root>
 
-			<InputField
-				id="username"
-				name="username"
-				label={$_('page.user_username')}
-				bind:value={$form.username}
-				errorMessage={$errors.username}
-				{...$constraints.username}
-			/>
-			<div class="flex gap-sm">
-				<Button>{$_('page.user_cancel', { default: 'Cancel' })}</Button>
-				<Button type="submit" variant="rose">{$_('page.user_save', { default: 'Save' })}</Button>
+		<Label.Root for="username" class="mb-xs flex flex-col gap-xs font-bold">
+			{$_('username', { default: 'Username' })}
+			<div class="relative">
+				<input
+					type="text"
+					name="username"
+					aria-invalid={$errors.username ? 'true' : undefined}
+					bind:value={$form.username}
+					class:input-valid={$errors.username === undefined}
+					class:input-invalid={$errors.username !== undefined}
+					{...$constraints.username}
+				/>
+
+				{#if $errors.username !== undefined}
+					<div class="absolute right-xs top-1/2 size-5 -translate-y-1/2 text-red-500">
+						<XCircleIcon class="size-5" />
+					</div>
+				{/if}
 			</div>
-		</form>
-	</div>
+			{#if $errors.username}
+				<p class="error-message">{$errors.username}</p>
+			{/if}
+		</Label.Root>
+		<div class="flex gap-sm">
+			<Button>{$_('cancel', { default: 'Cancel' })}</Button>
+			<Button type="submit" variant="rose">{$_('save')}</Button>
+		</div>
+	</form>
 </div>
 
 <style lang="postcss">
-	input {
+	/* input {
 		@apply border-dashed border-purple-600 bg-transparent font-mono text-xs text-white;
-	}
+	} */
 </style>

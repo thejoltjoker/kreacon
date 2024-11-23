@@ -1,6 +1,5 @@
 <script lang="ts">
-	import type { SubmissionWithCategoryMediaReactionsUserVotes } from '$lib/server/db/schema';
-	export let submission: SubmissionWithCategoryMediaReactionsUserVotes;
+	export let submission: any;
 	import { EllipsisIcon, ThumbsUpIcon, SmileIcon } from 'lucide-svelte';
 	import { _ } from 'svelte-i18n';
 	const { media } = submission;
@@ -33,21 +32,21 @@
 			<div class="order-1 flex shrink grow basis-full flex-col lg:order-5 lg:basis-16">
 				<p class="title">{submission.category.name}</p>
 				<p class="subtitle hidden lg:block">
-					{$_('page.category.singular', { default: 'Category' })}
+					{$_('category', { default: 'Category' })}
 				</p>
 			</div>
 			<div class="order-2 flex shrink grow basis-4 items-center gap-xs lg:flex-col lg:items-start">
 				<ThumbsUpIcon class="mb-1 size-5 lg:hidden" />
 				<p class="title">{submission.votes.length}</p>
 				<p class="subtitle hidden lg:block">
-					{$_('page.vote.plural', { default: 'Votes' })}
+					{$_('votes', { default: 'Votes' })}
 				</p>
 			</div>
 			<div class="order-2 flex shrink grow basis-4 items-center gap-xs lg:flex-col lg:items-start">
 				<SmileIcon class="mb-1 size-5 lg:hidden" />
 				<p class="title">{submission.reactions.length}</p>
 				<p class="subtitle hidden lg:block">
-					{$_('page.reaction.plural', { default: 'Reactions' })}
+					{$_('reactions', { default: 'Reactions' })}
 				</p>
 			</div>
 		</div>

@@ -1,51 +1,57 @@
 <script lang="ts">
 	import { CheckCircle2Icon, XCircleIcon } from 'lucide-svelte';
 	import { _ } from 'svelte-i18n';
-	export let validationErrorPaths: string[] = [];
+
+	interface Props {
+		errors?: string[] | undefined;
+	}
+
+	const { errors }: Props = $props();
+	console.log(errors);
 </script>
 
-<ul>
+<!-- <ul>
 	<li>
-		{#if validationErrorPaths.includes('too_small')}
+		{#if errors.short}
 			<XCircleIcon class="size-5  text-red-500" />
 		{:else}
 			<CheckCircle2Icon class="size-5  text-green-500" />
 		{/if}
 		<p>
-			{$_('validation.password_long_enough', { default: 'Password is long enough' })}
+			{$_('password_long_enough', { default: 'Password is long enough' })}
 		</p>
 	</li>
 
 	<li>
-		{#if validationErrorPaths.includes('special')}
+		{#if errors.special}
 			<XCircleIcon class="size-5  text-red-500" />
 		{:else}
 			<CheckCircle2Icon class="size-5  text-green-500" />
 		{/if}
 		<p>
-			{$_('validation.password_special', { default: 'Password has special character' })}
+			{$_('password_special', { default: 'Password has special character' })}
 		</p>
 	</li>
 
 	<li>
-		{#if validationErrorPaths.includes('number')}
+		{#if errors.number}
 			<XCircleIcon class="size-5  text-red-500" />
 		{:else}
 			<CheckCircle2Icon class="size-5  text-green-500" />
 		{/if}
 		<p>
-			{$_('validation.password_number', { default: 'Password has number' })}
+			{$_('password_number', { default: 'Password has number' })}
 		</p>
 	</li>
 
 	<li>
-		{#if validationErrorPaths.includes('common')}
+		{#if errors.common}
 			<XCircleIcon class="size-5  text-red-500" />
 		{:else}
 			<CheckCircle2Icon class="size-5  text-green-500" />
 		{/if}
 		<p>
-			{$_('validation.password_uncommon', { default: 'Password is uncommon' })}
+			{$_('password_uncommon', { default: 'Password is uncommon' })}
 		</p>
 	</li>
 </ul>
@@ -57,4 +63,4 @@
 			@apply inline-flex items-center gap-xs transition-all duration-500;
 		}
 	}
-</style>
+</style> -->

@@ -21,7 +21,7 @@
 	<aside class="info">
 		<Card>
 			<SubmissionDetails {submission} />
-			<SubmissionActions {submission} />
+			<SubmissionActions />
 		</Card>
 		<Card>
 			<ReactionsList {reactions} />

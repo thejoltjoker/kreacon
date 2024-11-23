@@ -20,6 +20,7 @@ export const seed = async (db: db) => {
 				.insert(schema.media)
 				.values({
 					...item,
+					type: item.type as 'image' | 'video' | 'audio',
 					submissionId: await getSubmissionId(db, item.submissionId)
 				})
 				.returning();

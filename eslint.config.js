@@ -4,8 +4,7 @@ import svelte from 'eslint-plugin-svelte';
 import globals from 'globals';
 import ts from 'typescript-eslint';
 
-/** @type {import('eslint').Linter.Config[]} */
-export default [
+export default ts.config(
 	js.configs.recommended,
 	...ts.configs.recommended,
 	...svelte.configs['flat/recommended'],
@@ -31,4 +30,4 @@ export default [
 	{
 		ignores: ['build/', '.svelte-kit/', 'dist/']
 	}
-];
+);

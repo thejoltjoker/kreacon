@@ -1,72 +1,54 @@
-import { createSession } from '$lib/server/auth/createSession';
-import { createTokens } from '$lib/server/auth/createTokens';
-import { setCookies } from '$lib/server/auth/setCookies';
-import { db } from '$lib/server/db';
-import { users } from '$lib/server/db/schema';
-import { redirect, type Actions, fail, error } from '@sveltejs/kit';
+import { createSession, generateSessionToken, setSessionTokenCookie } from '$lib/server/auth';
+import { providers } from '$lib/server/auth/oauth/OAuthClient';
+import db from '$lib/server/db';
+import users from '$lib/server/db/schema/user';
+import { verify } from '@node-rs/argon2';
+import { fail, redirect } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
-import type { PageServerLoad } from './$types';
-import bcrypt from 'bcryptjs';
-import { availableOAuthProviders } from '$lib/server/auth/oauth/getOAuthClient';
-import { createLogger } from '$lib/server/logger';
-
-const logger = createLogger('login');
-
-export const load = (async ({ locals }) => {
-	if (locals.user) {
-		throw redirect(302, '/profile');
+import { message, superValidate } from 'sveltekit-superforms';
+import { zod } from 'sveltekit-superforms/adapters';
+import { z } from 'zod';
+import type { Actions, PageServerLoad } from './$types';
+const schema = z.object({
+	email: z.string().email(),
+	password: z.string()
+});
+export const load = (async (event) => {
+	if (event.locals.user) {
+		return redirect(302, '/profile');
 	}
 
-	const providers = availableOAuthProviders();
-	logger.info('Available OAuth providers', { providers });
-	return { providers };
+	const form = await superValidate(zod(schema));
+
+	return { form, providers };
 }) satisfies PageServerLoad;
 
-export const actions: Actions = {
-	login: async ({ request, cookies }) => {
-		logger.info('Login attempt initiated');
-		const data = await request.formData();
-		const email = data.get('email')?.toString();
-		const password = data.get('password')?.toString();
+export const actions = {
+	login: async (event) => {
+		const form = await superValidate(event.request, zod(schema));
 
-		if (!email || !password) {
-			logger.warn('Login attempt failed: Missing email or password');
-			return fail(400, { email, password, emailMissing: true });
+		if (!form.valid) {
+			return fail(400, { form });
 		}
 
-		const user = await db.query.users.findFirst({
-			where: eq(users.email, email)
+		const { email, password } = form.data;
+
+		const existingUser = await db.query.users.findFirst({ where: eq(users.email, email) });
+
+		const validPassword = await verify(existingUser?.password ?? '', password, {
+			memoryCost: 19456,
+			timeCost: 2,
+			outputLen: 32,
+			parallelism: 1
 		});
-
-		if (!user) {
-			logger.warn(`Login attempt failed: User not found for email ${email}`);
-			return fail(401, { message: 'Invalid email or password' });
+		if (!validPassword || !existingUser) {
+			return message(form, { status: 'error', text: 'Incorrect username or password' });
 		}
 
-		if (!user.password) {
-			logger.error(`User ${user.id} has no password set`);
-			return error(500, { message: 'Something went wrong' });
-		}
+		const sessionToken = generateSessionToken();
+		const session = await createSession(sessionToken, existingUser.id);
+		setSessionTokenCookie(event, sessionToken, session.expiresAt);
 
-		const passwordMatch = await bcrypt.compare(password, user.password);
-
-		if (!passwordMatch) {
-			logger.warn(`Login attempt failed: Incorrect password for user ${user.id}`);
-			return fail(401, { message: 'Invalid email or password' });
-		}
-
-		logger.info(`User ${user.id} authenticated successfully`);
-
-		const session = await createSession(user.id);
-		logger.debug(`Session created for user ${user.id}: ${session.sessionToken}`);
-
-		const { accessToken, refreshToken } = createTokens(session.sessionToken, user.id);
-		logger.debug(`Tokens created for user ${user.id}`);
-
-		setCookies(cookies, accessToken, refreshToken);
-		logger.debug(`Cookies set for user ${user.id}`);
-
-		logger.info(`User ${user.id} logged in successfully`);
-		throw redirect(302, '/profile');
+		return redirect(302, '/profile');
 	}
-};
+} satisfies Actions;

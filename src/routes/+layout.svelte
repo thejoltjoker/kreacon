@@ -1,24 +1,32 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
 	import '$lib/i18n';
-	import { user } from '$lib/stores/userStore';
 	import { locale, waitLocale } from 'svelte-i18n';
 	import '../app.css';
-	import type { LayoutData, LayoutLoad } from './$types';
+	import type { LayoutData } from './$types';
 
-	export let data: LayoutData;
-	export const load: LayoutLoad = async () => {
+	let { children } = $props();
+
+	$effect(() => {
 		if (browser) {
 			locale.set(window.navigator.language);
 		}
-		await waitLocale();
-	};
+		waitLocale().then(() => {
+			console.log('Locale loaded');
+		});
 
-	user.set(data.user);
+		if (browser) {
+			const debugElements = document.querySelectorAll('.debug');
+			debugElements.forEach((element) => {
+				const randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+				(element as HTMLElement).style.border = `1px solid ${randomColor}`;
+			});
+		}
+	});
 </script>
 
 <svelte:head>
 	<title>Kreacon</title>
 </svelte:head>
 
-<slot />
+{@render children()}

@@ -15,6 +15,12 @@
 			{ "name": "Freestyle Photo" },
 			{ "name": "Stop Motion" },
 			{ "name": "Wild / Animation" }
+		],
+		"tickets": [
+			{ "username": "john_doe" },
+			{ "username": "jane_doe" },
+			{ "username": "alice_smith" },
+			{ "username": "bob_jones" }
 		]
 	},
 	{
@@ -33,6 +39,12 @@
 			{ "name": "Freestyle Photo" },
 			{ "name": "Stop Motion" },
 			{ "name": "Wild / Animation" }
+		],
+		"tickets": [
+			{ "username": "john_doe" },
+			{ "username": "jane_doe" },
+			{ "username": "alice_smith" },
+			{ "username": "bob_jones" }
 		]
 	}
 ]

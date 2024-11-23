@@ -7,13 +7,13 @@
 <ul>
 	<SidebarMenuItem
 		href="/admin/events"
-		label={$_('entity.event.plural', { default: 'Events' })}
+		label={$_('events', { default: 'Events' })}
 		icon={CalendarIcon}
 		count={1}
 	/>
 	<SidebarMenuItem
 		href="/admin/users"
-		label={$_('entity.user.plural', { default: 'Users' })}
+		label={$_('users', { default: 'Users' })}
 		icon={CircleUserRoundIcon}
 		count={109}
 	/>

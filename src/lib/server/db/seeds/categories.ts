@@ -1,3 +1,4 @@
+import type { MediaType } from '$lib/types/mediaTypes';
 import { db } from '../../db';
 import * as schema from '../../db/schema';
 import data from './data/categories.json';
@@ -8,7 +9,8 @@ export const seed = async (db: db) => {
 			await db
 				.insert(schema.categories)
 				.values({
-					...category
+					...category,
+					allowedMediaType: category.allowedMediaType as MediaType
 				})
 				.returning();
 		})
