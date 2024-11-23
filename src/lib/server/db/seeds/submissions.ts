@@ -52,6 +52,16 @@ async function getEventId(db: db, eventName: string) {
 	return event.id;
 }
 
+async function getTicketId(db: db, eventId: number, userId: string) {
+	const ticket = await db.query.tickets.findFirst({
+		where: and(eq(schema.tickets.eventId, eventId), eq(schema.tickets.userId, userId))
+	});
+	if (!ticket) {
+		throw new Error('Unknown ticket: ' + userId + ' for event ' + eventId);
+	}
+	return ticket.id;
+}
+
 async function getCategoryId(db: db, eventId: number, categoryName: string) {
 	const [category] = await db
 		.select()
@@ -74,6 +84,7 @@ export const seed = async (db: db) => {
 			const userId = await getUserId(db, submission.user.email);
 			const eventId = await getEventId(db, submission.event.name);
 			const categoryId = await getCategoryId(db, eventId, submission.category.name);
+			const ticketId = await getTicketId(db, eventId, userId);
 			await db.transaction(async (tx) => {
 				const [insertedMedia] = await tx
 					.insert(schema.media)
@@ -90,6 +101,7 @@ export const seed = async (db: db) => {
 						eventId: eventId,
 						categoryId: categoryId,
 						userId: userId,
+						ticketId: ticketId,
 						mediaId: insertedMedia.id
 					})
 					.returning();

@@ -1,6 +1,7 @@
 import type { Config } from 'tailwindcss';
 import twForms from '@tailwindcss/forms';
 import defaultTheme from 'tailwindcss/defaultTheme';
+import defaultColors from 'tailwindcss/colors';
 
 export default {
 	content: ['./src/**/*.{html,js,svelte,ts}'],
@@ -18,7 +19,13 @@ export default {
 				'2xl': '1.563rem',
 				'3xl': '1.953rem',
 				'4xl': '2.441rem',
-				'5xl': '3.052rem'
+				'5xl': '3.052rem',
+				h1: '1.953rem',
+				h2: '1.563rem',
+				h3: '1.25rem',
+				h4: '1.125rem',
+				h5: '1rem',
+				h6: '1rem'
 			},
 			scale: {
 				98: '.98'
@@ -39,38 +46,55 @@ export default {
 				xxl: defaultTheme.spacing['12']
 			},
 			spacing: {
-				xxs: defaultTheme.spacing['2'],
-				xs: defaultTheme.spacing['3'],
-				sm: defaultTheme.spacing['4'],
-				md: defaultTheme.spacing['6'],
-				lg: defaultTheme.spacing['8'],
-				xl: defaultTheme.spacing['10'],
-				xxl: defaultTheme.spacing['12'],
-				form: defaultTheme.spacing['12'],
-				'input-sm': defaultTheme.spacing['10'],
-				'input-md': defaultTheme.spacing['12'],
-				'input-lg': defaultTheme.spacing['16'],
-				thumbnail: defaultTheme.spacing['40'],
-				'avatar-sm': defaultTheme.spacing['10'],
-				'avatar-md': defaultTheme.spacing['12'],
-				'avatar-lg': defaultTheme.spacing['14'],
-				'avatar-xl': defaultTheme.spacing['16']
+				'3xs': '2px',
+				'2xs': '4px',
+				xs: '8px',
+				sm: '12px',
+				md: '16px',
+				lg: '20px',
+				xl: '24px',
+				'2xl': '28px',
+				'3xl': '32px',
+				'4xl': '36px',
+				'5xl': '40px',
+				'6xl': '44px',
+				'7xl': '48px',
+				form: '48px',
+				'input-sm': '40px',
+				'input-md': '48px',
+				'input-lg': '56px',
+				'avatar-sm': '48px',
+				'avatar-md': '64px',
+				'avatar-lg': '96px',
+				thumbnail: defaultTheme.spacing['40']
 			},
 			width: {
-				sidebar: '20rem'
+				sidebar: '20rem',
+				'profile-sidebar': '260px'
 			},
 			gridTemplateColumns: {
 				'admin-submissions-list-item': '10rem minmax(900px, 1fr) repeat(16, minmax(0, 1fr))',
 				submissions: 'repeat(auto-fill, minmax(400px, 1fr))'
 			},
 			borderRadius: {
-				xs: defaultTheme.spacing['3.5'],
-				sm: defaultTheme.spacing['4'],
-				md: defaultTheme.spacing['8'],
-				lg: defaultTheme.spacing['10'],
-				xl: defaultTheme.spacing['12']
+				'3xs': '2px',
+				'2xs': '4px',
+				xs: '8px',
+				sm: '12px',
+				md: '16px',
+				lg: '20px',
+				xl: '24px',
+				'2xl': '28px',
+				'3xl': '32px',
+				'4xl': '36px',
+				'5xl': '40px',
+				'6xl': '44px',
+				'7xl': '48px',
+				form: '12px',
+				button: '9999px'
 			},
 			colors: {
+				divider: defaultColors.zinc[800],
 				amber: {
 					'50': '#fffeea',
 					'100': '#fffac5',

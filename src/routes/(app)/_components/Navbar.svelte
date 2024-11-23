@@ -1,6 +1,6 @@
 <script lang="ts">
 	import AccountMenu from '$lib/components/AccountMenu.svelte';
-	import Button from '$lib/components/Button.svelte';
+	import Button from '$lib/components/OldButton.svelte';
 	import Link from '$lib/components/Link.svelte';
 	import type { UserWithoutPassword } from '$lib/server/db/schema/user';
 

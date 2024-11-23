@@ -7,7 +7,8 @@ import { roleEnum, timestamps } from './shared';
 import submissions from './submission';
 import tickets from './ticket';
 import votes from './vote';
-import { registerUserSchema } from '$lib/schemas/user';
+import { registerUserSchema } from '../../../schemas/user';
+import events from './event';
 
 export const users = pgTable('user', {
 	id: uuid('id').defaultRandom().primaryKey(),

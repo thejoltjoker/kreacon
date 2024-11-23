@@ -2,7 +2,7 @@ import { hash } from '@node-rs/argon2';
 import { db } from '../../db';
 import * as schema from '../../db/schema';
 import users from './data/users.json';
-import type { UserRole } from '$lib/types/userRoles';
+import type { UserRole } from '../../../types/userRoles';
 
 export const seed = async (db: db) => {
 	await Promise.all(

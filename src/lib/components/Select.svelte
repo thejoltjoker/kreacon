@@ -13,6 +13,7 @@
 		items: { value: string; label: string }[];
 		label: string;
 	}
+	// class="h-input rounded-9px border-border-input bg-background placeholder:text-foreground-alt/50 inline-flex w-[296px] select-none items-center border px-[11px] text-sm transition-colors "
 	let { items, label }: Props = $props();
 
 	let value = $state<string>('');
@@ -21,7 +22,7 @@
 
 <Select.Root type="single" onValueChange={(v) => (value = v)}>
 	<Select.Trigger
-		class="h-input rounded-9px border-border-input bg-background placeholder:text-foreground-alt/50 inline-flex w-[296px] select-none items-center border px-[11px] text-sm transition-colors"
+		class="flex h-input-md min-w-48 items-center justify-between rounded-full border border-white bg-black px-md py-2 text-white"
 		aria-label="Select a item"
 	>
 		<Palette class="text-muted-foreground mr-[9px] size-6" />

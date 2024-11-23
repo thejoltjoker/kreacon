@@ -1,5 +1,5 @@
 <script>
-	import Button from '$lib/components/Button.svelte';
+	import Button from '$lib/components/OldButton.svelte';
 </script>
 
 <h1>Verify your email</h1>

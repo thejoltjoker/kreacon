@@ -1,5 +1,5 @@
 import { pgEnum, timestamp } from 'drizzle-orm/pg-core';
-import { userRoles } from '$lib/types/userRoles';
+import { userRoles } from '../../../types/userRoles';
 export const roleEnum = pgEnum('role', userRoles);
 export const timestamps = {
 	createdAt: timestamp('created_at', { mode: 'date' }).notNull().defaultNow(),

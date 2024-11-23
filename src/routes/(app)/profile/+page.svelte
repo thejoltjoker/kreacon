@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Button from '$lib/components/Button.svelte';
+	import Button from '$lib/components/OldButton.svelte';
 	import Card from '$lib/components/Card.svelte';
 	import { updateUserSchema } from '$lib/schemas/user';
 	import { Label } from 'bits-ui';
@@ -9,6 +9,7 @@
 	import { zodClient } from 'sveltekit-superforms/adapters';
 	import { debounce } from 'throttle-debounce';
 	import ImageUpload from './_components/ImageUpload.svelte';
+	import Sidebar from './_components/Sidebar.svelte';
 
 	interface PageProps {
 		data: import('./$types').PageData;
@@ -74,74 +75,68 @@
 <svelte:head>
 	<title>Profile</title>
 </svelte:head>
+<div class="w-full p-sm">
+	{#if $message}<h3>{$message}</h3>{/if}
 
-{#if $message}<h3>{$message}</h3>{/if}
-
-<div class="mx-auto max-w-screen-sm">
-	<Card>
-		<SuperDebug data={$form} />
-		<div class="flex flex-col items-center">
-			<h1 class="text-4xl font-bold">Profile</h1>
-			<ImageUpload bind:imageUrl {setImageUrl} />
-			<form method="POST" class="flex w-full flex-col gap-sm" use:enhance>
-				<div class="flex items-center justify-center">
-					<!-- TODO File upload -->
-					<!-- <input type="file" name="image" id="image" on:change={onFileChange} accept="image/*" /> -->
-				</div>
-				<Label.Root for="email" class="mb-xs flex flex-col gap-xs font-bold">
-					{$_('email', { default: 'Email' })}
-					<div class="relative">
-						<input
-							type="text"
-							name="email"
-							aria-invalid={$errors.email ? 'true' : undefined}
-							bind:value={$form.email}
-							class:input-valid={$errors.email === undefined}
-							class:input-invalid={$errors.email !== undefined}
-							{...$constraints.email}
-						/>
-
-						{#if $errors.email !== undefined}
-							<div class="absolute right-xs top-1/2 size-5 -translate-y-1/2 text-red-500">
-								<XCircleIcon class="size-5" />
-							</div>
-						{/if}
-					</div>
-					{#if $errors.email}
-						<p class="error-message">{$errors.email}</p>
-					{/if}
-				</Label.Root>
-
-				<Label.Root for="username" class="mb-xs flex flex-col gap-xs font-bold">
-					{$_('username', { default: 'Username' })}
-					<div class="relative">
-						<input
-							type="text"
-							name="username"
-							aria-invalid={$errors.username ? 'true' : undefined}
-							bind:value={$form.username}
-							class:input-valid={$errors.username === undefined}
-							class:input-invalid={$errors.username !== undefined}
-							{...$constraints.username}
-						/>
-
-						{#if $errors.username !== undefined}
-							<div class="absolute right-xs top-1/2 size-5 -translate-y-1/2 text-red-500">
-								<XCircleIcon class="size-5" />
-							</div>
-						{/if}
-					</div>
-					{#if $errors.username}
-						<p class="error-message">{$errors.username}</p>
-					{/if}
-				</Label.Root>
-				<div class="flex gap-sm">
-					<Button>{$_('cancel', { default: 'Cancel' })}</Button>
-					<Button type="submit" variant="rose">{$_('save')}</Button>
-				</div>
-			</form>
+	<h1 class="text-xl font-bold">General settings</h1>
+	<ImageUpload bind:imageUrl {setImageUrl} />
+	<form method="POST" class="flex w-full flex-col gap-sm" use:enhance>
+		<div class="flex items-center justify-center">
+			<!-- TODO File upload -->
+			<!-- <input type="file" name="image" id="image" on:change={onFileChange} accept="image/*" /> -->
 		</div>
-	</Card>
+		<Label.Root for="email" class="mb-xs flex flex-col gap-xs font-bold">
+			{$_('email', { default: 'Email' })}
+			<div class="relative">
+				<input
+					type="text"
+					name="email"
+					aria-invalid={$errors.email ? 'true' : undefined}
+					bind:value={$form.email}
+					class:input-valid={$errors.email === undefined}
+					class:input-invalid={$errors.email !== undefined}
+					{...$constraints.email}
+				/>
+
+				{#if $errors.email !== undefined}
+					<div class="absolute right-xs top-1/2 size-5 -translate-y-1/2 text-red-500">
+						<XCircleIcon class="size-5" />
+					</div>
+				{/if}
+			</div>
+			{#if $errors.email}
+				<p class="error-message">{$errors.email}</p>
+			{/if}
+		</Label.Root>
+
+		<Label.Root for="username" class="mb-xs flex flex-col gap-xs font-bold">
+			{$_('username', { default: 'Username' })}
+			<div class="relative">
+				<input
+					type="text"
+					name="username"
+					aria-invalid={$errors.username ? 'true' : undefined}
+					bind:value={$form.username}
+					class:input-valid={$errors.username === undefined}
+					class:input-invalid={$errors.username !== undefined}
+					{...$constraints.username}
+				/>
+
+				{#if $errors.username !== undefined}
+					<div class="absolute right-xs top-1/2 size-5 -translate-y-1/2 text-red-500">
+						<XCircleIcon class="size-5" />
+					</div>
+				{/if}
+			</div>
+			{#if $errors.username}
+				<p class="error-message">{$errors.username}</p>
+			{/if}
+		</Label.Root>
+		<div class="flex gap-sm">
+			<Button>{$_('cancel', { default: 'Cancel' })}</Button>
+			<Button type="submit" variant="rose">{$_('save')}</Button>
+		</div>
+	</form>
 </div>
 
 <style lang="postcss">

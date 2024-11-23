@@ -1,14 +1,15 @@
 import { relations, type InferInsertModel, type InferSelectModel } from 'drizzle-orm';
 import { integer, pgTable, uuid, varchar } from 'drizzle-orm/pg-core';
 import type { User, Vote } from 'lucide-svelte';
+import { randomString } from '../../../helpers/randomString';
 import categories, { type Category } from './category';
-import events from './event';
 import media, { type Media } from './media';
 import reactions, { type Reaction } from './reaction';
 import { timestamps } from './shared';
+import tickets from './ticket';
 import users from './user';
 import { votes } from './vote';
-import { randomString } from '../../../helpers/randomString';
+import events from './event';
 
 export const submissions = pgTable('submission', {
 	id: varchar('id')
@@ -19,9 +20,10 @@ export const submissions = pgTable('submission', {
 		.notNull(),
 	categoryId: integer('category_id').notNull(),
 	eventId: integer('event_id').notNull(),
-	title: varchar('title').notNull(),
-	views: integer().notNull().default(0),
 	mediaId: integer('media_id').notNull(),
+	ticketId: varchar('ticket_id', { length: 255 }).notNull(),
+	title: varchar('title', { length: 255 }).notNull(),
+	views: integer().notNull().default(0),
 	...timestamps
 });
 
@@ -33,6 +35,10 @@ export const submissionsRelations = relations(submissions, ({ one, many }) => ({
 	category: one(categories, {
 		fields: [submissions.categoryId],
 		references: [categories.id]
+	}),
+	ticket: one(tickets, {
+		fields: [submissions.ticketId],
+		references: [tickets.id]
 	}),
 	event: one(events, {
 		fields: [submissions.eventId],

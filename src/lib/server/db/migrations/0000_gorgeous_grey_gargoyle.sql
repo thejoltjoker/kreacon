@@ -1,4 +1,4 @@
-CREATE TYPE "public"."mediaType" AS ENUM('image', 'video', 'audio');--> statement-breakpoint
+CREATE TYPE "public"."media_type" AS ENUM('image', 'video', 'audio');--> statement-breakpoint
 CREATE TYPE "public"."role" AS ENUM('user', 'admin');--> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "account" (
 	"user_id" uuid NOT NULL,
@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS "category" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"name" text NOT NULL,
 	"description" varchar(512),
-	"allowed_media_type" "mediaType",
+	"media_type" "media_type",
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL
 );
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS "event" (
 CREATE TABLE IF NOT EXISTS "media" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"submission_id" varchar,
-	"type" "mediaType" NOT NULL,
+	"type" "media_type" NOT NULL,
 	"url" varchar(255) NOT NULL,
 	"alt" varchar(255),
 	"created_at" timestamp DEFAULT now() NOT NULL,
@@ -67,8 +67,10 @@ CREATE TABLE IF NOT EXISTS "submission" (
 	"id" varchar PRIMARY KEY NOT NULL,
 	"user_id" uuid NOT NULL,
 	"category_id" integer NOT NULL,
+	"ticket_id" integer NOT NULL,
 	"event_id" integer NOT NULL,
 	"title" varchar NOT NULL,
+	"views" integer DEFAULT 0 NOT NULL,
 	"media_id" integer NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL

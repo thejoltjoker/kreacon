@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Avatar from '$lib/components/Avatar.svelte';
-	import Button from '$lib/components/Button.svelte';
+	import Button from '$lib/components/OldButton.svelte';
 	import type { PageData } from '../$types';
 	type Submission = PageData['submission'];
 	export let submission: Submission;

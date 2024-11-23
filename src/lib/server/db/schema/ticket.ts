@@ -1,12 +1,13 @@
 import { type InferInsertModel, type InferSelectModel, relations } from 'drizzle-orm';
-import { integer, pgTable, serial, uuid, varchar } from 'drizzle-orm/pg-core';
+import { integer, pgTable, uuid, varchar } from 'drizzle-orm/pg-core';
 import events from './event';
 import { timestamps } from './shared';
 import users from './user';
 
 export const tickets = pgTable('tickets', {
-	id: serial('id').primaryKey(),
-	content: varchar('content', { length: 255 }),
+	id: varchar({ length: 255 })
+		.primaryKey()
+		.$defaultFn(() => crypto.randomUUID()),
 	userId: uuid('user_id'),
 	eventId: integer('event_id'),
 	...timestamps

@@ -9,6 +9,43 @@
 		@apply h-full;
 	}
 
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		@apply font-bold;
+	}
+
+	h1 {
+		@apply text-h1;
+	}
+
+	h2 {
+		@apply text-h2;
+	}
+
+	h3 {
+		@apply text-h3;
+	}
+
+	h4 {
+		@apply text-h4;
+	}
+
+	h5 {
+		@apply text-h5;
+	}
+
+	h6 {
+		@apply text-h6;
+	}
+
+	a {
+		@apply text-white hover:text-violet-500;
+	}
+
 	body {
 		@apply h-full bg-white text-black dark:bg-black dark:text-white;
 	}
@@ -39,5 +76,9 @@
 
 	.input-invalid {
 		@apply !border-red-500 focus:!ring-red-500;
+	}
+
+	.card {
+		@apply rounded-lg border border-zinc-800 bg-zinc-950 p-sm;
 	}
 }

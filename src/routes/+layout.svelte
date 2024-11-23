@@ -14,6 +14,14 @@
 		waitLocale().then(() => {
 			console.log('Locale loaded');
 		});
+
+		if (browser) {
+			const debugElements = document.querySelectorAll('.debug');
+			debugElements.forEach((element) => {
+				const randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+				(element as HTMLElement).style.border = `1px solid ${randomColor}`;
+			});
+		}
 	});
 </script>
 

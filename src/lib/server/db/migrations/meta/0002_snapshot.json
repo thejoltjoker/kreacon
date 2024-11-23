@@ -1,6 +1,6 @@
 {
-  "id": "782190d0-b3ba-4354-828d-47d43806f40d",
-  "prevId": "29a819bc-50c1-49a9-842d-523553f2b780",
+  "id": "1004038c-1918-41ac-aa04-42d3f168774c",
+  "prevId": "782190d0-b3ba-4354-828d-47d43806f40d",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -456,21 +456,27 @@
           "primaryKey": false,
           "notNull": true
         },
-        "ticket_id": {
-          "name": "ticket_id",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
         "event_id": {
           "name": "event_id",
           "type": "integer",
           "primaryKey": false,
           "notNull": true
         },
+        "media_id": {
+          "name": "media_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ticket_id": {
+          "name": "ticket_id",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
         "title": {
           "name": "title",
-          "type": "varchar",
+          "type": "varchar(255)",
           "primaryKey": false,
           "notNull": true
         },
@@ -480,12 +486,6 @@
           "primaryKey": false,
           "notNull": true,
           "default": 0
-        },
-        "media_id": {
-          "name": "media_id",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
         },
         "created_at": {
           "name": "created_at",
