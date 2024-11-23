@@ -20,7 +20,7 @@ export const GET: RequestHandler = async ({ params }) => {
 
 	const updatedUser = await db
 		.update(users)
-		.set({ emailVerifiedAt: new Date().toISOString() })
+		.set({ emailVerifiedAt: new Date() })
 		.where(eq(users.email, email))
 		.returning();
 

@@ -16,7 +16,7 @@
 
 <div class="flex w-full flex-col gap-md">
 	{#if data.providers.length > 0}
-		<OAuthButtons providers={data.providers} />
+		<OAuthButtons providers={[...data.providers]} />
 		<Divider>{$_('login_divider', { default: 'or sign in with email' })}</Divider>
 	{/if}
 	<form method="POST" action="?/login" use:enhance class="flex w-full flex-col gap-md">
@@ -24,7 +24,7 @@
 			{$_('email', { default: 'Email' })}
 			<div class="relative">
 				<input
-				type="text"
+					type="text"
 					name="email"
 					aria-invalid={$errors.email ? 'true' : undefined}
 					bind:value={$form.email}

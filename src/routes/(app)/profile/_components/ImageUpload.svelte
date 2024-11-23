@@ -79,7 +79,7 @@
 
 <form class="flex flex-col items-center gap-sm">
 	<!-- svelte-ignore a11y-no-static-element-interactions -->
-	<div
+	<button
 		id="drop_zone"
 		class="group relative size-48 h-48 w-48 cursor-pointer overflow-hidden rounded-full border border-white"
 		on:drop={onFileDrop}
@@ -95,7 +95,7 @@
 			alt=""
 			class="h-full w-full object-cover transition group-hover:opacity-50"
 		/>
-	</div>
+	</button>
 
 	<!-- <div
 			id="drop_zone"
@@ -126,8 +126,8 @@
 		class="hidden"
 	/>
 	{#if imageUrl}
-		<Button on:click={handleRemove}>Remove profile image</Button>
+		<Button onclick={handleRemove}>Remove profile image</Button>
 	{:else}
-		<Button on:click={chooseFile}>Browse</Button>
+		<Button onclick={chooseFile}>Browse</Button>
 	{/if}
 </form>

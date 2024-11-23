@@ -1,5 +1,4 @@
 <script lang="ts">
-	import Separator from '$lib/components/Separator.svelte';
 	import type { PageData } from './$types';
 	import SubmissionsListItem from './_components/SubmissionsListItem.svelte';
 
@@ -19,7 +18,6 @@
 					votes: submission.votes
 				}}
 			/>
-			<Separator color="white" />
 		{/if}
 	{/each}
 </ul>

@@ -27,10 +27,10 @@
 // StrongCuriousIguana
 // StrongCuriousChamois
 
+import { eq, and } from 'drizzle-orm';
 import { db } from '../../db';
 import * as schema from '../../db/schema';
 import data from './data/submissions.json';
-import { and, eq } from 'drizzle-orm';
 
 async function getUserId(db: db, email: string) {
 	const user = await db.query.users.findFirst({
@@ -53,18 +53,19 @@ async function getEventId(db: db, eventName: string) {
 }
 
 async function getCategoryId(db: db, eventId: number, categoryName: string) {
-	const category = await db.query.categoriesToEvents.findFirst({
-		where: (categoriesToEvents, { eq }) => eq(categoriesToEvents.eventId, eventId),
-		with: {
-			category: {
-				where: (category, { eq }) => eq(category.name, categoryName)
-			}
-		}
-	});
+	const [category] = await db
+		.select()
+		.from(schema.categoriesToEvents)
+		.innerJoin(schema.categories, eq(schema.categories.id, schema.categoriesToEvents.categoryId))
+		.where(
+			and(eq(schema.categoriesToEvents.eventId, eventId), eq(schema.categories.name, categoryName))
+		)
+		.limit(1);
+
 	if (!category) {
 		throw new Error('Unknown category: ' + categoryName);
 	}
-	return category.categoryId;
+	return category.category.id;
 }
 
 export const seed = async (db: db) => {
@@ -77,7 +78,8 @@ export const seed = async (db: db) => {
 				const [insertedMedia] = await tx
 					.insert(schema.media)
 					.values({
-						...submission.media
+						...submission.media,
+						type: submission.media.type as 'image' | 'video' | 'audio'
 					})
 					.returning();
 

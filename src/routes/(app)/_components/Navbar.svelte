@@ -10,7 +10,7 @@
 	import { _ } from 'svelte-i18n';
 	import { fly } from 'svelte/transition';
 
-	let isMenuOpen = false;
+	let isMenuOpen = $state(false);
 
 	const menuItems = [
 		{ label: $_('home', { default: 'Home' }), href: '/' },
@@ -26,7 +26,7 @@
 		{/each}
 	</ul>
 	<div class="md:hidden">
-		<Button on:click={() => (isMenuOpen = !isMenuOpen)} class="z-20">
+		<Button onclick={() => (isMenuOpen = !isMenuOpen)} class="z-20">
 			<AlignJustifyIcon class="size-5" />
 		</Button>
 	</div>
@@ -39,7 +39,7 @@
 					</Button>
 				</div>
 				<div class="md:hidden">
-					<Button on:click={() => (isMenuOpen = !isMenuOpen)} size="md">
+					<Button onclick={() => (isMenuOpen = !isMenuOpen)} size="md">
 						<PlusIcon class="h-4 w-4" />
 					</Button>
 				</div>
@@ -66,7 +66,8 @@
 		<div class="flex h-full items-center justify-center">
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
 			<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-			<ul class="flex flex-col gap-lg text-2xl" on:click={() => (isMenuOpen = false)}>
+			<!-- TODO -->
+			<!-- <ul class="flex flex-col gap-lg text-2xl" onclick={() => (isMenuOpen = false)}>
 				{#each menuItems as item}
 					<li
 						in:fly={{
@@ -77,7 +78,7 @@
 						<Link href={item.href}>{item.label}</Link>
 					</li>
 				{/each}
-			</ul>
+			</ul> -->
 		</div>
 	</div>
 {/if}

@@ -1,6 +1,5 @@
 <script lang="ts">
-	import type { SubmissionWithCategoryMediaReactionsUserVotes } from '$lib/server/db/schema';
-	export let submission: SubmissionWithCategoryMediaReactionsUserVotes;
+	export let submission: any;
 	import { EllipsisIcon, ThumbsUpIcon, SmileIcon } from 'lucide-svelte';
 	import { _ } from 'svelte-i18n';
 	const { media } = submission;

@@ -7,7 +7,7 @@
 	<div class="container">
 		<div class="flex flex-col gap-4 text-center">
 			<a
-				href="#"
+				href="/"
 				class="mx-auto inline-flex items-center gap-3 rounded-full border px-2 py-1.5 text-sm"
 				><div
 					class="focus:ring-ring inline-flex items-center rounded-full bg-white px-2.5 py-0.5 text-xs font-semibold text-black transition-colors hover:bg-white/80 focus:outline-none focus:ring-2 focus:ring-offset-2"
