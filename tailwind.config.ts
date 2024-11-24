@@ -9,7 +9,8 @@ export default {
 	theme: {
 		extend: {
 			fontFamily: {
-				sans: ['Figtree', 'sans-serif']
+				sans: ['Figtree', 'sans-serif'],
+				emoji: ['Noto Color Emoji', 'sans-serif']
 			},
 			fontSize: {
 				sm: '1rem',
@@ -66,6 +67,7 @@ export default {
 				'avatar-sm': '48px',
 				'avatar-md': '64px',
 				'avatar-lg': '96px',
+				reaction: '4rem',
 				thumbnail: defaultTheme.spacing['40']
 			},
 			width: {
@@ -74,7 +76,8 @@ export default {
 			},
 			gridTemplateColumns: {
 				'admin-submissions-list-item': '10rem minmax(900px, 1fr) repeat(16, minmax(0, 1fr))',
-				submissions: 'repeat(auto-fill, minmax(400px, 1fr))'
+				submissions: 'repeat(auto-fill, minmax(400px, 1fr))',
+				reactions: 'repeat(auto-fill, minmax(250px, 1fr))'
 			},
 			borderRadius: {
 				'3xs': '2px',

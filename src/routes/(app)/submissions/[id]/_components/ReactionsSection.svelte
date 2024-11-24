@@ -7,25 +7,21 @@
 		submission,
 		user
 	}: {
-		reactions: NonNullable<PageData['submission']>['reactions'];
-		submission: NonNullable<PageData['submission']>;
-		user: NonNullable<PageData['user']>;
+		reactions?: NonNullable<PageData['submission']>['reactions'];
+		submission?: NonNullable<PageData['submission']>;
+		user?: NonNullable<PageData['user']>;
 	} = $props();
 </script>
 
-<div class="card">
-	<div class="flex items-center">
-		<div>
-			<p class="text-sm text-gray-500">Rebound of</p>
-			<p class="font-medium">{submission?.title}</p>
-			<p class="text-sm text-gray-500">By {user?.username}</p>
-		</div>
-	</div>
-	<ul>
-		{#each reactions as reaction}
-			<li>
+<div class="flex flex-col gap-sm">
+	<h4>Reactions</h4>
+	<ul class="grid-cols-reactions grid gap-lg">
+		{#if reactions}
+			{#each reactions as reaction}
 				<ReactionsListItem {reaction} />
-			</li>
-		{/each}
+			{/each}
+		{:else}
+			<li>No reactions yet</li>
+		{/if}
 	</ul>
 </div>

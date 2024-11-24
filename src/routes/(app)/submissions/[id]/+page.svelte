@@ -9,9 +9,14 @@
 	import SubmissionMedia from './_components/SubmissionMedia.svelte';
 	import VoteButton from './_components/VoteButton.svelte';
 	import ReactionsSection from './_components/ReactionsSection.svelte';
+	import { Popover } from 'bits-ui';
+	import { enhance } from '$app/forms';
+	import { emojis } from '$lib/emojis';
 
 	let { data }: { data: PageData } = $props();
 	const { user, submission } = data;
+	const isAllowedToReact: boolean =
+		submission?.reactions.find((reaction) => reaction.userId === user?.id) == null;
 	const submissionId = $page.params.id;
 </script>
 
@@ -40,9 +45,34 @@
 			</div>
 		</a>
 		<div class="flex items-center gap-3">
-			<Button variant="outline" size="icon" title="React">
-				<SmilePlusIcon class="h-5 w-5" />
-			</Button>
+			<Popover.Root>
+				<Popover.Trigger>
+					<Button variant="outline" size="icon" title="React">
+						<SmilePlusIcon />
+					</Button>
+				</Popover.Trigger>
+				<Popover.Content
+					class="z-50 max-h-[320px] w-fit max-w-[320px] overflow-hidden overflow-y-auto rounded-lg bg-zinc-900 p-sm"
+					sideOffset={5}
+				>
+					{#if user == null}
+						<p>You must be logged in to share your reaction.</p>
+						<Button href="/login?redirect=/submissions/{submissionId}">Log in</Button>
+					{:else if !isAllowedToReact}
+						<p>You already reacted to this submission.</p>
+					{:else}
+						<!-- TODO Allow user to change reaction -->
+						<form method="POST" action="?/react">
+							<div class="flex flex-wrap gap-xs">
+								{#each emojis as emoji}
+									<Button type="submit" name="reaction" value={emoji} variant="ghost" size="icon">
+										{emoji}
+									</Button>
+								{/each}
+							</div>
+						</form>{/if}
+				</Popover.Content>
+			</Popover.Root>
 			<VoteButton isSignedIn={user != null} id={submissionId} />
 		</div>
 	</div>
@@ -80,9 +110,8 @@
 	<!-- Description -->
 
 	<!-- Reactions -->
-	{#if submission?.reactions && submission?.user && user}
-		<ReactionsSection reactions={submission?.reactions} {submission} {user} />
-	{/if}
+
+	<ReactionsSection reactions={submission?.reactions} {submission} />
 
 	<!-- Author profile -->
 	<div class=" text-center">

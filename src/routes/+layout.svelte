@@ -4,7 +4,7 @@
 	import { locale, waitLocale } from 'svelte-i18n';
 	import '../app.css';
 	import type { LayoutData } from './$types';
-
+	import '@fontsource/noto-color-emoji';
 	let { children } = $props();
 
 	$effect(() => {

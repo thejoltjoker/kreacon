@@ -29,15 +29,22 @@
 	}
 </script>
 
-<li class="flex items-center gap-2">
-	<div>
-		<Avatar src={reaction.user?.picture ?? ''} alt={reaction.user?.username ?? 'User picture'} />
-	</div>
-	<div class="flex w-full flex-col">
-		<p class="text-sm font-bold">{reaction.user?.username}</p>
-		<p class="text-sm text-zinc-500">{getRelativeTime(reaction.createdAt)}</p>
-	</div>
-	<div class="w-button text-center">
-		<p class="text-3xl">{reaction.value}</p>
-	</div>
+<li class="card pt-lg">
+	<a href="/users/{reaction.user.username}" class="flex items-center justify-between gap-sm">
+		<div class="flex gap-sm">
+			<div>
+				<Avatar
+					src={reaction.user?.picture ?? ''}
+					alt={reaction.user?.username ?? 'User picture'}
+				/>
+			</div>
+			<div class="flex w-full flex-col">
+				<p class="text-sm font-bold">{reaction.user?.username}</p>
+				<p class="text-sm text-zinc-500">{getRelativeTime(reaction.createdAt)}</p>
+			</div>
+		</div>
+		<div class="w-button text-center">
+			<p class="font-emoji text-3xl">{reaction.value}</p>
+		</div>
+	</a>
 </li>

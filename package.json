@@ -72,6 +72,7 @@
 		"@azure/communication-email": "^1.0.0",
 		"@azure/identity": "^4.5.0",
 		"@azure/storage-blob": "^12.26.0",
+		"@fontsource/noto-color-emoji": "^5.1.0",
 		"@microsoft/applicationinsights-web": "^3.3.4",
 		"@node-rs/argon2": "^2.0.0",
 		"drizzle-orm": "^0.36.4",
