@@ -1,7 +1,6 @@
 import env from '$lib/env';
 import { DefaultAzureCredential } from '@azure/identity';
 import { BlobServiceClient } from '@azure/storage-blob';
-import { createHash } from 'crypto';
 
 export const blobServiceClient = new BlobServiceClient(
 	`https://${env.AZURE_STORAGE_ACCOUNT_NAME}.blob.core.windows.net`,

@@ -1,5 +1,5 @@
 <script lang="ts">
-	export let submission: any;
+	export let submission;
 	import { EllipsisIcon, ThumbsUpIcon, SmileIcon } from 'lucide-svelte';
 	import { _ } from 'svelte-i18n';
 	const { media } = submission;

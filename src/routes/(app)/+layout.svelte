@@ -1,5 +1,4 @@
 <script lang="ts">
-	import type { UserWithoutPassword } from '$lib/server/db/schema/user';
 	import type { Snippet } from 'svelte';
 	import '../../app.css';
 	import Navbar from './_components/Navbar.svelte';

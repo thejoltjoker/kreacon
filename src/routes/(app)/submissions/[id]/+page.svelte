@@ -2,16 +2,14 @@
 	import { page } from '$app/stores';
 	import { DownloadIcon, ShareIcon, SmilePlusIcon } from 'lucide-svelte';
 	import type { PageData } from './$types';
-
 	import Avatar from '$lib/components/Avatar.svelte';
 	import Button from '$lib/components/Button.svelte';
+	import { emojis } from '$lib/emojis';
+	import { Popover } from 'bits-ui';
 	import AudioPlayer from './_components/AudioPlayer.svelte';
+	import ReactionsSection from './_components/ReactionsSection.svelte';
 	import SubmissionMedia from './_components/SubmissionMedia.svelte';
 	import VoteButton from './_components/VoteButton.svelte';
-	import ReactionsSection from './_components/ReactionsSection.svelte';
-	import { Popover } from 'bits-ui';
-	import { enhance } from '$app/forms';
-	import { emojis } from '$lib/emojis';
 
 	let { data }: { data: PageData } = $props();
 	const { user, submission } = data;
@@ -111,7 +109,7 @@
 
 	<!-- Reactions -->
 
-	<ReactionsSection reactions={submission?.reactions} {submission} />
+	<ReactionsSection reactions={submission?.reactions} />
 
 	<!-- Author profile -->
 	<div class=" text-center">

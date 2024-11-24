@@ -3,19 +3,15 @@
 	import ReactionsListItem from './ReactionsListItem.svelte';
 
 	let {
-		reactions,
-		submission,
-		user
+		reactions
 	}: {
 		reactions?: NonNullable<PageData['submission']>['reactions'];
-		submission?: NonNullable<PageData['submission']>;
-		user?: NonNullable<PageData['user']>;
 	} = $props();
 </script>
 
 <div class="flex flex-col gap-sm">
 	<h4>Reactions</h4>
-	<ul class="grid-cols-reactions grid gap-lg">
+	<ul class="grid grid-cols-reactions gap-lg">
 		{#if reactions}
 			{#each reactions as reaction}
 				<ReactionsListItem {reaction} />

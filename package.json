@@ -75,6 +75,7 @@
 		"@fontsource/noto-color-emoji": "^5.1.0",
 		"@microsoft/applicationinsights-web": "^3.3.4",
 		"@node-rs/argon2": "^2.0.0",
+		"argon2": "^0.41.1",
 		"drizzle-orm": "^0.36.4",
 		"drizzle-zod": "^0.5.1",
 		"lucide-svelte": "^0.460.1",

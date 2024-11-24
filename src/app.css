@@ -79,6 +79,6 @@
 	}
 
 	.card {
-		@apply bg-surface-muted rounded-lg p-lg;
+		@apply rounded-lg bg-surface-muted p-lg;
 	}
 }

@@ -1,7 +1,6 @@
 <script lang="ts">
 	import AccountMenu from '$lib/components/AccountMenu.svelte';
 	import Button from '$lib/components/Button.svelte';
-	import Link from '$lib/components/Link.svelte';
 	import type { UserWithoutPassword } from '$lib/server/db/schema/user';
 
 	let { user }: { user: UserWithoutPassword | null } = $props();
@@ -70,8 +69,6 @@
 			</Button>
 		</div> -->
 		<div class="flex h-full items-center justify-center">
-			<!-- svelte-ignore a11y-click-events-have-key-events -->
-			<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 			<!-- TODO -->
 			<!-- <ul class="flex flex-col gap-lg text-2xl" onclick={() => (isMenuOpen = false)}>
 				{#each menuItems as item}

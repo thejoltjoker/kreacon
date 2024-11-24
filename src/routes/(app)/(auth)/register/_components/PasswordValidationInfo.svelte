@@ -1,7 +1,4 @@
 <script lang="ts">
-	import { CheckCircle2Icon, XCircleIcon } from 'lucide-svelte';
-	import { _ } from 'svelte-i18n';
-
 	interface Props {
 		errors?: string[] | undefined;
 	}

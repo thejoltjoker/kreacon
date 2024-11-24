@@ -1,22 +1,22 @@
 <script lang="ts">
 	import Button from '$lib/components/Button.svelte';
-	import { SignalZero, UploadIcon } from 'lucide-svelte';
+	import { UploadIcon } from 'lucide-svelte';
 
 	export let imageUrl: string | null = null;
 	export let setImageUrl: (url: string) => void;
 
-	let dragOverClasses = '';
+	// let dragOverClasses = '';
 	let fileInput: HTMLInputElement;
 
 	const onDragOver = (event: DragEvent) => {
 		event.stopPropagation();
 		event.preventDefault();
-		dragOverClasses = 'bg-gray-100';
+		// dragOverClasses = 'bg-gray-100';
 	};
 	const onDragOut = (event: DragEvent) => {
 		event.stopPropagation();
 		event.preventDefault();
-		dragOverClasses = '';
+		// dragOverClasses = '';
 	};
 
 	const onFileChange = (event: Event) => {
@@ -24,7 +24,7 @@
 		if (input.files && input.files.length > 0) {
 			handleFile(input.files[0]);
 		}
-		dragOverClasses = '';
+		// dragOverClasses = '';
 	};
 
 	const onFileDrop = (event: DragEvent) => {
@@ -33,7 +33,7 @@
 		if (input?.files && input.files.length > 0) {
 			handleFile(input.files[0]);
 		}
-		dragOverClasses = '';
+		// dragOverClasses = '';
 	};
 
 	const handleFile = (file: File) => {
@@ -51,7 +51,7 @@
 		} else {
 			throw new Error('Invalid file type, only images allowed');
 		}
-		dragOverClasses = '';
+		// dragOverClasses = '';
 	};
 
 	const uploadFile = (file: File) => {
@@ -71,14 +71,13 @@
 	const handleRemove = () => {
 		imageUrl = '';
 		// imageForm.patchValue({ image: '' });
-		dragOverClasses = '';
+		// dragOverClasses = '';
 		setImageUrl('');
 		// imageUploaded.emit(null);
 	};
 </script>
 
 <form class="flex flex-col items-center gap-sm">
-	<!-- svelte-ignore a11y-no-static-element-interactions -->
 	<button
 		id="drop_zone"
 		class="group relative size-48 h-48 w-48 cursor-pointer overflow-hidden rounded-full border border-white"

@@ -26,7 +26,6 @@
 // StrongCuriousChameleon
 // StrongCuriousIguana
 // StrongCuriousChamois
-
 import { eq, and } from 'drizzle-orm';
 import { db } from '../../db';
 import * as schema from '../../db/schema';

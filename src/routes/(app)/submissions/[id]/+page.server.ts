@@ -1,11 +1,10 @@
 import { db } from '$lib/server/db';
 import { submissions } from '$lib/server/db/schema';
 
-import type { PageServerLoad } from './$types';
-import { z } from 'zod';
 import reactions, { insertReactionSchema } from '$lib/server/db/schema/reaction';
 import { fail } from '@sveltejs/kit';
 import { eq, sql } from 'drizzle-orm';
+import type { PageServerLoad } from './$types';
 
 export const load = (async ({ params, locals }) => {
 	const { id } = params;

@@ -1,8 +1,7 @@
 <script lang="ts">
-	import Select from '$lib/components/Select.svelte';
-	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
-	import { browser } from '$app/environment';
+	import { page } from '$app/stores';
+	import Select from '$lib/components/Select.svelte';
 	import type { Category } from '$lib/server/db/schema/category';
 
 	const options: { label: string; value: string }[] = [

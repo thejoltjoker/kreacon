@@ -2,14 +2,13 @@ import { createSession, generateSessionToken, setSessionTokenCookie } from '$lib
 import { providers } from '$lib/server/auth/oauth/OAuthClient';
 import db from '$lib/server/db';
 import users from '$lib/server/db/schema/user';
-import { verify } from '@node-rs/argon2';
+import { verifyPassword } from '$lib/server/utils';
 import { fail, redirect } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
 import { message, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import { z } from 'zod';
 import type { Actions, PageServerLoad } from './$types';
-import { verifyPassword } from '$lib/server/utils';
 const schema = z.object({
 	email: z.string().email(),
 	password: z.string()

@@ -1,11 +1,10 @@
 import { db } from '$lib/server/db';
+import users, { updateUserSchema } from '$lib/server/db/schema/user';
 import { fail, redirect } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm/pg-core/expressions';
 import { message, setError, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import type { PageServerLoad } from './$types';
-import users, { updateUserSchema } from '$lib/server/db/schema/user';
-import { z } from 'zod';
 
 export const load = (async ({ locals }) => {
 	if (!locals.user) {

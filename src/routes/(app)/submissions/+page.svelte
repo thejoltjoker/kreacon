@@ -1,12 +1,11 @@
 <script lang="ts">
+	import Avatar from '$lib/components/Avatar.svelte';
 	import { _ } from 'svelte-i18n';
 	import type { PageData } from './$types';
 	import FilterBar from './_components/FilterBar.svelte';
-	import { fly } from 'svelte/transition';
-	import Avatar from '$lib/components/Avatar.svelte';
 
 	export let data: PageData;
-	const { submissions, user, categories } = data;
+	const { submissions, categories } = data;
 	console.log(submissions);
 </script>
 

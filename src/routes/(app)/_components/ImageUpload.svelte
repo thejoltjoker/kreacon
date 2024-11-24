@@ -1,6 +1,5 @@
 <script lang="ts">
 	let dragOverClasses = '';
-	let image: string | null = null;
 	let displayImage = '';
 	let fileInput: HTMLInputElement;
 	const onDragOver = (event: DragEvent) => {

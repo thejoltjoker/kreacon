@@ -1,4 +1,4 @@
-import { hash, verify } from '@node-rs/argon2';
+import { hash, verify } from 'argon2';
 
 export const argonSettings = {
 	memoryCost: 19456,
@@ -8,6 +8,6 @@ export const argonSettings = {
 };
 
 export const verifyPassword = async (password: string, hash: string) =>
-	await verify(hash, password, argonSettings);
+	await verify(hash, password);
 
 export const hashPassword = async (password: string) => await hash(password, argonSettings);

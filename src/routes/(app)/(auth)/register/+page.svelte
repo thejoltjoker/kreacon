@@ -16,7 +16,8 @@
 
 	let { data }: PageProps = $props();
 
-	const { form, errors, message, enhance, constraints, allErrors } = superForm(data.form, {
+	// TODO Add message
+	const { form, errors, enhance, constraints } = superForm(data.form, {
 		validators: zodClient(registerUserSchema)
 	});
 
