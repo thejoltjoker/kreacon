@@ -43,7 +43,7 @@
 	}
 
 	a {
-		@apply text-white hover:text-violet-500;
+		@apply text-white transition-colors hover:text-violet-500;
 	}
 
 	body {
@@ -67,18 +67,18 @@
 
 @layer components {
 	.error {
-		@apply text-red-500;
+		@apply text-error;
 	}
 
 	.input-valid {
-		@apply !border-green-500 focus:!ring-green-500;
+		@apply !border-success focus:!ring-success;
 	}
 
 	.input-invalid {
-		@apply !border-red-500 focus:!ring-red-500;
+		@apply !border-error focus:!ring-error;
 	}
 
 	.card {
-		@apply rounded-lg border border-zinc-800 bg-zinc-950 p-sm;
+		@apply bg-surface-muted rounded-lg p-lg;
 	}
 }

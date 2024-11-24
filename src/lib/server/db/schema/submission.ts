@@ -24,6 +24,7 @@ export const submissions = pgTable('submission', {
 	ticketId: varchar('ticket_id', { length: 255 }).notNull(),
 	title: varchar('title', { length: 255 }).notNull(),
 	views: integer().notNull().default(0),
+	thumbnailId: integer('thumbnail_id').notNull(),
 	...timestamps
 });
 
@@ -48,6 +49,10 @@ export const submissionsRelations = relations(submissions, ({ one, many }) => ({
 	votes: many(votes),
 	media: one(media, {
 		fields: [submissions.mediaId],
+		references: [media.id]
+	}),
+	thumbnail: one(media, {
+		fields: [submissions.thumbnailId],
 		references: [media.id]
 	})
 }));

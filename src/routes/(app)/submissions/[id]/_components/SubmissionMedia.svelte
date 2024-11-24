@@ -6,7 +6,7 @@
 </script>
 
 <section class="media">
-	<img src={`/${media?.url}`} alt={media?.alt} />
+	<img src={`${media?.url}`} alt={media?.alt} />
 </section>
 
 <style lang="postcss">

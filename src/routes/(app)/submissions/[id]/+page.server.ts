@@ -3,7 +3,7 @@ import { submissions } from '$lib/server/db/schema';
 import { eq } from 'drizzle-orm/pg-core/expressions';
 import type { PageServerLoad } from './$types';
 
-export const load = (async ({ params }) => {
+export const load = (async ({ params, locals }) => {
 	const { id } = params;
 
 	const result = await db.query.submissions.findFirst({
@@ -33,5 +33,5 @@ export const load = (async ({ params }) => {
 		}
 	});
 
-	return { submission: result };
+	return { submission: result, user: locals.user };
 }) satisfies PageServerLoad;

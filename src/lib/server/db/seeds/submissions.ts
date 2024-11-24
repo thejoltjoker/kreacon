@@ -32,7 +32,7 @@ import { db } from '../../db';
 import * as schema from '../../db/schema';
 import data from './data/submissions.json';
 
-async function getUserId(db: db, email: string) {
+async function getUserIdFromEmail(db: db, email: string) {
 	const user = await db.query.users.findFirst({
 		where: eq(schema.users.email, email)
 	});
@@ -81,11 +81,35 @@ async function getCategoryId(db: db, eventId: number, categoryName: string) {
 export const seed = async (db: db) => {
 	await Promise.all(
 		data.map(async (submission) => {
-			const userId = await getUserId(db, submission.user.email);
+			const userId = await getUserIdFromEmail(db, submission.user.email);
 			const eventId = await getEventId(db, submission.event.name);
 			const categoryId = await getCategoryId(db, eventId, submission.category.name);
 			const ticketId = await getTicketId(db, eventId, userId);
+
+			let userEmails: string[] = [];
+			if (submission.reactions) {
+				userEmails = submission.reactions.map((reaction) => reaction.user.email);
+			}
+			const userIds = await Promise.all(userEmails.map((email) => getUserIdFromEmail(db, email)));
+
+			const emailToUserId = Object.fromEntries(
+				userEmails.map((email, index) => [email, userIds[index]])
+			);
+
 			await db.transaction(async (tx) => {
+				let insertedThumbnail: number | null = null;
+
+				if (submission.thumbnail) {
+					const [result] = await tx
+						.insert(schema.media)
+						.values({
+							...submission.thumbnail,
+							type: submission.thumbnail.type as 'image' | 'video' | 'audio'
+						})
+						.returning();
+					insertedThumbnail = result.id;
+				}
+
 				const [insertedMedia] = await tx
 					.insert(schema.media)
 					.values({
@@ -102,9 +126,25 @@ export const seed = async (db: db) => {
 						categoryId: categoryId,
 						userId: userId,
 						ticketId: ticketId,
-						mediaId: insertedMedia.id
+						mediaId: insertedMedia.id,
+						thumbnailId: insertedThumbnail ?? insertedMedia.id
 					})
 					.returning();
+
+				if (submission.reactions) {
+					await Promise.all(
+						submission.reactions.map(async (reaction) => {
+							await tx
+								.insert(schema.reactions)
+								.values({
+									...reaction,
+									userId: emailToUserId[reaction.user.email],
+									submissionId: insertedSubmission.id
+								})
+								.returning();
+						})
+					);
+				}
 
 				await tx
 					.update(schema.media)

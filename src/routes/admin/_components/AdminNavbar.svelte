@@ -1,5 +1,5 @@
 <script>
-	import Button from '$lib/components/OldButton.svelte';
+	import Button from '$lib/components/Button.svelte';
 	import Link from '$lib/components/Link.svelte';
 	import { _ } from 'svelte-i18n';
 </script>

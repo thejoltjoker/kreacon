@@ -7,9 +7,17 @@
 		"event": { "name": "Beacon Summer 1991" },
 		"media": {
 			"type": "image",
-			"url": "images/StrongCuriousChihuahua.png",
+			"url": "/images/StrongCuriousChihuahua.png",
 			"alt": "Whispers of the Forgotten Forest"
-		}
+		},
+		"reactions": [
+			{
+				"user": {
+					"email": "jane.doe@example.com"
+				},
+				"value": "👍"
+			}
+		]
 	},
 	{
 		"id": "StrongCuriousHerring",
@@ -18,8 +26,13 @@
 		"event": { "name": "Beacon Summer 1991" },
 		"title": "Echoes in the Urban Labyrinth",
 		"media": {
+			"type": "audio",
+			"url": "/audio/datorpojken_-_dont_sell_the_shell.mp3",
+			"alt": "Echoes in the Urban Labyrinth"
+		},
+		"thumbnail": {
 			"type": "image",
-			"url": "images/StrongCuriousHerring.png",
+			"url": "/images/prerendered-music-thumbnail.webp",
 			"alt": "Echoes in the Urban Labyrinth"
 		}
 	},
@@ -30,8 +43,13 @@
 		"event": { "name": "Beacon Summer 1991" },
 		"title": "Fragments of a Shattered Dream",
 		"media": {
+			"type": "audio",
+			"url": "/audio/datorpojken_-_dont_sell_the_shell.mp3",
+			"alt": "Fragments of a Shattered Dream"
+		},
+		"thumbnail": {
 			"type": "image",
-			"url": "images/StrongCuriousBloodhound.png",
+			"url": "/images/tracked-music-thumbnail.webp",
 			"alt": "Fragments of a Shattered Dream"
 		}
 	},
@@ -43,7 +61,7 @@
 		"title": "The Dancer's Last Pirouette",
 		"media": {
 			"type": "image",
-			"url": "images/StrongCuriousDuck.png",
+			"url": "/images/StrongCuriousDuck.png",
 			"alt": "The Dancer's Last Pirouette"
 		}
 	},
@@ -55,7 +73,7 @@
 		"title": "Nebula's Lullaby",
 		"media": {
 			"type": "image",
-			"url": "images/StrongCuriousGoat.png",
+			"url": "/images/StrongCuriousGoat.png",
 			"alt": "Nebula's Lullaby"
 		}
 	},
@@ -67,7 +85,7 @@
 		"title": "Shadows of Yesterday's Tomorrow",
 		"media": {
 			"type": "image",
-			"url": "images/StrongCuriousMacaw.png",
+			"url": "/images/StrongCuriousMacaw.png",
 			"alt": "Shadows of Yesterday's Tomorrow"
 		}
 	},
@@ -79,7 +97,7 @@
 		"title": "The Clockwork Heart",
 		"media": {
 			"type": "image",
-			"url": "images/StrongCuriousOctopus.png",
+			"url": "/images/StrongCuriousOctopus.png",
 			"alt": "The Clockwork Heart"
 		}
 	},
@@ -91,7 +109,7 @@
 		"title": "Melodies from a Rusty Piano",
 		"media": {
 			"type": "image",
-			"url": "images/StrongCuriousVole.png",
+			"url": "/images/StrongCuriousVole.png",
 			"alt": "Melodies from a Rusty Piano"
 		}
 	},
@@ -103,7 +121,7 @@
 		"title": "Reflections in a Broken Mirror",
 		"media": {
 			"type": "image",
-			"url": "images/StrongCuriousWolffish.png",
+			"url": "/images/StrongCuriousWolffish.png",
 			"alt": "Reflections in a Broken Mirror"
 		}
 	},
@@ -114,8 +132,13 @@
 		"event": { "name": "Beacon Winter 1991" },
 		"title": "The Lighthouse at the Edge of Time",
 		"media": {
+			"type": "audio",
+			"url": "/audio/datorpojken_-_dont_sell_the_shell.mp3",
+			"alt": "The Lighthouse at the Edge of Time"
+		},
+		"thumbnail": {
 			"type": "image",
-			"url": "images/StrongCuriousStoat.png",
+			"url": "/images/prerendered-music-thumbnail.webp",
 			"alt": "The Lighthouse at the Edge of Time"
 		}
 	},
@@ -126,8 +149,13 @@
 		"event": { "name": "Beacon Winter 1991" },
 		"title": "Autumn's Fiery Embrace",
 		"media": {
+			"type": "audio",
+			"url": "/audio/datorpojken_-_dont_sell_the_shell.mp3",
+			"alt": "Autumn's Fiery Embrace"
+		},
+		"thumbnail": {
 			"type": "image",
-			"url": "images/StrongCuriousMongrel.png",
+			"url": "/images/tracked-music-thumbnail.webp",
 			"alt": "Autumn's Fiery Embrace"
 		}
 	},
@@ -139,7 +167,7 @@
 		"title": "Secrets of the Deep Blue",
 		"media": {
 			"type": "image",
-			"url": "images/StrongCuriousCivet.png",
+			"url": "/images/StrongCuriousCivet.png",
 			"alt": "Secrets of the Deep Blue"
 		}
 	},
@@ -151,7 +179,7 @@
 		"title": "The Alchemist's Final Experiment",
 		"media": {
 			"type": "image",
-			"url": "images/StrongCuriousCentipede.png",
+			"url": "/images/StrongCuriousCentipede.png",
 			"alt": "The Alchemist's Final Experiment"
 		}
 	},
@@ -163,7 +191,7 @@
 		"title": "Whispers in the Wind Chimes",
 		"media": {
 			"type": "image",
-			"url": "images/StrongCuriousLlama.png",
+			"url": "/images/StrongCuriousLlama.png",
 			"alt": "Whispers in the Wind Chimes"
 		}
 	},
@@ -175,7 +203,7 @@
 		"title": "Neon Dreams in Tokyo",
 		"media": {
 			"type": "image",
-			"url": "images/StrongCuriousSwan.png",
+			"url": "/images/StrongCuriousSwan.png",
 			"alt": "Neon Dreams in Tokyo"
 		}
 	},
@@ -187,7 +215,7 @@
 		"title": "The Butterfly Effect",
 		"media": {
 			"type": "image",
-			"url": "images/StrongCuriousMonkfish.png",
+			"url": "/images/StrongCuriousMonkfish.png",
 			"alt": "The Butterfly Effect"
 		}
 	},
@@ -199,7 +227,7 @@
 		"title": "The Physical Impossibility of Death in the Mind of Someone Living",
 		"media": {
 			"type": "image",
-			"url": "images/StrongCuriousYak.png",
+			"url": "/images/StrongCuriousYak.png",
 			"alt": "The Physical Impossibility of Death in the Mind of Someone Living"
 		}
 	},
@@ -210,8 +238,13 @@
 		"event": { "name": "Beacon Summer 1991" },
 		"title": "Balloon Dog",
 		"media": {
+			"type": "audio",
+			"url": "/audio/datorpojken_-_dont_sell_the_shell.mp3",
+			"alt": "Balloon Dog"
+		},
+		"thumbnail": {
 			"type": "image",
-			"url": "images/StrongCuriousTamarin.png",
+			"url": "/images/prerendered-music-thumbnail.webp",
 			"alt": "Balloon Dog"
 		}
 	},
@@ -222,8 +255,13 @@
 		"event": { "name": "Beacon Summer 1991" },
 		"title": "My Bed",
 		"media": {
+			"type": "audio",
+			"url": "/audio/datorpojken_-_dont_sell_the_shell.mp3",
+			"alt": "My Bed"
+		},
+		"thumbnail": {
 			"type": "image",
-			"url": "images/StrongCuriousOkapi.png",
+			"url": "/images/tracked-music-thumbnail.webp",
 			"alt": "My Bed"
 		}
 	},
@@ -235,7 +273,7 @@
 		"title": "Girl with Balloon",
 		"media": {
 			"type": "image",
-			"url": "images/StrongCuriousMuskrat.png",
+			"url": "/images/StrongCuriousMuskrat.png",
 			"alt": "Girl with Balloon"
 		}
 	},
@@ -247,7 +285,7 @@
 		"title": "99 Cent",
 		"media": {
 			"type": "image",
-			"url": "images/StrongCuriousGrouse.png",
+			"url": "/images/StrongCuriousGrouse.png",
 			"alt": "99 Cent"
 		}
 	},
@@ -259,7 +297,7 @@
 		"title": "Untitled Film Stills",
 		"media": {
 			"type": "image",
-			"url": "images/StrongCuriousGrasshopper.png",
+			"url": "/images/StrongCuriousGrasshopper.png",
 			"alt": "Untitled Film Stills"
 		}
 	},
@@ -271,7 +309,7 @@
 		"title": "The Cremaster Cycle",
 		"media": {
 			"type": "image",
-			"url": "images/StrongCuriousBongo.png",
+			"url": "/images/StrongCuriousBongo.png",
 			"alt": "The Cremaster Cycle"
 		}
 	},
@@ -283,7 +321,7 @@
 		"title": "Truisms",
 		"media": {
 			"type": "image",
-			"url": "images/StrongCuriousRockfish.png",
+			"url": "/images/StrongCuriousRockfish.png",
 			"alt": "Truisms"
 		}
 	},
@@ -295,7 +333,7 @@
 		"title": "And Then, And Then And Then And Then And Then",
 		"media": {
 			"type": "image",
-			"url": "images/StrongCuriousOlm.png",
+			"url": "/images/StrongCuriousOlm.png",
 			"alt": "And Then, And Then And Then And Then And Then"
 		}
 	},
@@ -306,8 +344,13 @@
 		"event": { "name": "Beacon Winter 1991" },
 		"title": "Crack is Wack",
 		"media": {
+			"type": "audio",
+			"url": "/audio/datorpojken_-_dont_sell_the_shell.mp3",
+			"alt": "Crack is Wack"
+		},
+		"thumbnail": {
 			"type": "image",
-			"url": "images/StrongCuriousChicken.png",
+			"url": "/images/tracked-music-thumbnail.webp",
 			"alt": "Crack is Wack"
 		}
 	},
@@ -318,8 +361,13 @@
 		"event": { "name": "Beacon Winter 1991" },
 		"title": "Riding with Death",
 		"media": {
+			"type": "audio",
+			"url": "/audio/datorpojken_-_dont_sell_the_shell.mp3",
+			"alt": "Riding with Death"
+		},
+		"thumbnail": {
 			"type": "image",
-			"url": "images/StrongCuriousGorilla.png",
+			"url": "/images/tracked-music-thumbnail.webp",
 			"alt": "Riding with Death"
 		}
 	},
@@ -331,7 +379,7 @@
 		"title": "The Ballad of Sexual Dependency",
 		"media": {
 			"type": "image",
-			"url": "images/StrongCuriousLynx.png",
+			"url": "/images/StrongCuriousLynx.png",
 			"alt": "The Ballad of Sexual Dependency"
 		}
 	},
@@ -343,7 +391,7 @@
 		"title": "La Nona Ora",
 		"media": {
 			"type": "image",
-			"url": "images/StrongCuriousMastiff.png",
+			"url": "/images/StrongCuriousMastiff.png",
 			"alt": "La Nona Ora"
 		}
 	},
@@ -355,7 +403,7 @@
 		"title": "Infinity Mirror Room - Phalli's Field",
 		"media": {
 			"type": "image",
-			"url": "images/StrongCuriousOtter.png",
+			"url": "/images/StrongCuriousOtter.png",
 			"alt": "Infinity Mirror Room - Phalli's Field"
 		}
 	},
@@ -367,7 +415,7 @@
 		"title": "Cloud Gate",
 		"media": {
 			"type": "image",
-			"url": "images/StrongCuriousPanther.png",
+			"url": "/images/StrongCuriousPanther.png",
 			"alt": "Cloud Gate"
 		}
 	},
@@ -379,7 +427,7 @@
 		"title": "Your Body is a Battleground",
 		"media": {
 			"type": "image",
-			"url": "images/StrongCuriousWolfhound.png",
+			"url": "/images/StrongCuriousWolfhound.png",
 			"alt": "Your Body is a Battleground"
 		}
 	}

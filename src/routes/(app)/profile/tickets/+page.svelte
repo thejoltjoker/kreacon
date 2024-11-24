@@ -18,7 +18,7 @@
 	{:else}
 		<ul>
 			{#each tickets as ticket}
-				<li>{ticket.content}</li>
+				<li>{ticket.event?.name}</li>
 			{/each}
 		</ul>
 	{/if}

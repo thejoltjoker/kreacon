@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Button from '$lib/components/OldButton.svelte';
+	import Button from '$lib/components/Button.svelte';
 	import Card from '$lib/components/Card.svelte';
 	import { updateUserSchema } from '$lib/schemas/user';
 	import { Label } from 'bits-ui';
@@ -134,7 +134,7 @@
 		</Label.Root>
 		<div class="flex gap-sm">
 			<Button>{$_('cancel', { default: 'Cancel' })}</Button>
-			<Button type="submit" variant="rose">{$_('save')}</Button>
+			<Button type="submit">{$_('save')}</Button>
 		</div>
 	</form>
 </div>

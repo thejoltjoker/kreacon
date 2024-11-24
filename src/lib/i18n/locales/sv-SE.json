@@ -51,5 +51,7 @@
 	"password_special": "Lösenordet har specialtecken",
 	"password_number": "Lösenordet har siffror",
 	"password_common": "Lösenordet är för vanligt",
-	"password_uncommon": "Lösenordet är tillräckligt unikt"
+	"password_uncommon": "Lösenordet är tillräckligt unikt",
+
+	"sign_up": "Registrera"
 }

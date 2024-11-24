@@ -94,7 +94,18 @@ export default {
 				button: '9999px'
 			},
 			colors: {
+				primary: defaultColors.violet,
+				secondary: defaultColors.blue,
+				muted: defaultColors.zinc[600],
 				divider: defaultColors.zinc[800],
+				success: defaultColors.green[500],
+				error: defaultColors.red[500],
+				surface: {
+					DEFAULT: 'rgb(9 9 10)',
+					muted: defaultColors.zinc[900],
+					subtle: defaultColors.zinc[800]
+				},
+				black: 'rgb(9 9 10)',
 				amber: {
 					'50': '#fffeea',
 					'100': '#fffac5',
@@ -175,7 +186,9 @@ export default {
 		'bg-white',
 		'bg-black',
 		'input-valid',
-		'input-invalid'
+		'input-invalid',
+		'max-w-screen-lg',
+		'max-w-screen-md'
 	],
 
 	plugins: [twForms]
