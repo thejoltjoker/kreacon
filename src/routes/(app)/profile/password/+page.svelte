@@ -23,7 +23,7 @@
 	<Button class="grow-0">Change password</Button>
 </form>
 
-<style>
+<style lang="postcss">
 	form {
 		@apply flex w-full flex-col gap-md;
 	}

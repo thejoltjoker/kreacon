@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Button from '$lib/components/OldButton.svelte';
+	import Button from '$lib/components/Button.svelte';
 	import Divider from '$lib/components/Divider.svelte';
 	import Link from '$lib/components/Link.svelte';
 	import { registerUserSchema } from '$lib/schemas/user';
@@ -16,7 +16,8 @@
 
 	let { data }: PageProps = $props();
 
-	const { form, errors, message, enhance, constraints, allErrors } = superForm(data.form, {
+	// TODO Add message
+	const { form, errors, enhance, constraints } = superForm(data.form, {
 		validators: zodClient(registerUserSchema)
 	});
 
@@ -81,9 +82,7 @@
 			constraints={$constraints.password}
 		/>
 
-		<Button variant="rose" type="submit">
-			{$_('register', { default: 'Register' })}
-		</Button>
+		<Button type="submit">{$_('register', { default: 'Register' })}</Button>
 		<p class="text-center">
 			{$_('already_member', { default: 'Already a member?' })}
 			<Link href="/login">{$_('login', { default: 'Log in' })}</Link>

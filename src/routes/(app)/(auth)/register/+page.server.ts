@@ -3,12 +3,12 @@ import { availableOAuthProviders } from '$lib/server/auth/oauth/getOAuthClient';
 import { db } from '$lib/server/db';
 import users, { insertUserSchema } from '$lib/server/db/schema/user';
 import { createLogger } from '$lib/server/logger';
-import { hash } from '@node-rs/argon2';
+import { hashPassword } from '$lib/server/utils';
 import { type Actions, fail, redirect } from '@sveltejs/kit';
+import { eq } from 'drizzle-orm';
 import { setError, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import type { PageServerLoad } from './$types';
-import { eq } from 'drizzle-orm';
 
 const logger = createLogger('register');
 
@@ -26,12 +26,7 @@ export const actions: Actions = {
 		}
 		const { username, password, email } = form.data;
 
-		const passwordHash = await hash(password, {
-			memoryCost: 19456,
-			timeCost: 2,
-			outputLen: 32,
-			parallelism: 1
-		});
+		const passwordHash = await hashPassword(password);
 
 		try {
 			const [createdUser] = await db

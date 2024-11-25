@@ -1,14 +1,14 @@
+import { randomString } from '$lib/helpers/randomString';
+import { getOAuthClient } from '$lib/server/auth/oauth/getOAuthClient';
+import { isOAuthProvider, type OAuthProvider } from '$lib/server/auth/oauth/OAuthClient';
 import { db } from '$lib/server/db';
 import { accounts, users } from '$lib/server/db/schema';
+import { createLogger } from '$lib/server/logger';
 import { error, redirect } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
 import type { RequestHandler } from './$types';
-import { getOAuthClient } from '$lib/server/auth/oauth/getOAuthClient';
-import { isOAuthProvider, type OAuthProvider } from '$lib/server/auth/oauth/OAuthClient';
-import { createLogger } from '$lib/server/logger';
-import { randomString } from '$lib/helpers/randomString';
-import bcrypt from 'bcryptjs';
 import { createSession, generateSessionToken, setSessionTokenCookie } from '$lib/server/auth';
+import { hashPassword } from '$lib/server/utils';
 
 const logger = createLogger('auth/callback');
 
@@ -58,7 +58,7 @@ export const GET: RequestHandler = async (event) => {
 			.insert(users)
 			.values({
 				username: randomString(),
-				password: await bcrypt.hash(crypto.randomUUID(), 12),
+				password: await hashPassword(crypto.randomUUID()),
 				email: userInfo.email
 			})
 			.returning();

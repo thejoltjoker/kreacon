@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { cn } from '$lib/utils';
 	import { Avatar, type WithoutChildrenOrChild } from 'bits-ui';
-	import { UserIcon, UserRoundIcon } from 'lucide-svelte';
-	import { type VariantProps, tv } from 'tailwind-variants';
+	import { UserRoundIcon } from 'lucide-svelte';
+	import { tv } from 'tailwind-variants';
 	type Props = WithoutChildrenOrChild<Avatar.RootProps> & {
 		src: string;
 		alt: string;

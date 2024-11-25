@@ -1,34 +1,34 @@
-import { createVerifyEmailToken } from '$lib/server/auth/verifyEmail';
+// import { createVerifyEmailToken } from '$lib/server/auth/verifyEmail';
 
-import { db } from '$lib/server/db';
-import { users } from '$lib/server/db/schema';
-import { error, redirect } from '@sveltejs/kit';
-import { eq } from 'drizzle-orm';
-import type { RequestHandler } from './$types';
-import { createLogger } from '$lib/server/logger';
+// import { db } from '$lib/server/db';
+// import { users } from '$lib/server/db/schema';
+// import { error, redirect } from '@sveltejs/kit';
+// import { eq } from 'drizzle-orm';
+// import type { RequestHandler } from './$types';
+// import { createLogger } from '$lib/server/logger';
 
-const logger = createLogger('verify-email');
+// const logger = createLogger('verify-email');
 
-export const GET: RequestHandler = async ({ params }) => {
-	const { email, hash } = params;
-	logger.info('Verifying email', { email, hash });
-	const token = await createVerifyEmailToken(email);
-	if (token !== hash) {
-		logger.error('Invalid token');
-		throw error(401, 'Invalid token');
-	}
+// export const GET: RequestHandler = async ({ params }) => {
+// 	const { email, hash } = params;
+// 	logger.info('Verifying email', { email, hash });
+// 	const token = await createVerifyEmailToken(email);
+// 	if (token !== hash) {
+// 		logger.error('Invalid token');
+// 		throw error(401, 'Invalid token');
+// 	}
 
-	const updatedUser = await db
-		.update(users)
-		.set({ emailVerifiedAt: new Date() })
-		.where(eq(users.email, email))
-		.returning();
+// 	const updatedUser = await db
+// 		.update(users)
+// 		.set({ emailVerifiedAt: new Date() })
+// 		.where(eq(users.email, email))
+// 		.returning();
 
-	if (!updatedUser || updatedUser.length === 0) {
-		logger.error('User not found');
-		throw error(404, 'User not found');
-	}
+// 	if (!updatedUser || updatedUser.length === 0) {
+// 		logger.error('User not found');
+// 		throw error(404, 'User not found');
+// 	}
 
-	logger.info('Email verified');
-	throw redirect(302, '/');
-};
+// 	logger.info('Email verified');
+// 	throw redirect(302, '/');
+// };

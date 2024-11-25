@@ -32,7 +32,7 @@
 
 		{#if delayed}
 			<div class="absolute right-xs top-1/2 size-5 -translate-y-1/2 animate-pulse text-zinc-500">
-				<LoaderCircleIcon class="stroke-3 size-5 animate-spin stroke-zinc-500" />
+				<LoaderCircleIcon class="size-5 animate-spin stroke-zinc-500 stroke-3" />
 			</div>
 		{:else if errors !== undefined}
 			<div class="absolute right-xs top-1/2 size-5 -translate-y-1/2 text-red-500">

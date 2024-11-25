@@ -22,7 +22,9 @@ for (const table of [
 	schema.categories,
 	schema.categoriesToEvents,
 	schema.tickets,
-	schema.submissions
+	schema.submissions,
+	schema.media,
+	schema.reactions
 ]) {
 	await resetTable(db, table);
 }

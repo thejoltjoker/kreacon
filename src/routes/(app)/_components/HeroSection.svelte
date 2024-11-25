@@ -1,6 +1,6 @@
 <script>
 	import BitsButton from '$lib/components/BitsButton.svelte';
-	import { ArrowRightIcon, MoveRightIcon } from 'lucide-svelte';
+	import { ArrowRightIcon } from 'lucide-svelte';
 </script>
 
 <section class="flex justify-center py-32">

@@ -1,15 +1,12 @@
 <script lang="ts">
-	import Button from '$lib/components/OldButton.svelte';
-	import Card from '$lib/components/Card.svelte';
+	import Button from '$lib/components/Button.svelte';
 	import { updateUserSchema } from '$lib/schemas/user';
 	import { Label } from 'bits-ui';
 	import { XCircleIcon } from 'lucide-svelte';
 	import { _ } from 'svelte-i18n';
-	import SuperDebug, { superForm } from 'sveltekit-superforms';
+	import { superForm } from 'sveltekit-superforms';
 	import { zodClient } from 'sveltekit-superforms/adapters';
-	import { debounce } from 'throttle-debounce';
 	import ImageUpload from './_components/ImageUpload.svelte';
-	import Sidebar from './_components/Sidebar.svelte';
 
 	interface PageProps {
 		data: import('./$types').PageData;
@@ -18,31 +15,10 @@
 
 	let { data, imageUrl }: PageProps = $props();
 
-	const { form, errors, message, enhance, constraints, allErrors } = superForm(data.form, {
+	const { form, errors, message, enhance, constraints } = superForm(data.form, {
 		validators: zodClient(updateUserSchema),
 		invalidateAll: 'force'
 	});
-
-	const {
-		delayed,
-		submit: submitCheckUsername,
-		enhance: submitEnhance
-	} = superForm(
-		{ username: '' },
-		{
-			invalidateAll: false,
-			applyAction: false,
-			multipleSubmits: 'abort',
-			onSubmit({ cancel }) {
-				if (!$form.username) cancel();
-			},
-			onUpdated({ form }) {
-				$errors.username = form.errors.username;
-			}
-		}
-	);
-
-	const checkUsername = debounce(500, submitCheckUsername);
 
 	const user = data.user;
 
@@ -134,7 +110,7 @@
 		</Label.Root>
 		<div class="flex gap-sm">
 			<Button>{$_('cancel', { default: 'Cancel' })}</Button>
-			<Button type="submit" variant="rose">{$_('save')}</Button>
+			<Button type="submit">{$_('save')}</Button>
 		</div>
 	</form>
 </div>

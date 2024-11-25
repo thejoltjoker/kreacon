@@ -51,5 +51,6 @@
 	"password_special": "Password has special character",
 	"password_number": "Password has number",
 	"password_common": "Password is common",
-	"password_uncommon": "Password is uncommon"
+	"password_uncommon": "Password is uncommon",
+	"sign_up": "Sign up"
 }

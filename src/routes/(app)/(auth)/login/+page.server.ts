@@ -2,7 +2,7 @@ import { createSession, generateSessionToken, setSessionTokenCookie } from '$lib
 import { providers } from '$lib/server/auth/oauth/OAuthClient';
 import db from '$lib/server/db';
 import users from '$lib/server/db/schema/user';
-import { verify } from '@node-rs/argon2';
+import { verifyPassword } from '$lib/server/utils';
 import { fail, redirect } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
 import { message, superValidate } from 'sveltekit-superforms';
@@ -35,12 +35,8 @@ export const actions = {
 
 		const existingUser = await db.query.users.findFirst({ where: eq(users.email, email) });
 
-		const validPassword = await verify(existingUser?.password ?? '', password, {
-			memoryCost: 19456,
-			timeCost: 2,
-			outputLen: 32,
-			parallelism: 1
-		});
+		const validPassword = await verifyPassword(existingUser?.password ?? '', password);
+
 		if (!validPassword || !existingUser) {
 			return message(form, { status: 'error', text: 'Incorrect username or password' });
 		}

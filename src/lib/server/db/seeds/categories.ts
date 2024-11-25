@@ -10,7 +10,7 @@ export const seed = async (db: db) => {
 				.insert(schema.categories)
 				.values({
 					...category,
-					allowedMediaType: category.allowedMediaType as MediaType
+					mediaType: category.mediaType as MediaType
 				})
 				.returning();
 		})

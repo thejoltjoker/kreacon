@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Avatar from '$lib/components/Avatar.svelte';
-	import Button from '$lib/components/OldButton.svelte';
+	import Button from '$lib/components/Button.svelte';
 	import type { PageData } from '../$types';
 	type Submission = PageData['submission'];
 	export let submission: Submission;
@@ -15,7 +15,10 @@
 		>
 	</p>
 	<div class="author">
-		<Avatar src={`${submission?.user?.picture}`} />
+		<Avatar
+			src={submission?.user?.picture ?? ''}
+			alt={submission?.user?.username ?? 'User picture'}
+		/>
 		<p class="w-full font-bold">{submission?.user?.username}</p>
 		<a href={`/users/${submission?.user?.username}`}>
 			<Button>Profile</Button>

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Button from '$lib/components/OldButton.svelte';
+	import Button from '$lib/components/Button.svelte';
 	import GitHubIcon from '$lib/symbols/GitHubIcon.svg?raw';
 	import { _ } from 'svelte-i18n';
 </script>

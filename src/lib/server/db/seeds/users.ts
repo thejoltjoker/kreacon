@@ -1,8 +1,8 @@
-import { hash } from '@node-rs/argon2';
+import { hashPassword } from '$lib/server/utils';
+import type { UserRole } from '../../../types/userRoles';
 import { db } from '../../db';
 import * as schema from '../../db/schema';
 import users from './data/users.json';
-import type { UserRole } from '../../../types/userRoles';
 
 export const seed = async (db: db) => {
 	await Promise.all(
@@ -13,12 +13,7 @@ export const seed = async (db: db) => {
 					...user,
 					emailVerifiedAt: new Date(user.emailVerifiedAt),
 					role: user.role as UserRole,
-					password: await hash(user.password, {
-						memoryCost: 19456,
-						timeCost: 2,
-						outputLen: 32,
-						parallelism: 1
-					})
+					password: await hashPassword(user.password)
 				})
 				.returning();
 		})

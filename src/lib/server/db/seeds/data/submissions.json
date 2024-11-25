@@ -7,9 +7,26 @@
 		"event": { "name": "Beacon Summer 1991" },
 		"media": {
 			"type": "image",
-			"url": "images/StrongCuriousChihuahua.png",
-			"alt": "Whispers of the Forgotten Forest"
-		}
+			"url": "/images/StrongCuriousChihuahua.png",
+			"alt": "Whispers of the Forgotten Forest",
+			"filename": "StrongCuriousChihuahua.png"
+		},
+		"reactions": [
+			{
+				"user": {
+					"email": "jane.doe@example.com"
+				},
+				"value": "👍"
+			},
+			{
+				"user": { "email": "bob.jones@example.com" },
+				"value": "🔥"
+			},
+			{
+				"user": { "email": "alice.smith@example.com" },
+				"value": "❤️"
+			}
+		]
 	},
 	{
 		"id": "StrongCuriousHerring",
@@ -18,10 +35,31 @@
 		"event": { "name": "Beacon Summer 1991" },
 		"title": "Echoes in the Urban Labyrinth",
 		"media": {
-			"type": "image",
-			"url": "images/StrongCuriousHerring.png",
+			"type": "audio",
+			"url": "/audio/datorpojken_-_dont_sell_the_shell.mp3",
+			"filename": "datorpojken_-_dont_sell_the_shell.mp3",
 			"alt": "Echoes in the Urban Labyrinth"
-		}
+		},
+		"thumbnail": {
+			"type": "image",
+			"url": "/images/prerendered-music-thumbnail.webp",
+			"alt": "Echoes in the Urban Labyrinth",
+			"filename": "StrongCuriousHerring.webp"
+		},
+		"reactions": [
+			{
+				"user": { "email": "john.doe@example.com" },
+				"value": "🎵"
+			},
+			{
+				"user": { "email": "alice.smith@example.com" },
+				"value": "🙌"
+			},
+			{
+				"user": { "email": "bob.jones@example.com" },
+				"value": "⭐"
+			}
+		]
 	},
 	{
 		"id": "StrongCuriousBloodhound",
@@ -30,10 +68,27 @@
 		"event": { "name": "Beacon Summer 1991" },
 		"title": "Fragments of a Shattered Dream",
 		"media": {
-			"type": "image",
-			"url": "images/StrongCuriousBloodhound.png",
+			"type": "audio",
+			"url": "/audio/datorpojken_-_dont_sell_the_shell.mp3",
+			"filename": "datorpojken_-_dont_sell_the_shell.mp3",
 			"alt": "Fragments of a Shattered Dream"
-		}
+		},
+		"thumbnail": {
+			"type": "image",
+			"url": "/images/tracked-music-thumbnail.webp",
+			"alt": "Fragments of a Shattered Dream",
+			"filename": "StrongCuriousBloodhound.webp"
+		},
+		"reactions": [
+			{
+				"user": { "email": "jane.doe@example.com" },
+				"value": "✨"
+			},
+			{
+				"user": { "email": "alice.smith@example.com" },
+				"value": "🎵"
+			}
+		]
 	},
 	{
 		"id": "StrongCuriousDuck",
@@ -43,9 +98,24 @@
 		"title": "The Dancer's Last Pirouette",
 		"media": {
 			"type": "image",
-			"url": "images/StrongCuriousDuck.png",
+			"url": "/images/StrongCuriousDuck.png",
+			"filename": "StrongCuriousDuck.png",
 			"alt": "The Dancer's Last Pirouette"
-		}
+		},
+		"reactions": [
+			{
+				"user": { "email": "bob.jones@example.com" },
+				"value": "🎨"
+			},
+			{
+				"user": { "email": "jane.doe@example.com" },
+				"value": "👏"
+			},
+			{
+				"user": { "email": "john.doe@example.com" },
+				"value": "⭐"
+			}
+		]
 	},
 	{
 		"id": "StrongCuriousGoat",
@@ -55,9 +125,20 @@
 		"title": "Nebula's Lullaby",
 		"media": {
 			"type": "image",
-			"url": "images/StrongCuriousGoat.png",
+			"url": "/images/StrongCuriousGoat.png",
+			"filename": "StrongCuriousGoat.png",
 			"alt": "Nebula's Lullaby"
-		}
+		},
+		"reactions": [
+			{
+				"user": { "email": "alice.smith@example.com" },
+				"value": "🎨"
+			},
+			{
+				"user": { "email": "bob.jones@example.com" },
+				"value": "✨"
+			}
+		]
 	},
 	{
 		"id": "StrongCuriousMacaw",
@@ -67,9 +148,24 @@
 		"title": "Shadows of Yesterday's Tomorrow",
 		"media": {
 			"type": "image",
-			"url": "images/StrongCuriousMacaw.png",
+			"url": "/images/StrongCuriousMacaw.png",
+			"filename": "StrongCuriousMacaw.png",
 			"alt": "Shadows of Yesterday's Tomorrow"
-		}
+		},
+		"reactions": [
+			{
+				"user": { "email": "jane.doe@example.com" },
+				"value": "❤️"
+			},
+			{
+				"user": { "email": "john.doe@example.com" },
+				"value": "👏"
+			},
+			{
+				"user": { "email": "bob.jones@example.com" },
+				"value": "🙌"
+			}
+		]
 	},
 	{
 		"id": "StrongCuriousOctopus",
@@ -79,9 +175,20 @@
 		"title": "The Clockwork Heart",
 		"media": {
 			"type": "image",
-			"url": "images/StrongCuriousOctopus.png",
+			"url": "/images/StrongCuriousOctopus.png",
+			"filename": "StrongCuriousOctopus.png",
 			"alt": "The Clockwork Heart"
-		}
+		},
+		"reactions": [
+			{
+				"user": { "email": "alice.smith@example.com" },
+				"value": "🎪"
+			},
+			{
+				"user": { "email": "jane.doe@example.com" },
+				"value": "⭐"
+			}
+		]
 	},
 	{
 		"id": "StrongCuriousVole",
@@ -91,9 +198,24 @@
 		"title": "Melodies from a Rusty Piano",
 		"media": {
 			"type": "image",
-			"url": "images/StrongCuriousVole.png",
+			"url": "/images/StrongCuriousVole.png",
+			"filename": "StrongCuriousVole.png",
 			"alt": "Melodies from a Rusty Piano"
-		}
+		},
+		"reactions": [
+			{
+				"user": { "email": "bob.jones@example.com" },
+				"value": "👍"
+			},
+			{
+				"user": { "email": "john.doe@example.com" },
+				"value": "✨"
+			},
+			{
+				"user": { "email": "alice.smith@example.com" },
+				"value": "🔥"
+			}
+		]
 	},
 	{
 		"id": "StrongCuriousWolffish",
@@ -103,9 +225,20 @@
 		"title": "Reflections in a Broken Mirror",
 		"media": {
 			"type": "image",
-			"url": "images/StrongCuriousWolffish.png",
+			"url": "/images/StrongCuriousWolffish.png",
+			"filename": "StrongCuriousWolffish.png",
 			"alt": "Reflections in a Broken Mirror"
-		}
+		},
+		"reactions": [
+			{
+				"user": { "email": "jane.doe@example.com" },
+				"value": "🎨"
+			},
+			{
+				"user": { "email": "bob.jones@example.com" },
+				"value": "❤️"
+			}
+		]
 	},
 	{
 		"id": "StrongCuriousStoat",
@@ -114,10 +247,31 @@
 		"event": { "name": "Beacon Winter 1991" },
 		"title": "The Lighthouse at the Edge of Time",
 		"media": {
-			"type": "image",
-			"url": "images/StrongCuriousStoat.png",
+			"type": "audio",
+			"url": "/audio/datorpojken_-_dont_sell_the_shell.mp3",
+			"filename": "datorpojken_-_dont_sell_the_shell.mp3",
 			"alt": "The Lighthouse at the Edge of Time"
-		}
+		},
+		"thumbnail": {
+			"type": "image",
+			"url": "/images/prerendered-music-thumbnail.webp",
+			"filename": "prerendered-music-thumbnail.webp",
+			"alt": "The Lighthouse at the Edge of Time"
+		},
+		"reactions": [
+			{
+				"user": { "email": "alice.smith@example.com" },
+				"value": "🎵"
+			},
+			{
+				"user": { "email": "john.doe@example.com" },
+				"value": "👏"
+			},
+			{
+				"user": { "email": "jane.doe@example.com" },
+				"value": "🙌"
+			}
+		]
 	},
 	{
 		"id": "StrongCuriousMongrel",
@@ -126,10 +280,27 @@
 		"event": { "name": "Beacon Winter 1991" },
 		"title": "Autumn's Fiery Embrace",
 		"media": {
-			"type": "image",
-			"url": "images/StrongCuriousMongrel.png",
+			"type": "audio",
+			"url": "/audio/datorpojken_-_dont_sell_the_shell.mp3",
+			"filename": "datorpojken_-_dont_sell_the_shell.mp3",
 			"alt": "Autumn's Fiery Embrace"
-		}
+		},
+		"thumbnail": {
+			"type": "image",
+			"url": "/images/tracked-music-thumbnail.webp",
+			"filename": "tracked-music-thumbnail.webp",
+			"alt": "Autumn's Fiery Embrace"
+		},
+		"reactions": [
+			{
+				"user": { "email": "bob.jones@example.com" },
+				"value": "🎵"
+			},
+			{
+				"user": { "email": "alice.smith@example.com" },
+				"value": "⭐"
+			}
+		]
 	},
 	{
 		"id": "StrongCuriousCivet",
@@ -139,9 +310,24 @@
 		"title": "Secrets of the Deep Blue",
 		"media": {
 			"type": "image",
-			"url": "images/StrongCuriousCivet.png",
+			"url": "/images/StrongCuriousCivet.png",
+			"filename": "StrongCuriousCivet.png",
 			"alt": "Secrets of the Deep Blue"
-		}
+		},
+		"reactions": [
+			{
+				"user": { "email": "jane.doe@example.com" },
+				"value": "✨"
+			},
+			{
+				"user": { "email": "john.doe@example.com" },
+				"value": "🎨"
+			},
+			{
+				"user": { "email": "bob.jones@example.com" },
+				"value": "👏"
+			}
+		]
 	},
 	{
 		"id": "StrongCuriousCentipede",
@@ -151,9 +337,20 @@
 		"title": "The Alchemist's Final Experiment",
 		"media": {
 			"type": "image",
-			"url": "images/StrongCuriousCentipede.png",
+			"url": "/images/StrongCuriousCentipede.png",
+			"filename": "StrongCuriousCentipede.png",
 			"alt": "The Alchemist's Final Experiment"
-		}
+		},
+		"reactions": [
+			{
+				"user": { "email": "alice.smith@example.com" },
+				"value": "👍"
+			},
+			{
+				"user": { "email": "jane.doe@example.com" },
+				"value": "🔥"
+			}
+		]
 	},
 	{
 		"id": "StrongCuriousLlama",
@@ -163,9 +360,24 @@
 		"title": "Whispers in the Wind Chimes",
 		"media": {
 			"type": "image",
-			"url": "images/StrongCuriousLlama.png",
+			"url": "/images/StrongCuriousLlama.png",
+			"filename": "StrongCuriousLlama.png",
 			"alt": "Whispers in the Wind Chimes"
-		}
+		},
+		"reactions": [
+			{
+				"user": { "email": "bob.jones@example.com" },
+				"value": "❤️"
+			},
+			{
+				"user": { "email": "john.doe@example.com" },
+				"value": "🎪"
+			},
+			{
+				"user": { "email": "alice.smith@example.com" },
+				"value": "⭐"
+			}
+		]
 	},
 	{
 		"id": "StrongCuriousSwan",
@@ -175,9 +387,20 @@
 		"title": "Neon Dreams in Tokyo",
 		"media": {
 			"type": "image",
-			"url": "images/StrongCuriousSwan.png",
+			"url": "/images/StrongCuriousSwan.png",
+			"filename": "StrongCuriousSwan.png",
 			"alt": "Neon Dreams in Tokyo"
-		}
+		},
+		"reactions": [
+			{
+				"user": { "email": "jane.doe@example.com" },
+				"value": "🙌"
+			},
+			{
+				"user": { "email": "bob.jones@example.com" },
+				"value": "✨"
+			}
+		]
 	},
 	{
 		"id": "StrongCuriousMonkfish",
@@ -187,9 +410,24 @@
 		"title": "The Butterfly Effect",
 		"media": {
 			"type": "image",
-			"url": "images/StrongCuriousMonkfish.png",
+			"url": "/images/StrongCuriousMonkfish.png",
+			"filename": "StrongCuriousMonkfish.png",
 			"alt": "The Butterfly Effect"
-		}
+		},
+		"reactions": [
+			{
+				"user": { "email": "alice.smith@example.com" },
+				"value": "👏"
+			},
+			{
+				"user": { "email": "john.doe@example.com" },
+				"value": "🎨"
+			},
+			{
+				"user": { "email": "jane.doe@example.com" },
+				"value": "🔥"
+			}
+		]
 	},
 	{
 		"id": "StrongCuriousYak",
@@ -199,9 +437,20 @@
 		"title": "The Physical Impossibility of Death in the Mind of Someone Living",
 		"media": {
 			"type": "image",
-			"url": "images/StrongCuriousYak.png",
+			"url": "/images/StrongCuriousYak.png",
+			"filename": "StrongCuriousYak.png",
 			"alt": "The Physical Impossibility of Death in the Mind of Someone Living"
-		}
+		},
+		"reactions": [
+			{
+				"user": { "email": "bob.jones@example.com" },
+				"value": "❤️"
+			},
+			{
+				"user": { "email": "john.doe@example.com" },
+				"value": "👍"
+			}
+		]
 	},
 	{
 		"id": "StrongCuriousTamarin",
@@ -210,10 +459,31 @@
 		"event": { "name": "Beacon Summer 1991" },
 		"title": "Balloon Dog",
 		"media": {
-			"type": "image",
-			"url": "images/StrongCuriousTamarin.png",
+			"type": "audio",
+			"url": "/audio/datorpojken_-_dont_sell_the_shell.mp3",
+			"filename": "datorpojken_-_dont_sell_the_shell.mp3",
 			"alt": "Balloon Dog"
-		}
+		},
+		"thumbnail": {
+			"type": "image",
+			"url": "/images/prerendered-music-thumbnail.webp",
+			"filename": "prerendered-music-thumbnail.webp",
+			"alt": "Balloon Dog"
+		},
+		"reactions": [
+			{
+				"user": { "email": "jane.doe@example.com" },
+				"value": "🎵"
+			},
+			{
+				"user": { "email": "alice.smith@example.com" },
+				"value": "⭐"
+			},
+			{
+				"user": { "email": "bob.jones@example.com" },
+				"value": "🙌"
+			}
+		]
 	},
 	{
 		"id": "StrongCuriousOkapi",
@@ -222,10 +492,27 @@
 		"event": { "name": "Beacon Summer 1991" },
 		"title": "My Bed",
 		"media": {
-			"type": "image",
-			"url": "images/StrongCuriousOkapi.png",
+			"type": "audio",
+			"url": "/audio/datorpojken_-_dont_sell_the_shell.mp3",
+			"filename": "datorpojken_-_dont_sell_the_shell.mp3",
 			"alt": "My Bed"
-		}
+		},
+		"thumbnail": {
+			"type": "image",
+			"url": "/images/tracked-music-thumbnail.webp",
+			"filename": "tracked-music-thumbnail.webp",
+			"alt": "My Bed"
+		},
+		"reactions": [
+			{
+				"user": { "email": "john.doe@example.com" },
+				"value": "✨"
+			},
+			{
+				"user": { "email": "jane.doe@example.com" },
+				"value": "🎵"
+			}
+		]
 	},
 	{
 		"id": "StrongCuriousMuskrat",
@@ -235,9 +522,24 @@
 		"title": "Girl with Balloon",
 		"media": {
 			"type": "image",
-			"url": "images/StrongCuriousMuskrat.png",
+			"url": "/images/StrongCuriousMuskrat.png",
+			"filename": "StrongCuriousMuskrat.png",
 			"alt": "Girl with Balloon"
-		}
+		},
+		"reactions": [
+			{
+				"user": { "email": "bob.jones@example.com" },
+				"value": "🎨"
+			},
+			{
+				"user": { "email": "alice.smith@example.com" },
+				"value": "👏"
+			},
+			{
+				"user": { "email": "john.doe@example.com" },
+				"value": "🔥"
+			}
+		]
 	},
 	{
 		"id": "StrongCuriousGrouse",
@@ -247,9 +549,20 @@
 		"title": "99 Cent",
 		"media": {
 			"type": "image",
-			"url": "images/StrongCuriousGrouse.png",
+			"url": "/images/StrongCuriousGrouse.png",
+			"filename": "StrongCuriousGrouse.png",
 			"alt": "99 Cent"
-		}
+		},
+		"reactions": [
+			{
+				"user": { "email": "jane.doe@example.com" },
+				"value": "❤️"
+			},
+			{
+				"user": { "email": "bob.jones@example.com" },
+				"value": "🎪"
+			}
+		]
 	},
 	{
 		"id": "StrongCuriousGrasshopper",
@@ -259,9 +572,24 @@
 		"title": "Untitled Film Stills",
 		"media": {
 			"type": "image",
-			"url": "images/StrongCuriousGrasshopper.png",
+			"url": "/images/StrongCuriousGrasshopper.png",
+			"filename": "StrongCuriousGrasshopper.png",
 			"alt": "Untitled Film Stills"
-		}
+		},
+		"reactions": [
+			{
+				"user": { "email": "alice.smith@example.com" },
+				"value": "👍"
+			},
+			{
+				"user": { "email": "john.doe@example.com" },
+				"value": "⭐"
+			},
+			{
+				"user": { "email": "jane.doe@example.com" },
+				"value": "🙌"
+			}
+		]
 	},
 	{
 		"id": "StrongCuriousBongo",
@@ -271,9 +599,20 @@
 		"title": "The Cremaster Cycle",
 		"media": {
 			"type": "image",
-			"url": "images/StrongCuriousBongo.png",
+			"url": "/images/StrongCuriousBongo.png",
+			"filename": "StrongCuriousBongo.png",
 			"alt": "The Cremaster Cycle"
-		}
+		},
+		"reactions": [
+			{
+				"user": { "email": "bob.jones@example.com" },
+				"value": "✨"
+			},
+			{
+				"user": { "email": "alice.smith@example.com" },
+				"value": "🎨"
+			}
+		]
 	},
 	{
 		"id": "StrongCuriousRockfish",
@@ -283,9 +622,24 @@
 		"title": "Truisms",
 		"media": {
 			"type": "image",
-			"url": "images/StrongCuriousRockfish.png",
+			"url": "/images/StrongCuriousRockfish.png",
+			"filename": "StrongCuriousRockfish.png",
 			"alt": "Truisms"
-		}
+		},
+		"reactions": [
+			{
+				"user": { "email": "john.doe@example.com" },
+				"value": "👏"
+			},
+			{
+				"user": { "email": "jane.doe@example.com" },
+				"value": "🔥"
+			},
+			{
+				"user": { "email": "bob.jones@example.com" },
+				"value": "❤️"
+			}
+		]
 	},
 	{
 		"id": "StrongCuriousOlm",
@@ -295,9 +649,20 @@
 		"title": "And Then, And Then And Then And Then And Then",
 		"media": {
 			"type": "image",
-			"url": "images/StrongCuriousOlm.png",
+			"url": "/images/StrongCuriousOlm.png",
+			"filename": "StrongCuriousOlm.png",
 			"alt": "And Then, And Then And Then And Then And Then"
-		}
+		},
+		"reactions": [
+			{
+				"user": { "email": "alice.smith@example.com" },
+				"value": "🎪"
+			},
+			{
+				"user": { "email": "john.doe@example.com" },
+				"value": "👍"
+			}
+		]
 	},
 	{
 		"id": "StrongCuriousChicken",
@@ -306,10 +671,31 @@
 		"event": { "name": "Beacon Winter 1991" },
 		"title": "Crack is Wack",
 		"media": {
-			"type": "image",
-			"url": "images/StrongCuriousChicken.png",
+			"type": "audio",
+			"url": "/audio/datorpojken_-_dont_sell_the_shell.mp3",
+			"filename": "datorpojken_-_dont_sell_the_shell.mp3",
 			"alt": "Crack is Wack"
-		}
+		},
+		"thumbnail": {
+			"type": "image",
+			"url": "/images/tracked-music-thumbnail.webp",
+			"filename": "tracked-music-thumbnail.webp",
+			"alt": "Crack is Wack"
+		},
+		"reactions": [
+			{
+				"user": { "email": "jane.doe@example.com" },
+				"value": "🎵"
+			},
+			{
+				"user": { "email": "bob.jones@example.com" },
+				"value": "⭐"
+			},
+			{
+				"user": { "email": "alice.smith@example.com" },
+				"value": "🙌"
+			}
+		]
 	},
 	{
 		"id": "StrongCuriousGorilla",
@@ -318,10 +704,27 @@
 		"event": { "name": "Beacon Winter 1991" },
 		"title": "Riding with Death",
 		"media": {
-			"type": "image",
-			"url": "images/StrongCuriousGorilla.png",
+			"type": "audio",
+			"url": "/audio/datorpojken_-_dont_sell_the_shell.mp3",
+			"filename": "datorpojken_-_dont_sell_the_shell.mp3",
 			"alt": "Riding with Death"
-		}
+		},
+		"thumbnail": {
+			"type": "image",
+			"url": "/images/tracked-music-thumbnail.webp",
+			"filename": "tracked-music-thumbnail.webp",
+			"alt": "Riding with Death"
+		},
+		"reactions": [
+			{
+				"user": { "email": "john.doe@example.com" },
+				"value": "✨"
+			},
+			{
+				"user": { "email": "jane.doe@example.com" },
+				"value": "🎨"
+			}
+		]
 	},
 	{
 		"id": "StrongCuriousLynx",
@@ -331,9 +734,24 @@
 		"title": "The Ballad of Sexual Dependency",
 		"media": {
 			"type": "image",
-			"url": "images/StrongCuriousLynx.png",
+			"url": "/images/StrongCuriousLynx.png",
+			"filename": "StrongCuriousLynx.png",
 			"alt": "The Ballad of Sexual Dependency"
-		}
+		},
+		"reactions": [
+			{
+				"user": { "email": "bob.jones@example.com" },
+				"value": "👏"
+			},
+			{
+				"user": { "email": "alice.smith@example.com" },
+				"value": "🔥"
+			},
+			{
+				"user": { "email": "john.doe@example.com" },
+				"value": "❤️"
+			}
+		]
 	},
 	{
 		"id": "StrongCuriousMastiff",
@@ -343,9 +761,20 @@
 		"title": "La Nona Ora",
 		"media": {
 			"type": "image",
-			"url": "images/StrongCuriousMastiff.png",
+			"url": "/images/StrongCuriousMastiff.png",
+			"filename": "StrongCuriousMastiff.png",
 			"alt": "La Nona Ora"
-		}
+		},
+		"reactions": [
+			{
+				"user": { "email": "jane.doe@example.com" },
+				"value": "🎪"
+			},
+			{
+				"user": { "email": "bob.jones@example.com" },
+				"value": "👍"
+			}
+		]
 	},
 	{
 		"id": "StrongCuriousOtter",
@@ -355,9 +784,24 @@
 		"title": "Infinity Mirror Room - Phalli's Field",
 		"media": {
 			"type": "image",
-			"url": "images/StrongCuriousOtter.png",
+			"url": "/images/StrongCuriousOtter.png",
+			"filename": "StrongCuriousOtter.png",
 			"alt": "Infinity Mirror Room - Phalli's Field"
-		}
+		},
+		"reactions": [
+			{
+				"user": { "email": "alice.smith@example.com" },
+				"value": "⭐"
+			},
+			{
+				"user": { "email": "john.doe@example.com" },
+				"value": "🙌"
+			},
+			{
+				"user": { "email": "jane.doe@example.com" },
+				"value": "✨"
+			}
+		]
 	},
 	{
 		"id": "StrongCuriousPanther",
@@ -367,9 +811,20 @@
 		"title": "Cloud Gate",
 		"media": {
 			"type": "image",
-			"url": "images/StrongCuriousPanther.png",
+			"url": "/images/StrongCuriousPanther.png",
+			"filename": "StrongCuriousPanther.png",
 			"alt": "Cloud Gate"
-		}
+		},
+		"reactions": [
+			{
+				"user": { "email": "bob.jones@example.com" },
+				"value": "🎨"
+			},
+			{
+				"user": { "email": "alice.smith@example.com" },
+				"value": "👏"
+			}
+		]
 	},
 	{
 		"id": "StrongCuriousWolfhound",
@@ -379,8 +834,23 @@
 		"title": "Your Body is a Battleground",
 		"media": {
 			"type": "image",
-			"url": "images/StrongCuriousWolfhound.png",
+			"url": "/images/StrongCuriousWolfhound.png",
+			"filename": "StrongCuriousWolfhound.png",
 			"alt": "Your Body is a Battleground"
-		}
+		},
+		"reactions": [
+			{
+				"user": { "email": "john.doe@example.com" },
+				"value": "🔥"
+			},
+			{
+				"user": { "email": "jane.doe@example.com" },
+				"value": "❤️"
+			},
+			{
+				"user": { "email": "bob.jones@example.com" },
+				"value": "🎪"
+			}
+		]
 	}
 ]

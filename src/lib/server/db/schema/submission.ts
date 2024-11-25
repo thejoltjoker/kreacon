@@ -5,7 +5,7 @@ import { randomString } from '../../../helpers/randomString';
 import categories, { type Category } from './category';
 import media, { type Media } from './media';
 import reactions, { type Reaction } from './reaction';
-import { timestamps } from './shared';
+import { submissionStatusEnum, timestamps } from './shared';
 import tickets from './ticket';
 import users from './user';
 import { votes } from './vote';
@@ -24,6 +24,8 @@ export const submissions = pgTable('submission', {
 	ticketId: varchar('ticket_id', { length: 255 }).notNull(),
 	title: varchar('title', { length: 255 }).notNull(),
 	views: integer().notNull().default(0),
+	thumbnailId: integer('thumbnail_id').notNull(),
+	status: submissionStatusEnum('status').notNull().default('draft'),
 	...timestamps
 });
 
@@ -48,6 +50,10 @@ export const submissionsRelations = relations(submissions, ({ one, many }) => ({
 	votes: many(votes),
 	media: one(media, {
 		fields: [submissions.mediaId],
+		references: [media.id]
+	}),
+	thumbnail: one(media, {
+		fields: [submissions.thumbnailId],
 		references: [media.id]
 	})
 }));

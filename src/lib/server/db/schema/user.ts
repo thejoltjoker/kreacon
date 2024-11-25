@@ -1,14 +1,13 @@
 import { relations, type InferInsertModel, type InferSelectModel } from 'drizzle-orm';
 import { pgTable, timestamp, uuid, varchar } from 'drizzle-orm/pg-core';
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
+import { registerUserSchema } from '../../../schemas/user';
 import accounts from './account';
 import reactions from './reaction';
 import { roleEnum, timestamps } from './shared';
 import submissions from './submission';
 import tickets from './ticket';
 import votes from './vote';
-import { registerUserSchema } from '../../../schemas/user';
-import events from './event';
 
 export const users = pgTable('user', {
 	id: uuid('id').defaultRandom().primaryKey(),

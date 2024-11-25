@@ -3,6 +3,7 @@ import { pgTable, primaryKey, uuid, varchar } from 'drizzle-orm/pg-core';
 import { timestamps } from './shared';
 import submissions from './submission';
 import users from './user';
+import { createInsertSchema } from 'drizzle-zod';
 
 export const votes = pgTable(
 	'vote',
@@ -20,9 +21,6 @@ export const votes = pgTable(
 	})
 );
 
-export type Vote = InferSelectModel<typeof votes>;
-export type InsertVote = InferInsertModel<typeof votes>;
-
 export const votesRelations = relations(votes, ({ one }) => ({
 	user: one(users, { fields: [votes.userId], references: [users.id] }),
 	submission: one(submissions, {
@@ -30,5 +28,10 @@ export const votesRelations = relations(votes, ({ one }) => ({
 		references: [submissions.id]
 	})
 }));
+
+export const insertVoteSchema = createInsertSchema(votes);
+
+export type Vote = InferSelectModel<typeof votes>;
+export type InsertVote = InferInsertModel<typeof votes>;
 
 export default votes;
