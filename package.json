@@ -1,6 +1,6 @@
 {
 	"name": "kreacon",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"private": true,
 	"scripts": {
 		"dev": "vite dev",
@@ -25,7 +25,8 @@
 		"swa:start": "swa start",
 		"swa:deploy": "swa deploy",
 		"prepare": "husky",
-		"commitlint": "commitlint --edit"
+		"commitlint": "commitlint --edit",
+		"logbook": "sh logbook.sh ../fsu23d-exjobb-loggbok-thejoltjoker/LOGBOOK.md"
 	},
 	"devDependencies": {
 		"@azure/static-web-apps-cli": "^2.0.1",
