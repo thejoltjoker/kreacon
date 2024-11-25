@@ -8,7 +8,8 @@
 		"media": {
 			"type": "image",
 			"url": "/images/StrongCuriousChihuahua.png",
-			"alt": "Whispers of the Forgotten Forest"
+			"alt": "Whispers of the Forgotten Forest",
+			"filename": "StrongCuriousChihuahua.png"
 		},
 		"reactions": [
 			{
@@ -36,12 +37,14 @@
 		"media": {
 			"type": "audio",
 			"url": "/audio/datorpojken_-_dont_sell_the_shell.mp3",
+			"filename": "datorpojken_-_dont_sell_the_shell.mp3",
 			"alt": "Echoes in the Urban Labyrinth"
 		},
 		"thumbnail": {
 			"type": "image",
 			"url": "/images/prerendered-music-thumbnail.webp",
-			"alt": "Echoes in the Urban Labyrinth"
+			"alt": "Echoes in the Urban Labyrinth",
+			"filename": "StrongCuriousHerring.webp"
 		},
 		"reactions": [
 			{
@@ -67,12 +70,14 @@
 		"media": {
 			"type": "audio",
 			"url": "/audio/datorpojken_-_dont_sell_the_shell.mp3",
+			"filename": "datorpojken_-_dont_sell_the_shell.mp3",
 			"alt": "Fragments of a Shattered Dream"
 		},
 		"thumbnail": {
 			"type": "image",
 			"url": "/images/tracked-music-thumbnail.webp",
-			"alt": "Fragments of a Shattered Dream"
+			"alt": "Fragments of a Shattered Dream",
+			"filename": "StrongCuriousBloodhound.webp"
 		},
 		"reactions": [
 			{
@@ -94,6 +99,7 @@
 		"media": {
 			"type": "image",
 			"url": "/images/StrongCuriousDuck.png",
+			"filename": "StrongCuriousDuck.png",
 			"alt": "The Dancer's Last Pirouette"
 		},
 		"reactions": [
@@ -120,6 +126,7 @@
 		"media": {
 			"type": "image",
 			"url": "/images/StrongCuriousGoat.png",
+			"filename": "StrongCuriousGoat.png",
 			"alt": "Nebula's Lullaby"
 		},
 		"reactions": [
@@ -142,6 +149,7 @@
 		"media": {
 			"type": "image",
 			"url": "/images/StrongCuriousMacaw.png",
+			"filename": "StrongCuriousMacaw.png",
 			"alt": "Shadows of Yesterday's Tomorrow"
 		},
 		"reactions": [
@@ -168,6 +176,7 @@
 		"media": {
 			"type": "image",
 			"url": "/images/StrongCuriousOctopus.png",
+			"filename": "StrongCuriousOctopus.png",
 			"alt": "The Clockwork Heart"
 		},
 		"reactions": [
@@ -190,6 +199,7 @@
 		"media": {
 			"type": "image",
 			"url": "/images/StrongCuriousVole.png",
+			"filename": "StrongCuriousVole.png",
 			"alt": "Melodies from a Rusty Piano"
 		},
 		"reactions": [
@@ -216,6 +226,7 @@
 		"media": {
 			"type": "image",
 			"url": "/images/StrongCuriousWolffish.png",
+			"filename": "StrongCuriousWolffish.png",
 			"alt": "Reflections in a Broken Mirror"
 		},
 		"reactions": [
@@ -238,11 +249,13 @@
 		"media": {
 			"type": "audio",
 			"url": "/audio/datorpojken_-_dont_sell_the_shell.mp3",
+			"filename": "datorpojken_-_dont_sell_the_shell.mp3",
 			"alt": "The Lighthouse at the Edge of Time"
 		},
 		"thumbnail": {
 			"type": "image",
 			"url": "/images/prerendered-music-thumbnail.webp",
+			"filename": "prerendered-music-thumbnail.webp",
 			"alt": "The Lighthouse at the Edge of Time"
 		},
 		"reactions": [
@@ -269,11 +282,13 @@
 		"media": {
 			"type": "audio",
 			"url": "/audio/datorpojken_-_dont_sell_the_shell.mp3",
+			"filename": "datorpojken_-_dont_sell_the_shell.mp3",
 			"alt": "Autumn's Fiery Embrace"
 		},
 		"thumbnail": {
 			"type": "image",
 			"url": "/images/tracked-music-thumbnail.webp",
+			"filename": "tracked-music-thumbnail.webp",
 			"alt": "Autumn's Fiery Embrace"
 		},
 		"reactions": [
@@ -296,6 +311,7 @@
 		"media": {
 			"type": "image",
 			"url": "/images/StrongCuriousCivet.png",
+			"filename": "StrongCuriousCivet.png",
 			"alt": "Secrets of the Deep Blue"
 		},
 		"reactions": [
@@ -322,6 +338,7 @@
 		"media": {
 			"type": "image",
 			"url": "/images/StrongCuriousCentipede.png",
+			"filename": "StrongCuriousCentipede.png",
 			"alt": "The Alchemist's Final Experiment"
 		},
 		"reactions": [
@@ -344,6 +361,7 @@
 		"media": {
 			"type": "image",
 			"url": "/images/StrongCuriousLlama.png",
+			"filename": "StrongCuriousLlama.png",
 			"alt": "Whispers in the Wind Chimes"
 		},
 		"reactions": [
@@ -370,6 +388,7 @@
 		"media": {
 			"type": "image",
 			"url": "/images/StrongCuriousSwan.png",
+			"filename": "StrongCuriousSwan.png",
 			"alt": "Neon Dreams in Tokyo"
 		},
 		"reactions": [
@@ -392,6 +411,7 @@
 		"media": {
 			"type": "image",
 			"url": "/images/StrongCuriousMonkfish.png",
+			"filename": "StrongCuriousMonkfish.png",
 			"alt": "The Butterfly Effect"
 		},
 		"reactions": [
@@ -418,6 +438,7 @@
 		"media": {
 			"type": "image",
 			"url": "/images/StrongCuriousYak.png",
+			"filename": "StrongCuriousYak.png",
 			"alt": "The Physical Impossibility of Death in the Mind of Someone Living"
 		},
 		"reactions": [
@@ -440,11 +461,13 @@
 		"media": {
 			"type": "audio",
 			"url": "/audio/datorpojken_-_dont_sell_the_shell.mp3",
+			"filename": "datorpojken_-_dont_sell_the_shell.mp3",
 			"alt": "Balloon Dog"
 		},
 		"thumbnail": {
 			"type": "image",
 			"url": "/images/prerendered-music-thumbnail.webp",
+			"filename": "prerendered-music-thumbnail.webp",
 			"alt": "Balloon Dog"
 		},
 		"reactions": [
@@ -471,11 +494,13 @@
 		"media": {
 			"type": "audio",
 			"url": "/audio/datorpojken_-_dont_sell_the_shell.mp3",
+			"filename": "datorpojken_-_dont_sell_the_shell.mp3",
 			"alt": "My Bed"
 		},
 		"thumbnail": {
 			"type": "image",
 			"url": "/images/tracked-music-thumbnail.webp",
+			"filename": "tracked-music-thumbnail.webp",
 			"alt": "My Bed"
 		},
 		"reactions": [
@@ -498,6 +523,7 @@
 		"media": {
 			"type": "image",
 			"url": "/images/StrongCuriousMuskrat.png",
+			"filename": "StrongCuriousMuskrat.png",
 			"alt": "Girl with Balloon"
 		},
 		"reactions": [
@@ -524,6 +550,7 @@
 		"media": {
 			"type": "image",
 			"url": "/images/StrongCuriousGrouse.png",
+			"filename": "StrongCuriousGrouse.png",
 			"alt": "99 Cent"
 		},
 		"reactions": [
@@ -546,6 +573,7 @@
 		"media": {
 			"type": "image",
 			"url": "/images/StrongCuriousGrasshopper.png",
+			"filename": "StrongCuriousGrasshopper.png",
 			"alt": "Untitled Film Stills"
 		},
 		"reactions": [
@@ -572,6 +600,7 @@
 		"media": {
 			"type": "image",
 			"url": "/images/StrongCuriousBongo.png",
+			"filename": "StrongCuriousBongo.png",
 			"alt": "The Cremaster Cycle"
 		},
 		"reactions": [
@@ -594,6 +623,7 @@
 		"media": {
 			"type": "image",
 			"url": "/images/StrongCuriousRockfish.png",
+			"filename": "StrongCuriousRockfish.png",
 			"alt": "Truisms"
 		},
 		"reactions": [
@@ -620,6 +650,7 @@
 		"media": {
 			"type": "image",
 			"url": "/images/StrongCuriousOlm.png",
+			"filename": "StrongCuriousOlm.png",
 			"alt": "And Then, And Then And Then And Then And Then"
 		},
 		"reactions": [
@@ -642,11 +673,13 @@
 		"media": {
 			"type": "audio",
 			"url": "/audio/datorpojken_-_dont_sell_the_shell.mp3",
+			"filename": "datorpojken_-_dont_sell_the_shell.mp3",
 			"alt": "Crack is Wack"
 		},
 		"thumbnail": {
 			"type": "image",
 			"url": "/images/tracked-music-thumbnail.webp",
+			"filename": "tracked-music-thumbnail.webp",
 			"alt": "Crack is Wack"
 		},
 		"reactions": [
@@ -673,11 +706,13 @@
 		"media": {
 			"type": "audio",
 			"url": "/audio/datorpojken_-_dont_sell_the_shell.mp3",
+			"filename": "datorpojken_-_dont_sell_the_shell.mp3",
 			"alt": "Riding with Death"
 		},
 		"thumbnail": {
 			"type": "image",
 			"url": "/images/tracked-music-thumbnail.webp",
+			"filename": "tracked-music-thumbnail.webp",
 			"alt": "Riding with Death"
 		},
 		"reactions": [
@@ -700,6 +735,7 @@
 		"media": {
 			"type": "image",
 			"url": "/images/StrongCuriousLynx.png",
+			"filename": "StrongCuriousLynx.png",
 			"alt": "The Ballad of Sexual Dependency"
 		},
 		"reactions": [
@@ -726,6 +762,7 @@
 		"media": {
 			"type": "image",
 			"url": "/images/StrongCuriousMastiff.png",
+			"filename": "StrongCuriousMastiff.png",
 			"alt": "La Nona Ora"
 		},
 		"reactions": [
@@ -748,6 +785,7 @@
 		"media": {
 			"type": "image",
 			"url": "/images/StrongCuriousOtter.png",
+			"filename": "StrongCuriousOtter.png",
 			"alt": "Infinity Mirror Room - Phalli's Field"
 		},
 		"reactions": [
@@ -774,6 +812,7 @@
 		"media": {
 			"type": "image",
 			"url": "/images/StrongCuriousPanther.png",
+			"filename": "StrongCuriousPanther.png",
 			"alt": "Cloud Gate"
 		},
 		"reactions": [
@@ -796,6 +835,7 @@
 		"media": {
 			"type": "image",
 			"url": "/images/StrongCuriousWolfhound.png",
+			"filename": "StrongCuriousWolfhound.png",
 			"alt": "Your Body is a Battleground"
 		},
 		"reactions": [

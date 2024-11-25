@@ -30,6 +30,7 @@ import { eq, and } from 'drizzle-orm';
 import { db } from '../../db';
 import * as schema from '../../db/schema';
 import data from './data/submissions.json';
+import type { MediaType } from '$lib/types/mediaTypes';
 
 async function getUserIdFromEmail(db: db, email: string) {
 	const user = await db.query.users.findFirst({
@@ -103,7 +104,8 @@ export const seed = async (db: db) => {
 						.insert(schema.media)
 						.values({
 							...submission.thumbnail,
-							type: submission.thumbnail.type as 'image' | 'video' | 'audio'
+							type: submission.thumbnail.type as MediaType,
+							filename: submission.thumbnail.url
 						})
 						.returning();
 					insertedThumbnail = result.id;
@@ -113,7 +115,7 @@ export const seed = async (db: db) => {
 					.insert(schema.media)
 					.values({
 						...submission.media,
-						type: submission.media.type as 'image' | 'video' | 'audio'
+						type: submission.media.type as MediaType
 					})
 					.returning();
 

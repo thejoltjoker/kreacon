@@ -42,6 +42,7 @@ CREATE TABLE IF NOT EXISTS "media" (
 	"submission_id" varchar,
 	"type" "media_type" NOT NULL,
 	"url" varchar(255) NOT NULL,
+	"filename" varchar(255) NOT NULL,
 	"alt" varchar(255),
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL

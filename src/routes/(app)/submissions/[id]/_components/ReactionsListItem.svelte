@@ -29,7 +29,7 @@
 	}
 </script>
 
-<li class="card pt-lg">
+<li class="card grow basis-[350px] pt-lg">
 	<a href="/users/{reaction.user.username}" class="flex items-center justify-between gap-sm">
 		<div class="flex gap-sm">
 			<div>

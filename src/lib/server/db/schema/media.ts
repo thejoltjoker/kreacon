@@ -8,6 +8,7 @@ export const media = pgTable('media', {
 	submissionId: varchar('submission_id').references(() => submissions.id),
 	type: mediaTypeEnum('type').notNull(),
 	url: varchar({ length: 255 }).notNull(),
+	filename: varchar({ length: 255 }).notNull(),
 	alt: varchar({ length: 255 }),
 	...timestamps
 });

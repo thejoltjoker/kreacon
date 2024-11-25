@@ -37,9 +37,11 @@ export const load = (async ({ params, locals }) => {
 						}
 					}
 				},
-				votes: {
-					where: eq(votes.userId, locals.user?.id ?? '')
-				}
+				votes: locals.user
+					? {
+							where: eq(votes.userId, locals.user.id)
+						}
+					: undefined
 			}
 		});
 	});

@@ -11,7 +11,7 @@
 
 <div class="flex flex-col gap-sm">
 	<h4>Reactions</h4>
-	<ul class="grid grid-cols-reactions gap-lg">
+	<ul class="grid grid-cols-1 gap-lg md:grid-cols-2">
 		{#if reactions}
 			{#each reactions as reaction}
 				<ReactionsListItem {reaction} />

@@ -1,24 +1,26 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { DownloadIcon, ShareIcon, SmilePlusIcon } from 'lucide-svelte';
-	import type { PageData } from './$types';
 	import Avatar from '$lib/components/Avatar.svelte';
 	import Button from '$lib/components/Button.svelte';
 	import { emojis } from '$lib/emojis';
 	import { Popover } from 'bits-ui';
+	import { DownloadIcon, SmilePlusIcon } from 'lucide-svelte';
+	import type { PageData } from './$types';
 	import AudioPlayer from './_components/AudioPlayer.svelte';
+	import ReactionButton from './_components/ReactionButton.svelte';
 	import ReactionsSection from './_components/ReactionsSection.svelte';
 	import SubmissionMedia from './_components/SubmissionMedia.svelte';
 	import VoteButton from './_components/VoteButton.svelte';
 
 	let { data }: { data: PageData } = $props();
 	const { user, submission } = data;
+	const submissionId = $page.params.id;
 
 	let isVoted = $state(data.isVoted ?? false);
 
-	const submissionId = $page.params.id;
-	const isAllowedToReact: boolean =
-		submission?.reactions.find((reaction) => reaction.userId === user?.id) == null;
+	let isAllowedToReact: boolean = $state(
+		submission?.reactions.find((reaction) => reaction.userId === user?.id) == null
+	);
 </script>
 
 <main class="mx-auto flex max-w-screen-lg flex-col gap-lg p-sm">
@@ -96,27 +98,29 @@
 		</div>
 		<!-- Actions -->
 		<div class="flex flex-1 justify-end gap-sm">
-			<Button variant="outline" size="icon" href={submission?.media.url} download>
+			<Button
+				variant="outline"
+				size="icon"
+				href={submission?.media.url}
+				download={submission?.media.filename ?? undefined}
+			>
 				<DownloadIcon />
 			</Button>
+			<!-- TODO share button
 			<Button variant="outline" size="icon">
 				<ShareIcon />
-			</Button>
-			<Button variant="outline" size="icon" title="React">
-				<SmilePlusIcon class="h-5 w-5" />
-			</Button>
-			<VoteButton isSignedIn={user != null} id={submissionId} {isVoted} />
+			</Button> -->
+			<ReactionButton {user} {submissionId} bind:isAllowedToReact />
+			<VoteButton isSignedIn={user != null} id={submissionId} bind:isVoted />
 		</div>
 	</div>
 
-	<!-- Description -->
-
 	<!-- Reactions -->
-
 	<ReactionsSection reactions={submission?.reactions} />
 
 	<!-- Author profile -->
-	<div class=" text-center">
+	<!-- TODO -->
+	<!-- <div class=" text-center">
 		<img
 			src={data.user?.picture}
 			alt={data.user?.username}
@@ -124,16 +128,17 @@
 		/>
 		<h2 class=" font-bold">{data.user?.username}</h2>
 		<button class="rounded-md bg-gray-900 px-4 py-2 text-white">Get in touch</button>
-	</div>
+	</div> -->
 
-	<!-- More work grid -->
-	<div>
+	<!-- More work/related grid -->
+	<!-- TODO -->
+	<!-- <div>
 		<div class=" flex items-center justify-between">
 			<h3 class="font-bold">More by {data.user?.username}</h3>
 			<a href="/" class="text-gray-500 hover:text-gray-700">View profile</a>
 		</div>
 		<div class="grid grid-cols-4 gap-4">
-			<!-- {#each data.moreWork as work}
+			{#each data.moreWork as work}
 				<a href={work.url} class="block">
 					<img
 						src={work.image}
@@ -141,7 +146,7 @@
 						class="w-full rounded-lg transition-opacity hover:opacity-90"
 					/>
 				</a>
-			{/each} -->
+			{/each}
 		</div>
-	</div>
+	</div> -->
 </main>

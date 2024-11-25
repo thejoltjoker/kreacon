@@ -1,9 +1,8 @@
 <script lang="ts">
-	import Button from '$lib/components/Button.svelte';
-	import { _ } from 'svelte-i18n';
-	import { Tooltip } from 'bits-ui';
 	import { enhance } from '$app/forms';
-	import { invalidateAll } from '$app/navigation';
+	import Button from '$lib/components/Button.svelte';
+	import { Tooltip } from 'bits-ui';
+	import { _ } from 'svelte-i18n';
 
 	let {
 		isSignedIn,
