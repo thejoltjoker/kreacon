@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Initial setup and general dev #1-16
-- CI workflow for checking if CHANGELOG.md is updated [#17](https://github.com/thejoltjoker/kreacon/pull/17)
+- Submission details page and CI workflow for checking if CHANGELOG.md is updated [#17](https://github.com/thejoltjoker/kreacon/pull/17)
 
 ### Changed
 
