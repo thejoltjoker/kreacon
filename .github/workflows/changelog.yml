@@ -14,5 +14,5 @@ jobs:
           fetch-depth: 0
       - name: Check if CHANGELOG.md has changed
         run: |
-          FILES_CHANGED=$(git diff --name-only origin/master...HEAD | grep -E 'CHANGELOG\.md' -c)
-          if [ "$FILES_CHANGED" != "2" ]; then echo "Remember to update CHANGELOG.md"; exit 1; fi;
+          FILES_CHANGED=$(git diff --name-only origin/main...HEAD | grep -E 'CHANGELOG\.md' -c)
+          if [ "$FILES_CHANGED" -lt 1 ]; then echo "Remember to update CHANGELOG.md"; exit 1; fi;
