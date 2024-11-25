@@ -5,7 +5,7 @@ import { randomString } from '../../../helpers/randomString';
 import categories, { type Category } from './category';
 import media, { type Media } from './media';
 import reactions, { type Reaction } from './reaction';
-import { timestamps } from './shared';
+import { submissionStatusEnum, timestamps } from './shared';
 import tickets from './ticket';
 import users from './user';
 import { votes } from './vote';
@@ -25,6 +25,7 @@ export const submissions = pgTable('submission', {
 	title: varchar('title', { length: 255 }).notNull(),
 	views: integer().notNull().default(0),
 	thumbnailId: integer('thumbnail_id').notNull(),
+	status: submissionStatusEnum('status').notNull().default('draft'),
 	...timestamps
 });
 

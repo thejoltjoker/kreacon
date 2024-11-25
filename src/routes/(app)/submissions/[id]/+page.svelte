@@ -13,9 +13,12 @@
 
 	let { data }: { data: PageData } = $props();
 	const { user, submission } = data;
+
+	let isVoted = $state(data.isVoted ?? false);
+
+	const submissionId = $page.params.id;
 	const isAllowedToReact: boolean =
 		submission?.reactions.find((reaction) => reaction.userId === user?.id) == null;
-	const submissionId = $page.params.id;
 </script>
 
 <main class="mx-auto flex max-w-screen-lg flex-col gap-lg p-sm">
@@ -68,10 +71,11 @@
 									</Button>
 								{/each}
 							</div>
-						</form>{/if}
+						</form>
+					{/if}
 				</Popover.Content>
 			</Popover.Root>
-			<VoteButton isSignedIn={user != null} id={submissionId} />
+			<VoteButton isSignedIn={user != null} id={submissionId} bind:isVoted />
 		</div>
 	</div>
 
@@ -101,7 +105,7 @@
 			<Button variant="outline" size="icon" title="React">
 				<SmilePlusIcon class="h-5 w-5" />
 			</Button>
-			<Button>Vote</Button>
+			<VoteButton isSignedIn={user != null} id={submissionId} {isVoted} />
 		</div>
 	</div>
 

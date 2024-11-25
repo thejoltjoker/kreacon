@@ -11,6 +11,7 @@
 					'bg-rose-500 hover:bg-rose-500/20 border-rose-500 border hover:text-white text-white',
 				white: 'bg-white border-white border text-black hover:text-zinc-900 hover:bg-zinc-300',
 				destructive: 'bg-destructive text-destructive hover:bg-destructive/90',
+				muted: 'bg-zinc-800 text-zinc-300 hover:bg-zinc-700',
 				outline: 'border-white bg-background hover:bg-white hover:text-black border text-white',
 				ghost: 'hover:bg-zinc-800 hover:text-white',
 				link: 'text-rose-500 underline-offset-4 hover:underline'

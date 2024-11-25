@@ -1,5 +1,6 @@
 CREATE TYPE "public"."media_type" AS ENUM('image', 'video', 'audio');--> statement-breakpoint
 CREATE TYPE "public"."role" AS ENUM('user', 'admin');--> statement-breakpoint
+CREATE TYPE "public"."submission_status" AS ENUM('draft', 'pending', 'published', 'hidden', 'deleted');--> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "account" (
 	"user_id" uuid NOT NULL,
 	"provider" varchar(255) NOT NULL,
@@ -47,7 +48,7 @@ CREATE TABLE IF NOT EXISTS "media" (
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "reaction" (
-	"value" varchar(255) NOT NULL,
+	"value" varchar(16) NOT NULL,
 	"user_id" uuid NOT NULL,
 	"submission_id" varchar(255) NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
@@ -73,6 +74,7 @@ CREATE TABLE IF NOT EXISTS "submission" (
 	"title" varchar(255) NOT NULL,
 	"views" integer DEFAULT 0 NOT NULL,
 	"thumbnail_id" integer NOT NULL,
+	"status" "submission_status" DEFAULT 'draft' NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL
 );
