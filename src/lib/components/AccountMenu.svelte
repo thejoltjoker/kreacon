@@ -1,49 +1,99 @@
 <script lang="ts">
-	import type { UserWithoutPassword } from '$lib/server/db/schema/user';
-	import Avatar from './Avatar.svelte';
-	import { DropdownMenu } from 'bits-ui';
-	import { LogOutIcon, SettingsIcon, UserCircle } from 'lucide-svelte';
-	import { enhance } from '$app/forms';
 	import { user } from '$lib/stores/user';
+	import { DropdownMenu } from 'bits-ui';
+	import {
+		LayoutGridIcon,
+		LogOutIcon,
+		TicketIcon,
+		UserCircle,
+		type Icon as IconType
+	} from 'lucide-svelte';
+	import Avatar from './Avatar.svelte';
+
+	type MenuItem =
+		| {
+				label: string;
+				href: string;
+				icon: typeof IconType;
+		  }
+		| 'divider';
+
+	const menuItems: MenuItem[] = [
+		{
+			label: 'Profile',
+			href: '/profile',
+			icon: UserCircle
+		},
+		{
+			label: 'Submissions',
+			href: '/submissions',
+			icon: LayoutGridIcon
+		},
+		{
+			label: 'Tickets',
+			href: '/tickets',
+			icon: TicketIcon
+		},
+		'divider',
+		{
+			label: 'Sign out',
+			href: '/logout',
+			icon: LogOutIcon
+		}
+	];
 </script>
 
-<DropdownMenu.Root>
-	<DropdownMenu.Trigger
-		class="focus-visible border-border-input bg-background-alt text-foreground focus-visible:ring-foreground focus-visible:ring-offset-background inline-flex h-input-md w-input-md items-end justify-center rounded-full border text-sm font-medium hover:bg-zinc-500 focus-visible:ring-2 focus-visible:ring-offset-2 active:scale-98"
-	>
-		<Avatar src={$user?.picture ?? ''} alt={$user?.username ?? 'User picture'} />
-	</DropdownMenu.Trigger>
-	<div class="p-2">
-		<DropdownMenu.Content
-			class="bg-background shadow-popover w-full max-w-[20rem] rounded-sm border border-zinc-500 bg-black px-1 py-1.5"
-			sideOffset={8}
+{#snippet menuItem(label: string, href: string, icon: typeof IconType)}
+	<DropdownMenu.Item class="z-50 min-w-48 max-w-full p-2xs">
+		<a
+			{href}
+			class="flex select-none items-center rounded-xs py-xs pl-xs pr-sm text-sm font-medium text-zinc-400 !ring-0 !ring-transparent hover:bg-zinc-800 hover:text-white"
 		>
-			<DropdownMenu.Item
-				class="flex h-10 select-none items-center rounded-xs py-3 pl-3 pr-1.5 text-sm font-medium !ring-0 !ring-transparent data-[highlighted]:bg-zinc-500"
-			>
-				<a href="/profile" class="flex items-center">
-					<UserCircle class="text-foreground-alt mr-2 size-5" />
-					Profile
-				</a>
-			</DropdownMenu.Item>
+			<svelte:component this={icon} class="text-foreground-alt mr-2 size-5" />
+			<span>{label}</span>
+		</a>
+	</DropdownMenu.Item>
+{/snippet}
 
-			<DropdownMenu.Item
-				class="flex h-10 select-none items-center rounded-xs py-3 pl-3 pr-1.5 text-sm font-medium !ring-0 !ring-transparent data-[highlighted]:bg-zinc-500"
-			>
-				<div class="flex items-center">
-					<SettingsIcon class="text-foreground-alt mr-2 size-5" />
-					Submissions
-				</div>
-			</DropdownMenu.Item>
-			<DropdownMenu.Separator class="my-1 -ml-1 -mr-1 block h-px bg-zinc-500" />
-			<DropdownMenu.Item
-				class="flex h-10 select-none items-center rounded-xs py-3 pl-3 pr-1.5 text-sm font-medium !ring-0 !ring-transparent data-[highlighted]:bg-zinc-500"
-			>
-				<a href="/logout" class="flex items-center">
-					<LogOutIcon class="text-foreground-alt mr-2 size-5" />
-					Sign out
-				</a>
-			</DropdownMenu.Item>
-		</DropdownMenu.Content>
-	</div>
+<DropdownMenu.Root>
+	<DropdownMenu.Trigger>
+		<Avatar
+			class="cursor-pointer border-white"
+			src={$user?.picture ?? ''}
+			alt={$user?.username ?? 'User picture'}
+		/>
+	</DropdownMenu.Trigger>
+
+	<DropdownMenu.Content
+		collisionPadding={20}
+		class="bg-background shadow-popover w-full max-w-[20rem] rounded-sm border border-zinc-500 bg-black px-1 py-1.5"
+		sideOffset={8}
+	>
+		{#each menuItems as item}
+			{#if item === 'divider'}
+				<DropdownMenu.Separator class="my-1 -ml-1 -mr-1 block h-px bg-zinc-500" />
+			{:else}
+				{@render menuItem(item.label, item.href, item.icon)}
+			{/if}
+		{/each}
+
+		<!-- <DropdownMenu.Item
+			class="flex h-10 select-none items-center rounded-xs py-3 pl-3 pr-1.5 text-sm font-medium !ring-0 !ring-transparent data-[highlighted]:bg-zinc-500"
+		>
+			<div class="flex items-center">
+				<SettingsIcon class="text-foreground-alt mr-2 size-5" />
+				Submissions
+			</div>
+		</DropdownMenu.Item>
+		{@render menuItem('Settings', '/settings', SettingsIcon)}
+		<DropdownMenu.Separator class="my-1 -ml-1 -mr-1 block h-px bg-zinc-500" />
+		<DropdownMenu.Item
+			class="flex h-10 select-none items-center rounded-xs py-3 pl-3 pr-1.5 text-sm font-medium !ring-0 !ring-transparent data-[highlighted]:bg-zinc-500"
+		>
+			<a href="/logout" class="flex items-center">
+				<LogOutIcon class="text-foreground-alt mr-2 size-5" />
+				Sign out
+			</a>
+		</DropdownMenu.Item> -->
+	</DropdownMenu.Content>
 </DropdownMenu.Root>
