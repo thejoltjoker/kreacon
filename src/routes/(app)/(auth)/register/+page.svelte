@@ -9,6 +9,8 @@
 	import { debounce } from 'throttle-debounce';
 	import OAuthButtons from '../_components/OAuthButtons.svelte';
 	import ValidatedInput from '$lib/components/ValidatedInput.svelte';
+	import { CheckCircle2Icon, LoaderCircleIcon, XCircleIcon } from 'lucide-svelte';
+	import { Label } from 'bits-ui';
 
 	interface PageProps {
 		data: import('./$types').PageData;
@@ -52,23 +54,61 @@
 	{/if}
 
 	<form method="POST" action="?/register" use:enhance class="flex flex-col gap-md">
-		<ValidatedInput
-			label="username"
-			name="username"
-			form="check"
-			value={$form.username}
-			errors={$errors.username}
-			delayed={$delayed}
-			constraints={$constraints.username}
-			onInput={checkUsername}
-		/>
+		<Label.Root for="username" class="flex flex-col gap-xs font-bold">
+			{$_('username', { default: 'Username' })}
+			<div class="relative">
+				<input
+					type="text"
+					name="username"
+					form="check"
+					aria-invalid={$errors.username ? 'true' : undefined}
+					bind:value={$form.username}
+					ondblclick={(e) => (e.target as HTMLInputElement).select()}
+					class:input-valid={!$delayed && $errors.username === undefined && $form.username !== ''}
+					class:input-invalid={$errors.username !== undefined}
+					oninput={checkUsername}
+					{...$constraints}
+				/>
+
+				{#if $delayed}
+					<div
+						class="absolute right-xs top-1/2 size-5 -translate-y-1/2 animate-pulse text-zinc-500"
+					>
+						<LoaderCircleIcon class="size-5 animate-spin stroke-zinc-500 stroke-3" />
+					</div>
+				{:else if $errors.username !== undefined}
+					<div class="absolute right-xs top-1/2 size-5 -translate-y-1/2 text-red-500">
+						<XCircleIcon class="size-5" />
+					</div>
+				{:else if $form.username}
+					<div class="absolute right-xs top-1/2 size-5 -translate-y-1/2 text-green-500">
+						<CheckCircle2Icon class="size-5" />
+					</div>
+				{/if}
+			</div>
+			{#if $errors.username}
+				{#if Array.isArray($errors.username)}
+					<ul class="flex flex-col gap-xs">
+						{#each $errors.username as error}
+							<li class="flex items-center gap-xs">
+								<XCircleIcon class="size-5 text-red-500" />
+								<p>{error}</p>
+							</li>
+						{/each}
+					</ul>
+				{:else}
+					<p class="error-message">{$errors.username}</p>
+				{/if}
+			{/if}
+		</Label.Root>
+
 		<input type="hidden" name="username" value={$form.username} />
 
 		<ValidatedInput
 			label="email"
 			type="email"
 			name="email"
-			value={$form.email}
+			bind:value={$form.email}
 			errors={$errors.email}
 			constraints={$constraints.email}
 		/>
@@ -77,7 +117,7 @@
 			label="password"
 			type="password"
 			name="password"
-			value={$form.password}
+			bind:value={$form.password}
 			errors={$errors.password}
 			constraints={$constraints.password}
 		/>

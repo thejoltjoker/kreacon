@@ -3,24 +3,40 @@
 	import { CheckCircle2Icon, LoaderCircleIcon, XCircleIcon } from 'lucide-svelte';
 	import { _ } from 'svelte-i18n';
 
-	export let label: string;
-	export let name: string;
-	export let type: 'text' | 'email' | 'password' = 'text';
-	export let value: string;
-	export let errors: string | string[] | undefined;
-	export let delayed = false;
-	export let constraints = {};
-	export let form: string | undefined = undefined;
-	export let onInput: ((e: Event) => void) | undefined = undefined;
+	interface Props extends Label.RootProps {
+		label: string;
+		name: string;
+		type?: 'text' | 'email' | 'password';
+		value: string;
+		errors?: string | string[];
+		delayed?: boolean;
+		constraints?: Record<string, unknown>;
+		form?: string;
+		onInput?: (e: Event) => void;
+		required?: boolean;
+	}
+	let {
+		label,
+		name,
+		type = 'text',
+		value = $bindable(),
+		errors,
+		delayed = false,
+		constraints = {},
+		form = undefined,
+		onInput = $bindable(),
+		required = false
+	}: Props = $props();
 </script>
 
-<Label.Root for={name} class="mb-xs flex flex-col gap-xs font-bold">
+<Label.Root for={name} class="flex flex-col gap-xs font-bold">
 	{$_(label, { default: label })}
 	<div class="relative">
 		<input
 			{type}
 			{name}
 			{form}
+			{required}
 			aria-invalid={errors ? 'true' : undefined}
 			bind:value
 			ondblclick={(e) => (e.target as HTMLInputElement).select()}
