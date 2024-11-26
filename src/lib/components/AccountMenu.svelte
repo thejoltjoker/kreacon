@@ -4,15 +4,14 @@
 	import { DropdownMenu } from 'bits-ui';
 	import { LogOutIcon, SettingsIcon, UserCircle } from 'lucide-svelte';
 	import { enhance } from '$app/forms';
-
-	let { user }: { user: UserWithoutPassword } = $props();
+	import { user } from '$lib/stores/user';
 </script>
 
 <DropdownMenu.Root>
 	<DropdownMenu.Trigger
 		class="focus-visible border-border-input bg-background-alt text-foreground focus-visible:ring-foreground focus-visible:ring-offset-background inline-flex h-input-md w-input-md items-end justify-center rounded-full border text-sm font-medium hover:bg-zinc-500 focus-visible:ring-2 focus-visible:ring-offset-2 active:scale-98"
 	>
-		<Avatar src={user?.picture ?? ''} alt={user?.username ?? 'User picture'} />
+		<Avatar src={$user?.picture ?? ''} alt={$user?.username ?? 'User picture'} />
 	</DropdownMenu.Trigger>
 	<div class="p-2">
 		<DropdownMenu.Content
