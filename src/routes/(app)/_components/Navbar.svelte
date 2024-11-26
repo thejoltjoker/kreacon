@@ -2,9 +2,7 @@
 	import AccountMenu from '$lib/components/AccountMenu.svelte';
 	import Button from '$lib/components/Button.svelte';
 	import Link from '$lib/components/Link.svelte';
-	import type { UserWithoutPassword } from '$lib/server/db/schema/user';
 	import { user } from '$lib/stores/user';
-
 	// Use store for user
 
 	import { AlignJustifyIcon, PlusIcon, XIcon } from 'lucide-svelte';
@@ -75,8 +73,6 @@
 <!-- Mobile menu -->
 {#if isMenuOpen}
 	<div class="absolute left-0 top-0 z-10 h-full w-full bg-black" transition:fly={{ y: -100 }}>
-		<!-- svelte-ignore a11y_click_events_have_key_events -->
-		<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
 		<div class="flex h-full items-center justify-center">
 			<ul class="flex flex-col gap-lg text-2xl">
 				{#each menuItems as item}

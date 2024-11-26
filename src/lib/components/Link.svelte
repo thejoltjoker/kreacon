@@ -7,7 +7,7 @@
 		children: Snippet;
 	}
 
-	let { href, onclick, children, ...props }: Props = $props();
+	let { href, children, ...props }: Props = $props();
 
 	const className = twMerge(
 		'underline decoration-rose-500 decoration-2 hover:text-rose-500 hover:no-underline hover:opacity-100',

@@ -1,6 +1,4 @@
 <script lang="ts">
-	import type { LayoutData } from '../$types';
-
 	import Avatar from '$lib/components/Avatar.svelte';
 	import { user } from '$lib/stores/user';
 </script>

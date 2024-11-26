@@ -1,11 +1,10 @@
 <script lang="ts">
+	import { enhance } from '$app/forms';
+	import Button from '$lib/components/Button.svelte';
 	import { emojis } from '$lib/emojis';
+	import { user } from '$lib/stores/user';
 	import { Popover } from 'bits-ui';
 	import { SmilePlusIcon } from 'lucide-svelte';
-	import type { PageData } from '../$types';
-	import Button from '$lib/components/Button.svelte';
-	import { enhance } from '$app/forms';
-	import { user } from '$lib/stores/user';
 
 	let {
 		submissionId,
