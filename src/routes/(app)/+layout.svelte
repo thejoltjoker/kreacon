@@ -16,12 +16,5 @@
 </svelte:head>
 
 <Navbar user={data.user} />
-<main>
-	{@render children()}
-</main>
 
-<style lang="postcss">
-	main {
-		@apply px-sm py-xs;
-	}
-</style>
+{@render children()}

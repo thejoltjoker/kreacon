@@ -9,7 +9,7 @@
 
 <style lang="postcss">
 	.wrapper {
-		@apply flex h-full flex-col items-center justify-center;
+		@apply flex h-[calc(100vh-6rem)] flex-col items-center justify-center;
 	}
 
 	.container {

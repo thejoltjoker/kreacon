@@ -6,7 +6,7 @@ import { createLogger } from '$lib/server/logger';
 import { hashPassword } from '$lib/server/utils';
 import { type Actions, fail, redirect } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
-import { setError, superValidate } from 'sveltekit-superforms';
+import { message, setError, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import type { PageServerLoad } from './$types';
 
@@ -27,7 +27,13 @@ export const actions: Actions = {
 		const { username, password, email } = form.data;
 
 		const passwordHash = await hashPassword(password);
-
+		const existingUsername = await db.query.users.findFirst({
+			where: eq(users.username, username)
+		});
+		if (existingUsername) {
+			setError(form, 'username', 'Username is already taken.');
+			return fail(400, { form });
+		}
 		try {
 			const [createdUser] = await db
 				.insert(users)
@@ -39,7 +45,7 @@ export const actions: Actions = {
 			setSessionTokenCookie(event, sessionToken, session.expiresAt);
 		} catch (e) {
 			logger.error(JSON.stringify(e));
-			return fail(500, { message: 'An error has occurred' });
+			return message(form, 'Something went wrong', { status: 500 });
 		}
 		// await sendEmailVerification(email.toString());
 		return redirect(302, '/');

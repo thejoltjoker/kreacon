@@ -14,12 +14,13 @@
 	const { form, errors, constraints, message, enhance } = superForm(data.form);
 </script>
 
-<div class="flex w-full flex-col gap-md">
+<div class="flex w-full flex-col gap-lg">
+	<h1 class="text-center">Log in</h1>
 	{#if data.providers.length > 0}
 		<OAuthButtons providers={[...data.providers]} />
 		<Divider>{$_('login_divider', { default: 'or sign in with email' })}</Divider>
 	{/if}
-	<form method="POST" action="?/login" use:enhance class="flex w-full flex-col gap-md">
+	<form method="POST" action="?/login" use:enhance class="flex w-full flex-col gap-sm">
 		<Label.Root for="email" class="mb-xs flex flex-col gap-xs font-bold">
 			{$_('email', { default: 'Email' })}
 			<div class="relative">
