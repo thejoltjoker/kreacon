@@ -1,7 +1,7 @@
 import { db } from '$lib/server/db';
 import type { PageServerLoad } from './$types';
 
-export const load = (async () => {
+export const load = (async ({ locals }) => {
 	const submissions = await db.query.submissions.findMany({
 		with: {
 			user: true,
@@ -11,5 +11,5 @@ export const load = (async () => {
 		}
 	});
 	const categories = await db.query.categories.findMany();
-	return { submissions: submissions, categories: categories };
+	return { submissions: submissions, categories: categories, user: locals.user };
 }) satisfies PageServerLoad;

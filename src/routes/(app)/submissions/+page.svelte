@@ -3,10 +3,11 @@
 	import { _ } from 'svelte-i18n';
 	import type { PageData } from './$types';
 	import FilterBar from './_components/FilterBar.svelte';
+	import { user } from '$lib/stores/user';
 
 	export let data: PageData;
 	const { submissions, categories } = data;
-	console.log(submissions);
+	user.set(data.user);
 </script>
 
 <h1 class="text-2xl font-bold">{$_('submissions', { default: 'Submissions' })}</h1>

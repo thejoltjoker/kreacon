@@ -3,14 +3,15 @@
 	import type { LayoutData } from './$types';
 	import Sidebar from './_components/Sidebar.svelte';
 	import ProfileHeader from './_components/ProfileHeader.svelte';
+	import { user } from '$lib/stores/user';
 
 	let { data, children }: { data: LayoutData; children: Snippet } = $props();
 
-	const { user } = data;
+	user.set(data.user);
 </script>
 
 <div class="mx-auto flex max-w-screen-md flex-col gap-sm">
-	<ProfileHeader {user} />
+	<ProfileHeader />
 	<div class="flex flex-row gap-sm">
 		<Sidebar />
 

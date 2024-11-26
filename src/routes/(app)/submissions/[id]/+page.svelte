@@ -11,15 +11,17 @@
 	import ReactionsSection from './_components/ReactionsSection.svelte';
 	import SubmissionMedia from './_components/SubmissionMedia.svelte';
 	import VoteButton from './_components/VoteButton.svelte';
+	import { user } from '$lib/stores/user';
 
 	let { data }: { data: PageData } = $props();
-	const { user, submission } = data;
+	const { submission } = data;
+	user.set(data.user);
 	const submissionId = $page.params.id;
 
 	let isVoted = $state(data.isVoted ?? false);
 
 	let isAllowedToReact: boolean = $state(
-		submission?.reactions.find((reaction) => reaction.userId === user?.id) == null
+		submission?.reactions.find((reaction) => reaction.userId === $user?.id) == null
 	);
 </script>
 
@@ -58,7 +60,7 @@
 					class="z-50 max-h-[320px] w-fit max-w-[320px] overflow-hidden overflow-y-auto rounded-lg bg-zinc-900 p-sm"
 					sideOffset={5}
 				>
-					{#if user == null}
+					{#if $user == null}
 						<p>You must be logged in to share your reaction.</p>
 						<Button href="/login?redirect=/submissions/{submissionId}">Log in</Button>
 					{:else if !isAllowedToReact}
@@ -77,7 +79,7 @@
 					{/if}
 				</Popover.Content>
 			</Popover.Root>
-			<VoteButton isSignedIn={user != null} id={submissionId} bind:isVoted />
+			<VoteButton isSignedIn={$user != null} id={submissionId} bind:isVoted />
 		</div>
 	</div>
 
@@ -110,8 +112,8 @@
 			<Button variant="outline" size="icon">
 				<ShareIcon />
 			</Button> -->
-			<ReactionButton {user} {submissionId} bind:isAllowedToReact />
-			<VoteButton isSignedIn={user != null} id={submissionId} bind:isVoted />
+			<ReactionButton {submissionId} bind:isAllowedToReact />
+			<VoteButton isSignedIn={$user != null} id={submissionId} bind:isVoted />
 		</div>
 	</div>
 

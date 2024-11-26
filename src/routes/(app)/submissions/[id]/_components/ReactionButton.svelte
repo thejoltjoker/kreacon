@@ -5,13 +5,12 @@
 	import type { PageData } from '../$types';
 	import Button from '$lib/components/Button.svelte';
 	import { enhance } from '$app/forms';
+	import { user } from '$lib/stores/user';
 
 	let {
-		user,
 		submissionId,
 		isAllowedToReact = $bindable()
 	}: {
-		user: PageData['user'];
 		submissionId: string;
 		isAllowedToReact: boolean;
 	} = $props();
@@ -31,7 +30,7 @@
 		class="z-50 max-h-[320px] w-fit max-w-[320px] overflow-hidden overflow-y-auto rounded-lg bg-zinc-900 p-sm"
 		sideOffset={5}
 	>
-		{#if user == null}
+		{#if $user == null}
 			<p>You must be logged in to share your reaction.</p>
 			<Button href="/login?redirect=/submissions/{submissionId}">Log in</Button>
 		{:else if !isAllowedToReact}
