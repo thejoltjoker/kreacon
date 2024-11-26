@@ -14,6 +14,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   [#17](https://github.com/thejoltjoker/kreacon/pull/17)
 - Logbook script for generating a logbook entry for the day
   [#19](https://github.com/thejoltjoker/kreacon/pull/19)
+- User registration and login
+  [#20](https://github.com/thejoltjoker/kreacon/pull/20)
+- Update navbar and make responsive
+  [#21](https://github.com/thejoltjoker/kreacon/pull/21)
 
 ### Changed
 

@@ -4,7 +4,6 @@
 	import { twMerge } from 'tailwind-merge';
 	interface Props extends HTMLAttributes<HTMLAnchorElement> {
 		href: string;
-		onclick: () => void;
 		children: Snippet;
 	}
 
@@ -16,6 +15,6 @@
 	);
 </script>
 
-<a {href} {onclick} class={className} {...props}>
+<a {href} class={className} {...props}>
 	{@render children()}
 </a>
