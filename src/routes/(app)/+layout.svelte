@@ -9,12 +9,13 @@
 	}
 
 	let { data, children }: Props = $props();
+	let user = $state(data.user);
 </script>
 
 <svelte:head>
 	<title>Kreacon</title>
 </svelte:head>
 
-<Navbar user={data.user} />
+<Navbar {user} />
 
 {@render children()}

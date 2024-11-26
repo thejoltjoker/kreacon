@@ -7,7 +7,7 @@ import { zod } from 'sveltekit-superforms/adapters';
 import type { PageServerLoad } from './$types';
 
 export const load = (async ({ locals }) => {
-	if (!locals.user) {
+	if (!locals.user || !locals.session) {
 		return redirect(302, '/login');
 	}
 	const user = await db.query.users.findFirst({
@@ -27,7 +27,7 @@ export const load = (async ({ locals }) => {
 
 export const actions = {
 	default: async ({ request, locals }) => {
-		if (!locals.user) {
+		if (!locals.user || !locals.session) {
 			return redirect(302, '/login');
 		}
 

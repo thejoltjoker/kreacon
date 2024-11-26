@@ -53,7 +53,7 @@ export const load = (async ({ params, locals }) => {
 
 export const actions = {
 	vote: async ({ params, locals }) => {
-		if (!locals.user) {
+		if (!locals.user || !locals.session) {
 			return fail(401, { error: 'Not signed in' });
 		}
 
@@ -75,7 +75,7 @@ export const actions = {
 		}
 	},
 	unvote: async ({ params, locals }) => {
-		if (!locals.user) {
+		if (!locals.user || !locals.session) {
 			return fail(401, { error: 'Not signed in' });
 		}
 
@@ -95,7 +95,7 @@ export const actions = {
 		}
 	},
 	react: async ({ params, locals, request }) => {
-		if (!locals.user) {
+		if (!locals.user || !locals.session) {
 			return fail(401, { error: 'Not signed in' });
 		}
 

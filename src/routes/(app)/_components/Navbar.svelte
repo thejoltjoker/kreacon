@@ -3,6 +3,7 @@
 	import Button from '$lib/components/Button.svelte';
 	import type { UserWithoutPassword } from '$lib/server/db/schema/user';
 
+	// Use store for user
 	let { user }: { user: UserWithoutPassword | null } = $props();
 
 	import { AlignJustifyIcon, PlusIcon } from 'lucide-svelte';

@@ -3,6 +3,7 @@
 	import Avatar from './Avatar.svelte';
 	import { DropdownMenu } from 'bits-ui';
 	import { LogOutIcon, SettingsIcon, UserCircle } from 'lucide-svelte';
+	import { enhance } from '$app/forms';
 
 	let { user }: { user: UserWithoutPassword } = $props();
 </script>
