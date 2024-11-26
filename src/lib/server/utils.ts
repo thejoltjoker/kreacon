@@ -7,7 +7,7 @@ export const argonSettings = {
 	parallelism: 1
 };
 
-export const verifyPassword = async (password: string, hash: string) =>
+export const verifyPassword = async (hash: string, password: string) =>
 	await verify(hash, password);
 
 export const hashPassword = async (password: string) => await hash(password, argonSettings);

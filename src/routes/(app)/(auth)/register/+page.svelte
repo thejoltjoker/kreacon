@@ -2,13 +2,13 @@
 	import Button from '$lib/components/Button.svelte';
 	import Divider from '$lib/components/Divider.svelte';
 	import Link from '$lib/components/Link.svelte';
-	import { registerUserSchema } from '$lib/schemas/user';
-	import { _ } from 'svelte-i18n';
-	import SuperDebug, { superForm } from 'sveltekit-superforms';
-	import { zodClient } from 'sveltekit-superforms/adapters';
-	import { debounce } from 'throttle-debounce';
-	import OAuthButtons from '../_components/OAuthButtons.svelte';
 	import ValidatedInput from '$lib/components/ValidatedInput.svelte';
+	import { registerUserSchema } from '$lib/schemas/user';
+	import { toSnakeCase } from 'drizzle-orm/casing';
+	import { _ } from 'svelte-i18n';
+	import { superForm } from 'sveltekit-superforms';
+	import { zodClient } from 'sveltekit-superforms/adapters';
+	import OAuthButtons from '../_components/OAuthButtons.svelte';
 
 	interface PageProps {
 		data: import('./$types').PageData;
@@ -17,58 +17,58 @@
 	let { data }: PageProps = $props();
 
 	// TODO Add message
-	const { form, errors, enhance, constraints } = superForm(data.form, {
+	const { form, errors, enhance, constraints, message } = superForm(data.form, {
 		validators: zodClient(registerUserSchema)
 	});
 
-	const {
-		delayed,
-		submit: submitCheckUsername,
-		enhance: submitEnhance
-	} = superForm(
-		{ username: '' },
-		{
-			invalidateAll: false,
-			applyAction: false,
-			multipleSubmits: 'abort',
-			onSubmit({ cancel }) {
-				if (!$form.username) cancel();
-			},
-			onUpdated({ form }) {
-				$errors.username = form.errors.username;
-			}
-		}
-	);
+	// TODO Username check
+	// const {
+	// 	delayed,
+	// 	submit: submitCheckUsername,
+	// 	enhance: submitEnhance
+	// } = superForm(
+	// 	{ username: '' },
+	// 	{
+	// 		invalidateAll: false,
+	// 		applyAction: false,
+	// 		multipleSubmits: 'abort',
+	// 		onSubmit({ cancel }) {
+	// 			if (!$form.username) cancel();
+	// 		},
+	// 		onUpdated({ form }) {
+	// 			$errors.username = form.errors.username;
+	// 		}
+	// 	}
+	// );
 
-	const checkUsername = debounce(500, submitCheckUsername);
+	// const checkUsername = debounce(500, submitCheckUsername);
 </script>
 
-<SuperDebug data={$form} />
+<!-- <SuperDebug data={$form} /> -->
 
-<div class="flex w-full flex-col gap-md">
+<div class="flex w-full flex-col gap-lg">
+	<h1 class="text-center">Sign up</h1>
 	{#if data.providers.length > 0}
 		<OAuthButtons providers={data.providers} />
 		<Divider>or use your email</Divider>
 	{/if}
 
-	<form method="POST" action="?/register" use:enhance class="flex flex-col gap-md">
+	<form method="POST" action="?/register" use:enhance class="flex flex-col gap-sm">
 		<ValidatedInput
+			type="text"
 			label="username"
 			name="username"
-			form="check"
-			value={$form.username}
+			bind:value={$form.username}
 			errors={$errors.username}
-			delayed={$delayed}
 			constraints={$constraints.username}
-			onInput={checkUsername}
 		/>
-		<input type="hidden" name="username" value={$form.username} />
+		<!-- <input type="hidden" name="username" value={$form.username} /> -->
 
 		<ValidatedInput
 			label="email"
 			type="email"
 			name="email"
-			value={$form.email}
+			bind:value={$form.email}
 			errors={$errors.email}
 			constraints={$constraints.email}
 		/>
@@ -77,16 +77,19 @@
 			label="password"
 			type="password"
 			name="password"
-			value={$form.password}
+			bind:value={$form.password}
 			errors={$errors.password}
 			constraints={$constraints.password}
 		/>
 
+		{#if $message}
+			<p class="error-message">{$_(toSnakeCase($message), { default: $message })}</p>
+		{/if}
 		<Button type="submit">{$_('register', { default: 'Register' })}</Button>
-		<p class="text-center">
-			{$_('already_member', { default: 'Already a member?' })}
-			<Link href="/login">{$_('login', { default: 'Log in' })}</Link>
-		</p>
 	</form>
-	<form id="check" method="POST" action="?/check" use:submitEnhance></form>
+	<!-- <form id="check" method="POST" action="?/check" use:submitEnhance></form> -->
+	<p class="text-center">
+		{$_('already_member', { default: 'Already a member?' })}
+		<Link href="/login">{$_('login', { default: 'Log in' })}</Link>
+	</p>
 </div>

@@ -7,6 +7,7 @@
 	import { superForm } from 'sveltekit-superforms';
 	import { zodClient } from 'sveltekit-superforms/adapters';
 	import ImageUpload from './_components/ImageUpload.svelte';
+	import { user } from '$lib/stores/user';
 
 	interface PageProps {
 		data: import('./$types').PageData;
@@ -20,9 +21,9 @@
 		invalidateAll: 'force'
 	});
 
-	const user = data.user;
+	user.set(data.user);
 
-	imageUrl = user?.picture ?? 'https://placehold.co/100x100';
+	imageUrl = $user?.picture ?? 'https://placehold.co/100x100';
 
 	const setImageUrl = (url: string) => {
 		imageUrl = url;

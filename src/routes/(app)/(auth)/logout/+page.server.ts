@@ -1,13 +1,14 @@
 import { deleteSessionTokenCookie, invalidateSession } from '$lib/server/auth';
-import { error, redirect } from '@sveltejs/kit';
-import type { RequestHandler } from './$types';
+import { redirect } from '@sveltejs/kit';
+import type { PageServerLoad } from './$types';
 
-export const GET: RequestHandler = async (event) => {
+export const load = (async (event) => {
+	console.log('logging out');
 	if (!event.locals.session) {
-		return error(401);
+		return redirect(302, '/');
 	}
 	await invalidateSession(event.locals.session.id);
 	deleteSessionTokenCookie(event);
 
 	return redirect(302, '/');
-};
+}) satisfies PageServerLoad;

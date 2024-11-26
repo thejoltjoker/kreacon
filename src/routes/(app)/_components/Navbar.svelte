@@ -2,8 +2,9 @@
 	import AccountMenu from '$lib/components/AccountMenu.svelte';
 	import Button from '$lib/components/Button.svelte';
 	import type { UserWithoutPassword } from '$lib/server/db/schema/user';
+	import { user } from '$lib/stores/user';
 
-	let { user }: { user: UserWithoutPassword | null } = $props();
+	// Use store for user
 
 	import { AlignJustifyIcon, PlusIcon } from 'lucide-svelte';
 	import { _ } from 'svelte-i18n';
@@ -34,7 +35,7 @@
 		</Button>
 	</div>
 	<ul class="right gap-sm">
-		{#if user}
+		{#if $user}
 			<li>
 				<div class="hidden md:block">
 					<Button variant="outline" href="/submit">
@@ -48,7 +49,7 @@
 				</div>
 			</li>
 			<li>
-				<AccountMenu {user} />
+				<AccountMenu />
 			</li>
 		{:else}
 			<li>

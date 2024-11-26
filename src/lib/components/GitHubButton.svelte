@@ -4,20 +4,16 @@
 	import { _ } from 'svelte-i18n';
 </script>
 
-<a href="/oauth/login/github">
-	<Button type="button">
-		<span class="icon">
-			<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-			{@html GitHubIcon}
-		</span>{$_('sign_in_github', { default: 'Sign in with GitHub' })}
-	</Button>
-</a>
+<Button type="button" variant="white" href="/oauth/login/github">
+	<span class="icon">
+		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+		{@html GitHubIcon}
+	</span>
+	{$_('sign_in_github', { default: 'Sign in with GitHub' })}
+</Button>
 
 <style lang="postcss">
 	.icon {
 		@apply h-5 w-5;
-	}
-	a {
-		@apply flex;
 	}
 </style>
