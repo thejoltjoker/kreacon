@@ -29,7 +29,6 @@
 					name="email"
 					aria-invalid={$errors.email ? 'true' : undefined}
 					bind:value={$form.email}
-					class:input-valid={$errors.email === undefined}
 					class:input-invalid={$errors.email !== undefined}
 					{...$constraints.email}
 				/>
@@ -52,7 +51,6 @@
 					name="password"
 					aria-invalid={$errors.password ? 'true' : undefined}
 					bind:value={$form.password}
-					class:input-valid={$errors.password === undefined}
 					class:input-invalid={$errors.password !== undefined}
 					{...$constraints.password}
 				/>

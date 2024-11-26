@@ -9,10 +9,12 @@ import { message, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import { z } from 'zod';
 import type { Actions, PageServerLoad } from './$types';
+
 const schema = z.object({
-	email: z.string().email(),
-	password: z.string()
+	email: z.string().email().max(128),
+	password: z.string().max(128)
 });
+
 export const load = (async (event) => {
 	if (event.locals.user) {
 		return redirect(302, '/profile');
@@ -35,8 +37,9 @@ export const actions = {
 
 		const existingUser = await db.query.users.findFirst({ where: eq(users.email, email) });
 
+		console.log('existingUser', existingUser);
 		const validPassword = await verifyPassword(existingUser?.password ?? '', password);
-
+		console.log('validPassword', validPassword);
 		if (!validPassword || !existingUser) {
 			return message(form, { status: 'error', text: 'Incorrect username or password' });
 		}
