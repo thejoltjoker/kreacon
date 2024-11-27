@@ -1,39 +1,62 @@
-<script lang="ts" context="module">
-	type T = Record<string, unknown>;
-</script>
-
 <script lang="ts" generics="T extends Record<string, unknown>">
-	import SuperDebug, { superForm } from 'sveltekit-superforms';
-	import type { SuperValidated } from 'sveltekit-superforms';
+	import type { SuperForm } from 'sveltekit-superforms';
+	import { onDestroy, type Snippet } from 'svelte';
 
-	export let data: SuperValidated<T>;
-	export let dataType: 'form' | 'json' = 'form';
-	export let invalidateAll = true; // set to false to keep form data using muliple forms on a page
+	interface Props {
+		form: SuperForm<T>;
+		action?: string;
+		children: Snippet;
 
-	export const superform = superForm(data, {
-		dataType,
-		invalidateAll,
-		onUpdated({ form }) {
-			if (form.valid) {
-				// Successful post! Do some more client-side stuff.
-			}
-		}
+		showSuccessAnimation?: boolean;
+		disabled?: boolean;
+		locked?: boolean;
+	}
+
+	let {
+		form,
+		action,
+		children,
+		showSuccessAnimation = $bindable(false),
+		disabled = $bindable(false),
+		locked = false
+	}: Props = $props();
+
+	const { errors, enhance, submitting } = form;
+
+	$effect(() => {
+		disabled = locked || $submitting;
 	});
 
-	const { form, message, delayed, errors, allErrors, enhance } = superform;
+	let successAnimationTimeout: ReturnType<typeof setTimeout> | undefined;
+
+	onDestroy(() => {
+		clearTimeout(successAnimationTimeout);
+	});
 </script>
 
-<div class="mx-auto max-w-screen-md">
-	<SuperDebug data={$form}></SuperDebug>
+<form
+	method="POST"
+	{action}
+	use:enhance={{
+		onUpdated({ form }) {
+			if (form.valid) {
+				showSuccessAnimation = true;
+				successAnimationTimeout = setTimeout(() => (showSuccessAnimation = false), 5000);
+			}
+		}
+	}}
+>
+	{@render children()}
 
-	<form method="POST" use:enhance {...$$restProps}>
-		<slot
-			{superform}
-			form={$form}
-			message={$message}
-			errors={$errors}
-			allErrors={$allErrors}
-			delayed={$delayed}
-		/>
-	</form>
-</div>
+	{#if !locked}
+		<button type="submit" class="btn-b" {disabled}>
+			{showSuccessAnimation ? 'Saved!' : 'Save'}
+		</button>
+	{/if}
+
+	{#if $errors._errors}
+		<div class="center">
+			{$errors._errors}
+		</div>
+	{/if}
+</form>

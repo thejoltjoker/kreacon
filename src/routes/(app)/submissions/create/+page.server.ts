@@ -4,8 +4,8 @@ import { zod } from 'sveltekit-superforms/adapters';
 import submissions, { insertSubmissionSchema } from '$lib/server/db/schema/submission';
 import { error, redirect } from '@sveltejs/kit';
 import db from '$lib/server/db';
-import { tickets, events, users } from '$lib/server/db/schema';
-import { eq, and, lte, gt } from 'drizzle-orm';
+import { users } from '$lib/server/db/schema';
+import { eq } from 'drizzle-orm';
 import { z } from 'zod';
 
 const createSubmissionSchema = insertSubmissionSchema.extend({
@@ -45,14 +45,15 @@ export const load = (async ({ locals }) => {
 				ticket.event.submissionsCloseAt > now
 		) || [];
 	const events = userTickets.map((ticket) => ({
+		categories: ticket.event?.categoriesToEvents.map((ce) => ce.category),
+		description: ticket.event?.description,
 		eventId: ticket.event?.id,
 		name: ticket.event?.name,
-		description: ticket.event?.description,
-		submissionsOpenAt: ticket.event?.submissionsOpenAt,
 		submissionsCloseAt: ticket.event?.submissionsCloseAt,
-		votingOpenAt: ticket.event?.votingOpenAt,
+		submissionsOpenAt: ticket.event?.submissionsOpenAt,
+		ticketId: ticket.id,
 		votingCloseAt: ticket.event?.votingCloseAt,
-		categories: ticket.event?.categoriesToEvents.map((ce) => ce.category)
+		votingOpenAt: ticket.event?.votingOpenAt
 	}));
 
 	const media = await db.query.media.findFirst();
