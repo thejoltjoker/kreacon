@@ -21,11 +21,13 @@ export const submissions = pgTable('submission', {
 	categoryId: integer('category_id').notNull(),
 	eventId: integer('event_id').notNull(),
 	mediaId: integer('media_id').notNull(),
-	ticketId: varchar('ticket_id', { length: 255 }).notNull(),
-	title: varchar('title', { length: 255 }).notNull(),
-	views: integer().notNull().default(0),
-	thumbnailId: integer('thumbnail_id').notNull(),
 	status: submissionStatusEnum('status').notNull().default('draft'),
+	thumbnailId: integer('thumbnail_id').notNull(),
+	ticketId: varchar('ticket_id', { length: 255 }).notNull(),
+	title: varchar({ length: 255 }).notNull(),
+	views: integer().notNull().default(0),
+	// TODO Add license https://creativecommons.org/share-your-work/cclicenses/
+	// license: varchar({ length: 255 }).notNull(),
 	...timestamps
 });
 
@@ -58,7 +60,12 @@ export const submissionsRelations = relations(submissions, ({ one, many }) => ({
 	})
 }));
 
-export const insertSubmissionSchema = createInsertSchema(submissions);
+export const insertSubmissionSchema = createInsertSchema(submissions).omit({
+	views: true,
+	createdAt: true,
+	updatedAt: true,
+	id: true
+});
 export const updateSubmissionSchema = insertSubmissionSchema.partial();
 export const selectSubmissionSchema = createSelectSchema(submissions);
 

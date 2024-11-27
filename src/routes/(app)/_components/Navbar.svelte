@@ -46,12 +46,12 @@
 		{#if $user}
 			<li>
 				<div class="hidden md:block">
-					<Button variant="outline" href="/submit">
+					<Button variant="outline" href="/submissions/create">
 						{$_('submit', { default: 'Submit' })}
 					</Button>
 				</div>
 				<div class="md:hidden">
-					<Button size="icon" variant="outline" href="/submit">
+					<Button size="icon" variant="outline" href="/submissions/create">
 						<PlusIcon class="h-4 w-4" />
 					</Button>
 				</div>
