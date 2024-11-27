@@ -16,10 +16,11 @@
 	let disabled = $state(false);
 </script>
 
-<SuperDebug data={$formData} />
-{#if data.form}
-	<Form {form} bind:showSuccessAnimation bind:disabled>
-		<!-- {#if message}
+<div class="mx-auto max-w-screen-md">
+	<SuperDebug data={$formData} />
+	{#if data.form}
+		<Form {form} bind:showSuccessAnimation bind:disabled>
+			<!-- {#if message}
 			<div
 				class="status"
 				class:error={message.status >= 400}
@@ -28,37 +29,39 @@
 				{message.text}
 			</div>
 		{/if} -->
-		<!-- <FileField {superform} field="media" label="Media"></FileField> -->
+			<!-- <FileField {superform} field="media" label="Media"></FileField> -->
 
-		<!-- TODO Get or create ticket, select -->
-		<!-- <TextField type="text" {superform} field="ticketId" label="Ticket"></TextField> -->
-		<Label.Root>
-			<span>Ticket</span>
-			<Select
-				{form}
-				field="ticketId"
-				{disabled}
-				options={data.events.map((e) => ({ label: e.name ?? 'Unknown', value: e.ticketId }))}
-			/>
-		</Label.Root>
+			<!-- TODO Get or create ticket, select -->
+			<!-- <TextField type="text" {superform} field="ticketId" label="Ticket"></TextField> -->
+			<Label.Root>
+				<span>Ticket</span>
+				<Select
+					{form}
+					label="Select an event"
+					field="ticketId"
+					{disabled}
+					options={data.events.map((e) => ({ label: e.name ?? 'Unknown', value: e.ticketId }))}
+				/>
+			</Label.Root>
 
-		<!-- <TextField type="text" {superform} field="title" label="Title"></TextField> -->
-		<Label.Root for="title">
-			<span>Title</span>
-			<Text {form} type="text" field="title" {disabled} />
-		</Label.Root>
-		<!-- TODO Select, categories for event of selected ticket -->
-		<!-- <TextField type="text" {superform} field="categoryId" label="Category"></TextField> -->
+			<!-- <TextField type="text" {superform} field="title" label="Title"></TextField> -->
+			<Label.Root for="title">
+				<span>Title</span>
+				<Text {form} type="text" field="title" {disabled} />
+			</Label.Root>
+			<!-- TODO Select, categories for event of selected ticket -->
+			<!-- <TextField type="text" {superform} field="categoryId" label="Category"></TextField> -->
 
-		<!-- <TextField type="text" {superform} field="mediaId" label="Media"></TextField> -->
+			<!-- <TextField type="text" {superform} field="mediaId" label="Media"></TextField> -->
 
-		<!-- TODO File input for thumbnail, generate locally, wasm? -->
-		<!-- <TextField type="text" {superform} field="thumbnailId" label="Thumbnail"></TextField> -->
+			<!-- TODO File input for thumbnail, generate locally, wasm? -->
+			<!-- <TextField type="text" {superform} field="thumbnailId" label="Thumbnail"></TextField> -->
 
-		<!-- TODO Get event from selected ticket -->
-		<input type="text" name="eventId" value={data.form?.data.eventId} hidden />
-		<input type="text" name="userId" value={data.form?.data.userId} hidden />
-		<input type="text" name="status" value={data.form?.data.status} hidden />
-		<Button type="submit">Submit</Button>
-	</Form>
-{/if}
+			<!-- TODO Get event from selected ticket -->
+			<input type="text" name="eventId" value={data.form?.data.eventId} hidden />
+			<input type="text" name="userId" value={data.form?.data.userId} hidden />
+			<input type="text" name="status" value={data.form?.data.status} hidden />
+			<Button type="submit">Submit</Button>
+		</Form>
+	{/if}
+</div>
