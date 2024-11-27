@@ -3,6 +3,7 @@
 	import { onDestroy, type Snippet } from 'svelte';
 
 	interface Props {
+		// eslint-disable-next-line no-undef
 		form: SuperForm<T>;
 		action?: string;
 		children: Snippet;

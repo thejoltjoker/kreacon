@@ -6,6 +6,7 @@
 	import Text from './_components/Text.svelte';
 	import SuperDebug, { superForm } from 'sveltekit-superforms';
 	import Select from './_components/Select.svelte';
+	import type { SelectItem } from './_types/SelectItem';
 
 	let { data }: { data: PageData } = $props();
 	console.log('data', data);
@@ -14,6 +15,12 @@
 	const { form: formData } = form;
 	let showSuccessAnimation = $state(false);
 	let disabled = $state(false);
+	let categories: SelectItem[] = $state([]);
+	$effect(() => {
+		const event = data.events?.find((e) => e.eventId?.toString() === $formData.eventId.toString());
+		categories =
+			event?.categories?.map((c) => ({ label: c.name ?? 'Unknown', value: c.id.toString() })) ?? [];
+	});
 </script>
 
 <div class="mx-auto max-w-screen-md">
@@ -34,13 +41,27 @@
 			<!-- TODO Get or create ticket, select -->
 			<!-- <TextField type="text" {superform} field="ticketId" label="Ticket"></TextField> -->
 			<Label.Root>
-				<span>Ticket</span>
+				<span>Event</span>
 				<Select
 					{form}
 					label="Select an event"
-					field="ticketId"
+					field="eventId"
 					{disabled}
-					options={data.events.map((e) => ({ label: e.name ?? 'Unknown', value: e.ticketId }))}
+					items={data.events.map((e) => ({
+						label: e.name ?? 'Unknown',
+						value: e.eventId?.toString() ?? ''
+					}))}
+				/>
+			</Label.Root>
+
+			<Label.Root>
+				<span>Category</span>
+				<Select
+					{form}
+					label="Select a category"
+					field="categoryId"
+					disabled={disabled || $formData.eventId == null}
+					items={categories}
 				/>
 			</Label.Root>
 
