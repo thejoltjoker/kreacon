@@ -12,10 +12,11 @@
 	console.log('data', data);
 
 	const form = superForm(data.form, { resetForm: false });
-	const { form: formData } = form;
+	const formData = form.form;
 	let showSuccessAnimation = $state(false);
 	let disabled = $state(false);
 	let categories: SelectItem[] = $state([]);
+
 	$effect(() => {
 		const event = data.events?.find((e) => e.eventId?.toString() === $formData.eventId.toString());
 		categories =
@@ -70,18 +71,13 @@
 				<span>Title</span>
 				<Text {form} type="text" field="title" {disabled} />
 			</Label.Root>
-			<!-- TODO Select, categories for event of selected ticket -->
-			<!-- <TextField type="text" {superform} field="categoryId" label="Category"></TextField> -->
 
 			<!-- <TextField type="text" {superform} field="mediaId" label="Media"></TextField> -->
 
 			<!-- TODO File input for thumbnail, generate locally, wasm? -->
 			<!-- <TextField type="text" {superform} field="thumbnailId" label="Thumbnail"></TextField> -->
-
-			<!-- TODO Get event from selected ticket -->
-			<input type="text" name="eventId" value={data.form?.data.eventId} hidden />
-			<input type="text" name="userId" value={data.form?.data.userId} hidden />
-			<input type="text" name="status" value={data.form?.data.status} hidden />
+			<input type="text" hidden name="thumbnailId" value={$formData.thumbnailId} />
+			<input type="text" hidden name="mediaId" value={$formData.mediaId} />
 			<Button type="submit">Submit</Button>
 		</Form>
 	{/if}

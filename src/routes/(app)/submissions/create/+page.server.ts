@@ -4,20 +4,23 @@ import { zod } from 'sveltekit-superforms/adapters';
 import submissions, { insertSubmissionSchema } from '$lib/server/db/schema/submission';
 import { error, redirect } from '@sveltejs/kit';
 import db from '$lib/server/db';
-import { users } from '$lib/server/db/schema';
-import { eq } from 'drizzle-orm';
+import { tickets, users } from '$lib/server/db/schema';
+import { and, eq, ne } from 'drizzle-orm';
 import { z } from 'zod';
+import { StatusCodes } from 'http-status-codes';
 
-const createSubmissionSchema = insertSubmissionSchema.extend({
-	media: z
-		.instanceof(File, { message: 'Please upload a file.' })
-		.refine((f) => f.size < 1_000_000_000, 'Max 1 GB upload size.')
-		.optional(),
-	thumbnail: z
-		.instanceof(File, { message: 'Please upload a file.' })
-		.refine((f) => f.size < 2_000_000, 'Max 2 MB upload size.')
-		.optional()
-});
+const createSubmissionSchema = insertSubmissionSchema
+	.extend({
+		media: z
+			.instanceof(File, { message: 'Please upload a file.' })
+			.refine((f) => f.size < 1_000_000_000, 'Max 1 GB upload size.')
+			.optional(),
+		thumbnail: z
+			.instanceof(File, { message: 'Please upload a file.' })
+			.refine((f) => f.size < 2_000_000, 'Max 2 MB upload size.')
+			.optional()
+	})
+	.omit({ ticketId: true, status: true, userId: true });
 
 export const load = (async ({ locals }) => {
 	if (!locals.user || !locals.session) {
@@ -44,29 +47,29 @@ export const load = (async ({ locals }) => {
 				ticket.event.submissionsOpenAt <= now &&
 				ticket.event.submissionsCloseAt > now
 		) || [];
+
 	const events = userTickets.map((ticket) => ({
+		// TODO add "isSubmitted" if user already submitted to category
 		categories: ticket.event?.categoriesToEvents.map((ce) => ce.category),
 		description: ticket.event?.description,
 		eventId: ticket.event?.id,
 		name: ticket.event?.name,
 		submissionsCloseAt: ticket.event?.submissionsCloseAt,
 		submissionsOpenAt: ticket.event?.submissionsOpenAt,
-		ticketId: ticket.id,
+		// ticketId: ticket.id,
 		votingCloseAt: ticket.event?.votingCloseAt,
 		votingOpenAt: ticket.event?.votingOpenAt
 	}));
 
+	// TODO Remove this
 	const media = await db.query.media.findFirst();
 
 	form.data = {
-		title: 'My title',
-		userId: locals.user.id,
+		title: 'My title ' + new Date().toLocaleTimeString(),
 		categoryId: events?.[0]?.categories?.[0]?.id ?? 0,
 		eventId: events?.[0]?.eventId ?? 0,
 		mediaId: media?.id ?? 0,
-		status: 'draft',
-		thumbnailId: media?.id ?? 0,
-		ticketId: userTickets?.[0]?.id ?? 0
+		thumbnailId: media?.id ?? 0
 	};
 	return {
 		form,
@@ -75,22 +78,76 @@ export const load = (async ({ locals }) => {
 }) satisfies PageServerLoad;
 
 export const actions = {
-	default: async ({ request }) => {
+	default: async ({ request, locals }) => {
+		if (!locals.user || !locals.session) {
+			redirect(StatusCodes.MOVED_TEMPORARILY, '/login?redirect=/submissions/create');
+		}
+		const { user } = locals;
 		const form = await superValidate(request, zod(createSubmissionSchema));
 
 		console.log('Massaging form data');
 		console.log('form', form);
 		console.log('form errors:', form.errors);
 
-		// TODO Add user id from locals
+		if (!form.valid) return fail(StatusCodes.BAD_REQUEST, { form });
 
-		if (!form.valid) return fail(400, { form });
+		const userData = await db.query.users.findFirst({
+			where: eq(users.id, user.id),
+			with: {
+				tickets: {
+					where: eq(tickets.eventId, form.data.eventId),
+					with: {
+						event: {
+							with: { categoriesToEvents: { with: { category: true } } }
+						}
+					}
+				},
+				submissions: {
+					where: and(
+						eq(submissions.userId, user.id),
+						eq(submissions.eventId, form.data.eventId),
+						eq(submissions.categoryId, form.data.categoryId)
+					)
+				}
+			}
+		});
 
-		// TODO Verify that user can submit to event and category
+		const [ticket] = userData?.tickets ?? [];
+		if (ticket == null) {
+			return error(StatusCodes.FORBIDDEN, {
+				message: 'User does not have a ticket for this event'
+			});
+		}
+
+		const alreadySubmitted = userData?.submissions != null && userData?.submissions.length > 0;
+		if (alreadySubmitted) {
+			return error(StatusCodes.FORBIDDEN, { message: 'User already submitted to this category' });
+		}
+
+		const category = ticket.event?.categoriesToEvents.find(
+			(ce) => ce.category.id === form.data.categoryId
+		)?.category;
+		if (category == null) {
+			return error(StatusCodes.BAD_REQUEST, { message: 'Category not available for this event' });
+		}
+
+		let id: string | null = null;
 		try {
-			await db.insert(submissions).values(form.data);
+			const [result] = await db
+				.insert(submissions)
+				.values({
+					...form.data,
+					userId: user.id,
+					ticketId: ticket.id,
+					status: 'pending'
+				})
+				.returning();
+			id = result?.id;
 		} catch {
-			return error(500, { message: 'Failed to create submission' });
+			return error(StatusCodes.INTERNAL_SERVER_ERROR, { message: 'Failed to create submission' });
+		}
+		if (id != null) {
+			redirect(StatusCodes.SEE_OTHER, `/submissions/${id}`);
 		}
 
 		return message(form, { text: 'Form posted successfully!' });

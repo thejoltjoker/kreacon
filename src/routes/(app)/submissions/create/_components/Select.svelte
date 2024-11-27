@@ -26,15 +26,7 @@
 	});
 </script>
 
-<!-- <select name="category" bind:value={$value} {disabled} {...$constraints}>
-	{#each items as o}
-		<option value={o.value} selected={o.value == $value}>
-			{o.label}
-		</option>
-	{/each}
-</select> -->
-
-<Select.Root type="single" bind:value={$value as string}>
+<Select.Root type="single" bind:value={$value as string} name={field}>
 	<Select.Trigger
 		class="flex h-form w-full items-center justify-between rounded-form border border-white px-sm text-left"
 	>
@@ -62,5 +54,12 @@
 		</Select.Content>
 	</Select.Portal>
 </Select.Root>
+<!-- <select name={field} bind:value={$value} {disabled} {...$constraints}>
+	{#each items as o}
+		<option value={o.value} selected={o.value == $value}>
+			{o.label}
+		</option>
+	{/each}
+</select> -->
 <!-- TODO Display errors -->
 {$errors}

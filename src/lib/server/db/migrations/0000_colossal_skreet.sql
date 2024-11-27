@@ -71,11 +71,11 @@ CREATE TABLE IF NOT EXISTS "submission" (
 	"category_id" integer NOT NULL,
 	"event_id" integer NOT NULL,
 	"media_id" integer NOT NULL,
+	"status" "submission_status" DEFAULT 'draft' NOT NULL,
+	"thumbnail_id" integer NOT NULL,
 	"ticket_id" varchar(255) NOT NULL,
 	"title" varchar(255) NOT NULL,
 	"views" integer DEFAULT 0 NOT NULL,
-	"thumbnail_id" integer NOT NULL,
-	"status" "submission_status" DEFAULT 'draft' NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL
 );

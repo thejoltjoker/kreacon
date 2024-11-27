@@ -39,6 +39,9 @@
 	method="POST"
 	{action}
 	use:enhance={{
+		onSubmit(e) {
+			console.log('onSubmit', e);
+		},
 		onUpdated({ form }) {
 			if (form.valid) {
 				showSuccessAnimation = true;
