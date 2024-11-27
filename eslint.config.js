@@ -3,7 +3,7 @@ import js from '@eslint/js';
 import svelte from 'eslint-plugin-svelte';
 import globals from 'globals';
 import ts from 'typescript-eslint';
-
+import unusedImports from 'eslint-plugin-unused-imports';
 export default ts.config(
 	js.configs.recommended,
 	...ts.configs.recommended,
@@ -29,5 +29,23 @@ export default ts.config(
 	},
 	{
 		ignores: ['build/', '.svelte-kit/', 'dist/']
+	},
+	{
+		plugins: {
+			'unused-imports': unusedImports
+		},
+		rules: {
+			'@typescript-eslint/no-unused-vars': 'off',
+			'unused-imports/no-unused-imports': 'error',
+			'unused-imports/no-unused-vars': [
+				'warn',
+				{
+					vars: 'all',
+					varsIgnorePattern: '^_',
+					args: 'after-used',
+					argsIgnorePattern: '^_'
+				}
+			]
+		}
 	}
 );
