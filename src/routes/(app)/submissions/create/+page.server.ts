@@ -5,7 +5,7 @@ import submissions, { insertSubmissionSchema } from '$lib/server/db/schema/submi
 import { error, redirect } from '@sveltejs/kit';
 import db from '$lib/server/db';
 import { tickets, users } from '$lib/server/db/schema';
-import { and, eq, ne } from 'drizzle-orm';
+import { and, eq } from 'drizzle-orm';
 import { z } from 'zod';
 import { StatusCodes } from 'http-status-codes';
 
@@ -36,7 +36,8 @@ export const load = (async ({ locals }) => {
 				with: {
 					event: { with: { categoriesToEvents: { with: { category: true } } } }
 				}
-			}
+			},
+			submissions: true
 		}
 	});
 
@@ -48,18 +49,30 @@ export const load = (async ({ locals }) => {
 				ticket.event.submissionsCloseAt > now
 		) || [];
 
-	const events = userTickets.map((ticket) => ({
-		// TODO add "isSubmitted" if user already submitted to category
-		categories: ticket.event?.categoriesToEvents.map((ce) => ce.category),
-		description: ticket.event?.description,
-		eventId: ticket.event?.id,
-		name: ticket.event?.name,
-		submissionsCloseAt: ticket.event?.submissionsCloseAt,
-		submissionsOpenAt: ticket.event?.submissionsOpenAt,
-		// ticketId: ticket.id,
-		votingCloseAt: ticket.event?.votingCloseAt,
-		votingOpenAt: ticket.event?.votingOpenAt
-	}));
+	console.log('userData', userData);
+	const events = userTickets.map((ticket) => {
+		const mappedCategories = ticket.event?.categoriesToEvents.map((ce) => ({
+			...ce.category,
+			isDisabled: userData?.submissions.some((s) => {
+				const currentEvent = s.eventId === ticket.event?.id;
+				const currentCategory = s.categoryId === ce.category.id;
+				return currentEvent && currentCategory;
+			})
+		}));
+
+		return {
+			// TODO add "isSubmitted" if user already submitted to category
+			categories: mappedCategories,
+			description: ticket.event?.description,
+			eventId: ticket.event?.id,
+			name: ticket.event?.name,
+			submissionsCloseAt: ticket.event?.submissionsCloseAt,
+			submissionsOpenAt: ticket.event?.submissionsOpenAt,
+			// ticketId: ticket.id,
+			votingCloseAt: ticket.event?.votingCloseAt,
+			votingOpenAt: ticket.event?.votingOpenAt
+		};
+	});
 
 	// TODO Remove this
 	const media = await db.query.media.findFirst();

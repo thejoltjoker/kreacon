@@ -1,32 +1,32 @@
 <!-- eslint-disable-next-line no-undef -->
 <script lang="ts" generics="T extends Record<string, unknown>">
-	import { Select } from 'bits-ui';
-	import { ChevronsUpDownIcon } from 'lucide-svelte';
+	import { Select, type SelectItemProps, type SelectSingleRootProps } from 'bits-ui';
+	import { ChevronsUpDownIcon, DotIcon } from 'lucide-svelte';
 	import type { FormPathLeaves } from 'sveltekit-superforms';
 
 	import { formFieldProxy, type SuperForm } from 'sveltekit-superforms/client';
-	import type { SelectItem } from '../_types/SelectItem';
 
-	interface Props {
+	type Props = Omit<SelectSingleRootProps, 'type' | 'value' | 'items'> & {
 		// eslint-disable-next-line no-undef
 		form: SuperForm<T>;
 		// eslint-disable-next-line no-undef
 		field: FormPathLeaves<T>;
 		disabled: boolean;
-		items: SelectItem[];
+		items: SelectItemProps[];
 		label: string;
-	}
+	};
 
-	const { form, field, disabled, items, label }: Props = $props();
-	const { value, errors, constraints } = formFieldProxy(form, field);
+	const { form, field, disabled, items, label, ...rootProps }: Props = $props();
+	const { value, errors } = formFieldProxy(form, field);
 
 	const selectedLabel = $derived($value ? items.find((o) => o.value == $value)?.label : label);
 	$effect(() => {
+		console.log('items', items);
 		console.log('value', $value);
 	});
 </script>
 
-<Select.Root type="single" bind:value={$value as string} name={field}>
+<Select.Root {...rootProps} type="single" bind:value={$value as string} name={field} {disabled}>
 	<Select.Trigger
 		class="flex h-form w-full items-center justify-between rounded-form border border-white px-sm text-left"
 	>
@@ -37,11 +37,19 @@
 		<Select.Content
 			class="mt-sm w-[var(--bits-select-anchor-width)] rounded-form border border-zinc-700 bg-black p-xs"
 		>
-			<Select.ScrollUpButton />
 			<Select.Viewport>
-				{#each items as o}
-					<Select.Item value={o.value} class="cursor-pointer rounded-form p-sm hover:bg-zinc-800">
-						{o.label}
+				{#each items as item}
+					<Select.Item
+						{...item}
+						disabled={item.disabled}
+						class="group flex h-form cursor-pointer items-center justify-between rounded-form pl-sm hover:!bg-zinc-800 data-[disabled]:!cursor-default data-[disabled]:!bg-transparent data-[selected]:font-bold data-[disabled]:text-zinc-500"
+					>
+						<span>{item.label}</span>
+						<span
+							class="hidden items-center justify-center text-rose-500 group-data-[selected]:flex"
+						>
+							<DotIcon class="h-form w-form" />
+						</span>
 					</Select.Item>
 				{/each}
 

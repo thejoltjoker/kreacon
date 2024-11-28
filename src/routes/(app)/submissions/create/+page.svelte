@@ -1,12 +1,11 @@
 <script lang="ts">
 	import Button from '$lib/components/Button.svelte';
-	import { Label } from 'bits-ui';
+	import { Label, type SelectItemProps } from 'bits-ui';
 	import type { PageData } from './$types';
 	import Form from './_components/Form.svelte';
 	import Text from './_components/Text.svelte';
 	import SuperDebug, { superForm } from 'sveltekit-superforms';
 	import Select from './_components/Select.svelte';
-	import type { SelectItem } from './_types/SelectItem';
 
 	let { data }: { data: PageData } = $props();
 	console.log('data', data);
@@ -15,12 +14,16 @@
 	const formData = form.form;
 	let showSuccessAnimation = $state(false);
 	let disabled = $state(false);
-	let categories: SelectItem[] = $state([]);
+	let categories: SelectItemProps[] = $state([]);
 
 	$effect(() => {
 		const event = data.events?.find((e) => e.eventId?.toString() === $formData.eventId.toString());
 		categories =
-			event?.categories?.map((c) => ({ label: c.name ?? 'Unknown', value: c.id.toString() })) ?? [];
+			event?.categories?.map((c) => ({
+				label: c.name ?? 'Unknown',
+				value: c.id.toString(),
+				disabled: c.isDisabled ?? false
+			})) ?? [];
 	});
 </script>
 
@@ -52,6 +55,9 @@
 						label: e.name ?? 'Unknown',
 						value: e.eventId?.toString() ?? ''
 					}))}
+					onValueChange={(value) => {
+						$formData.categoryId = '' as any; // Ugly type hack because category wants number
+					}}
 				/>
 			</Label.Root>
 
