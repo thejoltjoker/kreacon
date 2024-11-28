@@ -7,6 +7,7 @@
 	} from 'sveltekit-superforms/client';
 	import type { FormPathLeaves } from 'sveltekit-superforms';
 	import { cn } from '$lib/utils';
+	import Button from '../Button.svelte';
 
 	interface Props {
 		// eslint-disable-next-line no-undef
@@ -20,24 +21,25 @@
 	// const { value, errors, constraints } = formFieldProxy(form, field);
 	const { value, errors, constraints } = fileFieldProxy(form, field);
 
-	let dragOverClasses = $state('');
-	let displayImage = $state('');
+	let isDragging = $state(false);
+	let filePreview = $state<string | null>(null);
 	let fileInput: HTMLInputElement | null = $state(null);
-	let className = $derived(
+	// TODO Make drop zone a component
+	let dropZoneClassName = $derived(
 		cn(
-			'flex min-h-64 flex-col items-center justify-center border-2 border-dashed border-gray-400',
-			dragOverClasses
+			'flex min-h-[30vh] aspect-square flex-col items-center justify-center border-2 border-dashed border-muted-foreground rounded-form transition',
+			isDragging && 'bg-squid-950/25 border-primary !text-white'
 		)
 	);
 	const onDragOver = (event: DragEvent) => {
 		event.stopPropagation();
 		event.preventDefault();
-		dragOverClasses = 'bg-muted-background';
+		isDragging = true;
 	};
 	const onDragOut = (event: DragEvent) => {
 		event.stopPropagation();
 		event.preventDefault();
-		dragOverClasses = '';
+		isDragging = false;
 	};
 
 	// const onFileChange = (event: Event) => {
@@ -54,7 +56,7 @@
 		if (input?.files && input.files.length > 0) {
 			$value = input.files;
 		}
-		dragOverClasses = '';
+		isDragging = false;
 	};
 
 	// const handleFile = (file: File) => {
@@ -78,42 +80,64 @@
 	};
 
 	const handleRemove = () => {
-		displayImage = '';
+		filePreview = '';
 		// imageForm.patchValue({ image: '' });
-		dragOverClasses = '';
+		isDragging = false;
 		// imageUploaded.emit(null);
 	};
 
-	$effect(() => {
-		console.log('file', $value);
-	});
+	// $effect(() => {
+	// 	console.log('file', $value);
+	// 	if ($value instanceof FileList && $value.length > 0) {
+	// 		const reader = new FileReader();
+	// 		reader.onload = (e) => {
+	// 			filePreview = e.target?.result as string;
+	// 		};
+	// 		reader.readAsDataURL($value[0]);
+	// 	} else if ($value instanceof File) {
+	// 		const reader = new FileReader();
+	// 		reader.onload = (e) => {
+	// 			filePreview = e.target?.result as string;
+	// 		};
+	// 		reader.readAsDataURL($value);
+	// 	}
+	// });
 </script>
 
-{#if displayImage}
-	<img src={displayImage} alt="" class="min-h-32 w-full" />
+{#if filePreview != null}
+	<div
+		class="border-muted-foreground flex items-center justify-center overflow-hidden rounded-form border"
+	>
+		<div class="overflow-hidden rounded-lg">
+			<img src={filePreview} alt="" class="h-full w-full rounded-lg object-contain" />
+		</div>
+	</div>
 {/if}
 
-{#if !displayImage}
+{#if !filePreview}
 	<!-- svelte-ignore a11y-no-static-element-interactions -->
 	<div
 		role="presentation"
 		id="drop_zone"
-		class={className}
+		class={dropZoneClassName}
 		ondrop={onFileDrop}
 		ondragover={onDragOver}
 		ondragleave={onDragOut}
 	>
-		{#if dragOverClasses}
-			<p class="text-gray-500">Let go to add your file</p>
-			<p class="text-xs text-gray-300">Supports .jpg, .jpeg, .png</p>
+		{#if isDragging}
+			<p class="text-white">Let go to add your file</p>
 		{:else}
-			<p class="text-gray-500">
-				Drop your image here, or <label for="file-input" class="font-bold text-red-600">
+			<p class="text-muted-foreground-alt">
+				Drop your image here, or <button
+					type="button"
+					onclick={chooseFile}
+					class="decoration-secondary font-bold text-white underline"
+				>
 					browse
-				</label>
+				</button>
 			</p>
-			<p class="text-xs text-gray-300">Supports .jpg, .jpeg, .png</p>
 		{/if}
+		<p class="text-muted-background-alt text-sm">Supports .jpg, .jpeg, .png</p>
 	</div>
 	<input
 		bind:this={fileInput}
@@ -124,13 +148,15 @@
 		name={field}
 		{disabled}
 	/>
-	{#if displayImage}
-		<div class="mt-md flex justify-between gap-sm">
-			<button onclick={handleRemove}>Remove</button>
-		</div>
-	{:else}
-		<button onclick={chooseFile}>Browse</button>
-	{/if}
+{/if}
+{#if filePreview != null}
+	<div class="mt-md flex justify-between gap-sm">
+		<Button variant="outline" onclick={handleRemove}>Remove</Button>
+	</div>
+{:else}
+	<div class="mt-md flex justify-center">
+		<Button variant="outline" onclick={chooseFile}>Browse</Button>
+	</div>
 {/if}
 <!-- <input type="file" name={field} bind:value={$value} {...$constraints} {disabled} /> -->
 <!-- TODO Display errors -->
