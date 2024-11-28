@@ -47,7 +47,7 @@
 	<DropdownMenu.Item class="z-50 min-w-48 max-w-full p-2xs">
 		<a
 			{href}
-			class="flex select-none items-center rounded-xs py-xs pl-xs pr-sm text-sm font-medium text-zinc-400 !ring-0 !ring-transparent hover:bg-zinc-800 hover:text-white"
+			class="hover:bg-muted-background text-muted-foreground flex select-none items-center rounded-xs py-xs pl-xs pr-sm text-sm font-medium !ring-0 !ring-transparent hover:text-white"
 		>
 			<svelte:component this={icon} class="text-foreground-alt mr-2 size-5" />
 			<span>{label}</span>
@@ -66,19 +66,19 @@
 
 	<DropdownMenu.Content
 		collisionPadding={20}
-		class="bg-background shadow-popover w-full max-w-[20rem] rounded-sm border border-zinc-500 bg-black px-1 py-1.5"
+		class="bg-background shadow-popover border-muted-foreground w-full max-w-[20rem] rounded-sm border bg-black px-1 py-1.5"
 		sideOffset={8}
 	>
 		{#each menuItems as item}
 			{#if item === 'divider'}
-				<DropdownMenu.Separator class="my-1 -ml-1 -mr-1 block h-px bg-zinc-500" />
+				<DropdownMenu.Separator class="bg-muted-foreground my-1 -ml-1 -mr-1 block h-px" />
 			{:else}
 				{@render menuItem(item.label, item.href, item.icon)}
 			{/if}
 		{/each}
 
 		<!-- <DropdownMenu.Item
-			class="flex h-10 select-none items-center rounded-xs py-3 pl-3 pr-1.5 text-sm font-medium !ring-0 !ring-transparent data-[highlighted]:bg-zinc-500"
+			class="flex h-10 select-none items-center rounded-xs py-3 pl-3 pr-1.5 text-sm font-medium !ring-0 !ring-transparent data-[highlighted]:bg-muted-foreground"
 		>
 			<div class="flex items-center">
 				<SettingsIcon class="text-foreground-alt mr-2 size-5" />
@@ -86,9 +86,9 @@
 			</div>
 		</DropdownMenu.Item>
 		{@render menuItem('Settings', '/settings', SettingsIcon)}
-		<DropdownMenu.Separator class="my-1 -ml-1 -mr-1 block h-px bg-zinc-500" />
+		<DropdownMenu.Separator class="my-1 -ml-1 -mr-1 block h-px bg-muted-foreground" />
 		<DropdownMenu.Item
-			class="flex h-10 select-none items-center rounded-xs py-3 pl-3 pr-1.5 text-sm font-medium !ring-0 !ring-transparent data-[highlighted]:bg-zinc-500"
+			class="flex h-10 select-none items-center rounded-xs py-3 pl-3 pr-1.5 text-sm font-medium !ring-0 !ring-transparent data-[highlighted]:bg-muted-foreground"
 		>
 			<a href="/logout" class="flex items-center">
 				<LogOutIcon class="text-foreground-alt mr-2 size-5" />

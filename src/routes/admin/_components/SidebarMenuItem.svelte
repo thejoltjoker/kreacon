@@ -20,13 +20,13 @@
 
 <style lang="postcss">
 	li {
-		@apply flex w-full rounded-sm px-xs transition hover:bg-zinc-900;
+		@apply hover:bg-muted-background flex w-full rounded-sm px-xs transition;
 		& a {
 			@apply inline-flex grow items-center gap-sm py-xs font-bold;
 		}
 	}
 
 	.count {
-		@apply ml-auto rounded-full bg-zinc-700 px-3 py-1 text-center text-sm;
+		@apply bg-muted-background ml-auto rounded-full px-3 py-1 text-center text-sm;
 	}
 </style>

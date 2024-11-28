@@ -3,7 +3,7 @@
 	let className: string = '';
 	export { className as class };
 	const classNames = twMerge(
-		'flex flex-col gap-lg border border-zinc-700 rounded-md p-lg',
+		'flex flex-col gap-lg border border-muted-background rounded-md p-lg',
 		className
 	);
 </script>

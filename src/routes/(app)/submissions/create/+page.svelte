@@ -2,10 +2,10 @@
 	import Button from '$lib/components/Button.svelte';
 	import { Label, type SelectItemProps } from 'bits-ui';
 	import type { PageData } from './$types';
-	import Form from './_components/Form.svelte';
-	import Text from './_components/Text.svelte';
+	import Form from '$lib/components/Form/Form.svelte';
+	import Text from '$lib/components/Form/Text.svelte';
+	import Select from '$lib/components/Form/Select.svelte';
 	import SuperDebug, { superForm } from 'sveltekit-superforms';
-	import Select from './_components/Select.svelte';
 
 	let { data }: { data: PageData } = $props();
 	console.log('data', data);
@@ -30,7 +30,7 @@
 <div class="mx-auto max-w-screen-md">
 	<SuperDebug data={$formData} />
 	{#if data.form}
-		<Form {form} bind:showSuccessAnimation bind:disabled>
+		<Form {form} bind:showSuccessAnimation bind:disabled class="flex flex-col gap-md">
 			<!-- {#if message}
 			<div
 				class="status"
@@ -44,8 +44,8 @@
 
 			<!-- TODO Get or create ticket, select -->
 			<!-- <TextField type="text" {superform} field="ticketId" label="Ticket"></TextField> -->
-			<Label.Root>
-				<span>Event</span>
+			<Label.Root class="flex flex-col gap-xs" for="eventId">
+				<h6>Event</h6>
 				<Select
 					{form}
 					label="Select an event"
@@ -61,8 +61,8 @@
 				/>
 			</Label.Root>
 
-			<Label.Root>
-				<span>Category</span>
+			<Label.Root class="flex flex-col gap-xs" for="categoryId">
+				<h6>Category</h6>
 				<Select
 					{form}
 					label="Select a category"
@@ -73,8 +73,8 @@
 			</Label.Root>
 
 			<!-- <TextField type="text" {superform} field="title" label="Title"></TextField> -->
-			<Label.Root for="title">
-				<span>Title</span>
+			<Label.Root class="flex flex-col gap-xs" for="title">
+				<h6>Title</h6>
 				<Text {form} type="text" field="title" {disabled} />
 			</Label.Root>
 

@@ -28,25 +28,25 @@
 
 <Select.Root {...rootProps} type="single" bind:value={$value as string} name={field} {disabled}>
 	<Select.Trigger
-		class="flex h-form w-full items-center justify-between rounded-form border border-white px-sm text-left"
+		class="border-muted-foreground flex h-form w-full items-center justify-between rounded-form border px-sm text-left data-[state=open]:border-violet-500"
 	>
 		<span>{selectedLabel}</span>
 		<ChevronsUpDownIcon class="size-5" />
 	</Select.Trigger>
 	<Select.Portal>
 		<Select.Content
-			class="mt-sm w-[var(--bits-select-anchor-width)] rounded-form border border-zinc-700 bg-black p-xs"
+			class="border-muted-background bg-muted-background mt-sm w-[var(--bits-select-anchor-width)] rounded-form border p-xs"
 		>
 			<Select.Viewport>
 				{#each items as item}
 					<Select.Item
 						{...item}
 						disabled={item.disabled}
-						class="group flex h-form cursor-pointer items-center justify-between rounded-form pl-sm hover:!bg-zinc-800 data-[disabled]:!cursor-default data-[disabled]:!bg-transparent data-[selected]:font-bold data-[disabled]:text-zinc-500"
+						class="hover:!bg-muted-foreground data-[disabled]:text-muted-foreground group flex h-form cursor-pointer items-center justify-between rounded-form pl-sm data-[disabled]:!cursor-default data-[disabled]:!bg-transparent data-[selected]:font-bold"
 					>
 						<span>{item.label}</span>
 						<span
-							class="hidden items-center justify-center text-rose-500 group-data-[selected]:flex"
+							class="text-primary hidden items-center justify-center group-data-[selected]:flex"
 						>
 							<DotIcon class="h-form w-form" />
 						</span>
@@ -54,7 +54,7 @@
 				{/each}
 
 				{#if items.length == 0}
-					<Select.Item value="" class="cursor-pointer rounded-form p-sm hover:bg-zinc-800">
+					<Select.Item value="" class="hover:bg-muted-background cursor-pointer rounded-form p-sm">
 						No categories found
 					</Select.Item>
 				{/if}

@@ -30,7 +30,7 @@
 	<div class="flex flex-wrap items-center justify-between gap-xs">
 		<h1 class="text-2xl font-bold">{submission?.title}</h1>
 		<a href={`/submissions?category=${submission?.category.name}`}>
-			<h2 class="text-xl text-zinc-400 hover:text-violet-500">
+			<h2 class="text-muted-foreground text-xl hover:text-violet-500">
 				{submission?.category.name}
 			</h2>
 		</a>
@@ -46,7 +46,7 @@
 			/>
 			<div class="flex flex-col">
 				<h3 class="text-lg font-bold">{submission?.user?.username}</h3>
-				<span class="text-sm text-zinc-500">Submitted 2 days ago</span>
+				<span class="text-muted-foreground text-sm">Submitted 2 days ago</span>
 			</div>
 		</a>
 		<div class="flex items-center gap-3">
@@ -57,7 +57,7 @@
 					</Button>
 				</Popover.Trigger>
 				<Popover.Content
-					class="z-50 max-h-[320px] w-fit max-w-[320px] overflow-hidden overflow-y-auto rounded-lg bg-zinc-900 p-sm"
+					class="bg-muted-background z-50 max-h-[320px] w-fit max-w-[320px] overflow-hidden overflow-y-auto rounded-lg p-sm"
 					sideOffset={5}
 				>
 					{#if $user == null}

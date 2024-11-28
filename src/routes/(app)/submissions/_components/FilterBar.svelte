@@ -29,7 +29,7 @@
 			{#each categories as category}
 				<li
 					class:pill={category.name === $page.url.searchParams.get('category')}
-					class="hover:bg-zinc-800"
+					class="hover:bg-muted-background"
 				>
 					<button on:click={() => updateQueryParams(category.name)}>
 						{category.name}
