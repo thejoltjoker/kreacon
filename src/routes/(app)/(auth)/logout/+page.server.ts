@@ -3,7 +3,6 @@ import { redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
 export const load = (async (event) => {
-	console.log('logging out');
 	if (!event.locals.session) {
 		return redirect(302, '/');
 	}

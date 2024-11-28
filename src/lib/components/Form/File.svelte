@@ -10,7 +10,7 @@
 		disabled: boolean;
 	}
 
-	const { form, field, type = 'text', disabled }: Props = $props();
+	const { form, field, disabled }: Props = $props();
 	const { value, errors, constraints } = formFieldProxy(form, field);
 </script>
 

@@ -4,7 +4,6 @@
 	}
 
 	const { errors }: Props = $props();
-	console.log(errors);
 </script>
 
 <!-- <ul>

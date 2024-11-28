@@ -4,10 +4,11 @@ import { zod } from 'sveltekit-superforms/adapters';
 import submissions, { insertSubmissionSchema } from '$lib/server/db/schema/submission';
 import { error, redirect } from '@sveltejs/kit';
 import db from '$lib/server/db';
-import { tickets, users } from '$lib/server/db/schema';
+import { media, tickets, users } from '$lib/server/db/schema';
 import { and, eq } from 'drizzle-orm';
 import { z } from 'zod';
 import { StatusCodes } from 'http-status-codes';
+import { saveFile } from '$lib/helpers/saveFile';
 
 const createSubmissionSchema = insertSubmissionSchema
 	.extend({
@@ -49,7 +50,6 @@ export const load = (async ({ locals }) => {
 				ticket.event.submissionsCloseAt > now
 		) || [];
 
-	console.log('userData', userData);
 	const events = userTickets.map((ticket) => {
 		const mappedCategories = ticket.event?.categoriesToEvents.map((ce) => ({
 			...ce.category,
@@ -79,10 +79,12 @@ export const load = (async ({ locals }) => {
 
 	form.data = {
 		title: 'My title ' + new Date().toLocaleTimeString(),
-		categoryId: events?.[0]?.categories?.[0]?.id ?? 0,
-		eventId: events?.[0]?.eventId ?? 0,
+		categoryId: 0,
+		eventId: 0,
 		mediaId: media?.id ?? 0,
-		thumbnailId: media?.id ?? 0
+		thumbnailId: media?.id ?? 0,
+		media: undefined,
+		thumbnail: undefined
 	};
 	return {
 		form,
@@ -100,8 +102,7 @@ export const actions = {
 
 		console.log('Massaging form data');
 		console.log('form', form);
-		console.log('form errors:', form.errors);
-
+		console.log('media', form.data.media);
 		if (!form.valid) return fail(StatusCodes.BAD_REQUEST, { form });
 
 		const userData = await db.query.users.findFirst({
@@ -144,18 +145,40 @@ export const actions = {
 			return error(StatusCodes.BAD_REQUEST, { message: 'Category not available for this event' });
 		}
 
+		// TODO Save file to blob storage
+		// TODO Save file to static/uploads folder
+		let mediaPath: string | undefined = undefined;
+		if (form.data.media != null) {
+			mediaPath = await saveFile(form.data.media);
+		}
+
 		let id: string | null = null;
 		try {
-			const [result] = await db
-				.insert(submissions)
-				.values({
-					...form.data,
-					userId: user.id,
-					ticketId: ticket.id,
-					status: 'pending'
-				})
-				.returning();
-			id = result?.id;
+			await db.transaction(async (tx) => {
+				const [insertedMedia] =
+					mediaPath != null
+						? await tx
+								.insert(media)
+								.values({
+									url: mediaPath,
+									filename: (form.data.media?.name ?? '') + Date.now(),
+									alt: form.data.title,
+									type: 'image'
+								})
+								.returning()
+						: [];
+				const [result] = await tx
+					.insert(submissions)
+					.values({
+						...form.data,
+						userId: user.id,
+						ticketId: ticket.id,
+						status: 'pending',
+						mediaId: insertedMedia?.id
+					})
+					.returning();
+				id = result?.id;
+			});
 		} catch {
 			return error(StatusCodes.INTERNAL_SERVER_ERROR, { message: 'Failed to create submission' });
 		}

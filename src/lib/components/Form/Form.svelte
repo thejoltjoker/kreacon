@@ -12,6 +12,7 @@
 		showSuccessAnimation?: boolean;
 		disabled?: boolean;
 		locked?: boolean;
+		enctype?: 'multipart/form-data' | 'application/x-www-form-urlencoded' | 'text/plain';
 	}
 
 	let {

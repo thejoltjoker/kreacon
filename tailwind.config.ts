@@ -1,7 +1,6 @@
 import type { Config } from 'tailwindcss';
 import twForms from '@tailwindcss/forms';
 import defaultTheme from 'tailwindcss/defaultTheme';
-import defaultColors from 'tailwindcss/colors';
 
 export const colors = {
 	shade: {

@@ -6,9 +6,9 @@
 	import Text from '$lib/components/Form/Text.svelte';
 	import Select from '$lib/components/Form/Select.svelte';
 	import SuperDebug, { superForm } from 'sveltekit-superforms';
+	import File from '$lib/components/Form/File.svelte';
 
 	let { data }: { data: PageData } = $props();
-	console.log('data', data);
 
 	const form = superForm(data.form, { resetForm: false });
 	const formData = form.form;
@@ -30,7 +30,13 @@
 <div class="mx-auto max-w-screen-md">
 	<SuperDebug data={$formData} />
 	{#if data.form}
-		<Form {form} bind:showSuccessAnimation bind:disabled class="flex flex-col gap-md">
+		<Form
+			{form}
+			bind:showSuccessAnimation
+			bind:disabled
+			class="flex flex-col gap-md"
+			enctype="multipart/form-data"
+		>
 			<!-- {#if message}
 			<div
 				class="status"
@@ -41,6 +47,8 @@
 			</div>
 		{/if} -->
 			<!-- <FileField {superform} field="media" label="Media"></FileField> -->
+
+			<File {form} {disabled} field="media" />
 
 			<!-- TODO Get or create ticket, select -->
 			<!-- <TextField type="text" {superform} field="ticketId" label="Ticket"></TextField> -->
@@ -55,7 +63,8 @@
 						label: e.name ?? 'Unknown',
 						value: e.eventId?.toString() ?? ''
 					}))}
-					onValueChange={(value) => {
+					onValueChange={() => {
+						// eslint-disable-next-line @typescript-eslint/no-explicit-any
 						$formData.categoryId = '' as any; // Ugly type hack because category wants number
 					}}
 				/>

@@ -20,10 +20,6 @@
 	const { value, errors } = formFieldProxy(form, field);
 
 	const selectedLabel = $derived($value ? items.find((o) => o.value == $value)?.label : label);
-	$effect(() => {
-		console.log('items', items);
-		console.log('value', $value);
-	});
 </script>
 
 <Select.Root {...rootProps} type="single" bind:value={$value as string} name={field} {disabled}>
