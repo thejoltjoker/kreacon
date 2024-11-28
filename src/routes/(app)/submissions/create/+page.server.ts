@@ -11,6 +11,7 @@ import { StatusCodes } from 'http-status-codes';
 import { saveFile } from '$lib/helpers/saveFile';
 
 const createSubmissionSchema = insertSubmissionSchema
+	.pick({ categoryId: true, eventId: true, title: true })
 	.extend({
 		media: z
 			.instanceof(File, { message: 'Please upload a file.' })
@@ -20,8 +21,7 @@ const createSubmissionSchema = insertSubmissionSchema
 			.instanceof(File, { message: 'Please upload a file.' })
 			.refine((f) => f.size < 2_000_000, 'Max 2 MB upload size.')
 			.optional()
-	})
-	.omit({ ticketId: true, status: true, userId: true });
+	});
 
 export const load = (async ({ locals }) => {
 	if (!locals.user || !locals.session) {
@@ -61,7 +61,6 @@ export const load = (async ({ locals }) => {
 		}));
 
 		return {
-			// TODO add "isSubmitted" if user already submitted to category
 			categories: mappedCategories,
 			description: ticket.event?.description,
 			eventId: ticket.event?.id,
@@ -74,15 +73,10 @@ export const load = (async ({ locals }) => {
 		};
 	});
 
-	// TODO Remove this
-	const media = await db.query.media.findFirst();
-
 	form.data = {
 		title: 'My title ' + new Date().toLocaleTimeString(),
 		categoryId: 0,
 		eventId: 0,
-		mediaId: media?.id ?? 0,
-		thumbnailId: media?.id ?? 0,
 		media: undefined,
 		thumbnail: undefined
 	};
@@ -146,7 +140,7 @@ export const actions = {
 		}
 
 		// TODO Save file to blob storage
-		// TODO Save file to static/uploads folder
+
 		let mediaPath: string | undefined = undefined;
 		if (form.data.media != null) {
 			mediaPath = await saveFile(form.data.media);
@@ -174,7 +168,9 @@ export const actions = {
 						userId: user.id,
 						ticketId: ticket.id,
 						status: 'pending',
-						mediaId: insertedMedia?.id
+						mediaId: insertedMedia?.id,
+						// TODO Add thumbnail
+						thumbnailId: insertedMedia?.id
 					})
 					.returning();
 				id = result?.id;

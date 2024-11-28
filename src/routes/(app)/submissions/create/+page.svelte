@@ -25,10 +25,6 @@
 				disabled: c.isDisabled ?? false
 			})) ?? [];
 	});
-
-	$effect(() => {
-		console.log('file', $formData.media);
-	});
 </script>
 
 <div class="mx-auto max-w-screen-md">
@@ -50,8 +46,6 @@
 				{message.text}
 			</div>
 		{/if} -->
-			<!-- <FileField {superform} field="media" label="Media"></FileField> -->
-
 			<File {form} {disabled} field="media" />
 
 			<Label.Root class="flex flex-col gap-xs" for="eventId">
@@ -71,9 +65,8 @@
 					}}
 				/>
 				<p class="text-muted-foreground-light">
-					Can't find the event you're looking for? Make sure you've <a href=""
-						>added the ticket to your profile</a
-					>.
+					Can't find the event you're looking for? Make sure you've
+					<a href="/profile/tickets"> added the ticket to your profile </a>.
 				</p>
 			</Label.Root>
 
@@ -88,18 +81,13 @@
 				/>
 			</Label.Root>
 
-			<!-- <TextField type="text" {superform} field="title" label="Title"></TextField> -->
 			<Label.Root class="flex flex-col gap-xs" for="title">
 				<h6>Title</h6>
 				<Text {form} type="text" field="title" {disabled} />
 			</Label.Root>
 
-			<!-- <TextField type="text" {superform} field="mediaId" label="Media"></TextField> -->
-
 			<!-- TODO File input for thumbnail, generate locally, wasm? -->
-			<!-- <TextField type="text" {superform} field="thumbnailId" label="Thumbnail"></TextField> -->
-			<input type="text" hidden name="thumbnailId" value={$formData.thumbnailId} />
-			<input type="text" hidden name="mediaId" value={$formData.mediaId} />
+
 			<Button type="submit">Submit</Button>
 		</Form>
 	{/if}

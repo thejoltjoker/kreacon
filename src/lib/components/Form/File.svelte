@@ -15,14 +15,14 @@
 		// eslint-disable-next-line no-undef
 		field: FormPathLeaves<T>;
 		disabled: boolean;
+		filePreview?: string;
 	}
 
-	const { form, field, disabled }: Props = $props();
-	// const { value, errors, constraints } = formFieldProxy(form, field);
+	const { form, field, disabled, filePreview }: Props = $props();
 	const { value, errors, constraints } = fileFieldProxy(form, field);
 
 	let isDragging = $state(false);
-	let filePreview = $state<string | null>(null);
+
 	let fileInput: HTMLInputElement | null = $state(null);
 	// TODO Make drop zone a component
 	let dropZoneClassName = $derived(
@@ -42,14 +42,6 @@
 		isDragging = false;
 	};
 
-	// const onFileChange = (event: Event) => {
-	// 	const input = event.target as HTMLInputElement;
-	// 	if (input.files && input.files.length > 0) {
-	// 		handleFile(input.files[0]);
-	// 	}
-	// 	dragOverClasses = '';
-	// };
-
 	const onFileDrop = (event: DragEvent) => {
 		event.preventDefault();
 		const input = event.dataTransfer;
@@ -59,49 +51,13 @@
 		isDragging = false;
 	};
 
-	// const handleFile = (file: File) => {
-	// 	if (file.type.match('image.*')) {
-	// 		fileInput?.files?.add(file);
-	// 		// const reader = new FileReader();
-	// 		// reader.onload = (event) => {
-	// 		// 	displayImage = event.target?.result as string;
-	// 		// };
-	// 		// reader.readAsDataURL(file);
-
-	// 		// TODO Add to image form
-	// 	} else {
-	// 		throw new Error('Invalid file type, only images allowed');
-	// 	}
-	// 	dragOverClasses = '';
-	// };
-
 	const chooseFile = () => {
 		fileInput?.click();
 	};
 
 	const handleRemove = () => {
-		filePreview = '';
-		// imageForm.patchValue({ image: '' });
 		isDragging = false;
-		// imageUploaded.emit(null);
 	};
-
-	// $effect(() => {
-	// 	console.log('file', $value);
-	// 	if ($value instanceof FileList && $value.length > 0) {
-	// 		const reader = new FileReader();
-	// 		reader.onload = (e) => {
-	// 			filePreview = e.target?.result as string;
-	// 		};
-	// 		reader.readAsDataURL($value[0]);
-	// 	} else if ($value instanceof File) {
-	// 		const reader = new FileReader();
-	// 		reader.onload = (e) => {
-	// 			filePreview = e.target?.result as string;
-	// 		};
-	// 		reader.readAsDataURL($value);
-	// 	}
-	// });
 </script>
 
 {#if filePreview != null}
@@ -147,6 +103,7 @@
 		class="hidden"
 		name={field}
 		{disabled}
+		{...$constraints}
 	/>
 {/if}
 {#if filePreview != null}

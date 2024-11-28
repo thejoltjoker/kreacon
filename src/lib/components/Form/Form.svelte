@@ -58,11 +58,11 @@
 >
 	{@render children()}
 
-	{#if !locked}
+	<!-- {#if !locked}
 		<Button type="submit" {disabled}>
 			{showSuccessAnimation ? 'Saved!' : 'Save'}
 		</Button>
-	{/if}
+	{/if} -->
 
 	{#if $errors._errors}
 		<div class="center">
