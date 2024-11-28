@@ -25,6 +25,10 @@
 				disabled: c.isDisabled ?? false
 			})) ?? [];
 	});
+
+	$effect(() => {
+		console.log('file', $formData.media);
+	});
 </script>
 
 <div class="mx-auto max-w-screen-md">
@@ -50,8 +54,6 @@
 
 			<File {form} {disabled} field="media" />
 
-			<!-- TODO Get or create ticket, select -->
-			<!-- <TextField type="text" {superform} field="ticketId" label="Ticket"></TextField> -->
 			<Label.Root class="flex flex-col gap-xs" for="eventId">
 				<h6>Event</h6>
 				<Select
@@ -68,6 +70,11 @@
 						$formData.categoryId = '' as any; // Ugly type hack because category wants number
 					}}
 				/>
+				<p class="text-muted-foreground-light">
+					Can't find the event you're looking for? Make sure you've <a href=""
+						>added the ticket to your profile</a
+					>.
+				</p>
 			</Label.Root>
 
 			<Label.Root class="flex flex-col gap-xs" for="categoryId">

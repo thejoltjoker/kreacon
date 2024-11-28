@@ -191,7 +191,11 @@ export default {
 					dark: colors.sun[700]
 				},
 				muted: {
-					foreground: { DEFAULT: colors.shade[500], dark: colors.shade[500] },
+					foreground: {
+						DEFAULT: colors.shade[500],
+						light: colors.shade[400],
+						dark: colors.shade[500]
+					},
 					background: { DEFAULT: colors.shade[800], dark: colors.shade[800] }
 				},
 				'text-muted': {

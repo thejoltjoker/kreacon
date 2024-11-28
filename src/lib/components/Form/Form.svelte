@@ -28,7 +28,9 @@
 	const { errors, enhance, submitting } = form;
 
 	$effect(() => {
-		disabled = locked || $submitting;
+		// disabled = locked || $submitting;
+		// TODO Change this back
+		disabled = false;
 	});
 
 	let successAnimationTimeout: ReturnType<typeof setTimeout> | undefined;
