@@ -1,8 +1,7 @@
 <script lang="ts" generics="T extends Record<string, unknown>">
-	import type { SuperForm } from 'sveltekit-superforms';
 	import { onDestroy, type Snippet } from 'svelte';
 	import type { HTMLAttributes } from 'svelte/elements';
-	import Button from '../Button.svelte';
+	import type { SuperForm } from 'sveltekit-superforms';
 
 	interface Props extends HTMLAttributes<HTMLFormElement> {
 		// eslint-disable-next-line no-undef
@@ -28,9 +27,7 @@
 	const { errors, enhance, submitting } = form;
 
 	$effect(() => {
-		// disabled = locked || $submitting;
-		// TODO Change this back
-		disabled = false;
+		disabled = locked || $submitting;
 	});
 
 	let successAnimationTimeout: ReturnType<typeof setTimeout> | undefined;

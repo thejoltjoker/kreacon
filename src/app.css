@@ -47,7 +47,7 @@
 	}
 
 	body {
-		@apply bg-bg dark:bg-bg h-full text-black dark:text-white;
+		@apply h-full bg-bg text-black dark:bg-bg dark:text-white;
 	}
 
 	::selection {
@@ -61,7 +61,7 @@
 	input[type='text'],
 	input[type='email'],
 	input[type='password'] {
-		@apply border-muted-foreground bg-bg h-form w-full rounded-sm border px-3 py-2 focus:border-violet-500 focus:outline-none focus:ring-violet-500;
+		@apply h-form w-full rounded-sm border border-muted-foreground bg-bg px-3 py-2 focus:border-violet-500 focus:outline-none focus:ring-violet-500;
 	}
 }
 
@@ -79,6 +79,6 @@
 	}
 
 	.card {
-		@apply bg-muted-background rounded-lg p-lg;
+		@apply rounded-lg bg-muted-background p-lg;
 	}
 }

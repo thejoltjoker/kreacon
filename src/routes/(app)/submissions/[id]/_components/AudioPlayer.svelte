@@ -72,7 +72,7 @@
 		<div class="flex w-full items-center gap-lg">
 			<div class="font-mono" role="timer">{formatTime(currentTime)}</div>
 			<div
-				class="slider bg-shade-900 h-xs w-full cursor-pointer overflow-hidden rounded-full"
+				class="slider h-xs w-full cursor-pointer overflow-hidden rounded-full bg-shade-900"
 				role="slider"
 				aria-label="Audio progress"
 				aria-valuemin="0"

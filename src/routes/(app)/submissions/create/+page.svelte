@@ -1,13 +1,12 @@
 <script lang="ts">
 	import Button from '$lib/components/Button.svelte';
-	import { Label, type SelectItemProps } from 'bits-ui';
-	import type { PageData } from './$types';
-	import Form from '$lib/components/Form/Form.svelte';
-	import Text from '$lib/components/Form/Text.svelte';
-	import Select from '$lib/components/Form/Select.svelte';
-	import SuperDebug, { superForm } from 'sveltekit-superforms';
 	import File from '$lib/components/Form/File.svelte';
-	import type { MediaType } from '$lib/types/mediaTypes';
+	import Form from '$lib/components/Form/Form.svelte';
+	import Select from '$lib/components/Form/Select.svelte';
+	import Text from '$lib/components/Form/Text.svelte';
+	import { Label, type SelectItemProps } from 'bits-ui';
+	import { superForm } from 'sveltekit-superforms';
+	import type { PageData } from './$types';
 
 	let { data }: { data: PageData } = $props();
 
@@ -16,8 +15,8 @@
 	let showSuccessAnimation = $state(false);
 	let disabled = $state(false);
 	let categories: SelectItemProps[] = $state([]);
-	let canUpload = $derived($formData.eventId != null && $formData.categoryId != null);
-	let fileType = $state<MediaType>('image');
+
+	const { message } = form;
 
 	$effect(() => {
 		const event = data.events?.find((e) => e.eventId?.toString() === $formData.eventId.toString());
@@ -31,7 +30,7 @@
 </script>
 
 <div class="mx-auto max-w-screen-md">
-	<SuperDebug data={$formData} />
+	<!-- <SuperDebug data={$formData} /> -->
 	{#if data.form}
 		<Form
 			{form}
@@ -40,15 +39,20 @@
 			class="flex flex-col gap-md"
 			enctype="multipart/form-data"
 		>
-			<!-- {#if message}
-			<div
-				class="status"
-				class:error={message.status >= 400}
-				class:success={!message.status || message.status < 300}
-			>
-				{message.text}
-			</div>
-		{/if} -->
+			{#if $message}
+				<div
+					class="status"
+					class:error={$message.status >= 400}
+					class:success={!$message.status || $message.status < 300}
+				>
+					{$message.text}
+				</div>
+			{/if}
+			<Label.Root class="flex flex-col gap-xs" for="title">
+				<h4>Title</h4>
+				<Text {form} type="text" field="title" {disabled} />
+			</Label.Root>
+
 			<File {form} {disabled} field="media" />
 
 			<Label.Root class="flex flex-col gap-xs" for="eventId">
@@ -63,8 +67,7 @@
 						value: e.eventId?.toString() ?? ''
 					}))}
 					onValueChange={() => {
-						// eslint-disable-next-line @typescript-eslint/no-explicit-any
-						$formData.categoryId = '' as any; // Ugly type hack because category wants number
+						$formData.categoryId = '' as unknown as number; // Type hack because category wants number
 					}}
 				/>
 				<p class="text-muted-foreground-light">
@@ -82,11 +85,6 @@
 					disabled={disabled || $formData.eventId == null}
 					items={categories}
 				/>
-			</Label.Root>
-
-			<Label.Root class="flex flex-col gap-xs" for="title">
-				<h6>Title</h6>
-				<Text {form} type="text" field="title" {disabled} />
 			</Label.Root>
 
 			<!-- TODO File input for thumbnail, generate locally, wasm? -->

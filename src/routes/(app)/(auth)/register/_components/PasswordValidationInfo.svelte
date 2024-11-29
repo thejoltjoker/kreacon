@@ -1,10 +1,10 @@
-<script lang="ts">
+<!-- <script lang="ts">
 	interface Props {
 		errors?: string[] | undefined;
 	}
 
 	const { errors }: Props = $props();
-</script>
+</script> -->
 
 <!-- <ul>
 	<li>

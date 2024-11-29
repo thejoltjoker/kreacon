@@ -30,7 +30,7 @@
 				<Button href="/login?redirect=/submissions/{id}">{$_('vote', { default: 'Vote' })}</Button>
 			</Tooltip.Trigger>
 			<Tooltip.Content sideOffset={5}>
-				<div class="bg-muted-background z-50 rounded-md px-3 py-2 text-sm shadow-md">
+				<div class="z-50 rounded-md bg-muted-background px-3 py-2 text-sm shadow-md">
 					{$_('sign_in_to_vote', { default: 'Sign in to vote' })}
 				</div>
 			</Tooltip.Content>

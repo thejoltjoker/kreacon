@@ -29,7 +29,7 @@
 	}
 
 	a {
-		@apply text-muted-foreground hover:bg-muted-background block rounded-form px-md py-sm hover:text-white;
+		@apply block rounded-form px-md py-sm text-muted-foreground hover:bg-muted-background hover:text-white;
 	}
 
 	ul {

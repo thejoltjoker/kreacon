@@ -26,7 +26,7 @@
 		</Button>
 	</Popover.Trigger>
 	<Popover.Content
-		class="bg-muted-background z-50 max-h-[320px] w-fit max-w-[320px] overflow-hidden overflow-y-auto rounded-lg p-sm"
+		class="z-50 max-h-[320px] w-fit max-w-[320px] overflow-hidden overflow-y-auto rounded-lg bg-muted-background p-sm"
 		sideOffset={5}
 	>
 		{#if $user == null}

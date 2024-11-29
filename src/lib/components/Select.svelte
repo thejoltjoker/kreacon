@@ -24,13 +24,13 @@
 		class="flex h-input-md min-w-48 items-center justify-between rounded-full border border-white bg-black px-md py-2 text-white"
 		aria-label="Select a item"
 	>
-		<Palette class="text-muted-foreground mr-[9px] size-6" />
+		<Palette class="mr-[9px] size-6 text-muted-foreground" />
 		{selectedLabel}
-		<ChevronsUpDownIcon class="text-muted-foreground ml-auto size-6" />
+		<ChevronsUpDownIcon class="ml-auto size-6 text-muted-foreground" />
 	</Select.Trigger>
 	<Select.Portal>
 		<Select.Content
-			class="focus-override bg-background shadow-popover data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-50 max-h-96 w-[var(--bits-select-anchor-width)] min-w-[var(--bits-select-anchor-width)] select-none rounded-xl border border-muted px-1 py-3 outline-none data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1"
+			class="focus-override bg-background shadow-popover data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 border-muted z-50 max-h-96 w-[var(--bits-select-anchor-width)] min-w-[var(--bits-select-anchor-width)] select-none rounded-xl border px-1 py-3 outline-none data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1"
 			sideOffset={10}
 		>
 			<Select.ScrollUpButton class="flex w-full items-center justify-center">
@@ -39,7 +39,7 @@
 			<Select.Viewport class="p-1">
 				{#each items as item, i (i + item.value)}
 					<Select.Item
-						class="flex h-10 w-full select-none items-center rounded-button py-3 pl-5 pr-1.5 text-sm capitalize outline-none duration-75 data-[highlighted]:bg-muted"
+						class="data-[highlighted]:bg-muted flex h-10 w-full select-none items-center rounded-button py-3 pl-5 pr-1.5 text-sm capitalize outline-none duration-75"
 						value={item.value}
 						label={item.label}
 					>

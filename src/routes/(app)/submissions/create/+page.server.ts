@@ -74,7 +74,7 @@ export const load = (async ({ locals }) => {
 	});
 
 	form.data = {
-		title: 'My title ' + new Date().toLocaleTimeString(),
+		title: '',
 		categoryId: 0,
 		eventId: 0,
 		media: undefined,

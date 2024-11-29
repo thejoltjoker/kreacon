@@ -10,7 +10,7 @@ export const saveFile = async (file: File) => {
 	try {
 		await fs.mkdir(uploadsDir, { recursive: true });
 		const arrayBuffer = await file.arrayBuffer();
-		await fs.writeFile(mediaPath, Buffer.from(arrayBuffer));
+		await fs.writeFile(mediaPath, new Uint8Array(arrayBuffer));
 		console.log(`File saved to ${mediaPath}`);
 		return relativeMediaPath;
 	} catch (err) {

@@ -24,25 +24,25 @@
 
 <Select.Root {...rootProps} type="single" bind:value={$value as string} name={field} {disabled}>
 	<Select.Trigger
-		class="border-muted-foreground flex h-form w-full items-center justify-between rounded-form border px-sm text-left data-[state=open]:border-violet-500"
+		class="flex h-form w-full items-center justify-between rounded-form border border-muted-foreground px-sm text-left data-[state=open]:border-violet-500"
 	>
 		<span>{selectedLabel}</span>
 		<ChevronsUpDownIcon class="size-5" />
 	</Select.Trigger>
 	<Select.Portal>
 		<Select.Content
-			class="border-muted-background bg-muted-background mt-sm w-[var(--bits-select-anchor-width)] rounded-form border p-xs"
+			class="mt-sm w-[var(--bits-select-anchor-width)] rounded-form border border-muted-background bg-muted-background p-xs"
 		>
 			<Select.Viewport>
 				{#each items as item}
 					<Select.Item
 						{...item}
 						disabled={item.disabled}
-						class="hover:!bg-muted-foreground data-[disabled]:text-muted-foreground group flex h-form cursor-pointer items-center justify-between rounded-form pl-sm data-[disabled]:!cursor-default data-[disabled]:!bg-transparent data-[selected]:font-bold"
+						class="group flex h-form cursor-pointer items-center justify-between rounded-form pl-sm hover:!bg-muted-foreground data-[disabled]:!cursor-default data-[disabled]:!bg-transparent data-[selected]:font-bold data-[disabled]:text-muted-foreground"
 					>
 						<span>{item.label}</span>
 						<span
-							class="text-primary hidden items-center justify-center group-data-[selected]:flex"
+							class="hidden items-center justify-center text-primary group-data-[selected]:flex"
 						>
 							<DotIcon class="h-form w-form" />
 						</span>
@@ -50,7 +50,7 @@
 				{/each}
 
 				{#if items.length == 0}
-					<Select.Item value="" class="hover:bg-muted-background cursor-pointer rounded-form p-sm">
+					<Select.Item value="" class="cursor-pointer rounded-form p-sm hover:bg-muted-background">
 						No categories found
 					</Select.Item>
 				{/if}

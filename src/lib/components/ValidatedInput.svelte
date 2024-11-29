@@ -48,9 +48,9 @@
 
 		{#if delayed}
 			<div
-				class="text-muted-foreground absolute right-xs top-1/2 size-5 -translate-y-1/2 animate-pulse"
+				class="absolute right-xs top-1/2 size-5 -translate-y-1/2 animate-pulse text-muted-foreground"
 			>
-				<LoaderCircleIcon class="stroke-muted-foreground size-5 animate-spin stroke-3" />
+				<LoaderCircleIcon class="size-5 animate-spin stroke-muted-foreground stroke-3" />
 			</div>
 		{:else if errors !== undefined}
 			<div class="absolute right-xs top-1/2 size-5 -translate-y-1/2 text-red-500">

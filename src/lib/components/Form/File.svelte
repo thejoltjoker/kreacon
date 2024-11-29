@@ -1,14 +1,10 @@
 <script lang="ts" generics="T extends Record<string, unknown>">
-	import {
-		fileFieldProxy,
-		fileProxy,
-		formFieldProxy,
-		type SuperForm
-	} from 'sveltekit-superforms/client';
+	import { fileFieldProxy, type SuperForm } from 'sveltekit-superforms/client';
 	import type { FormPathLeaves } from 'sveltekit-superforms';
 	import { cn } from '$lib/utils';
 	import Button from '../Button.svelte';
 	import type { MediaType } from '$lib/types/mediaTypes';
+	import { mimeFromMediaType } from '$lib/helpers/mimeFromMediaType';
 
 	interface Props {
 		// eslint-disable-next-line no-undef
@@ -16,10 +12,10 @@
 		// eslint-disable-next-line no-undef
 		field: FormPathLeaves<T>;
 		disabled: boolean;
-		mediaType: MediaType;
+		mediaType?: MediaType;
 	}
 
-	const { form, field, disabled }: Props = $props();
+	const { form, field, disabled, mediaType = 'image' }: Props = $props();
 	const { value, errors, constraints } = fileFieldProxy(form, field);
 
 	let isDragging = $state(false);
@@ -83,7 +79,6 @@
 		</div>
 	</div>
 {:else}
-	<!-- svelte-ignore a11y-no-static-element-interactions -->
 	<div
 		role="presentation"
 		id="drop_zone"
@@ -121,7 +116,7 @@
 	bind:this={fileInput}
 	bind:files={$value as FileList}
 	type="file"
-	accept="image/png, image/jpeg"
+	accept={mimeFromMediaType(mediaType)}
 	hidden
 	name={field}
 	{disabled}

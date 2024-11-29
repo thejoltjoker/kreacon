@@ -47,7 +47,7 @@
 	<DropdownMenu.Item class="z-50 min-w-48 max-w-full p-2xs">
 		<a
 			{href}
-			class="hover:bg-muted-background text-muted-foreground flex select-none items-center rounded-xs py-xs pl-xs pr-sm text-sm font-medium !ring-0 !ring-transparent hover:text-white"
+			class="flex select-none items-center rounded-xs py-xs pl-xs pr-sm text-sm font-medium text-muted-foreground !ring-0 !ring-transparent hover:bg-muted-background hover:text-white"
 		>
 			<svelte:component this={icon} class="text-foreground-alt mr-2 size-5" />
 			<span>{label}</span>
@@ -66,12 +66,12 @@
 
 	<DropdownMenu.Content
 		collisionPadding={20}
-		class="bg-background shadow-popover border-muted-foreground w-full max-w-[20rem] rounded-sm border bg-black px-1 py-1.5"
+		class="bg-background shadow-popover w-full max-w-[20rem] rounded-sm border border-muted-foreground bg-black px-1 py-1.5"
 		sideOffset={8}
 	>
 		{#each menuItems as item}
 			{#if item === 'divider'}
-				<DropdownMenu.Separator class="bg-muted-foreground my-1 -ml-1 -mr-1 block h-px" />
+				<DropdownMenu.Separator class="my-1 -ml-1 -mr-1 block h-px bg-muted-foreground" />
 			{:else}
 				{@render menuItem(item.label, item.href, item.icon)}
 			{/if}

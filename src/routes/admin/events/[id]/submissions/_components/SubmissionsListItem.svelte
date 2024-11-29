@@ -22,7 +22,7 @@
 		</div>
 		<div class="flex grow flex-row flex-wrap items-center lg:flex-nowrap">
 			<div class="flex w-full grow basis-full flex-col md:basis-1/5">
-				<h3 class="hover:text-primary text-lg font-bold">
+				<h3 class="text-lg font-bold hover:text-primary">
 					<a href={`/submissions/${submission.id}`}>{submission.title}</a>
 				</h3>
 				<p class="subtitle">
