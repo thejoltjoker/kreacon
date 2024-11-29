@@ -1,13 +1,36 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
 	import Avatar from '$lib/components/Avatar.svelte';
+	import { user } from '$lib/stores/user';
+	import { Pagination } from 'bits-ui';
+	import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-svelte';
 	import { _ } from 'svelte-i18n';
 	import type { PageData } from './$types';
 	import FilterBar from './_components/FilterBar.svelte';
-	import { user } from '$lib/stores/user';
 
-	export let data: PageData;
-	const { submissions, categories } = data;
+	let { data }: { data: PageData } = $props();
+
+	let submissions = $derived(data.submissions);
+	let categories = $derived(data.categories);
+	let totalCount = $derived(Number(data.totalCount));
+	let searchParams = $state(new URLSearchParams($page.url.searchParams.toString()));
+	let pageNum = $derived(Number(searchParams.get('page') ?? 1));
+
 	user.set(data.user);
+
+	// TODO Showing loading indicators
+	// TODO What happens when a page doesn't exist
+	// TODO Handling edge cases (first/last page)
+	// TODO Recovery from failed requests
+	// TODO Combining pagination with filtering/sorting
+
+	const handlePageChange = (p: number) => {
+		const params = new URLSearchParams(searchParams.toString());
+		params.set('page', p.toString());
+		searchParams = params;
+		goto(`?${searchParams.toString()}`);
+	};
 </script>
 
 <h1 class="text-2xl font-bold">{$_('submissions', { default: 'Submissions' })}</h1>
@@ -55,6 +78,42 @@
 			</div>
 		</div>
 	{/each}
+	<!-- TODO Add pagination buttons -->
+</div>
+<div class="flex w-full items-center justify-center">
+	<Pagination.Root page={pageNum} count={totalCount} perPage={6} onPageChange={handlePageChange}>
+		{#snippet children({ pages, range })}
+			<div class="my-8 flex items-center">
+				<Pagination.PrevButton
+					class="hover:bg-dark-10 mr-[25px] inline-flex size-10 items-center justify-center rounded-[9px] bg-transparent active:scale-98 disabled:cursor-not-allowed disabled:text-muted-foreground hover:disabled:bg-transparent"
+				>
+					<ChevronLeftIcon class="size-6" />
+				</Pagination.PrevButton>
+				<div class="flex items-center gap-2.5">
+					{#each pages as page (page.key)}
+						{#if page.type === 'ellipsis'}
+							<div class="text-foreground-alt select-none text-[15px] font-medium">...</div>
+						{:else}
+							<Pagination.Page
+								{page}
+								class="inline-flex size-10 select-none items-center justify-center rounded-[9px] bg-transparent text-[15px] font-medium hover:bg-muted-background active:scale-98 disabled:cursor-not-allowed disabled:opacity-50 hover:disabled:bg-transparent data-[selected]:bg-muted-background data-[selected]:text-primary"
+							>
+								{page.value}
+							</Pagination.Page>
+						{/if}
+					{/each}
+				</div>
+				<Pagination.NextButton
+					class="hover:bg-dark-10 ml-[29px] inline-flex size-10 items-center justify-center rounded-[9px] bg-transparent active:scale-98 disabled:cursor-not-allowed disabled:text-muted-foreground hover:disabled:bg-transparent"
+				>
+					<ChevronRightIcon class="size-6" />
+				</Pagination.NextButton>
+			</div>
+			<p class="text-center text-[13px] text-muted-foreground">
+				Showing {range.start} - {range.end}
+			</p>
+		{/snippet}
+	</Pagination.Root>
 </div>
 
 <style>
