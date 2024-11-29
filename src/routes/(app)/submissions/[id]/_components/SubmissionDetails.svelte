@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Avatar from '$lib/components/Avatar.svelte';
 	import Button from '$lib/components/Button.svelte';
+	import { t } from '$lib/i18n';
 	import type { PageData } from '../$types';
 	type Submission = PageData['submission'];
 	export let submission: Submission;
@@ -9,7 +10,7 @@
 <section id="submission-details">
 	<h1>{submission?.title}</h1>
 	<p class="text-muted-foreground">
-		Submitted to
+		{$t('Submitted to')}
 		<a href="/categories/{submission?.category?.id}" class="font-bold text-amber-500"
 			>{submission?.category?.name}</a
 		>
@@ -21,7 +22,7 @@
 		/>
 		<p class="w-full font-bold">{submission?.user?.username}</p>
 		<a href={`/users/${submission?.user?.username}`}>
-			<Button>Profile</Button>
+			<Button>{$t('Profile')}</Button>
 		</a>
 	</div>
 </section>

@@ -3,6 +3,7 @@
 	import '../../app.css';
 	import Navbar from './_components/Navbar.svelte';
 	import { user } from '$lib/stores/user';
+	import Footer from './_components/Footer.svelte';
 
 	interface Props {
 		data: import('./$types').LayoutData;
@@ -18,6 +19,11 @@
 	<title>Kreacon</title>
 </svelte:head>
 
-<Navbar />
+<div class="flex min-h-screen flex-col">
+	<Navbar />
 
-{@render children()}
+	<div class="flex min-h-full grow flex-col items-center">
+		{@render children()}
+	</div>
+	<Footer />
+</div>

@@ -5,6 +5,7 @@
 	import Button from '../Button.svelte';
 	import type { MediaType } from '$lib/types/mediaTypes';
 	import { mimeFromMediaType } from '$lib/helpers/mimeFromMediaType';
+	import { t } from '$lib/i18n';
 
 	interface Props {
 		// eslint-disable-next-line no-undef
@@ -96,11 +97,13 @@
 					onclick={chooseFile}
 					class="text-2xl font-bold text-white underline decoration-secondary"
 				>
-					Click here to upload a file
+					{$t('Click here to upload a file')}
 				</button>
 			</p>
 		{/if}
-		<p class="text-muted-foreground-alt">Max. 1GB. Images, Audio or Video.</p>
+		<p class="text-muted-foreground-alt">
+			{$t('Max. 1GB. Images, Audio or Video.')}
+		</p>
 	</div>
 {/if}
 {#if filePreview != null}

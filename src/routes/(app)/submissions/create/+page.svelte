@@ -29,7 +29,7 @@
 	});
 </script>
 
-<div class="mx-auto max-w-screen-md">
+<div class="w-full max-w-screen-md">
 	<!-- <SuperDebug data={$formData} /> -->
 	{#if data.form}
 		<Form

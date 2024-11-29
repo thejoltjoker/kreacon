@@ -12,6 +12,7 @@
 	import SubmissionMedia from './_components/SubmissionMedia.svelte';
 	import VoteButton from './_components/VoteButton.svelte';
 	import { user } from '$lib/stores/user';
+	import { t } from '$lib/i18n';
 
 	let { data }: { data: PageData } = $props();
 	const { submission } = data;
@@ -25,7 +26,7 @@
 	);
 </script>
 
-<main class="mx-auto flex max-w-screen-lg flex-col gap-lg p-sm">
+<main class="flex w-full max-w-screen-lg flex-col gap-lg p-sm">
 	<!-- Header -->
 	<div class="flex flex-wrap items-center justify-between gap-xs">
 		<h1 class="text-2xl font-bold">{submission?.title}</h1>
@@ -95,8 +96,8 @@
 	<!-- Meta -->
 	<div class="flex items-center justify-between gap-lg text-sm text-gray-500">
 		<div class="flex flex-1 items-center gap-lg text-lg">
-			<p><span class="text-white">{submission?.views}</span> views</p>
-			<p><span class="text-white">{submission?.reactions.length}</span> reactions</p>
+			<p><span class="text-white">{submission?.views}</span> {$t('views')}</p>
+			<p><span class="text-white">{submission?.reactions.length}</span> {$t('reactions')}</p>
 		</div>
 		<!-- Actions -->
 		<div class="flex flex-1 justify-end gap-sm">
