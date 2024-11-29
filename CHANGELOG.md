@@ -22,6 +22,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   [#25](https://github.com/thejoltjoker/kreacon/pull/25)
 - Create footer, use ollama for translation, use flex on main layout
   [#27](https://github.com/thejoltjoker/kreacon/pull/27)
+- Add pagination
+  [#29](https://github.com/thejoltjoker/kreacon/pull/29)
 
 ### Changed
 
