@@ -7,6 +7,7 @@
 	import Select from '$lib/components/Form/Select.svelte';
 	import SuperDebug, { superForm } from 'sveltekit-superforms';
 	import File from '$lib/components/Form/File.svelte';
+	import type { MediaType } from '$lib/types/mediaTypes';
 
 	let { data }: { data: PageData } = $props();
 
@@ -15,6 +16,8 @@
 	let showSuccessAnimation = $state(false);
 	let disabled = $state(false);
 	let categories: SelectItemProps[] = $state([]);
+	let canUpload = $derived($formData.eventId != null && $formData.categoryId != null);
+	let fileType = $state<MediaType>('image');
 
 	$effect(() => {
 		const event = data.events?.find((e) => e.eventId?.toString() === $formData.eventId.toString());

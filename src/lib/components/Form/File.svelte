@@ -8,6 +8,7 @@
 	import type { FormPathLeaves } from 'sveltekit-superforms';
 	import { cn } from '$lib/utils';
 	import Button from '../Button.svelte';
+	import type { MediaType } from '$lib/types/mediaTypes';
 
 	interface Props {
 		// eslint-disable-next-line no-undef
@@ -15,10 +16,10 @@
 		// eslint-disable-next-line no-undef
 		field: FormPathLeaves<T>;
 		disabled: boolean;
-		filePreview?: string;
+		mediaType: MediaType;
 	}
 
-	const { form, field, disabled, filePreview }: Props = $props();
+	const { form, field, disabled }: Props = $props();
 	const { value, errors, constraints } = fileFieldProxy(form, field);
 
 	let isDragging = $state(false);
@@ -31,6 +32,13 @@
 			isDragging && 'bg-squid-950/25 border-primary !text-white'
 		)
 	);
+
+	let filePreview = $derived(
+		$value && $value instanceof FileList && $value.length > 0
+			? URL.createObjectURL($value[0] as Blob)
+			: null
+	);
+
 	const onDragOver = (event: DragEvent) => {
 		event.stopPropagation();
 		event.preventDefault();
@@ -60,17 +68,21 @@
 	};
 </script>
 
-{#if filePreview != null}
+{#if $value && $value instanceof FileList && $value.length > 0}
 	<div
-		class="border-muted-foreground flex items-center justify-center overflow-hidden rounded-form border"
+		class="flex items-center justify-center overflow-hidden rounded-form border border-muted-foreground"
 	>
 		<div class="overflow-hidden rounded-lg">
-			<img src={filePreview} alt="" class="h-full w-full rounded-lg object-contain" />
+			<img
+				src={$value instanceof FileList && $value.length > 0
+					? URL.createObjectURL($value[0] as Blob)
+					: null}
+				alt=""
+				class="h-full w-full rounded-lg object-contain"
+			/>
 		</div>
 	</div>
-{/if}
-
-{#if !filePreview}
+{:else}
 	<!-- svelte-ignore a11y-no-static-element-interactions -->
 	<div
 		role="presentation"
@@ -84,27 +96,17 @@
 			<p class="text-white">Let go to add your file</p>
 		{:else}
 			<p class="text-muted-foreground-alt">
-				Drop your image here, or <button
+				<button
 					type="button"
 					onclick={chooseFile}
-					class="decoration-secondary font-bold text-white underline"
+					class="text-2xl font-bold text-white underline decoration-secondary"
 				>
-					browse
+					Click here to upload a file
 				</button>
 			</p>
 		{/if}
-		<p class="text-muted-background-alt text-sm">Supports .jpg, .jpeg, .png</p>
+		<p class="text-muted-foreground-alt">Max. 1GB. Images, Audio or Video.</p>
 	</div>
-	<input
-		bind:this={fileInput}
-		bind:files={$value as FileList}
-		type="file"
-		accept="image/png, image/jpeg"
-		class="hidden"
-		name={field}
-		{disabled}
-		{...$constraints}
-	/>
 {/if}
 {#if filePreview != null}
 	<div class="mt-md flex justify-between gap-sm">
@@ -115,6 +117,16 @@
 		<Button variant="outline" onclick={chooseFile}>Browse</Button>
 	</div>
 {/if}
+<input
+	bind:this={fileInput}
+	bind:files={$value as FileList}
+	type="file"
+	accept="image/png, image/jpeg"
+	hidden
+	name={field}
+	{disabled}
+	{...$constraints}
+/>
 <!-- <input type="file" name={field} bind:value={$value} {...$constraints} {disabled} /> -->
 <!-- TODO Display errors -->
 {$errors}
