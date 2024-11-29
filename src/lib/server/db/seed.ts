@@ -43,19 +43,3 @@ await seeds.submissions(db);
 
 logger.info('Seeding completed');
 await db.$client.end();
-
-// export const seed = async () => {
-
-// 	await seedUsers();
-// 	logger.info('Seeding events...');
-// 	await seedEvents();
-// 	logger.info('Seeding categories...');
-// 	await seedCategories();
-// 	logger.info('Seeding submissions...');
-// 	await seedSubmissions();
-// 	logger.info('Seeding media...');
-// 	await seedMedia();
-
-// };
-
-// seed();

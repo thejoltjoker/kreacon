@@ -8,4 +8,6 @@
 	user.set(data.user);
 </script>
 
-<HeroSection />
+<div class="flex grow flex-col items-center justify-center">
+	<HeroSection />
+</div>

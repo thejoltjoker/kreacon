@@ -3,18 +3,22 @@
 	import Button from '$lib/components/Button.svelte';
 	import Link from '$lib/components/Link.svelte';
 	import { user } from '$lib/stores/user';
+	import { toSnakeCase } from 'drizzle-orm/casing';
 	// Use store for user
 
 	import { AlignJustifyIcon, PlusIcon, XIcon } from 'lucide-svelte';
-	import { _ } from 'svelte-i18n';
+	import { _, locale } from 'svelte-i18n';
 	import { fly } from 'svelte/transition';
 
 	let isMenuOpen = $state(false);
 
 	const menuItems = [
-		{ label: $_('submissions', { default: 'Submissions' }), href: '/submissions' },
-		{ label: $_('events', { default: 'Events' }), href: '/' }
+		{ label: 'Submissions', href: '/submissions' },
+		{ label: 'Events', href: '/' }
 	];
+	$effect(() => {
+		console.log($locale);
+	});
 </script>
 
 <nav>
@@ -23,7 +27,7 @@
 		{#each menuItems as item}
 			<li>
 				<Button href={item.href} variant="ghost">
-					{item.label}
+					{$_(toSnakeCase(item.label), { default: item.label })}
 				</Button>
 			</li>
 		{/each}

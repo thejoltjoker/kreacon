@@ -9,7 +9,8 @@
 
 	$effect(() => {
 		if (browser) {
-			locale.set(window.navigator.language);
+			const storedLocale = localStorage.getItem('locale');
+			locale.set(storedLocale ?? window.navigator.language);
 			waitLocale().then(() => {
 				ready = true;
 			});

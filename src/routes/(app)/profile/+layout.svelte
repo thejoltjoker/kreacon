@@ -10,7 +10,7 @@
 	user.set(data.user);
 </script>
 
-<div class="mx-auto flex max-w-screen-md flex-col gap-sm">
+<div class="flex w-full max-w-screen-md flex-col gap-sm">
 	<ProfileHeader />
 	<div class="flex flex-row gap-sm">
 		<Sidebar />

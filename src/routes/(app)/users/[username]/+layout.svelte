@@ -19,7 +19,7 @@
 
 <!-- Profile Header Section -->
 <Tabs.Root controlledValue value={currentTab} onValueChange={(v) => (currentTab = v)}>
-	<div class="mx-auto max-w-7xl px-4 py-8">
+	<div class="w-full max-w-7xl px-4 py-8">
 		<div class="flex items-start gap-6">
 			<!-- Avatar and Info -->
 			<div class="flex-1">
