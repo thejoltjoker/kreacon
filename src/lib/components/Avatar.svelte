@@ -23,7 +23,7 @@
 	}: Props = $props();
 
 	export const variants = tv({
-		base: 'border border-zinc-500 rounded-full aspect-square flex items-center justify-center overflow-hidden',
+		base: 'border border-muted-foreground rounded-full aspect-square flex items-center justify-center overflow-hidden',
 		variants: {
 			size: {
 				default: 'h-form w-form',

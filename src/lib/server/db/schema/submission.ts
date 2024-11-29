@@ -1,15 +1,15 @@
 import { relations, type InferInsertModel, type InferSelectModel } from 'drizzle-orm';
 import { integer, pgTable, uuid, varchar } from 'drizzle-orm/pg-core';
-import type { User, Vote } from 'lucide-svelte';
+import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
 import { randomString } from '../../../helpers/randomString';
-import categories, { type Category } from './category';
-import media, { type Media } from './media';
-import reactions, { type Reaction } from './reaction';
+import categories from './category';
+import events from './event';
+import media from './media';
+import reactions from './reaction';
 import { submissionStatusEnum, timestamps } from './shared';
 import tickets from './ticket';
 import users from './user';
 import { votes } from './vote';
-import events from './event';
 
 export const submissions = pgTable('submission', {
 	id: varchar('id')
@@ -21,11 +21,13 @@ export const submissions = pgTable('submission', {
 	categoryId: integer('category_id').notNull(),
 	eventId: integer('event_id').notNull(),
 	mediaId: integer('media_id').notNull(),
-	ticketId: varchar('ticket_id', { length: 255 }).notNull(),
-	title: varchar('title', { length: 255 }).notNull(),
-	views: integer().notNull().default(0),
-	thumbnailId: integer('thumbnail_id').notNull(),
 	status: submissionStatusEnum('status').notNull().default('draft'),
+	thumbnailId: integer('thumbnail_id').notNull(),
+	ticketId: varchar('ticket_id', { length: 255 }).notNull(),
+	title: varchar({ length: 255 }).notNull(),
+	views: integer().notNull().default(0),
+	// TODO Add license https://creativecommons.org/share-your-work/cclicenses/
+	// license: varchar({ length: 255 }).notNull(),
 	...timestamps
 });
 
@@ -58,14 +60,16 @@ export const submissionsRelations = relations(submissions, ({ one, many }) => ({
 	})
 }));
 
+export const insertSubmissionSchema = createInsertSchema(submissions).omit({
+	views: true,
+	createdAt: true,
+	updatedAt: true,
+	id: true
+});
+export const updateSubmissionSchema = insertSubmissionSchema.partial();
+export const selectSubmissionSchema = createSelectSchema(submissions);
+
 export type Submission = InferSelectModel<typeof submissions>;
 export type InsertSubmission = InferInsertModel<typeof submissions>;
-export type SubmissionWithCategoryMediaReactionsUserVotes = InferSelectModel<typeof submissions> & {
-	category: Category;
-	media: Media[];
-	reactions: Reaction[];
-	user: User;
-	votes: Vote[];
-};
 
 export default submissions;

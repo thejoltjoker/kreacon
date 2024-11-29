@@ -9,7 +9,9 @@
 		<Avatar src={$user.picture ?? ''} alt={$user.username ?? 'User avatar'} />
 		<div class="flex flex-col">
 			<p class="text-xl font-bold">{$user.username}</p>
-			<p class="text-sm text-zinc-500">Member since {$user.createdAt.toLocaleDateString()}</p>
+			<p class="text-sm text-muted-foreground">
+				Member since {$user.createdAt.toLocaleDateString()}
+			</p>
 		</div>
 	</section>
 {/if}

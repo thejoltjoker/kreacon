@@ -22,11 +22,11 @@
 		</div>
 		<div class="flex grow flex-row flex-wrap items-center lg:flex-nowrap">
 			<div class="flex w-full grow basis-full flex-col md:basis-1/5">
-				<h3 class="text-lg font-bold hover:text-rose-500">
+				<h3 class="text-lg font-bold hover:text-primary">
 					<a href={`/submissions/${submission.id}`}>{submission.title}</a>
 				</h3>
 				<p class="subtitle">
-					by <span class="text-rose-600">{submission.user?.username}</span>
+					by <span class="text-primary-600">{submission.user?.username}</span>
 				</p>
 			</div>
 			<div class="order-1 flex shrink grow basis-full flex-col lg:order-5 lg:basis-16">
@@ -61,6 +61,6 @@
 		@apply text-lg font-bold lg:text-xl;
 	}
 	.subtitle {
-		@apply text-zinc-500;
+		@apply text-muted-foreground;
 	}
 </style>

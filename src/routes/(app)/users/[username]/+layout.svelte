@@ -52,7 +52,7 @@
 
 		<!-- Navigation -->
 		<nav class="mt-12">
-			<Tabs.List class="flex items-center justify-between border-b border-zinc-800 pb-sm">
+			<Tabs.List class="flex items-center justify-between border-b border-muted-background pb-sm">
 				<div class="flex gap-8">
 					<Tab value="submissions" label="Submissions" />
 					<Tab value="events" label="Events" />

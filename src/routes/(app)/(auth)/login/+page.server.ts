@@ -37,9 +37,8 @@ export const actions = {
 
 		const existingUser = await db.query.users.findFirst({ where: eq(users.email, email) });
 
-		console.log('existingUser', existingUser);
 		const validPassword = await verifyPassword(existingUser?.password ?? '', password);
-		console.log('validPassword', validPassword);
+
 		if (!validPassword || !existingUser) {
 			return message(form, { status: 'error', text: 'Incorrect username or password' });
 		}

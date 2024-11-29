@@ -50,7 +50,7 @@
 					class="translate-y-sm rounded-md p-sm opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:bg-black/75 group-hover:opacity-100 group-hover:backdrop-blur"
 				>
 					<h2 class="text-lg font-bold">{submission.title}</h2>
-					<p class="text-zinc-400">{submission.category?.name}</p>
+					<p class="text-muted-foreground">{submission.category?.name}</p>
 				</div>
 			</div>
 		</div>

@@ -40,7 +40,7 @@
 			</div>
 			<div class="flex w-full flex-col">
 				<p class="text-sm font-bold">{reaction.user?.username}</p>
-				<p class="text-sm text-zinc-500">{getRelativeTime(reaction.createdAt)}</p>
+				<p class="text-sm text-muted-foreground">{getRelativeTime(reaction.createdAt)}</p>
 			</div>
 		</div>
 		<div class="w-button text-center">

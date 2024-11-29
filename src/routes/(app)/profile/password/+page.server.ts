@@ -19,7 +19,6 @@ const schema = z.object({
 export const actions = {
 	default: async ({ request }) => {
 		const form = await superValidate(request, zod(schema));
-		console.log(form);
 
 		if (!form.valid) {
 			// Again, return { form } and things will just work.

@@ -8,7 +8,7 @@
 
 <section id="submission-details">
 	<h1>{submission?.title}</h1>
-	<p class="text-zinc-500">
+	<p class="text-muted-foreground">
 		Submitted to
 		<a href="/categories/{submission?.category?.id}" class="font-bold text-amber-500"
 			>{submission?.category?.name}</a

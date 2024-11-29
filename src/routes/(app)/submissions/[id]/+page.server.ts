@@ -86,7 +86,6 @@ export const actions = {
 			await db
 				.delete(votes)
 				.where(and(eq(votes.submissionId, submissionId), eq(votes.userId, userId)));
-			console.log('Deleted vote');
 
 			return { success: true };
 		} catch (error) {

@@ -1,5 +1,5 @@
 {
-	"id": "2110320d-6558-4e27-84ec-d4d319e2bfe3",
+	"id": "98f68a82-16ea-48d3-b104-819d12521d27",
 	"prevId": "00000000-0000-0000-0000-000000000000",
 	"version": "7",
 	"dialect": "postgresql",
@@ -447,6 +447,20 @@
 					"primaryKey": false,
 					"notNull": true
 				},
+				"status": {
+					"name": "status",
+					"type": "submission_status",
+					"typeSchema": "public",
+					"primaryKey": false,
+					"notNull": true,
+					"default": "'draft'"
+				},
+				"thumbnail_id": {
+					"name": "thumbnail_id",
+					"type": "integer",
+					"primaryKey": false,
+					"notNull": true
+				},
 				"ticket_id": {
 					"name": "ticket_id",
 					"type": "varchar(255)",
@@ -465,20 +479,6 @@
 					"primaryKey": false,
 					"notNull": true,
 					"default": 0
-				},
-				"thumbnail_id": {
-					"name": "thumbnail_id",
-					"type": "integer",
-					"primaryKey": false,
-					"notNull": true
-				},
-				"status": {
-					"name": "status",
-					"type": "submission_status",
-					"typeSchema": "public",
-					"primaryKey": false,
-					"notNull": true,
-					"default": "'draft'"
 				},
 				"created_at": {
 					"name": "created_at",
