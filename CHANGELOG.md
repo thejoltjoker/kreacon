@@ -18,6 +18,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   [#20](https://github.com/thejoltjoker/kreacon/pull/20)
 - Update navbar and make responsive
   [#21](https://github.com/thejoltjoker/kreacon/pull/21)
+- User can create submissions
+  [#25](https://github.com/thejoltjoker/kreacon/pull/25)
 
 ### Changed
 
