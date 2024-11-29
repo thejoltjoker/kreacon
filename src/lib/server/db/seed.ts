@@ -43,4 +43,3 @@ await seeds.submissions(db);
 
 logger.info('Seeding completed');
 await db.$client.end();
-

@@ -4,8 +4,8 @@ import { _, init, register, waitLocale } from 'svelte-i18n';
 import { derived } from 'svelte/store';
 import { defaultLocale, locales } from './locales';
 
-for (const locale of Object.keys(locales)) {
-	register(locale, locales[locale]);
+for (const [locale, translation] of Object.entries(locales)) {
+	register(locale, translation);
 }
 
 init({

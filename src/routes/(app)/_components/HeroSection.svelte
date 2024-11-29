@@ -1,5 +1,4 @@
 <script>
-	import BitsButton from '$lib/components/BitsButton.svelte';
 	import Button from '$lib/components/Button.svelte';
 	import { ArrowRightIcon } from 'lucide-svelte';
 	import { _ } from 'svelte-i18n';
