@@ -6,7 +6,7 @@
 	type Props = WithoutChildrenOrChild<Avatar.RootProps> & {
 		src: string;
 		alt: string;
-		size?: 'default' | 'sm' | 'md' | 'lg';
+		size?: 'default' | 'auto' | 'sm' | 'md' | 'lg';
 		imageRef?: HTMLImageElement | null;
 		fallbackRef?: HTMLElement | null;
 	};
@@ -27,6 +27,7 @@
 		variants: {
 			size: {
 				default: 'h-form w-form',
+				auto: 'aspect-square max-h-full max-w-full',
 				sm: 'h-avatar-sm w-avatar-sm',
 				md: 'h-avatar-md w-avatar-md',
 				lg: 'h-avatar-lg w-avatar-lg'

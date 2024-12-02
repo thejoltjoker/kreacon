@@ -27,7 +27,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Changes in existing functionality
+- Show only published submissions to everyone
+  [#31](https://github.com/thejoltjoker/kreacon/pull/31)
 
 ### Deprecated
 

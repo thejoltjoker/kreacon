@@ -7,23 +7,23 @@
 	import { superForm } from 'sveltekit-superforms';
 	import { zodClient } from 'sveltekit-superforms/adapters';
 	import ImageUpload from './_components/ImageUpload.svelte';
-	import { user } from '$lib/stores/user';
+	import { page } from '$app/stores';
 
 	interface PageProps {
 		data: import('./$types').PageData;
 		imageUrl: string;
 	}
 
-	let { data, imageUrl }: PageProps = $props();
+	let { data, imageUrl: initialImageUrl }: PageProps = $props();
 
 	const { form, errors, message, enhance, constraints } = superForm(data.form, {
 		validators: zodClient(updateUserSchema),
 		invalidateAll: 'force'
 	});
 
-	user.set(data.user);
-
-	imageUrl = $user?.picture ?? 'https://placehold.co/100x100';
+	let imageUrl = $state<string>(
+		initialImageUrl ?? $page.data.user?.picture ?? 'https://placehold.co/100x100'
+	);
 
 	const setImageUrl = (url: string) => {
 		imageUrl = url;

@@ -20,26 +20,25 @@
 	}
 </script>
 
-<div class="flex items-center justify-stretch gap-sm">
-	<div class="grow basis-1">
+<div class="debug flex w-full flex-wrap gap-sm md:flex-nowrap">
+	<div class="debug order-2 w-1/2 grow basis-1/3 md:order-1 md:max-w-[200px]">
 		<Select label="Event" items={[]} />
 	</div>
-	<div class="grow">
-		<ul class="flex items-center justify-center gap-xs text-lg font-bold">
-			{#each categories as category}
-				<li
-					class:pill={category.name === $page.url.searchParams.get('category')}
-					class="hover:bg-muted-background"
-				>
-					<button on:click={() => updateQueryParams(category.name)}>
-						{category.name}
-					</button>
-				</li>
-			{/each}
-		</ul>
-	</div>
 
-	<div class="shrink grow basis-1">
+	<ul class="debug order-1 flex w-full max-w-full grow gap-sm overflow-x-scroll md:order-2">
+		{#each categories as category}
+			<li
+				class:pill={category.name === $page.url.searchParams.get('category')}
+				class="w-fit text-nowrap hover:bg-muted-background"
+			>
+				<button on:click={() => updateQueryParams(category.name)}>
+					{category.name}
+				</button>
+			</li>
+		{/each}
+	</ul>
+
+	<div class="debug order-3 w-1/2 grow basis-1/3 md:order-3 md:max-w-[200px]">
 		<Select label="Sort by" items={options} />
 	</div>
 </div>

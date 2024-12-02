@@ -1,6 +1,7 @@
 [
 	{
 		"id": "StrongCuriousChihuahua",
+		"status": "published",
 		"user": { "email": "john.doe@example.com" },
 		"title": "Whispers of the Forgotten Forest",
 		"category": { "name": "Combined Demo" },
@@ -30,6 +31,7 @@
 	},
 	{
 		"id": "StrongCuriousHerring",
+		"status": "published",
 		"user": { "email": "john.doe@example.com" },
 		"category": { "name": "Prerendered Music" },
 		"event": { "name": "Beacon Summer 1991" },
@@ -63,6 +65,7 @@
 	},
 	{
 		"id": "StrongCuriousBloodhound",
+		"status": "published",
 		"user": { "email": "john.doe@example.com" },
 		"category": { "name": "Tracked Music" },
 		"event": { "name": "Beacon Summer 1991" },
@@ -92,6 +95,7 @@
 	},
 	{
 		"id": "StrongCuriousDuck",
+		"status": "published",
 		"user": { "email": "john.doe@example.com" },
 		"category": { "name": "Freestyle Graphics" },
 		"event": { "name": "Beacon Summer 1991" },
@@ -119,6 +123,7 @@
 	},
 	{
 		"id": "StrongCuriousGoat",
+		"status": "published",
 		"user": { "email": "john.doe@example.com" },
 		"category": { "name": "Oldschool Graphics" },
 		"event": { "name": "Beacon Summer 1991" },
@@ -142,6 +147,7 @@
 	},
 	{
 		"id": "StrongCuriousMacaw",
+		"status": "published",
 		"user": { "email": "john.doe@example.com" },
 		"category": { "name": "Freestyle Photo" },
 		"event": { "name": "Beacon Summer 1991" },
@@ -169,6 +175,7 @@
 	},
 	{
 		"id": "StrongCuriousOctopus",
+		"status": "published",
 		"user": { "email": "john.doe@example.com" },
 		"category": { "name": "Stop Motion" },
 		"event": { "name": "Beacon Summer 1991" },
@@ -192,6 +199,7 @@
 	},
 	{
 		"id": "StrongCuriousVole",
+		"status": "published",
 		"user": { "email": "john.doe@example.com" },
 		"category": { "name": "Wild / Animation" },
 		"event": { "name": "Beacon Summer 1991" },
@@ -219,6 +227,7 @@
 	},
 	{
 		"id": "StrongCuriousWolffish",
+		"status": "published",
 		"user": { "email": "john.doe@example.com" },
 		"category": { "name": "Combined Demo" },
 		"event": { "name": "Beacon Winter 1991" },
@@ -242,6 +251,7 @@
 	},
 	{
 		"id": "StrongCuriousStoat",
+		"status": "published",
 		"user": { "email": "john.doe@example.com" },
 		"category": { "name": "Prerendered Music" },
 		"event": { "name": "Beacon Winter 1991" },
@@ -275,6 +285,7 @@
 	},
 	{
 		"id": "StrongCuriousMongrel",
+		"status": "published",
 		"user": { "email": "john.doe@example.com" },
 		"category": { "name": "Tracked Music" },
 		"event": { "name": "Beacon Winter 1991" },
@@ -304,6 +315,7 @@
 	},
 	{
 		"id": "StrongCuriousCivet",
+		"status": "published",
 		"user": { "email": "john.doe@example.com" },
 		"category": { "name": "Freestyle Graphics" },
 		"event": { "name": "Beacon Winter 1991" },
@@ -331,6 +343,7 @@
 	},
 	{
 		"id": "StrongCuriousCentipede",
+		"status": "published",
 		"user": { "email": "john.doe@example.com" },
 		"category": { "name": "Oldschool Graphics" },
 		"event": { "name": "Beacon Winter 1991" },
@@ -354,6 +367,7 @@
 	},
 	{
 		"id": "StrongCuriousLlama",
+		"status": "published",
 		"user": { "email": "john.doe@example.com" },
 		"category": { "name": "Freestyle Photo" },
 		"event": { "name": "Beacon Winter 1991" },
@@ -381,6 +395,7 @@
 	},
 	{
 		"id": "StrongCuriousSwan",
+		"status": "published",
 		"user": { "email": "john.doe@example.com" },
 		"category": { "name": "Stop Motion" },
 		"event": { "name": "Beacon Winter 1991" },
@@ -404,6 +419,7 @@
 	},
 	{
 		"id": "StrongCuriousMonkfish",
+		"status": "published",
 		"user": { "email": "john.doe@example.com" },
 		"category": { "name": "Wild / Animation" },
 		"event": { "name": "Beacon Winter 1991" },
@@ -431,6 +447,7 @@
 	},
 	{
 		"id": "StrongCuriousYak",
+		"status": "published",
 		"user": { "email": "alice.smith@example.com" },
 		"category": { "name": "Combined Demo" },
 		"event": { "name": "Beacon Summer 1991" },
@@ -454,6 +471,7 @@
 	},
 	{
 		"id": "StrongCuriousTamarin",
+		"status": "published",
 		"user": { "email": "alice.smith@example.com" },
 		"category": { "name": "Prerendered Music" },
 		"event": { "name": "Beacon Summer 1991" },
@@ -487,6 +505,7 @@
 	},
 	{
 		"id": "StrongCuriousOkapi",
+		"status": "published",
 		"user": { "email": "alice.smith@example.com" },
 		"category": { "name": "Tracked Music" },
 		"event": { "name": "Beacon Summer 1991" },
@@ -516,6 +535,7 @@
 	},
 	{
 		"id": "StrongCuriousMuskrat",
+		"status": "published",
 		"user": { "email": "alice.smith@example.com" },
 		"category": { "name": "Freestyle Graphics" },
 		"event": { "name": "Beacon Summer 1991" },
@@ -543,6 +563,7 @@
 	},
 	{
 		"id": "StrongCuriousGrouse",
+		"status": "published",
 		"user": { "email": "alice.smith@example.com" },
 		"category": { "name": "Oldschool Graphics" },
 		"event": { "name": "Beacon Summer 1991" },
@@ -566,6 +587,7 @@
 	},
 	{
 		"id": "StrongCuriousGrasshopper",
+		"status": "published",
 		"user": { "email": "alice.smith@example.com" },
 		"category": { "name": "Freestyle Photo" },
 		"event": { "name": "Beacon Summer 1991" },
@@ -593,6 +615,7 @@
 	},
 	{
 		"id": "StrongCuriousBongo",
+		"status": "published",
 		"user": { "email": "alice.smith@example.com" },
 		"category": { "name": "Stop Motion" },
 		"event": { "name": "Beacon Summer 1991" },
@@ -616,6 +639,7 @@
 	},
 	{
 		"id": "StrongCuriousRockfish",
+		"status": "published",
 		"user": { "email": "alice.smith@example.com" },
 		"category": { "name": "Wild / Animation" },
 		"event": { "name": "Beacon Summer 1991" },
@@ -643,6 +667,7 @@
 	},
 	{
 		"id": "StrongCuriousOlm",
+		"status": "published",
 		"user": { "email": "alice.smith@example.com" },
 		"category": { "name": "Combined Demo" },
 		"event": { "name": "Beacon Winter 1991" },
@@ -666,6 +691,7 @@
 	},
 	{
 		"id": "StrongCuriousChicken",
+		"status": "published",
 		"user": { "email": "alice.smith@example.com" },
 		"category": { "name": "Prerendered Music" },
 		"event": { "name": "Beacon Winter 1991" },
@@ -699,6 +725,7 @@
 	},
 	{
 		"id": "StrongCuriousGorilla",
+		"status": "published",
 		"user": { "email": "alice.smith@example.com" },
 		"category": { "name": "Tracked Music" },
 		"event": { "name": "Beacon Winter 1991" },
@@ -728,6 +755,7 @@
 	},
 	{
 		"id": "StrongCuriousLynx",
+		"status": "published",
 		"user": { "email": "alice.smith@example.com" },
 		"category": { "name": "Freestyle Graphics" },
 		"event": { "name": "Beacon Winter 1991" },
@@ -755,6 +783,7 @@
 	},
 	{
 		"id": "StrongCuriousMastiff",
+		"status": "published",
 		"user": { "email": "alice.smith@example.com" },
 		"category": { "name": "Oldschool Graphics" },
 		"event": { "name": "Beacon Winter 1991" },
@@ -778,6 +807,7 @@
 	},
 	{
 		"id": "StrongCuriousOtter",
+		"status": "published",
 		"user": { "email": "alice.smith@example.com" },
 		"category": { "name": "Freestyle Photo" },
 		"event": { "name": "Beacon Winter 1991" },
@@ -805,6 +835,7 @@
 	},
 	{
 		"id": "StrongCuriousPanther",
+		"status": "published",
 		"user": { "email": "alice.smith@example.com" },
 		"category": { "name": "Stop Motion" },
 		"event": { "name": "Beacon Winter 1991" },
@@ -828,6 +859,7 @@
 	},
 	{
 		"id": "StrongCuriousWolfhound",
+		"status": "published",
 		"user": { "email": "alice.smith@example.com" },
 		"category": { "name": "Wild / Animation" },
 		"event": { "name": "Beacon Winter 1991" },
