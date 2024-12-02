@@ -24,6 +24,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   [#27](https://github.com/thejoltjoker/kreacon/pull/27)
 - Add pagination
   [#29](https://github.com/thejoltjoker/kreacon/pull/29)
+- Add filtering and sorting to submissions page
+  [#33](https://github.com/thejoltjoker/kreacon/pull/33)
 
 ### Changed
 
