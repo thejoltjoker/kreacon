@@ -186,8 +186,8 @@ export default {
 					dark: colors.bubblegum[700]
 				},
 				tertiary: {
-					DEFAULT: colors.sun[600],
-					light: colors.sun[500],
+					DEFAULT: colors.sun[400],
+					light: colors.sun[400],
 					dark: colors.sun[700]
 				},
 				muted: {

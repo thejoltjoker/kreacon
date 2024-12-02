@@ -8,7 +8,6 @@
 	};
 
 	$effect(() => {
-		console.log($locale);
 		localStorage.setItem('locale', $locale ?? 'en');
 	});
 </script>

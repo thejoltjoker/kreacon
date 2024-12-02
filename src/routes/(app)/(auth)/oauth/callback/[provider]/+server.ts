@@ -17,7 +17,7 @@ export const GET: RequestHandler = async (event) => {
 	const provider = params.provider;
 	const code = url.searchParams.get('code');
 	const state = url.searchParams.get('state');
-	console.log('OAuth callback', { provider, code });
+
 	logger.info('OAuth callback', { provider, code });
 
 	if (!provider) {

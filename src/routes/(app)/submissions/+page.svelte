@@ -2,7 +2,6 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import Avatar from '$lib/components/Avatar.svelte';
-	import { user } from '$lib/stores/user';
 	import { Pagination } from 'bits-ui';
 	import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-svelte';
 	import { _ } from 'svelte-i18n';
@@ -14,11 +13,10 @@
 
 	let submissions = $derived(data.submissions);
 	let categories = $derived(data.categories);
+	let events = $derived(data.events);
 	let totalCount = $derived(Number(data.totalCount));
 	let searchParams = $state(new URLSearchParams($page.url.searchParams.toString()));
 	let pageNum = $derived(Number(searchParams.get('page') ?? 1));
-
-	user.set(data.user);
 
 	// TODO Showing loading indicators
 	// TODO What happens when a page doesn't exist
@@ -37,7 +35,7 @@
 <h1 class="text-2xl font-bold">{$_('submissions', { default: 'Submissions' })}</h1>
 
 <div class="w-full px-xl py-sm">
-	<FilterBar {categories} />
+	<FilterBar {events} {categories} />
 </div>
 <div class="grid w-full grid-cols-submissions gap-sm p-xl">
 	{#each submissions as submission}
@@ -87,7 +85,6 @@
 			</div>
 		</div>
 	{/each}
-	<!-- TODO Add pagination buttons -->
 </div>
 <div class="flex w-full items-center justify-center">
 	<Pagination.Root page={pageNum} count={totalCount} perPage={30} onPageChange={handlePageChange}>

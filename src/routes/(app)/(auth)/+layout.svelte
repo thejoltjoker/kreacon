@@ -9,10 +9,10 @@
 
 <style lang="postcss">
 	.wrapper {
-		@apply flex h-[calc(100vh-6rem)] flex-col items-center justify-center;
+		@apply flex h-[calc(100vh-6rem)] w-full flex-col items-center justify-center;
 	}
 
 	.container {
-		@apply flex max-w-[30rem] flex-col gap-md rounded-md border border-neutral-700 px-md py-xl md:p-2xl;
+		@apply flex w-full max-w-[30rem] flex-col gap-md rounded-md border border-neutral-700 px-md py-xl md:p-2xl;
 	}
 </style>

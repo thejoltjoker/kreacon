@@ -2,7 +2,6 @@
 	import type { Snippet } from 'svelte';
 	import '../../app.css';
 	import Navbar from './_components/Navbar.svelte';
-	import { user } from '$lib/stores/user';
 	import Footer from './_components/Footer.svelte';
 
 	interface Props {
@@ -10,9 +9,7 @@
 		children: Snippet;
 	}
 
-	let { data, children }: Props = $props();
-
-	user.set(data.user);
+	let { children }: Props = $props();
 </script>
 
 <svelte:head>

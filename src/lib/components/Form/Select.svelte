@@ -58,12 +58,6 @@
 		</Select.Content>
 	</Select.Portal>
 </Select.Root>
-<!-- <select name={field} bind:value={$value} {disabled} {...$constraints}>
-	{#each items as o}
-		<option value={o.value} selected={o.value == $value}>
-			{o.label}
-		</option>
-	{/each}
-</select> -->
+
 <!-- TODO Display errors -->
 {$errors}
