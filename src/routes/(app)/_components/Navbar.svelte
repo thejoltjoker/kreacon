@@ -1,15 +1,13 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	import AccountMenu from '$lib/components/AccountMenu.svelte';
 	import Button from '$lib/components/Button.svelte';
 	import Link from '$lib/components/Link.svelte';
-	import { user } from '$lib/stores/user';
 	import { toSnakeCase } from 'drizzle-orm/casing';
-	// Use store for user
-
 	import { AlignJustifyIcon, PlusIcon, XIcon } from 'lucide-svelte';
 	import { _, locale } from 'svelte-i18n';
 	import { fly } from 'svelte/transition';
-
+	const user = $derived($page.data.user);
 	let isMenuOpen = $state(false);
 
 	const menuItems = [
@@ -47,7 +45,7 @@
 		</Button>
 	</div>
 	<ul class="right gap-sm">
-		{#if $user}
+		{#if user}
 			<li>
 				<div class="hidden md:block">
 					<Button variant="outline" href="/submissions/create">

@@ -2,9 +2,11 @@
 	import { enhance } from '$app/forms';
 	import Button from '$lib/components/Button.svelte';
 	import { emojis } from '$lib/emojis';
-	import { user } from '$lib/stores/user';
+	import { page } from '$app/stores';
 	import { Popover } from 'bits-ui';
 	import { SmilePlusIcon } from 'lucide-svelte';
+
+	const user = $derived($page.data.user);
 
 	let {
 		submissionId,
@@ -29,7 +31,7 @@
 		class="z-50 max-h-[320px] w-fit max-w-[320px] overflow-hidden overflow-y-auto rounded-lg bg-muted-background p-sm"
 		sideOffset={5}
 	>
-		{#if $user == null}
+		{#if user == null}
 			<p>You must be logged in to share your reaction.</p>
 			<Button href="/login?redirect=/submissions/{submissionId}">Log in</Button>
 		{:else if !isAllowedToReact}

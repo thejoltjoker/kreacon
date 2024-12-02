@@ -8,6 +8,7 @@
 	import { _ } from 'svelte-i18n';
 	import type { PageData } from './$types';
 	import FilterBar from './_components/FilterBar.svelte';
+	import StatusIcon from './_components/StatusIcon.svelte';
 
 	let { data }: { data: PageData } = $props();
 
@@ -35,10 +36,10 @@
 
 <h1 class="text-2xl font-bold">{$_('submissions', { default: 'Submissions' })}</h1>
 
-<div class="py-sm">
+<div class="w-full px-xl py-sm">
 	<FilterBar {categories} />
 </div>
-<div class="grid grid-cols-submissions gap-sm">
+<div class="grid w-full grid-cols-submissions gap-sm p-xl">
 	{#each submissions as submission}
 		<div class="wrapper group grid overflow-hidden rounded-md">
 			<div class="h-full w-full overflow-hidden rounded-md">
@@ -58,14 +59,22 @@
 					{/if}
 				</a>
 			</div>
-			<div class="items-left pointer-events-none flex h-full w-full flex-col justify-between p-sm">
+			<div
+				class="items-left pointer-events-none relative flex h-full w-full flex-col justify-between p-sm"
+			>
+				{#if ['draft', 'pending'].includes(submission.status)}
+					<div class="absolute right-sm top-sm">
+						<StatusIcon status={submission.status} />
+					</div>
+				{/if}
 				<a
 					href={`/users/${submission.user?.username}`}
-					class="pointer-events-auto inline-flex w-fit -translate-y-sm items-center gap-sm rounded-full p-xs pr-md opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:bg-black/75 group-hover:opacity-100 group-hover:backdrop-blur"
+					class="pointer-events-auto inline-flex h-form w-fit -translate-y-sm items-center gap-sm rounded-full p-xs pr-md opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:bg-black/75 group-hover:opacity-100 group-hover:backdrop-blur"
 				>
 					<Avatar
 						src={submission.user?.picture ?? ''}
 						alt={submission.user?.username ?? 'User picture'}
+						size="auto"
 					/>
 					<p>{submission.user?.username}</p>
 				</a>
@@ -81,7 +90,7 @@
 	<!-- TODO Add pagination buttons -->
 </div>
 <div class="flex w-full items-center justify-center">
-	<Pagination.Root page={pageNum} count={totalCount} perPage={6} onPageChange={handlePageChange}>
+	<Pagination.Root page={pageNum} count={totalCount} perPage={30} onPageChange={handlePageChange}>
 		{#snippet children({ pages, range })}
 			<div class="my-8 flex items-center">
 				<Pagination.PrevButton

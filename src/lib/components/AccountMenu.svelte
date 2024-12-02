@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { user } from '$lib/stores/user';
+	import { page } from '$app/stores';
 	import { DropdownMenu } from 'bits-ui';
 	import {
 		LayoutGridIcon,
@@ -41,6 +41,8 @@
 			icon: LogOutIcon
 		}
 	];
+
+	const user = $derived($page.data.user);
 </script>
 
 {#snippet menuItem(label: string, href: string, icon: typeof IconType)}
@@ -59,8 +61,8 @@
 	<DropdownMenu.Trigger>
 		<Avatar
 			class="cursor-pointer border-white"
-			src={$user?.picture ?? ''}
-			alt={$user?.username ?? 'User picture'}
+			src={user?.picture ?? ''}
+			alt={user?.username ?? 'User picture'}
 		/>
 	</DropdownMenu.Trigger>
 
