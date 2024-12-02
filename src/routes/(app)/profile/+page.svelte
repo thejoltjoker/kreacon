@@ -9,21 +9,21 @@
 	import ImageUpload from './_components/ImageUpload.svelte';
 	import { page } from '$app/stores';
 
-	const user = $derived($page.data.user);
-
 	interface PageProps {
 		data: import('./$types').PageData;
 		imageUrl: string;
 	}
 
-	let { data, imageUrl }: PageProps = $props();
+	let { data, imageUrl: initialImageUrl }: PageProps = $props();
 
 	const { form, errors, message, enhance, constraints } = superForm(data.form, {
 		validators: zodClient(updateUserSchema),
 		invalidateAll: 'force'
 	});
 
-	imageUrl = $derived(user?.picture ?? 'https://placehold.co/100x100');
+	let imageUrl = $state<string>(
+		initialImageUrl ?? $page.data.user?.picture ?? 'https://placehold.co/100x100'
+	);
 
 	const setImageUrl = (url: string) => {
 		imageUrl = url;

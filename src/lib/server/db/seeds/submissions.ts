@@ -31,6 +31,7 @@ import { db } from '../../db';
 import * as schema from '../../db/schema';
 import data from './data/submissions.json';
 import type { MediaType } from '$lib/types/mediaTypes';
+import type { SubmissionStatus } from '$lib/types/submissionStatus';
 
 async function getUserIdFromEmail(db: db, email: string) {
 	const user = await db.query.users.findFirst({
@@ -123,6 +124,7 @@ export const seed = async (db: db) => {
 					.insert(schema.submissions)
 					.values({
 						...submission,
+						status: submission.status as SubmissionStatus,
 						eventId: eventId,
 						categoryId: categoryId,
 						userId: userId,

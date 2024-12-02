@@ -45,13 +45,13 @@
 	const user = $derived($page.data.user);
 </script>
 
-{#snippet menuItem(label: string, href: string, icon: typeof IconType)}
+{#snippet menuItem(label: string, href: string, Icon: typeof IconType)}
 	<DropdownMenu.Item class="z-50 min-w-48 max-w-full p-2xs">
 		<a
 			{href}
 			class="flex select-none items-center rounded-xs py-xs pl-xs pr-sm text-sm font-medium text-muted-foreground !ring-0 !ring-transparent hover:bg-muted-background hover:text-white"
 		>
-			<svelte:component this={icon} class="text-foreground-alt mr-2 size-5" />
+			<Icon class="text-foreground-alt mr-2 size-5" />
 			<span>{label}</span>
 		</a>
 	</DropdownMenu.Item>
