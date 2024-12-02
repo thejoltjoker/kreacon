@@ -46,7 +46,8 @@
 </script>
 
 <div class="combobox relative">
-	<Combobox.Root bind:value bind:open {...mergedRootProps}>
+	<!-- eslint-disable @typescript-eslint/no-explicit-any -->
+	<Combobox.Root bind:value={value as any} bind:open {...mergedRootProps as Combobox.RootProps}>
 		<Combobox.Input {...mergedInputProps} class="input" data-active={active} />
 		<Combobox.Trigger aria-label="Select an item" class="combobox-trigger">
 			<ChevronsUpDownIcon />
@@ -55,7 +56,7 @@
 			<Combobox.Content {...contentProps} class={contentClassName} sideOffset={10}>
 				{#each filteredItems as item, i (i + item.value)}
 					<Combobox.Item value={item.value} label={item.label} class="combobox-item group">
-						{#snippet children({ selected })}
+						{#snippet children()}
 							{item.label}
 							<span
 								class="hidden items-center justify-center text-primary group-data-[selected]:flex"

@@ -77,7 +77,6 @@ export const load = (async ({ locals, url }) => {
 				.map((event) => [event.id, event])
 		).values()
 	).sort((a, b) => (a.name > b.name ? 1 : -1));
-	console.log('Events:', events);
 	return {
 		submissions: result.submissions,
 		totalCount: result.totalCount.count,

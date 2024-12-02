@@ -1,10 +1,10 @@
 <script lang="ts">
+	// TODO Disallow sorting to be unselected
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import Combobox from '$lib/components/Combobox.svelte';
 	import Select from '$lib/components/Select.svelte';
 	import type { Category } from '$lib/server/db/schema/category';
-	import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-svelte';
 	import { type PageData } from '../$types';
 
 	const sortByItems: {
@@ -52,7 +52,7 @@
 
 <div class="flex w-full flex-wrap gap-sm md:flex-nowrap">
 	<div
-		class="debug order-2 flex-1 shrink grow basis-1 md:order-1 md:min-w-[300px] md:max-w-[300px] md:basis-[300px]"
+		class="order-2 flex-1 shrink grow basis-1 md:order-1 md:min-w-[300px] md:max-w-[300px] md:basis-[300px]"
 	>
 		<Combobox
 			items={eventsItems}
@@ -68,7 +68,7 @@
 	</div>
 
 	<div
-		class="debug relative order-1 flex w-full shrink grow basis-full overflow-hidden md:order-2 md:basis-1/2"
+		class="relative order-1 flex w-full shrink grow basis-full overflow-hidden md:order-2 md:basis-1/2"
 	>
 		<ul class="relative order-1 flex gap-sm overflow-x-scroll md:order-2">
 			<li
@@ -91,7 +91,7 @@
 		</ul>
 	</div>
 	<div
-		class="debug order-3 shrink grow basis-1 md:order-3 md:w-[200px] md:min-w-[200px] md:max-w-[200px]"
+		class="order-3 shrink grow basis-1 md:order-3 md:w-[200px] md:min-w-[200px] md:max-w-[200px]"
 	>
 		<Select items={sortByItems} value={sortBy} onValueChange={handleSortByChange} />
 	</div>

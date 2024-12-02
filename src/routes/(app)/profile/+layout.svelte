@@ -4,7 +4,7 @@
 	import Sidebar from './_components/Sidebar.svelte';
 	import ProfileHeader from './_components/ProfileHeader.svelte';
 
-	let { data, children }: { data: LayoutData; children: Snippet } = $props();
+	let { children }: { data: LayoutData; children: Snippet } = $props();
 </script>
 
 <div class="flex w-full max-w-screen-md flex-col gap-sm">

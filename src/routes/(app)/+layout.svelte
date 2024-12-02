@@ -9,7 +9,7 @@
 		children: Snippet;
 	}
 
-	let { data, children }: Props = $props();
+	let { children }: Props = $props();
 </script>
 
 <svelte:head>

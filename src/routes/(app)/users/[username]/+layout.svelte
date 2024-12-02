@@ -60,7 +60,7 @@
 					<Tab value="reactions" label="Reactions" />
 				</div>
 				<div>
-					<Select items={sortBy} label="Sort by" />
+					<Select items={sortBy} placeholder="Sort by" />
 				</div>
 			</Tabs.List>
 		</nav>

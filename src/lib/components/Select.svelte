@@ -15,7 +15,7 @@
 
 <Select.Root type="single" bind:value {...restProps}>
 	<Select.Trigger class="select-trigger">
-		<span>{selectedLabel}</span>
+		<span>{selectedLabel ?? placeholder}</span>
 		<ChevronsUpDownIcon class="size-5" />
 	</Select.Trigger>
 	<Select.Portal>

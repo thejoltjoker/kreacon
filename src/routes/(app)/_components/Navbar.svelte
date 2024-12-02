@@ -5,7 +5,7 @@
 	import Link from '$lib/components/Link.svelte';
 	import { toSnakeCase } from 'drizzle-orm/casing';
 	import { AlignJustifyIcon, PlusIcon, XIcon } from 'lucide-svelte';
-	import { _, locale } from 'svelte-i18n';
+	import { _ } from 'svelte-i18n';
 	import { fly } from 'svelte/transition';
 	const user = $derived($page.data.user);
 	let isMenuOpen = $state(false);
@@ -14,9 +14,6 @@
 		{ label: 'Submissions', href: '/submissions' },
 		{ label: 'Events', href: '/' }
 	];
-	$effect(() => {
-		console.log($locale);
-	});
 </script>
 
 <nav>
