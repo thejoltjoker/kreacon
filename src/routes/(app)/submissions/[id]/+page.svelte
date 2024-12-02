@@ -31,8 +31,8 @@
 	<!-- Header -->
 	<div class="flex flex-wrap items-center justify-between gap-xs">
 		<h1 class="text-2xl font-bold">{submission?.title}</h1>
-		<a href={`/submissions?category=${submission?.category.name}`}>
-			<h2 class="text-xl text-muted-foreground hover:text-violet-500">
+		<a href={`/submissions?category=${submission?.category.id}`}>
+			<h2 class="text-xl text-secondary hover:text-tertiary">
 				{submission?.category.name}
 			</h2>
 		</a>

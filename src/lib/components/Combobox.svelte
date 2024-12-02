@@ -2,7 +2,7 @@
 	import { cn } from '$lib/utils';
 	import { Combobox, type WithoutChildrenOrChild, mergeProps } from 'bits-ui';
 	import { ChevronsUpDownIcon, DotIcon } from 'lucide-svelte';
-
+	// TODO Clear combobox button
 	type Item = { value: string; label: string };
 
 	type Props = Combobox.RootProps & {
@@ -27,9 +27,9 @@
 		return items.filter((item) => item.label.toLowerCase().includes(searchValue.toLowerCase()));
 	});
 
-	function handleInput(e: Event & { currentTarget: HTMLInputElement }) {
+	const handleInput = (e: Event & { currentTarget: HTMLInputElement }) => {
 		searchValue = e.currentTarget.value;
-	}
+	};
 
 	function handleOpenChange(newOpen: boolean) {
 		if (!newOpen) searchValue = '';
@@ -48,17 +48,13 @@
 <div class="combobox relative">
 	<Combobox.Root bind:value bind:open {...mergedRootProps}>
 		<Combobox.Input {...mergedInputProps} class="input" data-active={active} />
-		<Combobox.Trigger aria-label="Select an item" class="trigger">
+		<Combobox.Trigger aria-label="Select an item" class="combobox-trigger">
 			<ChevronsUpDownIcon />
 		</Combobox.Trigger>
 		<Combobox.Portal>
 			<Combobox.Content {...contentProps} class={contentClassName} sideOffset={10}>
 				{#each filteredItems as item, i (i + item.value)}
-					<Combobox.Item
-						value={item.value}
-						label={item.label}
-						class="group flex h-form cursor-pointer items-center justify-between rounded-form pl-sm hover:!bg-muted-foreground data-[disabled]:!cursor-default data-[disabled]:!bg-transparent data-[selected]:font-bold data-[disabled]:text-muted-foreground"
-					>
+					<Combobox.Item value={item.value} label={item.label} class="combobox-item group">
 						{#snippet children({ selected })}
 							{item.label}
 							<span

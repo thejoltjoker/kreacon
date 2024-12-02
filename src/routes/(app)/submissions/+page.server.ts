@@ -2,7 +2,7 @@ import { db } from '$lib/server/db';
 import { count } from 'drizzle-orm/sql/functions';
 import type { PageServerLoad } from './$types';
 import submissions from '$lib/server/db/schema/submission';
-import { and, eq, or } from 'drizzle-orm';
+import { and, eq, or, sql } from 'drizzle-orm';
 
 // TODO Handling invalid page numbers
 // TODO Combining pagination with filtering/sorting
@@ -36,6 +36,13 @@ export const load = (async ({ locals, url }) => {
 						return asc(items.createdAt);
 					case 'date_desc':
 						return desc(items.createdAt);
+					// TODO Sort by reactions count
+					// case 'reactions_asc':
+					// 	return asc(count(items.reactions));
+					// case 'reactions_desc':
+					// 	return desc(count(items.reactions));
+					case 'random':
+						return sql`random()`;
 					default:
 						return asc(items.createdAt);
 				}
@@ -48,9 +55,13 @@ export const load = (async ({ locals, url }) => {
 			.select({ count: count() })
 			.from(submissions)
 			.where(
-				locals.user
-					? or(eq(submissions.userId, locals.user.id), eq(submissions.status, 'published'))
-					: eq(submissions.status, 'published')
+				and(
+					locals.user
+						? or(eq(submissions.userId, locals.user.id), eq(submissions.status, 'published'))
+						: eq(submissions.status, 'published'),
+					event ? eq(submissions.eventId, Number(event)) : undefined,
+					category ? eq(submissions.categoryId, Number(category)) : undefined
+				)
 			);
 
 		return { submissions: result, totalCount };

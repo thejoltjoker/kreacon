@@ -4,20 +4,34 @@
 	import Combobox from '$lib/components/Combobox.svelte';
 	import Select from '$lib/components/Select.svelte';
 	import type { Category } from '$lib/server/db/schema/category';
+	import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-svelte';
 	import { type PageData } from '../$types';
 
-	const options: { label: string; value: string }[] = [
-		{ label: 'Date', value: 'date' },
-		{ label: 'Random', value: 'random' },
-		{ label: 'Reactions', value: 'reactions' }
+	const sortByItems: {
+		value: string;
+		label: string;
+		disabled?: boolean;
+	}[] = [
+		{ label: 'Date (asc)', value: 'date_asc' },
+		{ label: 'Date (desc)', value: 'date_desc' },
+		{ label: 'Random', value: 'random' }
+		// TODO Sort by reactions count
+		// { label: 'Reactions', value: 'reactions' }
 	];
 
 	let { categories, events }: { categories: Category[]; events: PageData['events'] } = $props();
 
+	let event = $state<string | undefined>($page.url.searchParams.get('event') ?? undefined);
 	let eventsItems = $derived(events.map((e) => ({ label: e.name, value: e.id.toString() })));
-	const handleCategoryChange = (categoryId: number) => {
+	let sortBy = $state<string>($page.url.searchParams.get('sortBy') ?? 'date_asc');
+
+	const handleCategoryChange = (categoryId: number | null) => {
 		const params = new URLSearchParams($page.url.searchParams);
-		params.set('category', categoryId.toString());
+		if (categoryId) {
+			params.set('category', categoryId.toString());
+		} else {
+			params.delete('category');
+		}
 		goto(`?${params.toString()}`, { keepFocus: true });
 	};
 
@@ -28,42 +42,66 @@
 		params.set('event', event);
 		goto(`?${params.toString()}`);
 	};
+
+	const handleSortByChange = (sortBy: string) => {
+		const params = new URLSearchParams($page.url.searchParams);
+		params.set('sortBy', sortBy);
+		goto(`?${params.toString()}`);
+	};
 </script>
 
-<div class=" flex w-full flex-wrap gap-sm md:flex-nowrap">
-	<div class="order-2 w-1/2 grow basis-1/3 md:order-1 md:max-w-[300px]">
+<div class="flex w-full flex-wrap gap-sm md:flex-nowrap">
+	<div
+		class="debug order-2 flex-1 shrink grow basis-1 md:order-1 md:min-w-[300px] md:max-w-[300px] md:basis-[300px]"
+	>
 		<Combobox
 			items={eventsItems}
 			type="single"
-			inputProps={{ placeholder: 'Filter by event', 'aria-label': 'Search a fruit' }}
+			inputProps={{
+				defaultValue: events?.find((e) => e.id === Number(event))?.name ?? '',
+				placeholder: 'Filter by event',
+				'aria-label': 'Search a fruit'
+			}}
 			onValueChange={handleEventChange}
+			bind:value={event}
 		/>
-		<!-- <Select label="Event" items={[]} /> -->
 	</div>
 
-	<ul class=" order-1 flex w-full max-w-full grow gap-sm overflow-x-scroll md:order-2">
-		{#each categories as category}
+	<div
+		class="debug relative order-1 flex w-full shrink grow basis-full overflow-hidden md:order-2 md:basis-1/2"
+	>
+		<ul class="relative order-1 flex gap-sm overflow-x-scroll md:order-2">
 			<li
-				class:pill={category.name === $page.url.searchParams.get('category')}
 				class="w-fit text-nowrap hover:bg-muted-background"
+				class:pill={$page.url.searchParams.get('category') == null}
 			>
-				<button onclick={() => handleCategoryChange(category.id)}>
-					{category.name}
-				</button>
+				<button onclick={() => handleCategoryChange(null)}> All </button>
 			</li>
-		{/each}
-	</ul>
-
-	<div class=" order-3 w-1/2 grow basis-1/3 md:order-3 md:max-w-[200px]">
-		<Select label="Sort by" items={options} />
+			{#each categories as category}
+				<li>
+					<button
+						onclick={() => handleCategoryChange(category.id)}
+						class="w-fit text-nowrap hover:bg-muted-background"
+						class:pill={category.id === Number($page.url.searchParams.get('category'))}
+					>
+						{category.name}
+					</button>
+				</li>
+			{/each}
+		</ul>
+	</div>
+	<div
+		class="debug order-3 shrink grow basis-1 md:order-3 md:w-[200px] md:min-w-[200px] md:max-w-[200px]"
+	>
+		<Select items={sortByItems} value={sortBy} onValueChange={handleSortByChange} />
 	</div>
 </div>
 
 <style lang="postcss">
-	li {
-		@apply flex h-input-md items-center justify-center rounded-full px-md transition;
+	li button {
+		@apply flex h-form items-center justify-center rounded-full px-md transition;
 	}
 	.pill {
-		@apply flex h-input-md items-center justify-center rounded-full bg-white px-md text-black;
+		@apply flex h-form items-center justify-center rounded-full bg-white px-md text-black;
 	}
 </style>

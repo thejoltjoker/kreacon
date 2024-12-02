@@ -86,8 +86,24 @@
 		& .input {
 			@apply flex h-form w-full items-center justify-between rounded-form border border-muted-foreground bg-black text-white data-[active]:border-white;
 		}
-		& .trigger {
-			@apply absolute right-0 top-1/2 z-50 flex size-form -translate-y-1/2 items-center justify-center;
-		}
+	}
+
+	.combobox-trigger {
+		@apply absolute right-0 top-1/2 z-50 flex size-form -translate-y-1/2 items-center justify-center;
+	}
+
+	.combobox-item {
+		@apply flex h-form cursor-pointer items-center justify-between rounded-form pl-sm hover:!bg-muted-foreground data-[disabled]:!cursor-default data-[disabled]:!bg-transparent data-[highlighted]:bg-muted-foreground data-[selected]:font-bold data-[disabled]:text-muted-foreground data-[selected]:text-white;
+	}
+
+	.select-trigger {
+		@apply flex h-form w-full items-center justify-between rounded-form border border-muted-foreground px-sm text-left text-white data-[state=open]:border-violet-500;
+	}
+
+	.select-content {
+		@apply mt-sm w-[var(--bits-select-anchor-width)] rounded-form border border-muted-background bg-muted-background p-xs;
+	}
+	.select-item {
+		@apply flex h-form cursor-pointer items-center justify-between rounded-form pl-sm hover:!bg-muted-foreground data-[disabled]:!cursor-default data-[disabled]:!bg-transparent data-[selected]:font-bold data-[disabled]:text-muted-foreground;
 	}
 }

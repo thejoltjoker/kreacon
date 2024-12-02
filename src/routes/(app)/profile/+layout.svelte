@@ -3,11 +3,8 @@
 	import type { LayoutData } from './$types';
 	import Sidebar from './_components/Sidebar.svelte';
 	import ProfileHeader from './_components/ProfileHeader.svelte';
-	import { user } from '$lib/stores/user';
 
 	let { data, children }: { data: LayoutData; children: Snippet } = $props();
-
-	user.set(data.user);
 </script>
 
 <div class="flex w-full max-w-screen-md flex-col gap-sm">
