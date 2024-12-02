@@ -81,4 +81,13 @@
 	.card {
 		@apply rounded-lg bg-muted-background p-lg;
 	}
+
+	.combobox {
+		& .input {
+			@apply flex h-form w-full items-center justify-between rounded-form border border-muted-foreground bg-black text-white data-[active]:border-white;
+		}
+		& .trigger {
+			@apply absolute right-0 top-1/2 z-50 flex size-form -translate-y-1/2 items-center justify-center;
+		}
+	}
 }

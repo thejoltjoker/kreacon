@@ -2,13 +2,15 @@ import { db } from '$lib/server/db';
 import { count } from 'drizzle-orm/sql/functions';
 import type { PageServerLoad } from './$types';
 import submissions from '$lib/server/db/schema/submission';
-import { eq, or } from 'drizzle-orm';
+import { and, eq, or } from 'drizzle-orm';
 
 // TODO Handling invalid page numbers
 // TODO Combining pagination with filtering/sorting
 
 export const load = (async ({ locals, url }) => {
 	const page = Number(url.searchParams.get('page') ?? '1');
+	const event = url.searchParams.get('event');
+	const category = url.searchParams.get('category');
 	const sortBy = url.searchParams.get('sortBy') ?? 'date_asc';
 	const pageSize = 30;
 
@@ -21,9 +23,13 @@ export const load = (async ({ locals, url }) => {
 				category: true
 			},
 			where: (submissions, { or, eq }) =>
-				locals.user
-					? or(eq(submissions.userId, locals.user.id), eq(submissions.status, 'published'))
-					: eq(submissions.status, 'published'),
+				and(
+					locals.user
+						? or(eq(submissions.userId, locals.user.id), eq(submissions.status, 'published'))
+						: eq(submissions.status, 'published'),
+					event ? eq(submissions.eventId, Number(event)) : undefined,
+					category ? eq(submissions.categoryId, Number(category)) : undefined
+				),
 			orderBy: (items, { asc, desc }) => {
 				switch (sortBy) {
 					case 'date_asc':
@@ -53,11 +59,19 @@ export const load = (async ({ locals, url }) => {
 	const categories = await db.query.categories.findMany({
 		with: { categoriesToEvents: { with: { event: { columns: { name: true, id: true } } } } }
 	});
-
+	const events = Array.from(
+		new Map(
+			categories
+				.flatMap((c) => c.categoriesToEvents.map((ctoe) => ctoe.event))
+				.map((event) => [event.id, event])
+		).values()
+	).sort((a, b) => (a.name > b.name ? 1 : -1));
+	console.log('Events:', events);
 	return {
 		submissions: result.submissions,
 		totalCount: result.totalCount.count,
 		categories,
-		user: locals.user
+		user: locals.user,
+		events
 	};
 }) satisfies PageServerLoad;
