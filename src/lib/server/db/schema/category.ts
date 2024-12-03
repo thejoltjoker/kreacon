@@ -7,6 +7,7 @@ import { submissions } from './submission';
 export const categories = pgTable('category', {
 	id: serial().primaryKey(),
 	name: text().notNull(),
+	slug: text().notNull().unique(),
 	description: text().notNull(),
 	mediaType: mediaTypeEnum('media_type').notNull(),
 	...timestamps
