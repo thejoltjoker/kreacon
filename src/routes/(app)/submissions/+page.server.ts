@@ -11,7 +11,7 @@ export const load = (async ({ locals, url }) => {
 	const page = Number(url.searchParams.get('page') ?? '1');
 	const event = url.searchParams.get('event');
 	const category = url.searchParams.get('category');
-	const sortBy = url.searchParams.get('sortBy') ?? 'date_asc';
+	const sortBy = url.searchParams.get('sortBy') ?? 'date_desc';
 	const pageSize = 30;
 
 	const result = await db.transaction(async (tx) => {

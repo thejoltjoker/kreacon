@@ -3,12 +3,13 @@
 	import AccountMenu from '$lib/components/AccountMenu.svelte';
 	import Button from '$lib/components/Button.svelte';
 	import Link from '$lib/components/Link.svelte';
+	import { t } from '$lib/i18n';
 	import { AlignJustifyIcon, PlusIcon, XIcon } from 'lucide-svelte';
 	import { _ } from 'svelte-i18n';
 	import { fly } from 'svelte/transition';
 	const user = $derived($page.data.user);
 	let isMenuOpen = $state(false);
-	let { title }: { title: string } = $props();
+	let { title }: { title: { text: string; href: string } } = $props();
 
 	const menuItems = [
 		{ label: 'Submissions', href: '/submissions' },
@@ -18,7 +19,9 @@
 
 <nav>
 	<!-- <BackButton /> -->
-	<h1 class="hidden md:block">{title}</h1>
+	<a class="hidden md:block" href={title.href ?? '/'}>
+		<h1>{$t(title.text ?? 'Kreacon')}</h1>
+	</a>
 	<!-- TODO Breadcrumbs -->
 	<div class="md:hidden">
 		<Button
@@ -43,7 +46,7 @@
 					</Button>
 				</div>
 				<div class="md:hidden">
-					<Button size="icon" variant="outline" href="/submissions/create">
+					<Button size="icon" variant="default" href="/submissions/create">
 						<PlusIcon class="h-4 w-4" />
 					</Button>
 				</div>
@@ -84,7 +87,7 @@
 
 <style lang="postcss">
 	nav {
-		@apply flex items-center gap-sm px-sm py-sm md:px-xl;
+		@apply flex items-center gap-sm border-b border-b-divider px-sm py-sm md:px-xl;
 	}
 	ul {
 		@apply inline-flex items-center;

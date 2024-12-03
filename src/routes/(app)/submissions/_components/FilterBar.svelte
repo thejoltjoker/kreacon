@@ -16,8 +16,8 @@
 		label: string;
 		disabled?: boolean;
 	}[] = [
-		{ label: 'Date (asc)', value: 'date_asc' },
-		{ label: 'Date (desc)', value: 'date_desc' },
+		{ label: 'Newest', value: 'date_desc' },
+		{ label: 'Oldest', value: 'date_asc' },
 		{ label: 'Random', value: 'random' }
 		// TODO Sort by reactions count
 		// { label: 'Reactions', value: 'reactions' }
@@ -69,8 +69,8 @@
 	});
 </script>
 
-<div class="flex w-full flex-wrap gap-sm pt-sm md:gap-xl lg:flex-nowrap">
-	<div class="relative shrink-0 grow basis-[560px] overflow-hidden lg:shrink">
+<div class="flex w-full flex-wrap gap-sm pt-xl md:gap-xl lg:flex-nowrap">
+	<div class="relative shrink grow basis-[640px] overflow-hidden">
 		<div
 			class:hidden={!canScrollLeft}
 			class="justify-left absolute left-0 top-1/2 z-10 flex h-form w-[96px] -translate-y-1/2 items-center bg-gradient-to-r from-bg via-bg"

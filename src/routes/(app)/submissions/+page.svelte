@@ -37,19 +37,19 @@
 <div class="grid w-full grid-cols-submissions gap-sm px-sm md:gap-xl md:px-xl">
 	{#each submissions as submission}
 		<div class="wrapper group grid overflow-hidden rounded-md">
-			<div class="h-full w-full overflow-hidden rounded-md">
+			<div class="aspect-square h-full w-full overflow-hidden rounded-md">
 				<a href={`/submissions/${submission.id}`}>
 					{#if submission?.media?.type === 'image'}
 						<img
 							src={`${submission?.media?.url}`}
 							alt={submission?.media?.alt}
-							class="w-full object-cover object-center"
+							class="h-full w-full object-cover object-center"
 						/>
 					{:else if submission?.media?.type === 'audio'}
 						<img
 							src={`/images/music-thumbnail.webp`}
 							alt="Audio"
-							class="w-full object-cover object-center"
+							class="h-full w-full object-cover object-center"
 						/>
 					{/if}
 				</a>

@@ -27,7 +27,7 @@
 	);
 </script>
 
-<main class="flex w-full max-w-screen-lg flex-col gap-sm px-sm md:gap-xl md:px-xl">
+<main class="flex w-full max-w-screen-lg flex-col gap-sm px-sm pt-sm md:gap-xl md:px-xl md:pt-xl">
 	<!-- Header -->
 	<div class="flex flex-wrap items-center justify-between gap-xs">
 		<h1 class="text-2xl font-bold">{submission?.title}</h1>

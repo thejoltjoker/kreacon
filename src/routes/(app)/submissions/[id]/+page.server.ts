@@ -48,7 +48,8 @@ export const load = (async ({ params, locals }) => {
 
 	const isVoted = Boolean(result?.votes && result?.votes.length > 0);
 
-	return { submission: result, user: locals.user, isVoted };
+	const title = { text: 'Submissions', href: `/submissions` };
+	return { submission: result, user: locals.user, isVoted, title };
 }) satisfies PageServerLoad;
 
 export const actions = {

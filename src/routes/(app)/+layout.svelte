@@ -12,7 +12,7 @@
 	}
 
 	let { children }: Props = $props();
-	let title = $derived($page.data.title ?? 'Kreacon');
+	let title = $derived($page.data.title.text ?? 'Kreacon');
 </script>
 
 <svelte:head>
@@ -20,7 +20,7 @@
 </svelte:head>
 
 <div class="flex min-h-screen flex-col">
-	<AppNavbar title={$t(title)} />
+	<AppNavbar title={$page.data.title} />
 
 	<div class="flex min-h-full grow flex-col items-center gap-xl">
 		{@render children()}

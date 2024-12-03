@@ -10,7 +10,7 @@
 
 	let { items }: Props = $props();
 
-	let value = $state('date_asc');
+	let value = $state('date_desc');
 	let placeholder = 'Sort by';
 
 	const selectedLabel = $derived(items.find((item) => item.value === value)?.label);
