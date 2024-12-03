@@ -8,7 +8,6 @@
 	import EventCombobox from './EventCombobox.svelte';
 	import SortBySelect from './SortBySelect.svelte';
 	import { onMount } from 'svelte';
-	import { check } from 'drizzle-orm/mysql-core';
 	import Button from '$lib/components/Button.svelte';
 
 	const sortByItems: {
@@ -55,11 +54,13 @@
 	};
 
 	const scrollLeft = () => {
+		if (!categoriesListRef) return;
 		categoriesListRef.scrollLeft -= scrollAmount;
 		checkScroll();
 	};
 
 	const scrollRight = () => {
+		if (!categoriesListRef) return;
 		categoriesListRef.scrollLeft += scrollAmount;
 		checkScroll();
 	};
@@ -89,7 +90,7 @@
 		</div>
 
 		<ul
-			class="scrollbar-hide relative order-1 flex gap-sm overflow-auto scroll-smooth"
+			class="scrollbar-hide relative order-1 flex gap-sm overflow-auto scroll-smooth font-bold"
 			bind:this={categoriesListRef}
 			onscroll={checkScroll}
 		>

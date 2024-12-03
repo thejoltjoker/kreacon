@@ -84,7 +84,7 @@
 
 	.combobox {
 		& .input {
-			@apply flex h-form w-full items-center justify-between rounded-form border border-muted-foreground bg-black text-white data-[active]:border-white;
+			@apply flex h-form w-full items-center justify-between rounded-form border border-muted-foreground bg-bg text-white data-[active]:border-white;
 		}
 	}
 

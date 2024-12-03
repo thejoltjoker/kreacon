@@ -64,7 +64,7 @@
 				{/if}
 				<a
 					href={`/users/${submission.user?.username}`}
-					class="pointer-events-auto inline-flex h-form w-fit -translate-y-sm items-center gap-sm rounded-full p-xs pr-md opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:bg-black/75 group-hover:opacity-100 group-hover:backdrop-blur"
+					class="pointer-events-auto inline-flex h-form w-fit translate-y-0 items-center gap-sm rounded-full p-xs pr-md transition-all duration-300 group-hover:bg-black/75 group-hover:backdrop-blur md:-translate-y-sm md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100"
 				>
 					<Avatar
 						src={submission.user?.picture ?? ''}
@@ -74,7 +74,7 @@
 					<p>{submission.user?.username}</p>
 				</a>
 				<div
-					class="translate-y-sm rounded-md p-sm opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:bg-black/75 group-hover:opacity-100 group-hover:backdrop-blur"
+					class="rounded-md bg-black/75 p-sm backdrop-blur transition-all duration-300 group-hover:backdrop-blur md:translate-y-sm md:bg-none md:opacity-0 md:backdrop-blur-none md:group-hover:translate-y-0 md:group-hover:bg-black/75 md:group-hover:opacity-100"
 				>
 					<h2 class="text-lg font-bold">{submission.title}</h2>
 					<p class="text-muted-foreground">{submission.category?.name}</p>
