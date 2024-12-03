@@ -31,6 +31,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Show only published submissions to everyone
   [#31](https://github.com/thejoltjoker/kreacon/pull/31)
+- Update layout of submissions page
+  [#35](https://github.com/thejoltjoker/kreacon/pull/35)
 
 ### Deprecated
 

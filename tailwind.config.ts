@@ -207,7 +207,7 @@ export default {
 					foreground: { DEFAULT: colors.shade[400], dark: colors.shade[400] },
 					background: { DEFAULT: colors.shade[700], dark: colors.shade[700] }
 				},
-				divider: { DEFAULT: colors.shade[800] },
+				divider: { DEFAULT: colors.shade[700] },
 				success: { DEFAULT: colors.mint[500] },
 				destructive: { DEFAULT: colors.pomodoro[500] },
 				error: { DEFAULT: colors.pomodoro[500] },

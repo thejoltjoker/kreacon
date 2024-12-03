@@ -2,18 +2,21 @@
 	// TODO Disallow sorting to be unselected
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-	import Combobox from '$lib/components/Combobox.svelte';
-	import Select from '$lib/components/Select.svelte';
 	import type { Category } from '$lib/server/db/schema/category';
+	import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-svelte';
 	import { type PageData } from '../$types';
+	import EventCombobox from './EventCombobox.svelte';
+	import SortBySelect from './SortBySelect.svelte';
+	import { onMount } from 'svelte';
+	import Button from '$lib/components/Button.svelte';
 
 	const sortByItems: {
 		value: string;
 		label: string;
 		disabled?: boolean;
 	}[] = [
-		{ label: 'Date (asc)', value: 'date_asc' },
-		{ label: 'Date (desc)', value: 'date_desc' },
+		{ label: 'Newest', value: 'date_desc' },
+		{ label: 'Oldest', value: 'date_asc' },
 		{ label: 'Random', value: 'random' }
 		// TODO Sort by reactions count
 		// { label: 'Reactions', value: 'reactions' }
@@ -21,7 +24,7 @@
 
 	let { categories, events }: { categories: Category[]; events: PageData['events'] } = $props();
 
-	let event = $state<string | undefined>($page.url.searchParams.get('event') ?? undefined);
+	let eventId = $state<string | undefined>($page.url.searchParams.get('event') ?? undefined);
 	let eventsItems = $derived(events.map((e) => ({ label: e.name, value: e.id.toString() })));
 	let sortBy = $state<string>($page.url.searchParams.get('sortBy') ?? 'date_asc');
 
@@ -35,44 +38,64 @@
 		goto(`?${params.toString()}`, { keepFocus: true });
 	};
 
-	const handleEventChange = (event: string) => {
-		// TODO Set event search param
-		// TODO Filter categories by event
-		const params = new URLSearchParams($page.url.searchParams);
-		params.set('event', event);
-		goto(`?${params.toString()}`);
+	let categoriesListRef = $state<HTMLElement | null>(null);
+	const scrollAmount = 320;
+
+	// Add these new states
+	let canScrollLeft = $state(false);
+	let canScrollRight = $state(false);
+
+	// Update scroll functions and add check scroll function
+	const checkScroll = () => {
+		if (!categoriesListRef) return;
+		canScrollLeft = categoriesListRef.scrollLeft > 0;
+		canScrollRight =
+			categoriesListRef.scrollLeft < categoriesListRef.scrollWidth - categoriesListRef.clientWidth;
 	};
 
-	const handleSortByChange = (sortBy: string) => {
-		const params = new URLSearchParams($page.url.searchParams);
-		params.set('sortBy', sortBy);
-		goto(`?${params.toString()}`);
+	const scrollLeft = () => {
+		if (!categoriesListRef) return;
+		categoriesListRef.scrollLeft -= scrollAmount;
+		checkScroll();
 	};
+
+	const scrollRight = () => {
+		if (!categoriesListRef) return;
+		categoriesListRef.scrollLeft += scrollAmount;
+		checkScroll();
+	};
+
+	onMount(() => {
+		checkScroll();
+	});
 </script>
 
-<div class="flex w-full flex-wrap gap-sm md:flex-nowrap">
-	<div
-		class="order-2 flex-1 shrink grow basis-1 md:order-1 md:min-w-[300px] md:max-w-[300px] md:basis-[300px]"
-	>
-		<Combobox
-			items={eventsItems}
-			type="single"
-			inputProps={{
-				defaultValue: events?.find((e) => e.id === Number(event))?.name ?? '',
-				placeholder: 'Filter by event',
-				'aria-label': 'Search a fruit'
-			}}
-			onValueChange={handleEventChange}
-			bind:value={event}
-		/>
-	</div>
+<div class="flex w-full flex-wrap gap-sm pt-xl md:gap-xl lg:flex-nowrap">
+	<div class="relative shrink grow basis-[640px] overflow-hidden">
+		<div
+			class:hidden={!canScrollLeft}
+			class="justify-left absolute left-0 top-1/2 z-10 flex h-form w-[96px] -translate-y-1/2 items-center bg-gradient-to-r from-bg via-bg"
+		>
+			<Button size="icon" variant="outline" onclick={scrollLeft} class="bg-bg">
+				<ChevronLeftIcon />
+			</Button>
+		</div>
+		<div
+			class:hidden={!canScrollRight}
+			class="absolute right-0 top-1/2 z-10 flex h-form w-[96px] -translate-y-1/2 items-center justify-end bg-gradient-to-l from-bg via-bg"
+		>
+			<Button size="icon" variant="outline" onclick={scrollRight} class="bg-bg">
+				<ChevronRightIcon />
+			</Button>
+		</div>
 
-	<div
-		class="relative order-1 flex w-full shrink grow basis-full overflow-hidden md:order-2 md:basis-1/2"
-	>
-		<ul class="relative order-1 flex gap-sm overflow-x-scroll md:order-2">
+		<ul
+			class="scrollbar-hide relative order-1 flex gap-sm overflow-auto scroll-smooth font-bold"
+			bind:this={categoriesListRef}
+			onscroll={checkScroll}
+		>
 			<li
-				class="w-fit text-nowrap hover:bg-muted-background"
+				class="w-fit text-nowrap rounded-full px-md hover:bg-muted-background"
 				class:pill={$page.url.searchParams.get('category') == null}
 			>
 				<button onclick={() => handleCategoryChange(null)}> All </button>
@@ -90,10 +113,11 @@
 			{/each}
 		</ul>
 	</div>
-	<div
-		class="order-3 shrink grow basis-1 md:order-3 md:w-[200px] md:min-w-[200px] md:max-w-[200px]"
-	>
-		<Select items={sortByItems} value={sortBy} onValueChange={handleSortByChange} />
+	<div class="shrink-0 grow basis-[320px] lg:grow-0">
+		<EventCombobox items={eventsItems} />
+	</div>
+	<div class="shrink-0 grow basis-[160px] lg:grow-0">
+		<SortBySelect items={sortByItems} />
 	</div>
 </div>
 
@@ -103,5 +127,14 @@
 	}
 	.pill {
 		@apply flex h-form items-center justify-center rounded-full bg-white px-md text-black;
+	}
+
+	/* Add scrollbar hiding utilities */
+	.scrollbar-hide {
+		-ms-overflow-style: none; /* IE and Edge */
+		scrollbar-width: none; /* Firefox */
+	}
+	.scrollbar-hide::-webkit-scrollbar {
+		display: none; /* Chrome, Safari and Opera */
 	}
 </style>
