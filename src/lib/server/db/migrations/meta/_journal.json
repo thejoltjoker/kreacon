@@ -8,6 +8,20 @@
 			"when": 1732738685355,
 			"tag": "0000_colossal_skreet",
 			"breakpoints": true
+		},
+		{
+			"idx": 1,
+			"version": "7",
+			"when": 1733241890054,
+			"tag": "0001_classy_zarda",
+			"breakpoints": true
+		},
+		{
+			"idx": 2,
+			"version": "7",
+			"when": 1733242570182,
+			"tag": "0002_goofy_shiva",
+			"breakpoints": true
 		}
 	]
 }

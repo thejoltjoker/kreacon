@@ -3,6 +3,8 @@ export { default as users, usersRelations } from './user';
 export { default as accounts, accountsRelations } from './account';
 export { default as categories, categoriesRelations } from './category';
 export { default as categoriesToEvents, categoriesToEventsRelations } from './categoriesToEvents';
+export { default as rules, rulesRelations } from './rule';
+export { default as categoriesToRules, categoriesToRulesRelations } from './categoriesToRules';
 export { default as events, eventsRelations } from './event';
 export { default as media, mediaRelations } from './media';
 export { default as reactions, reactionsRelations } from './reaction';

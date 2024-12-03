@@ -1,0 +1,1 @@
+ALTER TABLE "rule" ADD COLUMN "isGeneral" boolean DEFAULT false NOT NULL;

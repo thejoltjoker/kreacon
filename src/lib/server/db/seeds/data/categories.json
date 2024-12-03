@@ -3,48 +3,75 @@
 		"id": 1,
 		"name": "Combined Demo",
 		"mediaType": "video",
-		"description": "A comprehensive demo combining various elements like graphics, music, and animation."
+		"description": "A comprehensive demo combining various elements like graphics, music, and animation.",
+		"rules": [
+			{ "text": "The 'General Rules' apply to all competition categories." },
+			{ "text": "Maximum runtime is 7 minutes." },
+			{
+				"text": "The maximum file size for uncompressed entry files is 64 MB, including readmes, etc. You may use any compression algorithm for parts of your contribution."
+			},
+			{
+				"text": "Raw animations are not allowed. Animations should be submitted to the Wild / Animation competition."
+			},
+			{
+				"text": "Your contribution must be free of third-party rights unless you have a legal license to use the content. Free software or third-party content may be used if the license permits. You may use third-party content not under such a license if you have a signed permit from the copyright holder. This applies to everything in your contribution, including graphic engines, music, graphics, etc. We REQUIRE that you properly credit all third-party content when submitting your contribution."
+			},
+			{ "text": "A maximum of one competition entry per artist(s) is allowed." }
+		]
 	},
 	{
 		"id": 2,
 		"name": "Prerendered Music",
 		"mediaType": "audio",
-		"description": "Music created using prerendered techniques, often with high-quality production values."
+		"description": "Music created using prerendered techniques, often with high-quality production values.",
+		"rules": [
+			{ "text": "The 'General Rules' apply to all competition categories." },
+			{ "text": "Maximum runtime is 7 minutes." }
+		]
 	},
 	{
 		"id": 3,
 		"name": "Tracked Music",
 		"mediaType": "audio",
-		"description": "Music created using tracking software, often with a distinct retro or chiptune sound."
+		"description": "Music created using tracking software, often with a distinct retro or chiptune sound.",
+		"rules": [
+			{ "text": "The 'General Rules' apply to all competition categories." },
+			{ "text": "Maximum runtime is 7 minutes." }
+		]
 	},
 	{
 		"id": 4,
 		"name": "Freestyle Graphics",
 		"mediaType": "image",
-		"description": "Unrestricted graphical creations showcasing artistic freedom and creativity."
+		"description": "Unrestricted graphical creations showcasing artistic freedom and creativity.",
+		"rules": [{ "text": "The 'General Rules' apply to all competition categories." }]
 	},
 	{
 		"id": 5,
 		"name": "Oldschool Graphics",
 		"mediaType": "image",
-		"description": "Graphics created in the style of or using techniques from earlier computing eras."
+		"description": "Graphics created in the style of or using techniques from earlier computing eras.",
+		"rules": [{ "text": "The 'General Rules' apply to all competition categories." }]
 	},
 	{
 		"id": 6,
 		"name": "Freestyle Photo",
 		"mediaType": "image",
-		"description": "Unrestricted photographic entries allowing for creative expression and editing."
+		"description": "Unrestricted photographic entries allowing for creative expression and editing.",
+		"rules": [{ "text": "The 'General Rules' apply to all competition categories." }]
 	},
 	{
 		"id": 7,
 		"name": "Stop Motion",
 		"mediaType": "video",
-		"description": "Animations created using stop motion techniques, bringing static objects to life."
+		"description": "Animations created using stop motion techniques, bringing static objects to life.",
+		"rules": [{ "text": "The 'General Rules' apply to all competition categories." }]
 	},
 	{
 		"id": 8,
 		"name": "Wild / Animation",
 		"mediaType": "video",
-		"description": "A catch-all category for animations and other entries that don't fit elsewhere."
+		"description": "A catch-all category for animations and other entries that don't fit elsewhere.",
+		"rules": [{ "text": "The 'General Rules' apply to all competition categories." }]
 	}
 ]
