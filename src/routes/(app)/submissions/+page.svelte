@@ -8,6 +8,7 @@
 	import type { PageData } from './$types';
 	import FilterBar from './_components/FilterBar.svelte';
 	import StatusIcon from './_components/StatusIcon.svelte';
+	import { onMount } from 'svelte';
 
 	let { data }: { data: PageData } = $props();
 
@@ -31,8 +32,6 @@
 		goto(`?${searchParams.toString()}`);
 	};
 </script>
-
-<h1 class="text-2xl font-bold">{$_('submissions', { default: 'Submissions' })}</h1>
 
 <div class="w-full px-xl py-sm">
 	<FilterBar {events} {categories} />

@@ -6,6 +6,7 @@
 	import Select from '$lib/components/Select.svelte';
 	import type { Category } from '$lib/server/db/schema/category';
 	import { type PageData } from '../$types';
+	import EventCombobox from './EventCombobox.svelte';
 
 	const sortByItems: {
 		value: string;
@@ -21,7 +22,7 @@
 
 	let { categories, events }: { categories: Category[]; events: PageData['events'] } = $props();
 
-	let event = $state<string | undefined>($page.url.searchParams.get('event') ?? undefined);
+	let eventId = $state<string | undefined>($page.url.searchParams.get('event') ?? undefined);
 	let eventsItems = $derived(events.map((e) => ({ label: e.name, value: e.id.toString() })));
 	let sortBy = $state<string>($page.url.searchParams.get('sortBy') ?? 'date_asc');
 
@@ -35,11 +36,12 @@
 		goto(`?${params.toString()}`, { keepFocus: true });
 	};
 
-	const handleEventChange = (event: string) => {
+	const handleEventChange = (event: string | undefined) => {
 		// TODO Set event search param
 		// TODO Filter categories by event
 		const params = new URLSearchParams($page.url.searchParams);
-		params.set('event', event);
+		if (event) params.set('event', event);
+		else params.delete('event');
 		goto(`?${params.toString()}`);
 	};
 
@@ -51,25 +53,7 @@
 </script>
 
 <div class="flex w-full flex-wrap gap-sm md:flex-nowrap">
-	<div
-		class="order-2 flex-1 shrink grow basis-1 md:order-1 md:min-w-[300px] md:max-w-[300px] md:basis-[300px]"
-	>
-		<Combobox
-			items={eventsItems}
-			type="single"
-			inputProps={{
-				defaultValue: events?.find((e) => e.id === Number(event))?.name ?? '',
-				placeholder: 'Filter by event',
-				'aria-label': 'Search a fruit'
-			}}
-			onValueChange={handleEventChange}
-			bind:value={event}
-		/>
-	</div>
-
-	<div
-		class="relative order-1 flex w-full shrink grow basis-full overflow-hidden md:order-2 md:basis-1/2"
-	>
+	<div class="relative shrink grow basis-1/2 overflow-hidden">
 		<ul class="relative order-1 flex gap-sm overflow-x-scroll md:order-2">
 			<li
 				class="w-fit text-nowrap hover:bg-muted-background"
@@ -90,9 +74,18 @@
 			{/each}
 		</ul>
 	</div>
-	<div
-		class="order-3 shrink grow basis-1 md:order-3 md:w-[200px] md:min-w-[200px] md:max-w-[200px]"
-	>
+	<div class="shrink-0 grow basis-[300px]">
+		<EventCombobox
+			resetValue={() => handleEventChange(undefined)}
+			items={eventsItems}
+			inputProps={{
+				defaultValue: events?.find((e) => e.id === Number(eventId))?.name ?? ''
+			}}
+			onValueChange={handleEventChange}
+			bind:value={eventId}
+		/>
+	</div>
+	<div class="shrink-0 grow basis-[160px]">
 		<Select items={sortByItems} value={sortBy} onValueChange={handleSortByChange} />
 	</div>
 </div>

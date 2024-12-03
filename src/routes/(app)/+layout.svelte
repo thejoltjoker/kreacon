@@ -1,7 +1,9 @@
 <script lang="ts">
+	import { page } from '$app/stores';
+	import { t } from '$lib/i18n';
 	import type { Snippet } from 'svelte';
 	import '../../app.css';
-	import Navbar from './_components/Navbar.svelte';
+	import AppNavbar from './_components/AppNavbar.svelte';
 	import Footer from './_components/Footer.svelte';
 
 	interface Props {
@@ -10,14 +12,15 @@
 	}
 
 	let { children }: Props = $props();
+	let title = $derived($page.data.title ?? 'Kreacon');
 </script>
 
 <svelte:head>
-	<title>Kreacon</title>
+	<title>{$t(title)}</title>
 </svelte:head>
 
 <div class="flex min-h-screen flex-col">
-	<Navbar />
+	<AppNavbar title={$t(title)} />
 
 	<div class="flex min-h-full grow flex-col items-center">
 		{@render children()}
