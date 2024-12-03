@@ -20,7 +20,7 @@
 
 	const triggerClassName = cn('pointer-events-auto', triggerProps.class);
 	const tooltipClassName = cn(
-		'z-50 rounded-md bg-muted-background px-3 py-2 text-sm shadow-md',
+		'z-40 rounded-md bg-muted-background px-3 py-2 text-sm shadow-md',
 		restProps.tooltipClassName
 	);
 </script>

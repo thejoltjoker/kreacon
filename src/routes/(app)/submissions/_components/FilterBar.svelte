@@ -7,6 +7,7 @@
 	import type { Category } from '$lib/server/db/schema/category';
 	import { type PageData } from '../$types';
 	import EventCombobox from './EventCombobox.svelte';
+	import SortBySelect from './SortBySelect.svelte';
 
 	const sortByItems: {
 		value: string;
@@ -35,16 +36,10 @@
 		}
 		goto(`?${params.toString()}`, { keepFocus: true });
 	};
-
-	const handleSortByChange = (sortBy: string) => {
-		const params = new URLSearchParams($page.url.searchParams);
-		params.set('sortBy', sortBy);
-		goto(`?${params.toString()}`);
-	};
 </script>
 
 <div class="flex w-full flex-wrap gap-sm md:flex-nowrap">
-	<div class="relative shrink grow basis-1/2 overflow-hidden">
+	<div class="relative grow basis-[500px] overflow-hidden lg:shrink">
 		<ul class="relative order-1 flex gap-sm overflow-x-scroll md:order-2">
 			<li
 				class="w-fit text-nowrap hover:bg-muted-background"
@@ -65,11 +60,11 @@
 			{/each}
 		</ul>
 	</div>
-	<div class="shrink-0 grow basis-[300px]">
+	<div class="shrink-0 grow basis-[320px] md:grow-0">
 		<EventCombobox items={eventsItems} />
 	</div>
-	<div class="shrink-0 grow basis-[160px]">
-		<Select items={sortByItems} value={sortBy} onValueChange={handleSortByChange} />
+	<div class="shrink-0 grow basis-[160px] md:grow-0">
+		<SortBySelect items={sortByItems} />
 	</div>
 </div>
 

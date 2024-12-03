@@ -51,7 +51,7 @@
 		onOpenChange={handleOpenChange}
 		onValueChange={handleValueChange}
 	>
-		<div class="input pl-sm data-[active]:font-bold" data-active={isActive}>
+		<div class="input pl-md data-[active]:font-bold" data-active={isActive}>
 			<p class="font-bold">Event:</p>
 			<Combobox.Input
 				bind:ref={inputRef}

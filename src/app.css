@@ -89,7 +89,7 @@
 	}
 
 	.combobox-trigger {
-		@apply absolute right-0 top-1/2 z-50 flex size-form -translate-y-1/2 items-center justify-center;
+		@apply absolute right-0 top-1/2 z-30 flex size-form -translate-y-1/2 items-center justify-center;
 	}
 
 	.combobox-item {
@@ -97,7 +97,7 @@
 	}
 
 	.select-trigger {
-		@apply flex h-form w-full items-center justify-between rounded-form border border-muted-foreground px-sm text-left text-white data-[state=open]:border-violet-500;
+		@apply flex h-form w-full items-center justify-between rounded-form border border-muted-foreground px-md text-left text-white data-[state=open]:border-violet-500;
 	}
 
 	.select-content {

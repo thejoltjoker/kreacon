@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import AccountMenu from '$lib/components/AccountMenu.svelte';
+	import BackButton from '$lib/components/BackButton.svelte';
 	import Button from '$lib/components/Button.svelte';
 	import Link from '$lib/components/Link.svelte';
 	import { toSnakeCase } from 'drizzle-orm/casing';
@@ -18,7 +19,9 @@
 </script>
 
 <nav>
+	<!-- <BackButton /> -->
 	<h1>{title}</h1>
+	<!-- TODO Breadcrumbs -->
 	<div class="md:hidden">
 		<Button
 			onclick={() => (isMenuOpen = !isMenuOpen)}
@@ -37,7 +40,7 @@
 		{#if user}
 			<li>
 				<div class="hidden md:block">
-					<Button variant="outline" href="/submissions/create">
+					<Button variant="default" href="/submissions/create">
 						{$_('submit', { default: 'Submit' })}
 					</Button>
 				</div>

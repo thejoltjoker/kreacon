@@ -68,7 +68,7 @@
 
 	<DropdownMenu.Content
 		collisionPadding={20}
-		class="bg-background shadow-popover w-full max-w-[20rem] rounded-sm border border-muted-foreground bg-black px-1 py-1.5"
+		class="bg-background shadow-popover z-50 w-full max-w-[20rem] rounded-sm border border-muted-foreground bg-black px-1 py-1.5"
 		sideOffset={8}
 	>
 		{#each menuItems as item}

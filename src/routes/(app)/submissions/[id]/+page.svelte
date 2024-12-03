@@ -59,7 +59,7 @@
 					</Button>
 				</Popover.Trigger>
 				<Popover.Content
-					class="z-50 max-h-[320px] w-fit max-w-[320px] overflow-hidden overflow-y-auto rounded-lg bg-muted-background p-sm"
+					class="z-30 max-h-[320px] w-fit max-w-[320px] overflow-hidden overflow-y-auto rounded-lg bg-muted-background p-sm"
 					sideOffset={5}
 				>
 					{#if user == null}
