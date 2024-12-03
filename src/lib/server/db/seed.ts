@@ -20,13 +20,13 @@ for (const table of [
 	schema.users,
 	schema.events,
 	schema.categories,
-	schema.categoriesToEvents,
+	schema.eventCategories,
 	schema.tickets,
 	schema.submissions,
 	schema.media,
 	schema.reactions,
 	schema.rules,
-	schema.categoriesToRules
+	schema.eventCategoriesToRules
 ]) {
 	await resetTable(db, table);
 }

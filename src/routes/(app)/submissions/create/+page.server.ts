@@ -35,7 +35,7 @@ export const load = (async ({ locals }) => {
 		with: {
 			tickets: {
 				with: {
-					event: { with: { categoriesToEvents: { with: { category: true } } } }
+					event: { with: { eventCategories: { with: { category: true } } } }
 				}
 			},
 			submissions: true
@@ -51,7 +51,7 @@ export const load = (async ({ locals }) => {
 		) || [];
 
 	const events = userTickets.map((ticket) => {
-		const mappedCategories = ticket.event?.categoriesToEvents.map((ce) => ({
+		const mappedCategories = ticket.event?.eventCategories.map((ce) => ({
 			...ce.category,
 			isDisabled: userData?.submissions.some((s) => {
 				const currentEvent = s.eventId === ticket.event?.id;
@@ -106,7 +106,7 @@ export const actions = {
 					where: eq(tickets.eventId, form.data.eventId),
 					with: {
 						event: {
-							with: { categoriesToEvents: { with: { category: true } } }
+							with: { eventCategories: { with: { category: true } } }
 						}
 					}
 				},
@@ -132,7 +132,7 @@ export const actions = {
 			return error(StatusCodes.FORBIDDEN, { message: 'User already submitted to this category' });
 		}
 
-		const category = ticket.event?.categoriesToEvents.find(
+		const category = ticket.event?.eventCategories.find(
 			(ce) => ce.category.id === form.data.categoryId
 		)?.category;
 		if (category == null) {

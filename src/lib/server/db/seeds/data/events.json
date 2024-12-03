@@ -7,14 +7,57 @@
 		"votingOpenAt": "2025-06-16T00:00:00Z",
 		"votingCloseAt": "2025-06-30T23:59:59Z",
 		"categories": [
-			{ "name": "Combined Demo" },
-			{ "name": "Prerendered Music" },
-			{ "name": "Tracked Music" },
-			{ "name": "Freestyle Graphics" },
-			{ "name": "Oldschool Graphics" },
-			{ "name": "Freestyle Photo" },
-			{ "name": "Stop Motion" },
-			{ "name": "Wild / Animation" }
+			{
+				"name": "Combined Demo",
+				"rules": [
+					{ "text": "The 'General Rules' apply to all competition categories." },
+					{ "text": "Maximum runtime is 7 minutes." },
+					{
+						"text": "The maximum file size for uncompressed entry files is 64 MB, including readmes, etc. You may use any compression algorithm for parts of your contribution."
+					},
+					{
+						"text": "Raw animations are not allowed. Animations should be submitted to the Wild / Animation competition."
+					},
+					{
+						"text": "Your contribution must be free of third-party rights unless you have a legal license to use the content. Free software or third-party content may be used if the license permits. You may use third-party content not under such a license if you have a signed permit from the copyright holder. This applies to everything in your contribution, including graphic engines, music, graphics, etc. We REQUIRE that you properly credit all third-party content when submitting your contribution."
+					},
+					{ "text": "A maximum of one competition entry per artist(s) is allowed." }
+				]
+			},
+			{
+				"name": "Prerendered Music",
+				"rules": [
+					{ "text": "The 'General Rules' apply to all competition categories." },
+					{ "text": "Maximum runtime is 7 minutes." }
+				]
+			},
+			{
+				"name": "Tracked Music",
+				"rules": [
+					{ "text": "The 'General Rules' apply to all competition categories." },
+					{ "text": "Maximum runtime is 7 minutes." }
+				]
+			},
+			{
+				"name": "Freestyle Graphics",
+				"rules": [{ "text": "The 'General Rules' apply to all competition categories." }]
+			},
+			{
+				"name": "Oldschool Graphics",
+				"rules": [{ "text": "The 'General Rules' apply to all competition categories." }]
+			},
+			{
+				"name": "Freestyle Photo",
+				"rules": [{ "text": "The 'General Rules' apply to all competition categories." }]
+			},
+			{
+				"name": "Stop Motion",
+				"rules": [{ "text": "The 'General Rules' apply to all competition categories." }]
+			},
+			{
+				"name": "Wild / Animation",
+				"rules": [{ "text": "The 'General Rules' apply to all competition categories." }]
+			}
 		],
 		"tickets": [
 			{ "username": "john_doe" },
@@ -31,14 +74,38 @@
 		"votingOpenAt": "2025-12-16T00:00:00Z",
 		"votingCloseAt": "2025-12-30T23:59:59Z",
 		"categories": [
-			{ "name": "Combined Demo" },
-			{ "name": "Prerendered Music" },
-			{ "name": "Tracked Music" },
-			{ "name": "Freestyle Graphics" },
-			{ "name": "Oldschool Graphics" },
-			{ "name": "Freestyle Photo" },
-			{ "name": "Stop Motion" },
-			{ "name": "Wild / Animation" }
+			{
+				"name": "Combined Demo",
+				"rules": [{ "text": "The 'General Rules' apply to all competition categories." }]
+			},
+			{
+				"name": "Prerendered Music",
+				"rules": [{ "text": "The 'General Rules' apply to all competition categories." }]
+			},
+			{
+				"name": "Tracked Music",
+				"rules": [{ "text": "The 'General Rules' apply to all competition categories." }]
+			},
+			{
+				"name": "Freestyle Graphics",
+				"rules": [{ "text": "The 'General Rules' apply to all competition categories." }]
+			},
+			{
+				"name": "Oldschool Graphics",
+				"rules": [{ "text": "The 'General Rules' apply to all competition categories." }]
+			},
+			{
+				"name": "Freestyle Photo",
+				"rules": [{ "text": "The 'General Rules' apply to all competition categories." }]
+			},
+			{
+				"name": "Stop Motion",
+				"rules": [{ "text": "The 'General Rules' apply to all competition categories." }]
+			},
+			{
+				"name": "Wild / Animation",
+				"rules": [{ "text": "The 'General Rules' apply to all competition categories." }]
+			}
 		],
 		"tickets": [
 			{ "username": "john_doe" },
@@ -55,11 +122,26 @@
 		"votingOpenAt": "2024-11-16T00:00:00Z",
 		"votingCloseAt": "2025-12-30T23:59:59Z",
 		"categories": [
-			{ "name": "Prerendered Music" },
-			{ "name": "Tracked Music" },
-			{ "name": "Freestyle Graphics" },
-			{ "name": "Freestyle Photo" },
-			{ "name": "Wild / Animation" }
+			{
+				"name": "Prerendered Music",
+				"rules": [{ "text": "The 'General Rules' apply to all competition categories." }]
+			},
+			{
+				"name": "Tracked Music",
+				"rules": [{ "text": "The 'General Rules' apply to all competition categories." }]
+			},
+			{
+				"name": "Freestyle Graphics",
+				"rules": [{ "text": "The 'General Rules' apply to all competition categories." }]
+			},
+			{
+				"name": "Freestyle Photo",
+				"rules": [{ "text": "The 'General Rules' apply to all competition categories." }]
+			},
+			{
+				"name": "Wild / Animation",
+				"rules": [{ "text": "The 'General Rules' apply to all competition categories." }]
+			}
 		],
 		"tickets": [
 			{ "username": "john_doe" },
@@ -75,7 +157,16 @@
 		"submissionsCloseAt": "2025-12-15T23:59:59Z",
 		"votingOpenAt": "2024-11-16T00:00:00Z",
 		"votingCloseAt": "2025-12-30T23:59:59Z",
-		"categories": [{ "name": "Combined Demo" }, { "name": "Stop Motion" }],
+		"categories": [
+			{
+				"name": "Combined Demo",
+				"rules": [{ "text": "The 'General Rules' apply to all competition categories." }]
+			},
+			{
+				"name": "Stop Motion",
+				"rules": [{ "text": "The 'General Rules' apply to all competition categories." }]
+			}
+		],
 		"tickets": [
 			{ "username": "john_doe" },
 			{ "username": "jane_doe" },

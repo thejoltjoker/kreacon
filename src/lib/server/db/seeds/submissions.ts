@@ -66,10 +66,10 @@ async function getTicketId(db: db, eventId: number, userId: string) {
 async function getCategoryId(db: db, eventId: number, categoryName: string) {
 	const [category] = await db
 		.select()
-		.from(schema.categoriesToEvents)
-		.innerJoin(schema.categories, eq(schema.categories.id, schema.categoriesToEvents.categoryId))
+		.from(schema.eventCategories)
+		.innerJoin(schema.categories, eq(schema.categories.id, schema.eventCategories.categoryId))
 		.where(
-			and(eq(schema.categoriesToEvents.eventId, eventId), eq(schema.categories.name, categoryName))
+			and(eq(schema.eventCategories.eventId, eventId), eq(schema.categories.name, categoryName))
 		)
 		.limit(1);
 

@@ -3,7 +3,24 @@ import * as schema from '../../db/schema';
 import data from './data/events.json';
 import { eq } from 'drizzle-orm';
 
-async function getCategoryId(db: db, categoryName: string) {
+const getOrCreateRule = async (text: string) => {
+	const rule = await db.query.rules.findFirst({
+		where: eq(schema.rules.text, text)
+	});
+
+	if (rule) {
+		return rule.id;
+	}
+
+	const [insertedRule] = await db
+		.insert(schema.rules)
+		.values({ text })
+		.onConflictDoUpdate({ target: schema.rules.id, set: { text } })
+		.returning();
+	return insertedRule.id;
+};
+
+const getCategoryId = async (db: db, categoryName: string) => {
 	const category = await db.query.categories.findFirst({
 		where: eq(schema.categories.name, categoryName)
 	});
@@ -11,9 +28,9 @@ async function getCategoryId(db: db, categoryName: string) {
 		throw new Error('Unknown category: ' + categoryName);
 	}
 	return category.id;
-}
+};
 
-async function getUserId(db: db, username: string) {
+const getUserId = async (db: db, username: string) => {
 	const user = await db.query.users.findFirst({
 		where: eq(schema.users.username, username)
 	});
@@ -21,7 +38,7 @@ async function getUserId(db: db, username: string) {
 		throw new Error('Unknown user: ' + username);
 	}
 	return user.id;
-}
+};
 
 export const seed = async (db: db) => {
 	await Promise.all(
@@ -40,12 +57,26 @@ export const seed = async (db: db) => {
 			await Promise.all(
 				event.categories?.map(async (category) => {
 					const categoryId = await getCategoryId(db, category.name);
-					await db.insert(schema.categoriesToEvents).values({
-						categoryId,
-						eventId: insertedEvent.id
-					});
+					const [insertedEventCategory] = await db
+						.insert(schema.eventCategories)
+						.values({
+							categoryId,
+							eventId: insertedEvent.id
+						})
+						.returning();
+
+					await Promise.all(
+						category.rules?.map(async (rule) => {
+							const ruleId = await getOrCreateRule(rule.text);
+							await db.insert(schema.eventCategoriesToRules).values({
+								eventCategoryId: insertedEventCategory.id,
+								ruleId
+							});
+						})
+					);
 				})
 			);
+
 			await Promise.all(
 				event.tickets?.map(async (ticket) => {
 					const userId = await getUserId(db, ticket.username);

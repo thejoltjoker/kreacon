@@ -4,7 +4,7 @@ import events from './event';
 import { timestamps } from './shared';
 import users from './user';
 
-export const tickets = pgTable('tickets', {
+export const tickets = pgTable('ticket', {
 	id: varchar({ length: 255 })
 		.primaryKey()
 		.$defaultFn(() => crypto.randomUUID()),

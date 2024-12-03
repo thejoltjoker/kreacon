@@ -13,16 +13,23 @@ CREATE TABLE IF NOT EXISTS "account" (
 CREATE TABLE IF NOT EXISTS "category" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"name" text NOT NULL,
-	"description" varchar(512),
-	"media_type" "media_type",
+	"description" text NOT NULL,
+	"media_type" "media_type" NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
-CREATE TABLE IF NOT EXISTS "categories_to_events" (
+CREATE TABLE IF NOT EXISTS "event_category" (
+	"id" serial PRIMARY KEY NOT NULL,
 	"category_id" integer NOT NULL,
 	"event_id" integer NOT NULL,
-	CONSTRAINT "categories_to_events_event_id_category_id_pk" PRIMARY KEY("event_id","category_id")
+	CONSTRAINT "event_category_event_id_category_id_unique" UNIQUE("event_id","category_id")
+);
+--> statement-breakpoint
+CREATE TABLE IF NOT EXISTS "event_categories_to_rules" (
+	"event_category_id" integer NOT NULL,
+	"rule_id" integer NOT NULL,
+	CONSTRAINT "event_categories_to_rules_rule_id_event_category_id_pk" PRIMARY KEY("rule_id","event_category_id")
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "event" (
@@ -55,6 +62,14 @@ CREATE TABLE IF NOT EXISTS "reaction" (
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL,
 	CONSTRAINT "reaction_user_id_submission_id_pk" PRIMARY KEY("user_id","submission_id")
+);
+--> statement-breakpoint
+CREATE TABLE IF NOT EXISTS "rule" (
+	"id" serial PRIMARY KEY NOT NULL,
+	"text" text NOT NULL,
+	"isGeneral" boolean DEFAULT false NOT NULL,
+	"created_at" timestamp DEFAULT now() NOT NULL,
+	"updated_at" timestamp DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "session" (
@@ -117,13 +132,25 @@ EXCEPTION
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "categories_to_events" ADD CONSTRAINT "categories_to_events_category_id_category_id_fk" FOREIGN KEY ("category_id") REFERENCES "public"."category"("id") ON DELETE no action ON UPDATE no action;
+ ALTER TABLE "event_category" ADD CONSTRAINT "event_category_category_id_category_id_fk" FOREIGN KEY ("category_id") REFERENCES "public"."category"("id") ON DELETE no action ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "categories_to_events" ADD CONSTRAINT "categories_to_events_event_id_event_id_fk" FOREIGN KEY ("event_id") REFERENCES "public"."event"("id") ON DELETE no action ON UPDATE no action;
+ ALTER TABLE "event_category" ADD CONSTRAINT "event_category_event_id_event_id_fk" FOREIGN KEY ("event_id") REFERENCES "public"."event"("id") ON DELETE no action ON UPDATE no action;
+EXCEPTION
+ WHEN duplicate_object THEN null;
+END $$;
+--> statement-breakpoint
+DO $$ BEGIN
+ ALTER TABLE "event_categories_to_rules" ADD CONSTRAINT "event_categories_to_rules_event_category_id_event_category_id_fk" FOREIGN KEY ("event_category_id") REFERENCES "public"."event_category"("id") ON DELETE no action ON UPDATE no action;
+EXCEPTION
+ WHEN duplicate_object THEN null;
+END $$;
+--> statement-breakpoint
+DO $$ BEGIN
+ ALTER TABLE "event_categories_to_rules" ADD CONSTRAINT "event_categories_to_rules_rule_id_rule_id_fk" FOREIGN KEY ("rule_id") REFERENCES "public"."rule"("id") ON DELETE no action ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;

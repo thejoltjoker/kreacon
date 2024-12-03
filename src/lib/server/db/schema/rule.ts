@@ -1,6 +1,6 @@
 import { relations, type InferInsertModel, type InferSelectModel } from 'drizzle-orm';
 import { boolean, pgTable, serial, text } from 'drizzle-orm/pg-core';
-import categoriesToRules from './categoriesToRules';
+import eventCategoriesToRules from './eventCategoriesToRules';
 import { timestamps } from './shared';
 
 export const rules = pgTable('rule', {
@@ -11,7 +11,7 @@ export const rules = pgTable('rule', {
 });
 
 export const rulesRelations = relations(rules, ({ many }) => ({
-	categoriesToRules: many(categoriesToRules)
+	categoriesToRules: many(eventCategoriesToRules)
 }));
 
 export type Rule = InferSelectModel<typeof rules>;
