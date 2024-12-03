@@ -36,15 +36,6 @@
 		goto(`?${params.toString()}`, { keepFocus: true });
 	};
 
-	const handleEventChange = (event: string | undefined) => {
-		// TODO Set event search param
-		// TODO Filter categories by event
-		const params = new URLSearchParams($page.url.searchParams);
-		if (event) params.set('event', event);
-		else params.delete('event');
-		goto(`?${params.toString()}`);
-	};
-
 	const handleSortByChange = (sortBy: string) => {
 		const params = new URLSearchParams($page.url.searchParams);
 		params.set('sortBy', sortBy);
@@ -75,15 +66,7 @@
 		</ul>
 	</div>
 	<div class="shrink-0 grow basis-[300px]">
-		<EventCombobox
-			resetValue={() => handleEventChange(undefined)}
-			items={eventsItems}
-			inputProps={{
-				defaultValue: events?.find((e) => e.id === Number(eventId))?.name ?? ''
-			}}
-			onValueChange={handleEventChange}
-			bind:value={eventId}
-		/>
+		<EventCombobox items={eventsItems} />
 	</div>
 	<div class="shrink-0 grow basis-[160px]">
 		<Select items={sortByItems} value={sortBy} onValueChange={handleSortByChange} />
