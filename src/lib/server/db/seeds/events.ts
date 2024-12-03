@@ -1,7 +1,7 @@
 import { db } from '../../db';
 import * as schema from '../../db/schema';
 import data from './data/events.json';
-import { eq } from 'drizzle-orm';
+import { eq, sql } from 'drizzle-orm';
 
 const getOrCreateRule = async (text: string) => {
 	const rule = await db.query.rules.findFirst({
@@ -41,6 +41,25 @@ const getUserId = async (db: db, username: string) => {
 };
 
 export const seed = async (db: db) => {
+	// Collect all unique rules first
+	const uniqueRules = new Set(
+		data.flatMap(event => 
+			event.categories?.flatMap(category => 
+				category.rules?.map(rule => rule.text)
+			)
+		).filter(Boolean)
+	);
+
+	// Insert all rules in a single batch operation
+	const insertedRules = await db
+		.insert(schema.rules)
+		.values([...uniqueRules].map(text => ({ text })))
+		.onConflictDoUpdate({ target: schema.rules.id, set: { text: sql`excluded.text` } })
+		.returning();
+
+	// Create lookup map
+	const ruleIdMap = new Map(insertedRules.map(rule => [rule.text, rule.id]));
+
 	await Promise.all(
 		data.map(async (event) => {
 			const [insertedEvent] = await db
@@ -67,11 +86,13 @@ export const seed = async (db: db) => {
 
 					await Promise.all(
 						category.rules?.map(async (rule) => {
-							const ruleId = await getOrCreateRule(rule.text);
-							await db.insert(schema.eventCategoriesToRules).values({
-								eventCategoryId: insertedEventCategory.id,
-								ruleId
-							});
+							const ruleId = ruleIdMap.get(rule.text);
+							if (ruleId) {
+								await db.insert(schema.eventCategoriesToRules).values({
+									eventCategoryId: insertedEventCategory.id,
+									ruleId
+								});
+							}
 						})
 					);
 				})

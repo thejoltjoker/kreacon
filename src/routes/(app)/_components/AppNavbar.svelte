@@ -13,13 +13,14 @@
 
 	const menuItems = [
 		{ label: 'Submissions', href: '/submissions' },
-		{ label: 'Events', href: '/' }
+		{ label: 'Events', href: '/events' },
+		{ label: 'About', href: '/about' }
 	];
 </script>
 
 <nav>
 	<!-- <BackButton /> -->
-	<a class="hidden md:block" href={title.href ?? '/'}>
+	<a class="hidden flex-1 md:block" href={title.href ?? '/'}>
 		<h1>{$t(title.text ?? 'Kreacon')}</h1>
 	</a>
 	<!-- TODO Breadcrumbs -->
@@ -37,7 +38,16 @@
 			{/if}
 		</Button>
 	</div>
-	<ul class="right gap-sm">
+	<ul class="hidden flex-1 justify-center gap-sm md:flex">
+		{#each menuItems as item}
+			<li>
+				<Button variant="ghost" href={item.href} onclick={() => (isMenuOpen = false)}
+					>{item.label}</Button
+				>
+			</li>
+		{/each}
+	</ul>
+	<ul class="flex flex-1 items-center justify-end gap-sm">
 		{#if user}
 			<li>
 				<div class="hidden md:block">
@@ -87,16 +97,6 @@
 
 <style lang="postcss">
 	nav {
-		@apply flex items-center gap-sm border-b border-b-divider px-sm py-sm md:px-xl;
-	}
-	ul {
-		@apply inline-flex items-center;
-
-		& li {
-			@apply flex items-center;
-		}
-		&.right {
-			@apply ml-auto;
-		}
+		@apply flex items-center justify-between gap-sm border-b border-b-divider px-sm py-sm md:px-xl;
 	}
 </style>

@@ -30,7 +30,7 @@ export const eventCategoriesRelations = relations(eventCategories, ({ one, many 
 		fields: [eventCategories.eventId],
 		references: [events.id]
 	}),
-	rules: many(eventCategoriesToRules)
+	eventCategoriesToRules: many(eventCategoriesToRules)
 }));
 
 export default eventCategories;
