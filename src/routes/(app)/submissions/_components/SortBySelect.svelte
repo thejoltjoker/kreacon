@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-	import { Select, type SelectSingleRootProps, type WithoutChildren } from 'bits-ui';
-	import { ArrowDownUpIcon, ChevronsUpDownIcon, DotIcon } from 'lucide-svelte';
+	import { Select } from 'bits-ui';
+	import { ArrowDownUpIcon, DotIcon } from 'lucide-svelte';
 
 	type Props = {
 		items: { value: string; label: string; disabled?: boolean }[];

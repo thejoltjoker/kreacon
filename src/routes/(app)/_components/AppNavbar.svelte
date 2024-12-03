@@ -1,10 +1,8 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import AccountMenu from '$lib/components/AccountMenu.svelte';
-	import BackButton from '$lib/components/BackButton.svelte';
 	import Button from '$lib/components/Button.svelte';
 	import Link from '$lib/components/Link.svelte';
-	import { toSnakeCase } from 'drizzle-orm/casing';
 	import { AlignJustifyIcon, PlusIcon, XIcon } from 'lucide-svelte';
 	import { _ } from 'svelte-i18n';
 	import { fly } from 'svelte/transition';
@@ -20,7 +18,7 @@
 
 <nav>
 	<!-- <BackButton /> -->
-	<h1>{title}</h1>
+	<h1 class="hidden md:block">{title}</h1>
 	<!-- TODO Breadcrumbs -->
 	<div class="md:hidden">
 		<Button
@@ -85,17 +83,12 @@
 {/if}
 
 <style lang="postcss">
-	#title {
-		@apply mr-2xl text-xl font-bold;
-	}
 	nav {
-		@apply flex items-center gap-sm px-sm py-sm md:px-lg;
+		@apply flex items-center gap-sm px-sm py-sm md:px-xl;
 	}
 	ul {
 		@apply inline-flex items-center;
-		&.left {
-			@apply hidden md:inline-flex;
-		}
+
 		& li {
 			@apply flex items-center;
 		}

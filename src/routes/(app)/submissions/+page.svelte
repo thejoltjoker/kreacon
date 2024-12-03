@@ -4,11 +4,9 @@
 	import Avatar from '$lib/components/Avatar.svelte';
 	import { Pagination } from 'bits-ui';
 	import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-svelte';
-	import { _ } from 'svelte-i18n';
 	import type { PageData } from './$types';
 	import FilterBar from './_components/FilterBar.svelte';
 	import StatusIcon from './_components/StatusIcon.svelte';
-	import { onMount } from 'svelte';
 
 	let { data }: { data: PageData } = $props();
 
@@ -33,10 +31,10 @@
 	};
 </script>
 
-<div class="w-full px-xl py-sm">
+<div class="w-full px-sm md:px-xl">
 	<FilterBar {events} {categories} />
 </div>
-<div class="grid w-full grid-cols-submissions gap-sm p-xl">
+<div class="grid w-full grid-cols-submissions gap-sm px-sm md:gap-xl md:px-xl">
 	{#each submissions as submission}
 		<div class="wrapper group grid overflow-hidden rounded-md">
 			<div class="h-full w-full overflow-hidden rounded-md">

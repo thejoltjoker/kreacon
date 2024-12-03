@@ -22,7 +22,7 @@
 <div class="flex min-h-screen flex-col">
 	<AppNavbar title={$t(title)} />
 
-	<div class="flex min-h-full grow flex-col items-center">
+	<div class="flex min-h-full grow flex-col items-center gap-xl">
 		{@render children()}
 	</div>
 	<Footer />
