@@ -1,7 +1,7 @@
 import { db } from '../../db';
 import * as schema from '../../db/schema';
 import data from './data/events.json';
-import { eq, sql } from 'drizzle-orm';
+import { eq } from 'drizzle-orm';
 
 const getCategoryId = async (db: db, categoryName: string) => {
 	const category = await db.query.categories.findFirst({

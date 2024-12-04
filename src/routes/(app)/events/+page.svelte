@@ -4,7 +4,7 @@
 	let { data }: { data: PageData } = $props();
 </script>
 
-<main class="gap-8xl flex w-full max-w-screen-lg flex-col pt-xl">
+<main class="flex w-full max-w-screen-lg flex-col gap-8xl pt-xl">
 	{#each data.events as event}
 		<div>
 			<div class="flex items-center justify-between gap-sm">

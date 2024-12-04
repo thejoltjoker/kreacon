@@ -3,7 +3,7 @@ import { eventCategories, events } from '$lib/server/db/schema';
 import { error } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
 import { StatusCodes } from 'http-status-codes';
-import type { PageServerLoad } from './categories/$types';
+import type { PageServerLoad } from './$types';
 
 export const load = (async ({ params }) => {
 	const result = await db.transaction(async (tx) => {

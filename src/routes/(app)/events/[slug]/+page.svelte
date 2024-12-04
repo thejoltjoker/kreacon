@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { Separator } from 'bits-ui';
 	import type { PageData } from './$types';
 	import { locale } from 'svelte-i18n';
 

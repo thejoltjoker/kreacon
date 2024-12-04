@@ -7,6 +7,7 @@ export const prizes = pgTable('prize', {
 	id: serial().primaryKey(),
 	text: text().notNull(),
 	position: integer('position').notNull(),
+	value: integer('value'),
 	categoryId: integer('category_id'),
 	...timestamps
 });

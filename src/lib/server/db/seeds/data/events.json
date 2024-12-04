@@ -43,6 +43,11 @@
 				"rules": [
 					{ "text": "The 'General Rules' apply to all competition categories." },
 					{ "text": "Maximum runtime is 7 minutes." }
+				],
+				"prizes": [
+					{ "text": "Headphones", "position": 1 },
+					{ "text": "Music Gift Card", "position": 2 },
+					{ "text": "USB Drive", "position": 3 }
 				]
 			},
 			{
@@ -50,27 +55,57 @@
 				"rules": [
 					{ "text": "The 'General Rules' apply to all competition categories." },
 					{ "text": "Maximum runtime is 7 minutes." }
+				],
+				"prizes": [
+					{ "text": "Studio Monitor", "position": 1 },
+					{ "text": "Audio Interface", "position": 2 },
+					{ "text": "Microphone", "position": 3 }
 				]
 			},
 			{
 				"name": "Freestyle Graphics",
-				"rules": [{ "text": "The 'General Rules' apply to all competition categories." }]
+				"rules": [{ "text": "The 'General Rules' apply to all competition categories." }],
+				"prizes": [
+					{ "text": "Graphics Tablet", "position": 1 },
+					{ "text": "Art Supplies", "position": 2 },
+					{ "text": "Sketchbook", "position": 3 }
+				]
 			},
 			{
 				"name": "Oldschool Graphics",
-				"rules": [{ "text": "The 'General Rules' apply to all competition categories." }]
+				"rules": [{ "text": "The 'General Rules' apply to all competition categories." }],
+				"prizes": [
+					{ "text": "Retro Console", "position": 1 },
+					{ "text": "Pixel Art Book", "position": 2 },
+					{ "text": "Game Cartridge", "position": 3 }
+				]
 			},
 			{
 				"name": "Freestyle Photo",
-				"rules": [{ "text": "The 'General Rules' apply to all competition categories." }]
+				"rules": [{ "text": "The 'General Rules' apply to all competition categories." }],
+				"prizes": [
+					{ "text": "Camera Lens", "position": 1 },
+					{ "text": "Photography Book", "position": 2 },
+					{ "text": "Tripod", "position": 3 }
+				]
 			},
 			{
 				"name": "Stop Motion",
-				"rules": [{ "text": "The 'General Rules' apply to all competition categories." }]
+				"rules": [{ "text": "The 'General Rules' apply to all competition categories." }],
+				"prizes": [
+					{ "text": "Animation Software", "position": 1 },
+					{ "text": "Lighting Kit", "position": 2 },
+					{ "text": "Clay Modeling Kit", "position": 3 }
+				]
 			},
 			{
 				"name": "Wild / Animation",
-				"rules": [{ "text": "The 'General Rules' apply to all competition categories." }]
+				"rules": [{ "text": "The 'General Rules' apply to all competition categories." }],
+				"prizes": [
+					{ "text": "Animation Tablet", "position": 1 },
+					{ "text": "Storyboard Notebook", "position": 2 },
+					{ "text": "Animation Book", "position": 3 }
+				]
 			}
 		],
 		"tickets": [
@@ -91,6 +126,11 @@
 		"categories": [
 			{
 				"name": "Combined Demo",
+				"prizes": [
+					{ "text": "Color radio", "position": 1 },
+					{ "text": "Soap", "position": 2 },
+					{ "text": "Toothpicks", "position": 3 }
+				],
 				"rules": [{ "text": "The 'General Rules' apply to all competition categories." }]
 			},
 			{

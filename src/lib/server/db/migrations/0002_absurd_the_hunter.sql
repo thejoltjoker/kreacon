@@ -1,0 +1,1 @@
+ALTER TABLE "prize" ADD COLUMN "value" integer;
