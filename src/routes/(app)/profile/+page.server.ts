@@ -10,10 +10,23 @@ export const load = (async ({ locals }) => {
 	if (!locals.user || !locals.session) {
 		return redirect(302, '/login');
 	}
+
 	const user = await db.query.users.findFirst({
 		where: eq(users.id, locals.user.id),
 		columns: {
 			password: false
+		},
+		with: {
+			tickets: {
+				with: {
+					event: {
+						columns: {
+							id: true,
+							name: true
+						}
+					}
+				}
+			}
 		}
 	});
 
@@ -22,7 +35,12 @@ export const load = (async ({ locals }) => {
 	}
 	const form = await superValidate(user, zod(updateUserSchema));
 
-	return { form, user };
+	const tickets = user.tickets.map((t) => ({
+		id: t.id,
+		event: t.event
+	}));
+
+	return { form, user, tickets };
 }) satisfies PageServerLoad;
 
 export const actions = {
