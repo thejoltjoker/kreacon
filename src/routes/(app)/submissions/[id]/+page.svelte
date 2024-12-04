@@ -27,7 +27,6 @@
 	);
 </script>
 
-<a href={`/events/${submission?.event.slug}/categories/${submission?.category.slug}`}>text</a>
 <main class="flex w-full max-w-screen-lg flex-col gap-sm px-sm pt-sm md:gap-xl md:px-xl md:pt-xl">
 	<!-- Header -->
 	<div class="flex flex-wrap items-center justify-between gap-xs">
