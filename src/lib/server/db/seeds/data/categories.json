@@ -1,50 +1,50 @@
 [
 	{
-		"id": 1,
 		"name": "Combined Demo",
+		"slug": "combined-demo",
 		"mediaType": "video",
-		"description": "A comprehensive demo combining various elements like graphics, music, and animation."
+		"description": "A comprehensive showcase combining graphics, music, sound, and effects into a single cohesive experience. Entries should demonstrate technical and artistic skills while dazzling audiences with innovation and creativity."
 	},
 	{
-		"id": 2,
 		"name": "Prerendered Music",
+		"slug": "prerendered-music",
 		"mediaType": "audio",
-		"description": "Music created using prerendered techniques, often with high-quality production values."
+		"description": "Professional quality music compositions, from electronic beats to classical pieces and band recordings. Emphasizes originality and production quality in professionally mixed and mastered tracks."
 	},
 	{
-		"id": 3,
 		"name": "Tracked Music",
+		"slug": "tracked-music",
 		"mediaType": "audio",
-		"description": "Music created using tracking software, often with a distinct retro or chiptune sound."
+		"description": "Music created using tracker software like MilkyTracker or FastTracker, combining samples and patterns within technical constraints. Perfect for both nostalgic chiptunes and modern tracked compositions."
 	},
 	{
-		"id": 4,
 		"name": "Freestyle Graphics",
+		"slug": "freestyle-graphics",
 		"mediaType": "image",
-		"description": "Unrestricted graphical creations showcasing artistic freedom and creativity."
+		"description": "Unrestricted artistic expression encompassing hand-drawn illustrations, photo manipulation, pixel art, and 3D renders. Showcases creative process and unique artistic style."
 	},
 	{
-		"id": 5,
 		"name": "Oldschool Graphics",
+		"slug": "oldschool-graphics",
 		"mediaType": "image",
-		"description": "Graphics created in the style of or using techniques from earlier computing eras."
+		"description": "Low-resolution artwork created under classic technical constraints (max 320x200, 8-bit colors). Celebrates the charm and technical mastery of retro graphics creation."
 	},
 	{
-		"id": 6,
 		"name": "Freestyle Photo",
+		"slug": "freestyle-photo",
 		"mediaType": "image",
-		"description": "Unrestricted photographic entries allowing for creative expression and editing."
+		"description": "Photography focused on composition, lighting, and timing with minimal editing allowed. Celebrates the artistry of capturing perfect moments through the lens."
 	},
 	{
-		"id": 7,
 		"name": "Stop Motion",
+		"slug": "stop-motion",
 		"mediaType": "video",
-		"description": "Animations created using stop motion techniques, bringing static objects to life."
+		"description": "Frame-by-frame animations that blend meticulous planning with creative storytelling. Perfect for artists crafting dynamic sequences that can range from playful to dramatic."
 	},
 	{
-		"id": 8,
 		"name": "Wild / Animation",
+		"slug": "wild-animation",
 		"mediaType": "video",
-		"description": "A catch-all category for animations and other entries that don't fit elsewhere."
+		"description": "A category for experimental animations, music videos, and entries that defy traditional categories. Welcomes innovative formats and unconventional approaches to digital creativity."
 	}
 ]

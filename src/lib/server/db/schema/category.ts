@@ -1,19 +1,20 @@
 import { relations, type InferInsertModel, type InferSelectModel } from 'drizzle-orm';
-import { pgTable, serial, text, varchar } from 'drizzle-orm/pg-core';
-import categoriesToEvents from './categoriesToEvents';
+import { pgTable, serial, text } from 'drizzle-orm/pg-core';
+import eventCategories from './eventCategory';
 import { mediaTypeEnum, timestamps } from './shared';
 import { submissions } from './submission';
 
 export const categories = pgTable('category', {
 	id: serial().primaryKey(),
 	name: text().notNull(),
-	description: varchar({ length: 512 }),
-	mediaType: mediaTypeEnum('media_type'),
+	slug: text().notNull().unique(),
+	description: text().notNull(),
+	mediaType: mediaTypeEnum('media_type').notNull(),
 	...timestamps
 });
 
 export const categoriesRelations = relations(categories, ({ many }) => ({
-	categoriesToEvents: many(categoriesToEvents),
+	eventCategories: many(eventCategories),
 	submissions: many(submissions)
 }));
 

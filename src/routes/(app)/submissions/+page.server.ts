@@ -68,12 +68,12 @@ export const load = (async ({ locals, url }) => {
 	});
 
 	const categories = await db.query.categories.findMany({
-		with: { categoriesToEvents: { with: { event: { columns: { name: true, id: true } } } } }
+		with: { eventCategories: { with: { event: { columns: { name: true, id: true } } } } }
 	});
 	const events = Array.from(
 		new Map(
 			categories
-				.flatMap((c) => c.categoriesToEvents.map((ctoe) => ctoe.event))
+				.flatMap((c) => c.eventCategories.map((ctoe) => ctoe.event))
 				.map((event) => [event.id, event])
 		).values()
 	).sort((a, b) => (a.name > b.name ? 1 : -1));

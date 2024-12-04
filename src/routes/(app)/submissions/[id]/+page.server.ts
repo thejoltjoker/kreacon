@@ -21,6 +21,13 @@ export const load = (async ({ params, locals }) => {
 			with: {
 				media: true,
 				category: true,
+				event: {
+					columns: {
+						id: true,
+						name: true,
+						slug: true
+					}
+				},
 				user: {
 					columns: {
 						username: true,

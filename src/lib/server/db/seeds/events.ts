@@ -3,7 +3,7 @@ import * as schema from '../../db/schema';
 import data from './data/events.json';
 import { eq } from 'drizzle-orm';
 
-async function getCategoryId(db: db, categoryName: string) {
+const getCategoryId = async (db: db, categoryName: string) => {
 	const category = await db.query.categories.findFirst({
 		where: eq(schema.categories.name, categoryName)
 	});
@@ -11,9 +11,9 @@ async function getCategoryId(db: db, categoryName: string) {
 		throw new Error('Unknown category: ' + categoryName);
 	}
 	return category.id;
-}
+};
 
-async function getUserId(db: db, username: string) {
+const getUserId = async (db: db, username: string) => {
 	const user = await db.query.users.findFirst({
 		where: eq(schema.users.username, username)
 	});
@@ -21,7 +21,7 @@ async function getUserId(db: db, username: string) {
 		throw new Error('Unknown user: ' + username);
 	}
 	return user.id;
-}
+};
 
 export const seed = async (db: db) => {
 	await Promise.all(
@@ -37,15 +37,58 @@ export const seed = async (db: db) => {
 				})
 				.returning();
 
+			if (event.rules?.length) {
+				await Promise.all(
+					event.rules.map(async (rule) => {
+						return await db
+							.insert(schema.rules)
+							.values({
+								text: rule.text,
+								eventId: insertedEvent.id
+							})
+							.returning();
+					})
+				);
+			}
+
 			await Promise.all(
 				event.categories?.map(async (category) => {
 					const categoryId = await getCategoryId(db, category.name);
-					await db.insert(schema.categoriesToEvents).values({
-						categoryId,
-						eventId: insertedEvent.id
-					});
+					const [insertedEventCategory] = await db
+						.insert(schema.eventCategories)
+						.values({
+							categoryId,
+							eventId: insertedEvent.id
+						})
+						.returning();
+
+					// Insert rules for category (with null check)
+					if (category.rules?.length) {
+						await Promise.all(
+							category.rules.map(async (rule) => {
+								await db.insert(schema.rules).values({
+									text: rule.text,
+									categoryId: insertedEventCategory.id
+								});
+							})
+						);
+					}
+
+					// Insert prizes for category (with null check)
+					if (category.prizes?.length) {
+						await Promise.all(
+							category.prizes.map(async (prize) => {
+								await db.insert(schema.prizes).values({
+									text: prize.text,
+									position: prize.position,
+									categoryId: insertedEventCategory.id
+								});
+							})
+						);
+					}
 				})
 			);
+
 			await Promise.all(
 				event.tickets?.map(async (ticket) => {
 					const userId = await getUserId(db, ticket.username);

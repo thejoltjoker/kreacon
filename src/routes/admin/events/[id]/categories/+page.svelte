@@ -4,7 +4,7 @@
 	export let data: PageData;
 </script>
 
-<ul>
+<ul class="flex flex-col gap-sm">
 	{#each data.categories as category}
 		<li>{category.name}</li>
 	{/each}

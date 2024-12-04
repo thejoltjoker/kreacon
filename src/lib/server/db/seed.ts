@@ -20,26 +20,28 @@ for (const table of [
 	schema.users,
 	schema.events,
 	schema.categories,
-	schema.categoriesToEvents,
+	schema.eventCategories,
 	schema.tickets,
 	schema.submissions,
 	schema.media,
-	schema.reactions
+	schema.reactions,
+	schema.rules,
+	schema.prizes
 ]) {
 	await resetTable(db, table);
 }
 
-logger.info('Seeding users...');
+logger.info('👤 Seeding users...');
 await seeds.users(db);
 
-logger.info('Seeding categories...');
+logger.info('🔹 Seeding categories...');
 await seeds.categories(db);
 
-logger.info('Seeding events...');
+logger.info('🎟️ Seeding events...');
 await seeds.events(db);
 
-logger.info('Seeding submissions...');
+logger.info('🎫 Seeding submissions...');
 await seeds.submissions(db);
 
-logger.info('Seeding completed');
+logger.info('🎉 Seeding completed');
 await db.$client.end();

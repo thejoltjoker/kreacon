@@ -1,5 +1,5 @@
 import { db } from '$lib/server/db';
-import { categoriesToEvents } from '$lib/server/db/schema';
+import { eventCategories } from '$lib/server/db/schema';
 import { eq } from 'drizzle-orm/pg-core/expressions';
 
 import type { PageServerLoad } from './$types';
@@ -13,11 +13,11 @@ export const load = (async ({ params }) => {
 		return { categories: result };
 	}
 
-	const result = await db.query.categoriesToEvents.findMany({
+	const result = await db.query.eventCategories.findMany({
 		with: {
 			category: true
 		},
-		where: eq(categoriesToEvents.eventId, id)
+		where: eq(eventCategories.eventId, id)
 	});
 
 	return { categories: result.map((item) => item.category) };
