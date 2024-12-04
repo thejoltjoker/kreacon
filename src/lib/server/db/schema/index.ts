@@ -4,10 +4,6 @@ export { default as accounts, accountsRelations } from './account';
 export { default as categories, categoriesRelations } from './category';
 export { default as eventCategories, eventCategoriesRelations } from './eventCategory';
 export { default as rules, rulesRelations } from './rule';
-export {
-	default as eventCategoriesToRules,
-	eventCategoriesToRulesRelations as categoriesToRulesRelations
-} from './eventCategoriesToRules';
 export { default as events, eventsRelations } from './event';
 export { default as media, mediaRelations } from './media';
 export { default as reactions, reactionsRelations } from './reaction';

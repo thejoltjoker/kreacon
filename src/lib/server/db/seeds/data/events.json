@@ -7,6 +7,14 @@
 		"submissionsCloseAt": "2025-06-15T23:59:59Z",
 		"votingOpenAt": "2025-06-16T00:00:00Z",
 		"votingCloseAt": "2025-06-30T23:59:59Z",
+		"rules": [
+			{
+				"text": "Submissions must not use copyrighted material without explicit rights or licenses."
+			},
+			{
+				"text": "Kreacon may use and publish submissions on their websites/newsletters with appropriate attribution and links."
+			}
+		],
 		"categories": [
 			{
 				"name": "Combined Demo",

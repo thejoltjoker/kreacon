@@ -5,29 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1733244652496,
-      "tag": "0000_amusing_mikhail_rasputin",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1733244887118,
-      "tag": "0001_magenta_talkback",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1733245148041,
-      "tag": "0002_true_sasquatch",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "7",
-      "when": 1733245250252,
-      "tag": "0003_slim_chronomancer",
+      "when": 1733320009460,
+      "tag": "0000_flat_preak",
       "breakpoints": true
     }
   ]

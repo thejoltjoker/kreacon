@@ -1,9 +1,8 @@
 import { relations } from 'drizzle-orm';
-import { integer, pgTable, primaryKey, serial, unique } from 'drizzle-orm/pg-core';
+import { integer, pgTable, serial, unique } from 'drizzle-orm/pg-core';
 import { categories } from './category';
 import { events } from './event';
 import rules from './rule';
-import eventCategoriesToRules from './eventCategoriesToRules';
 
 export const eventCategories = pgTable(
 	'event_category',
@@ -30,7 +29,7 @@ export const eventCategoriesRelations = relations(eventCategories, ({ one, many 
 		fields: [eventCategories.eventId],
 		references: [events.id]
 	}),
-	eventCategoriesToRules: many(eventCategoriesToRules)
+	rules: many(rules)
 }));
 
 export default eventCategories;

@@ -13,22 +13,25 @@
 	<section class="flex flex-col gap-xl">
 		<h2>Categories</h2>
 		{#each categories as category}
-			<div>
+			<div class="flex flex-col gap-sm">
 				<a href="/submissions?event={data.event.id}&category={category.id}">
 					<h3>{category.name}</h3>
 				</a>
 				<div class="flex gap-xl">
-					<div class="flex-1">
+					<div class="flex flex-1 flex-col gap-sm">
 						<h4>About {category.name}</h4>
-						<p class="text-sm text-muted-foreground-alt">{category.description}</p>
+						<p class="text-muted-foreground-alt">{category.description}</p>
 					</div>
-					<div class="flex-1">
+					<div class="flex flex-1 flex-col gap-sm">
 						<h4>Rules</h4>
-						<ul>
-							{#each category.rules as rule}
-								<li>{rule.text}</li>
+						<ol class="flex flex-col gap-sm">
+							{#each category.rules as rule, index}
+								<li class="flex gap-sm">
+									<p class="text-muted-foreground-alt">{index + 1}.</p>
+									<p>{rule.text}</p>
+								</li>
 							{/each}
-						</ul>
+						</ol>
 					</div>
 				</div>
 			</div>

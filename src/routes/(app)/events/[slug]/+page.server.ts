@@ -1,30 +1,29 @@
 import db from '$lib/server/db';
 import { eventCategories, events } from '$lib/server/db/schema';
+import { error } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
+import { StatusCodes } from 'http-status-codes';
 import type { PageServerLoad } from './categories/$types';
+
 export const load = (async ({ params }) => {
 	const result = await db.transaction(async (tx) => {
-		const { id: eventId } = await tx.query.events.findFirst({
+		const event = await tx.query.events.findFirst({
 			where: eq(events.slug, params.slug),
 			columns: {
 				id: true
 			}
 		});
 
+		if (!event) {
+			throw error(StatusCodes.NOT_FOUND, 'Event not found');
+		}
+
 		const categories = await tx.query.eventCategories.findMany({
-			where: eq(eventCategories.eventId, eventId),
+			where: eq(eventCategories.eventId, event.id),
 			with: {
 				category: true,
-				eventCategoriesToRules: {
-					with: {
-						rule: true
-					}
-				}
+				rules: true
 			}
-		});
-
-		const event = await tx.query.events.findFirst({
-			where: eq(events.id, eventId)
 		});
 
 		return { categories, event };
@@ -34,7 +33,7 @@ export const load = (async ({ params }) => {
 	const { event } = result;
 	const categories = result.categories.map((category) => ({
 		...category.category,
-		rules: category.eventCategoriesToRules.map((rule) => rule.rule)
+		rules: category.rules
 	}));
 	return { categories, event, title };
 }) satisfies PageServerLoad;
