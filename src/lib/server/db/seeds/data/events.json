@@ -18,6 +18,11 @@
 		"categories": [
 			{
 				"name": "Combined Demo",
+				"prizes": [
+					{ "text": "Color radio", "position": 1 },
+					{ "text": "Soap", "position": 2 },
+					{ "text": "Toothpicks", "position": 3 }
+				],
 				"rules": [
 					{ "text": "The 'General Rules' apply to all competition categories." },
 					{ "text": "Maximum runtime is 7 minutes." },

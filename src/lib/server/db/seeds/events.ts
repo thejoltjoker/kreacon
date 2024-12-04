@@ -62,14 +62,30 @@ export const seed = async (db: db) => {
 						})
 						.returning();
 
-					await Promise.all(
-						category.rules?.map(async (rule) => {
-							await db.insert(schema.rules).values({
-								text: rule.text,
-								categoryId: insertedEventCategory.id
-							});
-						})
-					);
+					// Insert rules for category (with null check)
+					if (category.rules?.length) {
+						await Promise.all(
+							category.rules.map(async (rule) => {
+								await db.insert(schema.rules).values({
+									text: rule.text,
+									categoryId: insertedEventCategory.id
+								});
+							})
+						);
+					}
+
+					// Insert prizes for category (with null check)
+					if (category.prizes?.length) {
+						await Promise.all(
+							category.prizes.map(async (prize) => {
+								await db.insert(schema.prizes).values({
+									text: prize.text,
+									position: prize.position,
+									categoryId: insertedEventCategory.id
+								});
+							})
+						);
+					}
 				})
 			);
 

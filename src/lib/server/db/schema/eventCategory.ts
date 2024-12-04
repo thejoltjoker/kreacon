@@ -3,6 +3,7 @@ import { integer, pgTable, serial, unique } from 'drizzle-orm/pg-core';
 import { categories } from './category';
 import { events } from './event';
 import rules from './rule';
+import prizes from './prize';
 
 export const eventCategories = pgTable(
 	'event_category',
@@ -15,8 +16,8 @@ export const eventCategories = pgTable(
 			.notNull()
 			.references(() => events.id)
 	},
-	(t) => ({
-		uniqueConstraint: unique().on(t.eventId, t.categoryId)
+	(table) => ({
+		uniqueConstraint: unique().on(table.eventId, table.categoryId)
 	})
 );
 
@@ -29,7 +30,8 @@ export const eventCategoriesRelations = relations(eventCategories, ({ one, many 
 		fields: [eventCategories.eventId],
 		references: [events.id]
 	}),
-	rules: many(rules)
+	rules: many(rules),
+	prizes: many(prizes)
 }));
 
 export default eventCategories;

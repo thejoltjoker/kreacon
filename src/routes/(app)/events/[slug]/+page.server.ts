@@ -10,7 +10,13 @@ export const load = (async ({ params }) => {
 		const event = await tx.query.events.findFirst({
 			where: eq(events.slug, params.slug),
 			columns: {
-				id: true
+				id: true,
+				name: true,
+				description: true,
+				votingOpenAt: true,
+				votingCloseAt: true,
+				submissionsOpenAt: true,
+				submissionsCloseAt: true
 			}
 		});
 

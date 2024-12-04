@@ -25,7 +25,8 @@ for (const table of [
 	schema.submissions,
 	schema.media,
 	schema.reactions,
-	schema.rules
+	schema.rules,
+	schema.prizes
 ]) {
 	await resetTable(db, table);
 }

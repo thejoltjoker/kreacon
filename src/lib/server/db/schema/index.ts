@@ -11,3 +11,4 @@ export { default as sessions, sessionsRelations } from './session';
 export { default as submissions, submissionsRelations } from './submission';
 export { default as tickets, ticketsRelations } from './ticket';
 export { default as votes, votesRelations } from './vote';
+export { default as prizes, prizesRelations } from './prize';
