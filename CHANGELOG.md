@@ -26,6 +26,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   [#29](https://github.com/thejoltjoker/kreacon/pull/29)
 - Add filtering and sorting to submissions page
   [#33](https://github.com/thejoltjoker/kreacon/pull/33)
+- Add events page with categories and rules
+  [#37](https://github.com/thejoltjoker/kreacon/pull/37)
 
 ### Changed
 

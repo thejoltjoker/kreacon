@@ -79,7 +79,7 @@
 				sideOffset={10}
 			>
 				{#if filteredItems.length > 0}
-					{#each filteredItems as item, i (item.value)}
+					{#each filteredItems as item}
 						<Combobox.Item value={item.value} label={item.label} class="combobox-item group">
 							{#snippet children()}
 								{item.label}

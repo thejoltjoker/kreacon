@@ -24,9 +24,7 @@
 
 	let { categories, events }: { categories: Category[]; events: PageData['events'] } = $props();
 
-	let eventId = $state<string | undefined>($page.url.searchParams.get('event') ?? undefined);
 	let eventsItems = $derived(events.map((e) => ({ label: e.name, value: e.id.toString() })));
-	let sortBy = $state<string>($page.url.searchParams.get('sortBy') ?? 'date_asc');
 
 	const handleCategoryChange = (categoryId: number | null) => {
 		const params = new URLSearchParams($page.url.searchParams);
