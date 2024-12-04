@@ -84,10 +84,10 @@
 		"name": "Beacon Winter 1991",
 		"slug": "beacon-winter-1991",
 		"description": "Embrace the chill at Beacon Winter 2025! Our cozy LAN party features indoor gaming marathons, frosty-themed tournaments, winter cosplay contests, tech workshops by the fireplace, and warm comfort food. Connect with fellow gamers, compete for cool prizes, and create lasting memories in this winter wonderland of gaming.",
-		"submissionsOpenAt": "2025-12-01T00:00:00Z",
-		"submissionsCloseAt": "2025-12-15T23:59:59Z",
-		"votingOpenAt": "2025-12-16T00:00:00Z",
-		"votingCloseAt": "2025-12-30T23:59:59Z",
+		"submissionsOpenAt": "2024-11-01T00:00:00Z",
+		"submissionsCloseAt": "2024-11-30T23:59:59Z",
+		"votingOpenAt": "2024-12-01T00:00:00Z",
+		"votingCloseAt": "2025-01-30T23:59:59Z",
 		"categories": [
 			{
 				"name": "Combined Demo",

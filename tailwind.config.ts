@@ -140,6 +140,7 @@ export default {
 				'5xl': '40px',
 				'6xl': '44px',
 				'7xl': '48px',
+				'8xl': '96px',
 				form: '48px',
 				'input-sm': '40px',
 				'input-md': '48px',
