@@ -6,7 +6,10 @@ import { message, setError, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import type { PageServerLoad } from './$types';
 import tickets, { insertTicketSchema } from '$lib/server/db/schema/ticket';
-import { ticket as ticketClient } from '$lib/server/services/ticket';
+import { api as ticketClient } from '$lib/server/services/ticket';
+import { events } from '$lib/server/db/schema';
+
+const ticketSchema = insertTicketSchema.pick({ id: true });
 
 export const load = (async ({ locals }) => {
 	if (!locals.user || !locals.session) {
@@ -42,12 +45,12 @@ export const load = (async ({ locals }) => {
 		event: t.event
 	}));
 
-	const ticketForm = await superValidate(zod(insertTicketSchema));
+	const ticketForm = await superValidate(zod(ticketSchema));
 	return { form, ticketForm, user, tickets };
 }) satisfies PageServerLoad;
 
 export const actions = {
-	default: async ({ request, locals }) => {
+	updateProfile: async ({ request, locals }) => {
 		if (!locals.user || !locals.session) {
 			return redirect(302, '/login');
 		}
@@ -70,27 +73,39 @@ export const actions = {
 
 		return message(form, 'Form posted successfully!');
 	},
+
 	addTicket: async ({ request, locals }) => {
 		if (!locals.user || !locals.session) {
 			return redirect(302, '/login');
 		}
 
-		const ticketForm = await superValidate(request, zod(insertTicketSchema));
+		const ticketForm = await superValidate(request, zod(ticketSchema));
 
 		if (!ticketForm.valid) return fail(400, { ticketForm });
 
-		const ticketIsValid = await ticketClient.validate(ticketForm.data.id ?? '');
+		const validatedTicket = await ticketClient.validate(ticketForm.data.id ?? '');
 
-		if (!ticketIsValid) {
+		if (!validatedTicket) {
 			return setError(ticketForm, 'id', 'Ticket is invalid.');
 		}
 
-		// TODO Add ticket
-		await db.insert(tickets).values({
-			id: ticketForm.data.id,
-			userId: locals.user.id,
-			eventId: ticketForm.data.eventId
+		const event = await db.query.events.findFirst({
+			where: eq(events.name, validatedTicket.event)
 		});
+
+		if (!event) {
+			return setError(ticketForm, 'id', 'Ticket is invalid.');
+		}
+
+		try {
+			await db.insert(tickets).values({
+				id: validatedTicket.id,
+				userId: locals.user.id,
+				eventId: event.id
+			});
+		} catch (error) {
+			return setError(ticketForm, 'id', "You've already added a ticket for this event.");
+		}
 
 		return message(ticketForm, 'Ticket form submitted');
 	}

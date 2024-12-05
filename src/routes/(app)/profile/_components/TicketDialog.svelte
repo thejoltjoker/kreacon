@@ -4,10 +4,10 @@
 	import { TicketIcon, XIcon } from 'lucide-svelte';
 	let { isOpen = $bindable() }: { isOpen: boolean } = $props();
 	// TODO Change to isOpen
-	let open = $state(true);
+	// let open = $state(true);
 </script>
 
-<Dialog.Root bind:open>
+<Dialog.Root bind:open={isOpen}>
 	<Dialog.Portal>
 		<Dialog.Overlay class="fixed inset-0 z-50 bg-black/80" />
 		<Dialog.Content

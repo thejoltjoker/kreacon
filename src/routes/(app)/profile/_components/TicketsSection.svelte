@@ -1,13 +1,25 @@
 <script lang="ts">
 	import Button from '$lib/components/Button.svelte';
-	import { CheckCircle2Icon, CheckCircleIcon, CopyIcon, PlusIcon, XIcon } from 'lucide-svelte';
+	import { CheckCircle2Icon, PlusIcon } from 'lucide-svelte';
+	import SuperDebug, { superForm } from 'sveltekit-superforms';
 	import type { PageData } from '../$types';
 	import TicketDialog from './TicketDialog.svelte';
-
-	let { tickets }: { tickets: PageData['tickets'] } = $props();
+	import { Label } from 'bits-ui';
+	import DumbInput from '$lib/components/Form/DumbInput.svelte';
+	let { tickets, form }: { tickets: PageData['tickets']; form: PageData['ticketForm'] } = $props();
 	let adding = $state(false);
+	const {
+		form: ticketForm,
+		errors: ticketErrors,
+		enhance: ticketEnhance,
+		message: ticketMessage
+	} = superForm(form, {
+		resetForm: true,
+		invalidateAll: true
+	});
 </script>
 
+<SuperDebug data={$ticketForm} />
 <div class="flex w-full flex-col gap-sm">
 	<div class="flex items-center justify-between">
 		<h3>Tickets</h3>
@@ -36,4 +48,10 @@
 		</ul>
 	{/if}
 </div>
+{#if $ticketMessage}<h3>{$ticketMessage}</h3>{/if}
+{#if $ticketErrors.id}<span class="invalid">{$ticketErrors.id}</span>{/if}
+<form method="POST" action="?/addTicket" use:ticketEnhance>
+	<DumbInput label="Ticket ID" name="id" bind:value={$ticketForm.id} />
+	<Button type="submit">Submit</Button>
+</form>
 <TicketDialog bind:isOpen={adding} />

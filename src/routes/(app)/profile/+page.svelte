@@ -9,7 +9,7 @@
 	import ImageUpload from './_components/ImageUpload.svelte';
 	import { page } from '$app/stores';
 	import TicketsSection from './_components/TicketsSection.svelte';
-
+	import SuperDebug from 'sveltekit-superforms';
 	interface PageProps {
 		data: import('./$types').PageData;
 		imageUrl: string;
@@ -119,5 +119,5 @@
 			</div>
 		</form>
 	</section>
-	<TicketsSection {tickets} />
+	<TicketsSection {tickets} form={data.ticketForm} />
 </main>
