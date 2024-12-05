@@ -80,9 +80,11 @@ export const load = (async ({ locals }) => {
 		media: undefined,
 		thumbnail: undefined
 	};
+	const title = { text: 'Create Submission' };
 	return {
 		form,
-		events
+		events,
+		title
 	};
 }) satisfies PageServerLoad;
 
@@ -182,6 +184,6 @@ export const actions = {
 			redirect(StatusCodes.SEE_OTHER, `/submissions/${id}`);
 		}
 
-		return message(form, { text: 'Form posted successfully!' });
+		return message(form, { text: 'Form posted successfully!', status: 'success' });
 	}
 } satisfies Actions;

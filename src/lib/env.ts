@@ -26,7 +26,8 @@ const EnvSchema = z.object({
 	OAUTH_DISCORD_REDIRECT_URI: z.string(),
 	OAUTH_GITHUB_CLIENT_ID: z.string(),
 	OAUTH_GITHUB_CLIENT_SECRET: z.string(),
-	OAUTH_GITHUB_REDIRECT_URI: z.string()
+	OAUTH_GITHUB_REDIRECT_URI: z.string(),
+	TICKET_API_URL: z.string().url()
 });
 
 export type EnvSchema = z.infer<typeof EnvSchema>;

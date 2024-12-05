@@ -2,7 +2,7 @@
 	import type { WithElementRef } from 'bits-ui';
 	import type { HTMLAnchorAttributes, HTMLButtonAttributes } from 'svelte/elements';
 	import { type VariantProps, tv } from 'tailwind-variants';
-
+	import { type Icon as IconType } from 'lucide-svelte';
 	export const buttonVariants = tv({
 		base: 'ring-offset-background font-bold focus-visible:ring-ring inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-button transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-5 [&_svg]:shrink-0',
 		variants: {
@@ -11,7 +11,7 @@
 				white:
 					'bg-white border-white border text-black hover:text-muted-background hover:bg-muted-background hover:text-white',
 				destructive: 'bg-destructive text-destructive hover:bg-destructive/90',
-				muted: 'bg-muted-background text-muted-foreground hover:bg-muted-background',
+				muted: 'bg-muted-background text-muted-foreground-alt hover:bg-muted-background',
 				outline: 'border-white bg-background hover:bg-white hover:text-black border text-white',
 				ghost: 'hover:bg-muted-background hover:text-white',
 				link: 'text-primary underline-offset-4 hover:underline'
@@ -36,6 +36,7 @@
 		WithElementRef<HTMLAnchorAttributes> & {
 			variant?: ButtonVariant;
 			size?: ButtonSize;
+			icon?: typeof IconType;
 		};
 </script>
 
@@ -50,21 +51,33 @@
 		href = undefined,
 		type = 'button',
 		children,
+		icon: Icon = undefined,
 		...restProps
 	}: ButtonProps = $props();
 </script>
 
 {#if href}
-	<a bind:this={ref} class={cn(buttonVariants({ variant, size, className }))} {href} {...restProps}>
+	<a
+		bind:this={ref}
+		class={cn(buttonVariants({ variant, size, className }), Icon && 'pl-lg')}
+		{href}
+		{...restProps}
+	>
+		{#if Icon}
+			<Icon />
+		{/if}
 		{@render children?.()}
 	</a>
 {:else}
 	<button
 		bind:this={ref}
-		class={cn(buttonVariants({ variant, size, className }))}
+		class={cn(buttonVariants({ variant, size, className }), Icon && 'pl-lg')}
 		{type}
 		{...restProps}
 	>
+		{#if Icon}
+			<Icon />
+		{/if}
 		{@render children?.()}
 	</button>
 {/if}

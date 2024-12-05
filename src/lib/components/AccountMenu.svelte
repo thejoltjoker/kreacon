@@ -18,6 +18,8 @@
 		  }
 		| 'divider';
 
+	const user = $derived($page.data.user);
+
 	const menuItems: MenuItem[] = [
 		{
 			label: 'Profile',
@@ -26,12 +28,12 @@
 		},
 		{
 			label: 'Submissions',
-			href: '/submissions',
+			href: `/users/${$page.data.user?.username}`,
 			icon: LayoutGridIcon
 		},
 		{
 			label: 'Tickets',
-			href: '/tickets',
+			href: '/profile#tickets',
 			icon: TicketIcon
 		},
 		'divider',
@@ -41,8 +43,6 @@
 			icon: LogOutIcon
 		}
 	];
-
-	const user = $derived($page.data.user);
 </script>
 
 {#snippet menuItem(label: string, href: string, Icon: typeof IconType)}

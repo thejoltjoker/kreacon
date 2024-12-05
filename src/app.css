@@ -58,9 +58,12 @@
 		@apply border border-red-500;
 	}
 
-	input[type='text'],
+	/* input[type='text'], */
 	input[type='email'],
 	input[type='password'] {
+		@apply h-form w-full rounded-sm border border-muted-foreground bg-bg px-3 py-2 focus:border-violet-500 focus:outline-none focus:ring-violet-500;
+	}
+	.input {
 		@apply h-form w-full rounded-sm border border-muted-foreground bg-bg px-3 py-2 focus:border-violet-500 focus:outline-none focus:ring-violet-500;
 	}
 }
@@ -75,7 +78,7 @@
 	}
 
 	.input-invalid {
-		@apply !border-error focus:!ring-error;
+		@apply !border-error focus:!border-error focus:!ring-error;
 	}
 
 	.card {

@@ -16,8 +16,8 @@
 	{#if message}
 		<div
 			class="status"
-			class:error={message.status >= 400}
-			class:success={!message.status || message.status < 300}
+			class:error={message.status === 'error'}
+			class:success={message.status === 'success'}
 		>
 			{message.text}
 		</div>

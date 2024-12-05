@@ -2,31 +2,58 @@ import { db } from '$lib/server/db';
 import users, { updateUserSchema } from '$lib/server/db/schema/user';
 import { fail, redirect } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm/pg-core/expressions';
-import { message, setError, superValidate } from 'sveltekit-superforms';
+import { message, setError, superValidate, type Infer } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import type { PageServerLoad } from './$types';
+import tickets, { insertTicketSchema } from '$lib/server/db/schema/ticket';
+import { api as ticketClient } from '$lib/server/services/ticket';
+import { events } from '$lib/server/db/schema';
+import type { SuperFormMessage } from '$lib/types/SuperFormMessage';
+
+const ticketSchema = insertTicketSchema.pick({ id: true });
 
 export const load = (async ({ locals }) => {
 	if (!locals.user || !locals.session) {
 		return redirect(302, '/login');
 	}
+
 	const user = await db.query.users.findFirst({
 		where: eq(users.id, locals.user.id),
 		columns: {
 			password: false
+		},
+		with: {
+			accounts: { columns: { provider: true, providerAccountId: true } },
+			tickets: {
+				with: {
+					event: {
+						columns: {
+							id: true,
+							name: true
+						}
+					}
+				}
+			}
 		}
 	});
 
 	if (!user) {
 		return redirect(302, '/login');
 	}
-	const form = await superValidate(user, zod(updateUserSchema));
 
-	return { form, user };
+	const tickets = user.tickets.map((t) => ({
+		id: t.id,
+		event: t.event
+	}));
+
+	const ticketForm = await superValidate<Infer<typeof ticketSchema>, SuperFormMessage>(
+		zod(ticketSchema)
+	);
+	return { ticketForm, user, tickets };
 }) satisfies PageServerLoad;
 
 export const actions = {
-	default: async ({ request, locals }) => {
+	updateProfile: async ({ request, locals }) => {
 		if (!locals.user || !locals.session) {
 			return redirect(302, '/login');
 		}
@@ -47,6 +74,46 @@ export const actions = {
 
 		await db.update(users).set(form.data).where(eq(users.id, locals.user.id));
 
-		return message(form, 'Form posted successfully!');
+		return message(form, { status: 'success', text: 'Form posted successfully!' });
+	},
+
+	addTicket: async ({ request, locals }) => {
+		if (!locals.user || !locals.session) {
+			return redirect(302, '/login');
+		}
+
+		const ticketForm = await superValidate<Infer<typeof ticketSchema>, SuperFormMessage>(
+			request,
+			zod(ticketSchema)
+		);
+
+		if (!ticketForm.valid) return fail(400, { ticketForm });
+
+		const validatedTicket = await ticketClient.validate(ticketForm.data.id ?? '');
+
+		if (!validatedTicket) {
+			return setError(ticketForm, 'id', 'Ticket is invalid.');
+		}
+
+		const event = await db.query.events.findFirst({
+			where: eq(events.name, validatedTicket.event)
+		});
+
+		if (!event) {
+			return setError(ticketForm, 'id', 'Ticket is invalid.');
+		}
+
+		try {
+			await db.insert(tickets).values({
+				id: validatedTicket.id,
+				userId: locals.user.id,
+				eventId: event.id
+			});
+		} catch (error) {
+			console.error('Error adding ticket', error);
+			return setError(ticketForm, 'id', "You've already added a ticket for this event.");
+		}
+
+		return message(ticketForm, { status: 'success', text: 'Ticket added successfully!' });
 	}
 };

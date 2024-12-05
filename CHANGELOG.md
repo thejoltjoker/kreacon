@@ -35,6 +35,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   [#31](https://github.com/thejoltjoker/kreacon/pull/31)
 - Update layout of submissions page
   [#35](https://github.com/thejoltjoker/kreacon/pull/35)
+- Update profile page
+  [#39](https://github.com/thejoltjoker/kreacon/pull/39)
 
 ### Deprecated
 

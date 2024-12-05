@@ -124,9 +124,16 @@ export default {
 				md: defaultTheme.spacing['6'],
 				lg: defaultTheme.spacing['8'],
 				xl: defaultTheme.spacing['10'],
-				xxl: defaultTheme.spacing['12']
+				xxl: defaultTheme.spacing['12'],
+				'max-w-screen-xs': '400px',
+				'max-w-screen-sm': '640px',
+				'max-w-screen-md': '768px',
+				'max-w-screen-lg': '1024px',
+				'max-w-screen-xl': '1280px',
+				'max-w-screen-2xl': '1536px'
 			},
 			spacing: {
+				px: '1px',
 				'3xs': '2px',
 				'2xs': '4px',
 				xs: '8px',
@@ -231,7 +238,9 @@ export default {
 		'input-valid',
 		'input-invalid',
 		'max-w-screen-lg',
-		'max-w-screen-md'
+		'max-w-screen-md',
+		'border-white',
+		'border'
 	],
 	darkMode: 'selector',
 	plugins: [twForms]
