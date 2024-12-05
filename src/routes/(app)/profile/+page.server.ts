@@ -5,6 +5,8 @@ import { eq } from 'drizzle-orm/pg-core/expressions';
 import { message, setError, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import type { PageServerLoad } from './$types';
+import tickets, { insertTicketSchema } from '$lib/server/db/schema/ticket';
+import { ticket as ticketClient } from '$lib/server/services/ticket';
 
 export const load = (async ({ locals }) => {
 	if (!locals.user || !locals.session) {
@@ -40,7 +42,8 @@ export const load = (async ({ locals }) => {
 		event: t.event
 	}));
 
-	return { form, user, tickets };
+	const ticketForm = await superValidate(zod(insertTicketSchema));
+	return { form, ticketForm, user, tickets };
 }) satisfies PageServerLoad;
 
 export const actions = {
@@ -66,5 +69,29 @@ export const actions = {
 		await db.update(users).set(form.data).where(eq(users.id, locals.user.id));
 
 		return message(form, 'Form posted successfully!');
+	},
+	addTicket: async ({ request, locals }) => {
+		if (!locals.user || !locals.session) {
+			return redirect(302, '/login');
+		}
+
+		const ticketForm = await superValidate(request, zod(insertTicketSchema));
+
+		if (!ticketForm.valid) return fail(400, { ticketForm });
+
+		const ticketIsValid = await ticketClient.validate(ticketForm.data.id ?? '');
+
+		if (!ticketIsValid) {
+			return setError(ticketForm, 'id', 'Ticket is invalid.');
+		}
+
+		// TODO Add ticket
+		await db.insert(tickets).values({
+			id: ticketForm.data.id,
+			userId: locals.user.id,
+			eventId: ticketForm.data.eventId
+		});
+
+		return message(ticketForm, 'Ticket form submitted');
 	}
 };

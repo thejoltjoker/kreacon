@@ -3,6 +3,7 @@ import { integer, pgTable, uuid, varchar } from 'drizzle-orm/pg-core';
 import events from './event';
 import { timestamps } from './shared';
 import users from './user';
+import { createInsertSchema } from 'drizzle-zod';
 
 export const tickets = pgTable('ticket', {
 	id: varchar({ length: 255 })
@@ -12,6 +13,8 @@ export const tickets = pgTable('ticket', {
 	eventId: integer('event_id'),
 	...timestamps
 });
+
+export const insertTicketSchema = createInsertSchema(tickets);
 
 export type Ticket = InferSelectModel<typeof tickets>;
 export type InsertTicket = InferInsertModel<typeof tickets>;
