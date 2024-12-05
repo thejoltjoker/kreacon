@@ -1,6 +1,6 @@
 import type { Config } from 'tailwindcss';
 import twForms from '@tailwindcss/forms';
-import defaultTheme, { width } from 'tailwindcss/defaultTheme';
+import defaultTheme from 'tailwindcss/defaultTheme';
 
 export const colors = {
 	shade: {
@@ -133,6 +133,7 @@ export default {
 				'max-w-screen-2xl': '1536px'
 			},
 			spacing: {
+				px: '1px',
 				'3xs': '2px',
 				'2xs': '4px',
 				xs: '8px',
@@ -237,7 +238,9 @@ export default {
 		'input-valid',
 		'input-invalid',
 		'max-w-screen-lg',
-		'max-w-screen-md'
+		'max-w-screen-md',
+		'border-white',
+		'border'
 	],
 	darkMode: 'selector',
 	plugins: [twForms]

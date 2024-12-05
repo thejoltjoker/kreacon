@@ -11,7 +11,7 @@
 				white:
 					'bg-white border-white border text-black hover:text-muted-background hover:bg-muted-background hover:text-white',
 				destructive: 'bg-destructive text-destructive hover:bg-destructive/90',
-				muted: 'bg-muted-background text-muted-foreground hover:bg-muted-background',
+				muted: 'bg-muted-background text-muted-foreground-alt hover:bg-muted-background',
 				outline: 'border-white bg-background hover:bg-white hover:text-black border text-white',
 				ghost: 'hover:bg-muted-background hover:text-white',
 				link: 'text-primary underline-offset-4 hover:underline'

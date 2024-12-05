@@ -2,12 +2,13 @@ import { db } from '$lib/server/db';
 import users, { updateUserSchema } from '$lib/server/db/schema/user';
 import { fail, redirect } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm/pg-core/expressions';
-import { message, setError, superValidate } from 'sveltekit-superforms';
+import { message, setError, superValidate, type Infer } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import type { PageServerLoad } from './$types';
 import tickets, { insertTicketSchema } from '$lib/server/db/schema/ticket';
 import { api as ticketClient } from '$lib/server/services/ticket';
 import { events } from '$lib/server/db/schema';
+import type { SuperFormMessage } from '$lib/types/SuperFormMessage';
 
 const ticketSchema = insertTicketSchema.pick({ id: true });
 
@@ -38,15 +39,16 @@ export const load = (async ({ locals }) => {
 	if (!user) {
 		return redirect(302, '/login');
 	}
-	const form = await superValidate(user, zod(updateUserSchema));
 
 	const tickets = user.tickets.map((t) => ({
 		id: t.id,
 		event: t.event
 	}));
 
-	const ticketForm = await superValidate(zod(ticketSchema));
-	return { form, ticketForm, user, tickets };
+	const ticketForm = await superValidate<Infer<typeof ticketSchema>, SuperFormMessage>(
+		zod(ticketSchema)
+	);
+	return { ticketForm, user, tickets };
 }) satisfies PageServerLoad;
 
 export const actions = {
@@ -71,7 +73,7 @@ export const actions = {
 
 		await db.update(users).set(form.data).where(eq(users.id, locals.user.id));
 
-		return message(form, 'Form posted successfully!');
+		return message(form, { status: 'success', text: 'Form posted successfully!' });
 	},
 
 	addTicket: async ({ request, locals }) => {
@@ -79,7 +81,10 @@ export const actions = {
 			return redirect(302, '/login');
 		}
 
-		const ticketForm = await superValidate(request, zod(ticketSchema));
+		const ticketForm = await superValidate<Infer<typeof ticketSchema>, SuperFormMessage>(
+			request,
+			zod(ticketSchema)
+		);
 
 		if (!ticketForm.valid) return fail(400, { ticketForm });
 
@@ -107,6 +112,6 @@ export const actions = {
 			return setError(ticketForm, 'id', "You've already added a ticket for this event.");
 		}
 
-		return message(ticketForm, 'Ticket form submitted');
+		return message(ticketForm, { status: 'success', text: 'Ticket added successfully!' });
 	}
 };

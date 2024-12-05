@@ -28,6 +28,6 @@ export const actions = {
 		// TODO: Do something with the validated form.data
 
 		// Display a success status message
-		return message(form, 'Form posted successfully!');
+		return message(form, { text: 'Form posted successfully!', status: 'success' });
 	}
 };

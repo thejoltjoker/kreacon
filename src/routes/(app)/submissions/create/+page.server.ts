@@ -182,6 +182,6 @@ export const actions = {
 			redirect(StatusCodes.SEE_OTHER, `/submissions/${id}`);
 		}
 
-		return message(form, { text: 'Form posted successfully!' });
+		return message(form, { text: 'Form posted successfully!', status: 'success' });
 	}
 } satisfies Actions;

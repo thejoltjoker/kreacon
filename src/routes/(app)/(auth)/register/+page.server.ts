@@ -45,7 +45,7 @@ export const actions: Actions = {
 			setSessionTokenCookie(event, sessionToken, session.expiresAt);
 		} catch (e) {
 			logger.error(JSON.stringify(e));
-			return message(form, 'Something went wrong', { status: 500 });
+			return message(form, { text: 'Something went wrong', status: 'error' });
 		}
 		// await sendEmailVerification(email.toString());
 		return redirect(302, '/');

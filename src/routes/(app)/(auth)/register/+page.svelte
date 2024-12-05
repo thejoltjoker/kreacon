@@ -9,6 +9,7 @@
 	import { superForm } from 'sveltekit-superforms';
 	import { zodClient } from 'sveltekit-superforms/adapters';
 	import OAuthButtons from '../_components/OAuthButtons.svelte';
+	import { t } from '$lib/i18n';
 
 	interface PageProps {
 		data: import('./$types').PageData;
@@ -83,13 +84,19 @@
 		/>
 
 		{#if $message}
-			<p class="error-message">{$_(toSnakeCase($message), { default: $message })}</p>
+			<p
+				class="status"
+				class:error={$message.status === 'error'}
+				class:success={$message.status === 'success'}
+			>
+				{$t($message.text)}
+			</p>
 		{/if}
-		<Button type="submit">{$_('register', { default: 'Register' })}</Button>
+		<Button type="submit">{$t('Register')}</Button>
 	</form>
 	<!-- <form id="check" method="POST" action="?/check" use:submitEnhance></form> -->
 	<p class="text-center">
-		{$_('already_member', { default: 'Already a member?' })}
-		<Link href="/login">{$_('login', { default: 'Log in' })}</Link>
+		{$t('Already a member?')}
+		<Link href="/login">{$t('Log in')}</Link>
 	</p>
 </div>
