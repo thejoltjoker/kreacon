@@ -110,6 +110,7 @@ export const actions = {
 				eventId: event.id
 			});
 		} catch (error) {
+			console.error('Error adding ticket', error);
 			return setError(ticketForm, 'id', "You've already added a ticket for this event.");
 		}
 

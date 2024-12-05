@@ -4,8 +4,6 @@
 	import Link from '$lib/components/Link.svelte';
 	import ValidatedInput from '$lib/components/ValidatedInput.svelte';
 	import { registerUserSchema } from '$lib/schemas/user';
-	import { toSnakeCase } from 'drizzle-orm/casing';
-	import { _ } from 'svelte-i18n';
 	import { superForm } from 'sveltekit-superforms';
 	import { zodClient } from 'sveltekit-superforms/adapters';
 	import OAuthButtons from '../_components/OAuthButtons.svelte';

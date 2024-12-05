@@ -80,9 +80,11 @@ export const load = (async ({ locals }) => {
 		media: undefined,
 		thumbnail: undefined
 	};
+	const title = { text: 'Create Submission' };
 	return {
 		form,
-		events
+		events,
+		title
 	};
 }) satisfies PageServerLoad;
 

@@ -1,6 +1,4 @@
 <script lang="ts">
-	import Button from '$lib/components/Button.svelte';
-	import { PlusIcon } from 'lucide-svelte';
 	import type { PageData } from '../$types';
 
 	let { accounts = [] }: { accounts: PageData['user']['accounts'] } = $props();

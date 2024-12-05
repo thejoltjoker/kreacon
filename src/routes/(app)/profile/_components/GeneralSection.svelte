@@ -1,6 +1,4 @@
 <script lang="ts">
-	import Button from '$lib/components/Button.svelte';
-	import { CheckCircle2Icon, PlusIcon } from 'lucide-svelte';
 	import type { PageData } from '../$types';
 	import DumbInput from '$lib/components/Form/DumbInput.svelte';
 	let {
