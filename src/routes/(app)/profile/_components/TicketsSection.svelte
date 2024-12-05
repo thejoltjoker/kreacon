@@ -15,7 +15,7 @@
 
 <div class="flex w-full flex-col gap-sm">
 	<div class="flex items-center justify-between">
-		<h3>Tickets</h3>
+		<h2>Tickets</h2>
 		<Button variant="outline" icon={PlusIcon} onclick={() => (adding = true)}>Add ticket</Button>
 	</div>
 

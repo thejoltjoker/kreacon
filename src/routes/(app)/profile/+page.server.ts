@@ -23,6 +23,7 @@ export const load = (async ({ locals }) => {
 			password: false
 		},
 		with: {
+			accounts: { columns: { provider: true, providerAccountId: true } },
 			tickets: {
 				with: {
 					event: {

@@ -1,14 +1,30 @@
 <script lang="ts">
-	import { Label, type LabelRootProps } from 'bits-ui';
-	import type { HTMLInputAttributes } from 'svelte/elements';
-	import { type Icon as IconType } from 'lucide-svelte';
 	import { cn } from '$lib/utils';
+	import { Label, type LabelRootProps } from 'bits-ui';
+	import { type Icon as IconType } from 'lucide-svelte';
+	import type { HTMLInputAttributes } from 'svelte/elements';
+	import { tv } from 'tailwind-variants';
+
+	const inputVariants = tv({
+		base: 'h-form w-full rounded-sm border px-md focus:outline-none',
+		variants: {
+			variant: {
+				default:
+					'focus:border-violet-500 bg-bg focus:ring-violet-500 focus:placeholder:text-muted-background-alt disabled:border-muted-foreground disabled:bg-muted-background',
+				ghost: '!border-transparent bg-transparent rounded-none !p-0 text-muted-foreground-alt'
+			}
+		},
+		defaultVariants: {
+			variant: 'default'
+		}
+	});
 
 	interface Props extends HTMLInputAttributes {
 		label: string;
 		labelProps?: Omit<LabelRootProps, 'for'>;
 		icon?: typeof IconType;
 		errors?: string[];
+		variant?: 'default' | 'ghost';
 	}
 
 	let {
@@ -19,12 +35,15 @@
 		value = $bindable(),
 		icon: Icon,
 		errors = [],
+		variant = 'default',
 		...props
 	}: Props = $props();
 	let className = $derived(
 		cn(
-			'h-form w-full rounded-sm border bg-bg px-md focus:border-violet-500 focus:outline-none focus:ring-violet-500 focus:placeholder:text-muted-background-alt disabled:border-muted-foreground disabled:bg-muted-background',
-			value != null && value !== '' ? 'border-white' : 'border-muted-foreground',
+			inputVariants({ variant }),
+			value != null && value !== '' && variant !== 'ghost'
+				? 'border-white'
+				: 'border-muted-foreground',
 			errors.length > 0 && 'input-invalid',
 			props.class
 		)

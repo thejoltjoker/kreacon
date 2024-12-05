@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Divider from '$lib/components/Divider.svelte';
+	import AccountsSection from './_components/AccountsSection.svelte';
 	import GeneralSection from './_components/GeneralSection.svelte';
 	import TicketsSection from './_components/TicketsSection.svelte';
 	interface PageProps {
@@ -9,6 +10,7 @@
 	let { data }: PageProps = $props();
 
 	let { tickets, user } = data;
+	let { accounts } = user;
 </script>
 
 <svelte:head>
@@ -20,4 +22,5 @@
 	<Divider />
 	<TicketsSection {tickets} form={data.ticketForm} />
 	<Divider />
+	<AccountsSection {accounts} />
 </main>
