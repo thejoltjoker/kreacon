@@ -4,7 +4,7 @@
 	let { data }: { data: PageData } = $props();
 </script>
 
-<ul class="grid-cols-reactions-sm grid w-full gap-sm">
+<ul class="grid w-full grid-cols-reactions-sm gap-sm">
 	{#each data.reactions as reaction}
 		<li>
 			<a

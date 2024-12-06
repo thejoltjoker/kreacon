@@ -3,7 +3,7 @@
 	import type { Category } from '$lib/server/db/schema/category';
 	import type { Media } from '$lib/server/db/schema/media';
 	import type { Submission } from '$lib/server/db/schema/submission';
-	import type { PublicUser, User } from '$lib/server/db/schema/user';
+	import type { PublicUser } from '$lib/server/db/schema/user';
 	import StatusIcon from '../submissions/_components/StatusIcon.svelte';
 
 	interface Props {

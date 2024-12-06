@@ -1,11 +1,10 @@
 import db from '$lib/server/db';
-import users, { type PublicUser } from '$lib/server/db/schema/user';
+import users from '$lib/server/db/schema/user';
 import { desc, eq, and } from 'drizzle-orm';
 import type { LayoutServerLoad } from './$types';
-import submissions, { type Submission } from '$lib/server/db/schema/submission';
+import submissions from '$lib/server/db/schema/submission';
 import { StatusCodes } from 'http-status-codes';
 import { error } from '@sveltejs/kit';
-import type { Media } from '$lib/server/db/schema/media';
 
 export const load = (async ({ params, locals }) => {
 	const result = await db.transaction(async (tx) => {

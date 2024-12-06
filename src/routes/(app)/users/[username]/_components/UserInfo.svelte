@@ -1,6 +1,5 @@
 <script lang="ts">
 	import Avatar from '$lib/components/Avatar.svelte';
-	import type { PublicUser } from '$lib/server/db/schema/user';
 	import type { LayoutData } from '../$types';
 	interface Props {
 		user: LayoutData['profileUser'];

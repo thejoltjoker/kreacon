@@ -1,13 +1,13 @@
 import db from '$lib/server/db';
-import { users, type PublicUser } from '$lib/server/db/schema/user';
+import { users } from '$lib/server/db/schema/user';
 
-import { eq, and, count } from 'drizzle-orm';
+import { eq, count } from 'drizzle-orm';
 import type { PageServerLoad } from './$types';
 import { error } from '@sveltejs/kit';
 import { submissions } from '$lib/server/db/schema';
 import { sql } from 'drizzle-orm';
 
-export const load = (async ({ locals, params, url }) => {
+export const load = (async ({ params, url }) => {
 	const username = params.username;
 	const sortBy = url.searchParams.get('sortBy') ?? 'newest';
 	const page = Number(url.searchParams.get('page') ?? '1');

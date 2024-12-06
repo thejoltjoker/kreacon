@@ -1,12 +1,11 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
+	import { cn } from '$lib/utils';
 	import { Pagination, type PaginationRootProps } from 'bits-ui';
 	import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-svelte';
 
-	interface Props extends PaginationRootProps {}
-
-	let { count, perPage }: Props = $props();
+	let { count, perPage, ...props }: PaginationRootProps = $props();
 
 	let searchParams = $state(new URLSearchParams($page.url.searchParams.toString()));
 	let pageNum = $derived(Number(searchParams.get('page') ?? 1));
@@ -22,6 +21,8 @@
 		searchParams = params;
 		goto(`?${searchParams.toString()}`);
 	};
+
+	let rootClassName = cn('flex flex-col items-center', props.class);
 </script>
 
 <Pagination.Root
@@ -29,23 +30,24 @@
 	{count}
 	{perPage}
 	onPageChange={handlePageChange}
-	class="flex flex-col items-center"
+	class={rootClassName}
+	{...props}
 >
 	{#snippet children({ pages, range })}
 		<div class="my-xl flex items-center">
 			<Pagination.PrevButton
-				class="mr-sm inline-flex size-form items-center justify-center rounded-[9px] bg-transparent active:scale-98 disabled:cursor-not-allowed disabled:text-muted-foreground hover:disabled:bg-transparent"
+				class="mr-sm inline-flex size-form items-center justify-center rounded-form bg-transparent active:scale-98 disabled:cursor-not-allowed disabled:text-muted-foreground hover:disabled:bg-transparent"
 			>
 				<ChevronLeftIcon class="size-6" />
 			</Pagination.PrevButton>
 			<div class="flex items-center gap-2.5">
 				{#each pages as page (page.key)}
 					{#if page.type === 'ellipsis'}
-						<div class="text-foreground-alt select-none text-[15px] font-medium">...</div>
+						<div class="text-foreground-alt select-none font-medium">...</div>
 					{:else}
 						<Pagination.Page
 							{page}
-							class="inline-flex size-form select-none items-center justify-center rounded-[9px] bg-transparent text-[15px] font-medium hover:bg-muted-background active:scale-98 disabled:cursor-not-allowed disabled:opacity-50 hover:disabled:bg-transparent data-[selected]:bg-muted-background data-[selected]:text-tertiary"
+							class="inline-flex size-form select-none items-center justify-center rounded-form bg-transparent font-medium hover:bg-muted-background active:scale-98 disabled:cursor-not-allowed disabled:opacity-50 hover:disabled:bg-transparent data-[selected]:bg-muted-background data-[selected]:text-tertiary"
 						>
 							{page.value}
 						</Pagination.Page>
@@ -53,7 +55,7 @@
 				{/each}
 			</div>
 			<Pagination.NextButton
-				class="ml-sm inline-flex size-form items-center justify-center rounded-[9px] bg-transparent active:scale-98 disabled:cursor-not-allowed disabled:text-muted-foreground hover:disabled:bg-transparent"
+				class="ml-sm inline-flex size-form items-center justify-center rounded-form bg-transparent active:scale-98 disabled:cursor-not-allowed disabled:text-muted-foreground hover:disabled:bg-transparent"
 			>
 				<ChevronRightIcon class="size-6" />
 			</Pagination.NextButton>

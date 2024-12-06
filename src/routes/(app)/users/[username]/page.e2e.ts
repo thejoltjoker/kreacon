@@ -1,4 +1,3 @@
-import env from '$lib/env';
 import { test, expect } from '@playwright/test';
 
 test('User details', async ({ page }) => {
