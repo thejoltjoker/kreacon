@@ -11,7 +11,7 @@ export const load = (async ({ locals, url }) => {
 	const page = Number(url.searchParams.get('page') ?? '1');
 	const event = url.searchParams.get('event');
 	const category = url.searchParams.get('category');
-	const sortBy = url.searchParams.get('sortBy') ?? 'date_desc';
+	const sortBy = url.searchParams.get('sortBy') ?? 'newest';
 	const pageSize = 30;
 
 	const result = await db.transaction(async (tx) => {
@@ -32,9 +32,9 @@ export const load = (async ({ locals, url }) => {
 				),
 			orderBy: (items, { asc, desc }) => {
 				switch (sortBy) {
-					case 'date_asc':
+					case 'oldest':
 						return asc(items.createdAt);
-					case 'date_desc':
+					case 'newest':
 						return desc(items.createdAt);
 					// TODO Sort by reactions count
 					// case 'reactions_asc':

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	import HorizontalMenu from '$lib/components/HorizontalMenu.svelte';
 	import HorizontalMenuItem from '$lib/components/HorizontalMenuItem.svelte';
 	import type { Snippet } from 'svelte';
@@ -13,12 +14,13 @@
 		label: string;
 		disabled?: boolean;
 	}[] = [
-		{ label: 'Newest', value: 'date_desc' },
-		{ label: 'Oldest', value: 'date_asc' },
+		{ label: 'Newest', value: 'newest' },
+		{ label: 'Oldest', value: 'oldest' },
 		{ label: 'Random', value: 'random' }
 	];
 
 	let currentTab = $state('submissions');
+	let defaultSortBy = 'newest';
 </script>
 
 <!-- Profile Header Section -->
@@ -30,14 +32,20 @@
 	<!-- Navigation -->
 	<nav class="mt-sm md:mt-xl">
 		<HorizontalMenu>
-			<HorizontalMenuItem href="/users/{data.profileUser.username}/submissions">
+			<HorizontalMenuItem
+				href="/users/{data.profileUser.username}/submissions?sortBy={$page.url.searchParams.get(
+					'sortBy'
+				) ?? defaultSortBy}"
+			>
 				Submissions
 			</HorizontalMenuItem>
-			<!-- <HorizontalMenuItem href="/users/{data.user.username}/events">Events</HorizontalMenuItem> -->
-			<!-- <HorizontalMenuItem href="/users/{data.user.username}/votes">Votes</HorizontalMenuItem>
-			<HorizontalMenuItem href="/users/{data.user.username}/reactions">
+			<HorizontalMenuItem
+				href="/users/{data.profileUser.username}/reactions?sortBy={$page.url.searchParams.get(
+					'sortBy'
+				) ?? defaultSortBy}"
+			>
 				Reactions
-			</HorizontalMenuItem> -->
+			</HorizontalMenuItem>
 
 			<div class="ml-auto">
 				<SortBySelect items={sortByItems} />
