@@ -37,6 +37,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   [#35](https://github.com/thejoltjoker/kreacon/pull/35)
 - Update profile page
   [#39](https://github.com/thejoltjoker/kreacon/pull/39)
+- Update single user page
+  [#41](https://github.com/thejoltjoker/kreacon/pull/41)
 
 ### Deprecated
 
