@@ -25,3 +25,4 @@ static/mock/
 static/uploads/
 db-data
 playwright-report/
+.env.test

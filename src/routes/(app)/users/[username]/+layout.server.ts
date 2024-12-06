@@ -1,43 +1,63 @@
 import db from '$lib/server/db';
-import users from '$lib/server/db/schema/user';
-import { desc, eq } from 'drizzle-orm';
+import users, { type PublicUser } from '$lib/server/db/schema/user';
+import { desc, eq, and } from 'drizzle-orm';
 import type { LayoutServerLoad } from './$types';
-import submissions from '$lib/server/db/schema/submission';
+import submissions, { type Submission } from '$lib/server/db/schema/submission';
+import { StatusCodes } from 'http-status-codes';
+import { error } from '@sveltejs/kit';
+import type { Media } from '$lib/server/db/schema/media';
 
-export const load = (async ({ params }) => {
-	const user = await db.query.users.findFirst({
-		where: eq(users.username, params.username),
-		with: {
-			submissions: {
-				orderBy: desc(submissions.createdAt),
-				with: {
-					media: true
-				}
+export const load = (async ({ params, locals }) => {
+	const result = await db.transaction(async (tx) => {
+		const user = await tx.query.users.findFirst({
+			where: eq(users.username, params.username),
+			columns: {
+				username: true,
+				picture: true,
+				id: true,
+				createdAt: true
 			},
-			tickets: {
-				with: {
-					event: true
+			with: {
+				submissions: {
+					columns: {
+						id: true
+					}
 				},
-				columns: {
-					eventId: true
-				}
-			},
-
-			votes: {
-				with: {
-					submission: true
-				}
-			},
-			reactions: {
-				with: {
-					submission: true
+				tickets: {
+					columns: {
+						eventId: true
+					}
 				}
 			}
-		},
-		columns: {
-			password: false
+		});
+
+		if (!user) {
+			throw error(StatusCodes.NOT_FOUND, 'User not found');
 		}
+
+		const submissionsResult = await tx.query.submissions.findMany({
+			where: and(
+				eq(submissions.userId, user.id),
+				locals.user?.id !== user.id ? eq(submissions.status, 'published') : undefined
+			),
+			orderBy: desc(submissions.createdAt),
+			with: {
+				media: true
+			}
+		});
+
+		return {
+			profileUser: {
+				username: user.username,
+				picture: user.picture,
+				submissionCount: user.submissions.length,
+				ticketCount: user.tickets.length,
+				createdAt: user.createdAt
+			},
+			submissions: submissionsResult,
+			title: { text: 'User', href: `/users/${user.username}` }
+		};
 	});
 
-	return { user };
+	return result;
 }) satisfies LayoutServerLoad;

@@ -11,6 +11,7 @@ const stringBoolean = z.coerce
 
 const EnvSchema = z.object({
 	NODE_ENV: z.string().default('development'),
+	BASE_URL: z.string().url(),
 	DB_HOST: z.string(),
 	DB_USER: z.string(),
 	DB_PASSWORD: z.string(),
