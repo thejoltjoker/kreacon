@@ -12,17 +12,25 @@
 	let { title }: { title: { text: string; href: string } } = $props();
 
 	const menuItems = [
+		{ label: 'Categories', href: '/admin/submissions' },
 		{ label: 'Events', href: '/admin/events' },
-		{ label: 'Submissions', href: '/admin/submissions' }
+		{ label: 'Submissions', href: '/admin/submissions' },
+		{ label: 'Users', href: '/admin/users' }
 	];
 </script>
 
 <nav>
 	<!-- <BackButton /> -->
-	<a class="hidden flex-1 md:block" href={title.href ?? '/'}>
-		<h1>{$t(title.text ?? 'Kreacon')}</h1>
-		<p class="text-tertiary">Admin</p>
-	</a>
+	<div class="hidden flex-1 md:flex">
+		<a href={title.href ?? '/'} class="group">
+			<h1>{$t(title.text ?? 'Kreacon')}</h1>
+			<p
+				class="text-xs uppercase tracking-widest text-muted-foreground transition-colors group-hover:text-primary"
+			>
+				Kreacon Admin
+			</p>
+		</a>
+	</div>
 	<!-- TODO Breadcrumbs -->
 	<div class="md:hidden">
 		<Button

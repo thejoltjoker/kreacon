@@ -51,12 +51,14 @@
 	);
 </script>
 
-<Label.Root {...labelProps} for={name} class="relative flex w-full flex-col gap-xs">
-	{#if typeof label === 'string'}
-		<span class="font-bold">{label}</span>
-	{:else if label != null}
-		{@render label()}
-	{/if}
+<div class="relative flex w-full select-text flex-col gap-xs">
+	<Label.Root {...labelProps} for={name} class={cn(label == null && 'hidden', labelProps?.class)}>
+		{#if typeof label === 'string'}
+			<span class="font-bold">{label}</span>
+		{:else if label != null}
+			{@render label()}
+		{/if}
+	</Label.Root>
 	<span class="relative">
 		<input {...props} {type} {name} class={className} bind:value />
 		{#if Icon != null}
@@ -67,4 +69,4 @@
 	{#each errors as error}
 		<p class="error">{error}</p>
 	{/each}
-</Label.Root>
+</div>

@@ -1,14 +1,34 @@
 import { db } from '$lib/server/db';
 import { events } from '$lib/server/db/schema';
-import { eq } from 'drizzle-orm';
+import { eq, asc, desc } from 'drizzle-orm';
+import { sql } from 'drizzle-orm';
 import type { Actions, PageServerLoad } from './$types';
 import { fail } from '@sveltejs/kit';
 import { adminCheck, isAdmin } from '../utils';
 import { z } from 'zod';
 import { StatusCodes } from 'http-status-codes';
 
-export const load = (async () => {
-	const events = await db.query.events.findMany();
+export const load = (async ({ url }) => {
+	const sortBy = url.searchParams.get('sortBy') ?? 'newest';
+
+	const events = await db.query.events.findMany({
+		orderBy: (items) => {
+			switch (sortBy) {
+				case 'oldest':
+					return asc(items.createdAt);
+				case 'newest':
+					return desc(items.createdAt);
+				case 'name_asc':
+					return asc(items.name);
+				case 'name_desc':
+					return desc(items.name);
+				case 'random':
+					return sql`random()`;
+				default:
+					return desc(items.createdAt);
+			}
+		}
+	});
 
 	return { events, title: { text: 'Events', href: '/admin/events' } };
 }) satisfies PageServerLoad;
