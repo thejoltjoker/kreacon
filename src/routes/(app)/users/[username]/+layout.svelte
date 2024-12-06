@@ -3,7 +3,7 @@
 	import HorizontalMenu from '$lib/components/HorizontalMenu.svelte';
 	import HorizontalMenuItem from '$lib/components/HorizontalMenuItem.svelte';
 	import type { Snippet } from 'svelte';
-	import SortBySelect from '../../submissions/_components/SortBySelect.svelte';
+	import SortBySelect from '../../_components/SortBySelect.svelte';
 	import type { LayoutData } from './$types';
 	import UserInfo from './_components/UserInfo.svelte';
 
@@ -19,7 +19,6 @@
 		{ label: 'Random', value: 'random' }
 	];
 
-	let currentTab = $state('submissions');
 	let defaultSortBy = 'newest';
 </script>
 

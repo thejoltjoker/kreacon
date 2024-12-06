@@ -6,7 +6,7 @@
 	import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-svelte';
 	import { type PageData } from '../$types';
 	import EventCombobox from './EventCombobox.svelte';
-	import SortBySelect from './SortBySelect.svelte';
+	import SortBySelect from '../../_components/SortBySelect.svelte';
 	import { onMount } from 'svelte';
 	import Button from '$lib/components/Button.svelte';
 

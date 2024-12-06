@@ -14,7 +14,7 @@
 	}
 	let { href, children, class: className, ...props }: Props = $props();
 
-	const isActive = $derived($page.url.pathname === href);
+	const isActive = $derived($page.url.pathname.split('?')[0] === href.split('?')[0]);
 </script>
 
 <li>
