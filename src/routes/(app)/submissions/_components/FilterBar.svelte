@@ -15,8 +15,8 @@
 		label: string;
 		disabled?: boolean;
 	}[] = [
-		{ label: 'Newest', value: 'date_desc' },
-		{ label: 'Oldest', value: 'date_asc' },
+		{ label: 'Newest', value: 'newest' },
+		{ label: 'Oldest', value: 'oldest' },
 		{ label: 'Random', value: 'random' }
 		// TODO Sort by reactions count
 		// { label: 'Reactions', value: 'reactions' }

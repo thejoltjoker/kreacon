@@ -1,33 +1,27 @@
 import db from '$lib/server/db';
-import { users, type PublicUser } from '$lib/server/db/schema/user';
-
-import { eq, and } from 'drizzle-orm';
+import { reactions, users } from '$lib/server/db/schema';
+import { redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
-import { error } from '@sveltejs/kit';
-import { submissions } from '$lib/server/db/schema';
-import { sql } from 'drizzle-orm';
+import { eq, sql } from 'drizzle-orm';
 
-export const load = (async ({ locals, params, url }) => {
+export const load = (async ({ params, url }) => {
 	const username = params.username;
 	const sortBy = url.searchParams.get('sortBy') ?? 'newest';
 	const user = await db.query.users.findFirst({
 		where: eq(users.username, username)
 	});
-
 	if (!user) {
-		throw error(404, 'User not found');
+		throw redirect(302, '/');
 	}
-
-	const result = await db.query.submissions.findMany({
-		where: eq(submissions.userId, user.id),
+	const result = await db.query.reactions.findMany({
+		where: eq(reactions.userId, user.id),
 		with: {
-			media: true,
-			category: true,
-			thumbnail: true,
-			user: {
+			submission: {
 				columns: {
-					username: true,
-					picture: true
+					id: true
+				},
+				with: {
+					thumbnail: true
 				}
 			}
 		},
@@ -44,6 +38,5 @@ export const load = (async ({ locals, params, url }) => {
 			}
 		}
 	});
-
-	return { submissions: result };
+	return { reactions: result };
 }) satisfies PageServerLoad;
