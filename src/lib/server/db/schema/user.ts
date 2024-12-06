@@ -40,6 +40,7 @@ export const updateUserSchema = insertUserSchema.partial();
 export const selectUserSchema = createSelectSchema(users);
 
 export type User = InferSelectModel<typeof users>;
+export type PublicUser = Pick<User, 'username' | 'picture'>;
 export type UserWithoutPassword = Omit<User, 'password'>;
 export type InsertUser = InferInsertModel<typeof users>;
 

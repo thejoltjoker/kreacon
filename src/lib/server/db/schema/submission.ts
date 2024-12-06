@@ -2,9 +2,9 @@ import { relations, type InferInsertModel, type InferSelectModel } from 'drizzle
 import { integer, pgTable, uuid, varchar } from 'drizzle-orm/pg-core';
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
 import { randomString } from '../../../helpers/randomString';
-import categories from './category';
+import categories, { type Category } from './category';
 import events from './event';
-import media from './media';
+import media, { type Media } from './media';
 import reactions from './reaction';
 import { submissionStatusEnum, timestamps } from './shared';
 import tickets from './ticket';
@@ -70,6 +70,11 @@ export const updateSubmissionSchema = insertSubmissionSchema.partial();
 export const selectSubmissionSchema = createSelectSchema(submissions);
 
 export type Submission = InferSelectModel<typeof submissions>;
+export type SubmissionWithCategoryMediaThumbnail = InferSelectModel<typeof submissions> & {
+	category: Category;
+	media: Media;
+	thumbnail: Media;
+};
 export type InsertSubmission = InferInsertModel<typeof submissions>;
 
 export default submissions;

@@ -1,3 +1,4 @@
+test-results
 node_modules
 
 # Output
@@ -23,3 +24,5 @@ vite.config.ts.timestamp-*
 static/mock/
 static/uploads/
 db-data
+playwright-report/
+.env.test

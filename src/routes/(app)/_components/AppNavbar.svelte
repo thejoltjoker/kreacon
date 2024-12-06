@@ -12,9 +12,9 @@
 	let { title }: { title: { text: string; href: string } } = $props();
 
 	const menuItems = [
+		{ label: 'Home', href: '/' },
 		{ label: 'Submissions', href: '/submissions' },
-		{ label: 'Events', href: '/events' },
-		{ label: 'About', href: '/about' }
+		{ label: 'Events', href: '/events' }
 	];
 </script>
 
