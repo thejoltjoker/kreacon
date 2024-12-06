@@ -2,6 +2,7 @@
 	import { cn } from '$lib/utils';
 	import { Label, type LabelRootProps } from 'bits-ui';
 	import { type Icon as IconType } from 'lucide-svelte';
+	import type { Snippet } from 'svelte';
 	import type { HTMLInputAttributes } from 'svelte/elements';
 	import { tv } from 'tailwind-variants';
 
@@ -20,7 +21,7 @@
 	});
 
 	interface Props extends HTMLInputAttributes {
-		label: string;
+		label?: string | Snippet;
 		labelProps?: Omit<LabelRootProps, 'for'>;
 		icon?: typeof IconType;
 		errors?: string[];
@@ -51,7 +52,11 @@
 </script>
 
 <Label.Root {...labelProps} for={name} class="relative flex w-full flex-col gap-xs">
-	<span class="font-bold">{label}</span>
+	{#if typeof label === 'string'}
+		<span class="font-bold">{label}</span>
+	{:else if label != null}
+		{@render label()}
+	{/if}
 	<span class="relative">
 		<input {...props} {type} {name} class={className} bind:value />
 		{#if Icon != null}

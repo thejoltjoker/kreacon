@@ -56,8 +56,8 @@
 					</Tooltip.Provider>
 				{/each}
 				<div class="w-fit">
-					<DeleteButton />
-					<form method="POST" action="?/delete" use:enhance>
+					<DeleteButton bind:eventId={event.id} />
+					<!-- <form method="POST" action="?/delete" use:enhance>
 						<input type="hidden" name="id" value={event.id} />
 						<Button
 							type="submit"
@@ -67,7 +67,7 @@
 						>
 							<TrashIcon />
 						</Button>
-					</form>
+					</form> -->
 				</div>
 			</li>
 		{/each}

@@ -6,7 +6,8 @@
 		variants: {
 			variant: {
 				default: 'bg-divider text-muted-foreground',
-				white: 'bg-white text-white'
+				white: 'bg-white text-white',
+				invisible: 'bg-transparent'
 			}
 		},
 		defaultVariants: {

@@ -125,12 +125,13 @@ export default {
 				lg: defaultTheme.spacing['8'],
 				xl: defaultTheme.spacing['10'],
 				xxl: defaultTheme.spacing['12'],
-				'max-w-screen-xs': '400px',
-				'max-w-screen-sm': '640px',
-				'max-w-screen-md': '768px',
-				'max-w-screen-lg': '1024px',
-				'max-w-screen-xl': '1280px',
-				'max-w-screen-2xl': '1536px'
+				'screen-xs': '400px',
+				'screen-sm': '640px',
+				'screen-md': '768px',
+				'screen-lg': '1024px',
+				'screen-xl': '1280px',
+				'screen-2xl': '1536px',
+				dialog: '500px'
 			},
 			spacing: {
 				px: '1px',

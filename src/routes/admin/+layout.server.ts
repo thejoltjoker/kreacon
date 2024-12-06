@@ -1,10 +1,9 @@
-import { redirect } from '@sveltejs/kit';
+import { error } from '@sveltejs/kit';
+import { getReasonPhrase, StatusCodes } from 'http-status-codes';
 import type { LayoutServerLoad } from './$types';
-import { StatusCodes } from 'http-status-codes';
+import { adminCheck, isAdmin } from './utils';
 
 export const load = (async ({ locals }) => {
-	if (locals.session == null || locals.user == null || locals.user.role !== 'admin') {
-		throw redirect(302, '/');
-	}
+	adminCheck(locals);
 	return { title: { text: 'Admin', href: '/admin' } };
 }) satisfies LayoutServerLoad;
