@@ -33,8 +33,8 @@
 <nav>
 	<!-- <BackButton /> -->
 	<div class="hidden flex-1 md:flex">
-		<a href={title.href ?? '/'} class="group">
-			<h1>{$t(title.text ?? 'Kreacon')}</h1>
+		<a href={title?.href ?? '/'} class="group">
+			<h1>{$t(title?.text ?? 'Kreacon')}</h1>
 			<p
 				class:hidden={!isAdminRoute}
 				class="text-xs uppercase tracking-widest text-muted-foreground transition-colors group-hover:text-primary"

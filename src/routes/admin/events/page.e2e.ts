@@ -5,8 +5,6 @@ test('Unauthorized access to admin pages', async ({ page }) => {
 	await expect(response?.status()).toBe(401);
 });
 
-import { test, expect } from '@playwright/test';
-
 test('test', async ({ page }) => {
 	await page.goto('http://localhost:4173/login');
 	await page.locator('input[name="email"]').fill('john.doe@example.com');
