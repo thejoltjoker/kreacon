@@ -28,6 +28,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   [#33](https://github.com/thejoltjoker/kreacon/pull/33)
 - Add events page with categories and rules
   [#37](https://github.com/thejoltjoker/kreacon/pull/37)
+- Admin list events page
+  [#43](https://github.com/thejoltjoker/kreacon/pull/43)
 
 ### Changed
 

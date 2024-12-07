@@ -11,10 +11,10 @@ export const eventCategories = pgTable(
 		id: serial('id').primaryKey(),
 		categoryId: integer('category_id')
 			.notNull()
-			.references(() => categories.id),
+			.references(() => categories.id, { onDelete: 'cascade' }),
 		eventId: integer('event_id')
 			.notNull()
-			.references(() => events.id)
+			.references(() => events.id, { onDelete: 'cascade' })
 	},
 	(table) => ({
 		uniqueConstraint: unique().on(table.eventId, table.categoryId)

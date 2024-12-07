@@ -1,34 +1,31 @@
 <script lang="ts">
+	import { page } from '$app/stores';
+	import { t } from '$lib/i18n';
+	import type { Snippet } from 'svelte';
+	import '../../app.css';
 	import AdminNavbar from './_components/AdminNavbar.svelte';
-	import SidebarMenu from './_components/SidebarMenu.svelte';
-	import { _ } from 'svelte-i18n';
+	import Footer from '../(app)/_components/Footer.svelte';
+	import FilterBar from './_components/FilterBar.svelte';
+
+	interface Props {
+		data: import('./$types').LayoutData;
+		children: Snippet;
+	}
+
+	let { children }: Props = $props();
+	let title = $derived($page.data.title.text ?? 'Kreacon');
 </script>
 
-<AdminNavbar />
-<div class="flex gap-sm px-sm md:gap-md md:px-md">
-	<aside class="hidden flex-col lg:flex">
-		<SidebarMenu />
-		<p>{'Event name'}</p>
-		<ul>
-			<li>
-				<a href="/admin/events/1/categories">{$_('categories')}</a>
-			</li>
-			<li>
-				<a href="/admin/events/1/submissions">{$_('submissions')}</a>
-			</li>
-		</ul>
-	</aside>
+<svelte:head>
+	<title>{$t(title)}</title>
+</svelte:head>
 
-	<div class="w-full">
-		<slot />
+<div class="flex min-h-screen flex-col">
+	<AdminNavbar title={$page.data.title} />
+	<FilterBar />
+
+	<div class="flex min-h-full grow flex-col items-center gap-xl">
+		{@render children()}
 	</div>
+	<Footer />
 </div>
-
-<style lang="postcss">
-	aside {
-		@apply w-sidebar;
-		& ul {
-			@apply flex flex-col gap-y-2;
-		}
-	}
-</style>

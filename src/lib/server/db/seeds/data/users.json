@@ -6,7 +6,7 @@
 		"password": "password",
 		"emailVerifiedAt": "2024-03-20T00:00:00.000Z",
 		"picture": "/images/john.doe.webp",
-		"role": "user"
+		"role": "admin"
 	},
 	{
 		"id": "726a0536-c092-4e47-807d-7b6118e821ea",
