@@ -24,7 +24,9 @@
 </script>
 
 <Select.Root type="single" {value} onValueChange={handleSortByChange} allowDeselect={false}>
-	<Select.Trigger class="select-trigger flex gap-sm text-nowrap border-white font-bold">
+	<Select.Trigger
+		class="select-trigger sort-by-select flex gap-sm text-nowrap border-white font-bold"
+	>
 		<p>Sorted by: <span>{selectedLabel ?? placeholder}</span></p>
 
 		<ArrowDownUpIcon class="size-5" />
