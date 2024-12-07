@@ -30,6 +30,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   [#37](https://github.com/thejoltjoker/kreacon/pull/37)
 - Admin list events page
   [#43](https://github.com/thejoltjoker/kreacon/pull/43)
+- End-to-end testing
+  [#46](https://github.com/thejoltjoker/kreacon/pull/46)
 
 ### Changed
 
