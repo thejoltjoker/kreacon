@@ -7,15 +7,24 @@ import { fail } from '@sveltejs/kit';
 import { CalendarDateTime, parseAbsolute, parseDateTime, parseTime } from '@internationalized/date';
 import { z } from 'zod';
 
-const createEventSchema = insertEventSchema.pick({
-	description: true,
-	name: true,
-	slug: true,
-	submissionsOpenAt: true,
-	submissionsCloseAt: true,
-	votingOpenAt: true,
-	votingCloseAt: true
-});
+const createEventSchema = insertEventSchema
+	.pick({
+		description: true,
+		name: true,
+		slug: true,
+		submissionsOpenAt: true,
+		submissionsCloseAt: true,
+		votingOpenAt: true,
+		votingCloseAt: true
+	})
+	.refine((data) => data.submissionsCloseAt > data.submissionsOpenAt, {
+		message: 'Submissions close date must be after submissions open date',
+		path: ['submissionsCloseAt']
+	})
+	.refine((data) => data.votingCloseAt > data.votingOpenAt, {
+		message: 'Voting close date must be after voting open date',
+		path: ['votingCloseAt']
+	});
 
 export const load = (async () => {
 	const initialValues = {
@@ -23,9 +32,9 @@ export const load = (async () => {
 		description: '',
 		slug: '',
 		submissionsOpenAt: new Date(),
-		submissionsCloseAt: new Date(),
-		votingOpenAt: new Date(),
-		votingCloseAt: new Date()
+		submissionsCloseAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+		votingOpenAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+		votingCloseAt: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000)
 	};
 	const eventForm = await superValidate(initialValues, zod(createEventSchema));
 	return { eventForm };

@@ -8,6 +8,7 @@
 		class?: string;
 		icon?: typeof IconType;
 		iconProps?: IconProps;
+		inputProps?: DateField.InputProps;
 	};
 
 	let {
@@ -17,6 +18,7 @@
 		labelText,
 		icon: Icon,
 		iconProps,
+		inputProps,
 		...props
 	}: Props = $props();
 	let isChanged = $state(false);
@@ -33,8 +35,10 @@
 			{name}
 			class={cn(
 				'group flex h-form w-fit select-none items-center rounded-form border border-muted-foreground bg-bg px-xs text-muted-foreground-alt transition-colors focus-within:border-primary focus-within:shadow-sm hover:border-white data-[invalid]:border-destructive',
-				isChanged && 'border-white'
+				isChanged && 'border-white',
+				inputProps?.class
 			)}
+			{...inputProps}
 		>
 			{#snippet children({ segments })}
 				{#each segments as { part, value }}

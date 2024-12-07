@@ -1,46 +1,83 @@
 <script lang="ts">
-	import DumbInput from '$lib/components/Form/DumbInput.svelte';
-	import kebabCase from 'lodash/kebabCase';
-	import type { PageData } from './$types';
-	import { stringProxy, superForm } from 'sveltekit-superforms';
-	import SuperDebug from 'sveltekit-superforms';
 	import Button from '$lib/components/Button.svelte';
 	import DumbDate from '$lib/components/Form/DumbDate.svelte';
-	import { CalendarDateTime, parseAbsolute } from '@internationalized/date';
+	import DumbInput from '$lib/components/Form/DumbInput.svelte';
 	import {
-		CalendarArrowUpIcon,
-		CalendarHeartIcon,
-		CalendarIcon,
-		CalendarX2Icon
-	} from 'lucide-svelte';
+		CalendarDate,
+		CalendarDateTime,
+		getLocalTimeZone,
+		parseAbsolute,
+		parseZonedDateTime
+	} from '@internationalized/date';
+	import kebabCase from 'lodash/kebabCase';
+	import { CalendarArrowUpIcon, CalendarHeartIcon, CalendarX2Icon } from 'lucide-svelte';
+	import SuperDebug, { superForm } from 'sveltekit-superforms';
+	import type { PageData } from './$types';
 
 	let { data }: { data: PageData } = $props();
 
 	const { form, errors, constraints, message, enhance } = superForm(data.eventForm);
 	let slug = $derived(kebabCase($form.name));
 
-	let now = new Date();
-	let nowCalendarDateTime = new CalendarDateTime(
-		now.getFullYear(),
-		now.getMonth(),
-		now.getDate(),
-		now.getHours(),
-		now.getMinutes()
+	const timezone = getLocalTimeZone();
+
+	let submissionsOpenAt = $state<CalendarDateTime>(
+		new CalendarDateTime(
+			$form.submissionsOpenAt.getFullYear(),
+			$form.submissionsOpenAt.getMonth(),
+			$form.submissionsOpenAt.getDate(),
+			$form.submissionsOpenAt.getHours(),
+			$form.submissionsOpenAt.getMinutes()
+		)
 	);
-	let submissionsOpenAt = $state<CalendarDateTime>(nowCalendarDateTime);
-	let submissionsCloseAt = $state<CalendarDateTime>(nowCalendarDateTime.add({ days: 7 }));
-	let votingOpenAt = $state<CalendarDateTime>(nowCalendarDateTime.add({ days: 7 }));
-	let votingCloseAt = $state<CalendarDateTime>(nowCalendarDateTime.add({ days: 14 }));
+	let submissionsCloseAt = $state<CalendarDateTime>(
+		new CalendarDateTime(
+			$form.submissionsCloseAt.getFullYear(),
+			$form.submissionsCloseAt.getMonth(),
+			$form.submissionsCloseAt.getDate(),
+			$form.submissionsCloseAt.getHours(),
+			$form.submissionsCloseAt.getMinutes()
+		)
+	);
+	let votingOpenAt = $state<CalendarDateTime>(
+		new CalendarDateTime(
+			$form.votingOpenAt.getFullYear(),
+			$form.votingOpenAt.getMonth(),
+			$form.votingOpenAt.getDate(),
+			$form.votingOpenAt.getHours(),
+			$form.votingOpenAt.getMinutes()
+		)
+	);
+	let votingCloseAt = $state<CalendarDateTime>(
+		new CalendarDateTime(
+			$form.votingCloseAt.getFullYear(),
+			$form.votingCloseAt.getMonth(),
+			$form.votingCloseAt.getDate(),
+			$form.votingCloseAt.getHours(),
+			$form.votingCloseAt.getMinutes()
+		)
+	);
 
 	$effect(() => {
-		console.log('Converting to date');
-		$form.submissionsOpenAt = submissionsOpenAt.toDate();
+		$form.submissionsOpenAt = submissionsOpenAt.toDate(timezone);
+	});
+
+	$effect(() => {
+		$form.submissionsCloseAt = submissionsCloseAt.toDate(timezone);
+	});
+
+	$effect(() => {
+		$form.votingOpenAt = votingOpenAt.toDate(timezone);
+	});
+
+	$effect(() => {
+		$form.votingCloseAt = votingCloseAt.toDate(timezone);
 	});
 </script>
 
 <div class="flex w-full max-w-screen-md flex-col gap-xl py-xl">
 	<SuperDebug data={$form} />
-	{#if $message}<h3>{$message}</h3>{/if}
+	{#if $message}<h3>{JSON.stringify($message)}</h3>{/if}
 	<form method="POST" use:enhance class="flex flex-col gap-xl">
 		<DumbInput
 			label="Name"
@@ -82,7 +119,7 @@
 				labelText="Submissions Open At"
 				name="submissionsOpenAt"
 				bind:value={submissionsOpenAt}
-				{...$constraints.submissionsOpenAt}
+				inputProps={{ ...$constraints.submissionsOpenAt }}
 			/>
 			{#if $errors.submissionsOpenAt}<span class="invalid">{$errors.submissionsOpenAt}</span>{/if}
 
@@ -93,7 +130,7 @@
 				labelText="Submissions Close At"
 				name="submissionsCloseAt"
 				bind:value={submissionsCloseAt}
-				{...$constraints.submissionsCloseAt}
+				inputProps={{ ...$constraints.submissionsCloseAt }}
 			/>
 			{#if $errors.submissionsCloseAt}<span class="invalid">{$errors.submissionsCloseAt}</span>{/if}
 		</div>
@@ -105,7 +142,7 @@
 				labelText="Voting Open At"
 				name="votingOpenAt"
 				bind:value={votingOpenAt}
-				{...$constraints.votingOpenAt}
+				inputProps={{ ...$constraints.votingOpenAt }}
 			/>
 			{#if $errors.votingOpenAt}<span class="invalid">{$errors.votingOpenAt}</span>{/if}
 
@@ -116,7 +153,7 @@
 				labelText="Voting Close At"
 				name="votingCloseAt"
 				bind:value={votingCloseAt}
-				{...$constraints.votingCloseAt}
+				inputProps={{ ...$constraints.votingCloseAt }}
 			/>
 			{#if $errors.votingCloseAt}<span class="invalid">{$errors.votingCloseAt}</span>{/if}
 		</div>
