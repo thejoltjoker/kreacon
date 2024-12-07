@@ -55,17 +55,6 @@
 				{/each}
 				<div class="w-fit">
 					<DeleteButton bind:eventId={event.id} />
-					<!-- <form method="POST" action="?/delete" use:enhance>
-						<input type="hidden" name="id" value={event.id} />
-						<Button
-							type="submit"
-							variant="outline"
-							size="icon"
-							class="border-destructive hover:bg-destructive/20 hover:text-destructive"
-						>
-							<TrashIcon />
-						</Button>
-					</form> -->
 				</div>
 			</li>
 		{/each}

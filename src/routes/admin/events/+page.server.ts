@@ -4,7 +4,7 @@ import { eq, asc, desc } from 'drizzle-orm';
 import { sql } from 'drizzle-orm';
 import type { Actions, PageServerLoad } from './$types';
 import { fail } from '@sveltejs/kit';
-import { adminCheck, isAdmin } from '../utils';
+import { adminCheck } from '../utils';
 import { z } from 'zod';
 import { StatusCodes } from 'http-status-codes';
 

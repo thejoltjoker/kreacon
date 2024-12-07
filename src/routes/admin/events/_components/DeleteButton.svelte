@@ -30,7 +30,7 @@
 		</Button>
 	{/snippet}
 
-	{#snippet content()}
+	{#snippet description()}
 		<form method="POST" action="/admin/events?/delete" class="flex flex-col gap-xl" use:enhance>
 			<input type="hidden" bind:value={eventId} name="eventId" />
 			<p>

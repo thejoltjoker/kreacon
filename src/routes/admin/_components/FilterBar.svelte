@@ -1,14 +1,7 @@
 <script lang="ts">
-	import { page } from '$app/stores';
-	import AccountMenu from '$lib/components/AccountMenu.svelte';
 	import Button from '$lib/components/Button.svelte';
-	import DumbInput from '$lib/components/Form/DumbInput.svelte';
-	import Link from '$lib/components/Link.svelte';
-	import { t } from '$lib/i18n';
-	import { AlignJustifyIcon, PlusIcon, SearchIcon, XIcon } from 'lucide-svelte';
-	import { _ } from 'svelte-i18n';
+	import { PlusIcon } from 'lucide-svelte';
 	import SortBySelect from '../../(app)/_components/SortBySelect.svelte';
-	import EventCombobox from '../../(app)/submissions/_components/EventCombobox.svelte';
 	import TextFilter from '../../(app)/_components/TextFilter.svelte';
 
 	const sortByItems = [

@@ -3,7 +3,7 @@
 	import { Label, type LabelRootProps } from 'bits-ui';
 	import { type IconProps, type Icon as IconType } from 'lucide-svelte';
 	import type { Snippet } from 'svelte';
-	import type { HTMLAttributes, HTMLInputAttributes } from 'svelte/elements';
+	import type { HTMLInputAttributes } from 'svelte/elements';
 	import { tv } from 'tailwind-variants';
 
 	const inputVariants = tv({

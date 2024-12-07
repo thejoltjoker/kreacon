@@ -1,26 +1,22 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
 	import { Dialog, type WithoutChild } from 'bits-ui';
-	import { Separator } from 'bits-ui';
 	import { XIcon } from 'lucide-svelte';
-	import Button from './Button.svelte';
 	import Divider from './Divider.svelte';
 
 	interface Props extends Dialog.RootProps {
 		title: string;
-		content: Snippet;
+		description: Snippet;
 		trigger: Snippet;
 		contentProps?: WithoutChild<Dialog.ContentProps>;
 	}
 
 	let {
 		open = $bindable(false),
-		children,
 		contentProps,
 		title,
-		content,
+		description,
 		trigger,
-
 		...restProps
 	}: Props = $props();
 </script>
@@ -49,7 +45,7 @@
 			<Divider />
 
 			<Dialog.Description class="p-xl">
-				{@render content()}
+				{@render description()}
 			</Dialog.Description>
 		</Dialog.Content>
 	</Dialog.Portal>

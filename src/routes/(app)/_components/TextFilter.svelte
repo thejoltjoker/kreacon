@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-	import { onMount, type Component } from 'svelte';
+	import { onMount } from 'svelte';
 	import DumbInput from '$lib/components/Form/DumbInput.svelte';
-	import { HourglassIcon, LoaderCircleIcon, LoaderIcon, SearchIcon } from 'lucide-svelte';
+	import { SearchIcon } from 'lucide-svelte';
 	import { debounce } from 'throttle-debounce';
 	import { cn } from '$lib/utils';
 	let value = $state($page.url.searchParams.get('q'));
