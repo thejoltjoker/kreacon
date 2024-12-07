@@ -24,10 +24,7 @@ test('test', async ({ page }) => {
 	await expect(eventsList.locator('li').first()).toContainText('Created At');
 	await expect(eventsList.locator('li').first()).toContainText('Updated At');
 
-
-
-    // Sorting should work
-
+	// Sorting should work
 
 	//   WIP
 	//   await expect(page.locator('body')).toMatchAriaSnapshot(`

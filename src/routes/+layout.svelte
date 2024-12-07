@@ -7,7 +7,6 @@
 	import { page } from '$app/stores';
 	import Navbar from './(app)/_components/Navbar.svelte';
 	import Footer from './(app)/_components/Footer.svelte';
-	import { t } from '$lib/i18n';
 	let { children } = $props();
 	let ready = $state(false);
 
