@@ -4,6 +4,9 @@
 	import '@fontsource/noto-color-emoji';
 	import { locale, waitLocale } from 'svelte-i18n';
 	import '../app.css';
+	import { page } from '$app/stores';
+	import Navbar from './(app)/_components/Navbar.svelte';
+	import Footer from './(app)/_components/Footer.svelte';
 	let { children } = $props();
 	let ready = $state(false);
 
@@ -19,9 +22,15 @@
 </script>
 
 <svelte:head>
-	<title>Kreacon</title>
+	<title>{$page.data.title.text ?? 'Kreacon'}</title>
 </svelte:head>
 
 {#if ready}
-	{@render children()}
+	<div class="flex min-h-screen flex-col">
+		<Navbar title={$page.data.title} />
+
+		{@render children()}
+
+		<Footer />
+	</div>
 {/if}

@@ -9,7 +9,7 @@
 </script>
 
 <div class="w-full rounded-form">
-	<ul class="flex w-full flex-col gap-sm">
+	<ul class="events-list flex w-full flex-col gap-sm">
 		{#each data.events as event}
 			<li
 				class="flex gap-sm border-b border-b-divider px-xl pb-sm first-of-type:pt-sm last-of-type:border-b-0"

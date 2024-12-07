@@ -12,7 +12,13 @@ export const load = (async ({ url }) => {
 	const sortBy = url.searchParams.get('sortBy') ?? 'newest';
 	const searchQuery = url.searchParams.get('q');
 	let result;
-
+	const sortOptions = {
+		oldest: asc(events.createdAt),
+		name_asc: asc(events.name),
+		name_desc: desc(events.name),
+		random: sql`random()`,
+		newest: desc(events.createdAt)
+	} as const;
 	if (searchQuery) {
 		result = await db
 			.select()
@@ -26,31 +32,13 @@ export const load = (async ({ url }) => {
 					sql`ts_rank(to_tsvector('english', ${events.name} || ' ' || ${events.description}),
 						websearch_to_tsquery('english', ${searchQuery}))`
 				),
-				sortBy === 'oldest'
-					? asc(events.createdAt)
-					: sortBy === 'name_asc'
-						? asc(events.name)
-						: sortBy === 'name_desc'
-							? desc(events.name)
-							: sortBy === 'random'
-								? sql`random()`
-								: desc(events.createdAt)
+				sortOptions[sortBy as keyof typeof sortOptions] ?? sortOptions.newest
 			);
 	} else {
 		result = await db
 			.select()
 			.from(events)
-			.orderBy(
-				sortBy === 'oldest'
-					? asc(events.createdAt)
-					: sortBy === 'name_asc'
-						? asc(events.name)
-						: sortBy === 'name_desc'
-							? desc(events.name)
-							: sortBy === 'random'
-								? sql`random()`
-								: desc(events.createdAt)
-			);
+			.orderBy(sortOptions[sortBy as keyof typeof sortOptions] ?? sortOptions.newest);
 	}
 
 	return { events: result, title: { text: 'Events', href: '/admin/events' } };

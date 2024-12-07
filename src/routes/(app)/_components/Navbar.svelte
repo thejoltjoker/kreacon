@@ -2,31 +2,48 @@
 	import { page } from '$app/stores';
 	import AccountMenu from '$lib/components/AccountMenu.svelte';
 	import Button from '$lib/components/Button.svelte';
+	import HorizontalMenu from '$lib/components/HorizontalMenu.svelte';
+	import HorizontalMenuItem from '$lib/components/HorizontalMenuItem.svelte';
 	import Link from '$lib/components/Link.svelte';
-	import { toSnakeCase } from 'drizzle-orm/casing';
-	import { AlignJustifyIcon, PlusIcon, XIcon } from 'lucide-svelte';
+	import { t } from '$lib/i18n';
+	import { AlignJustifyIcon, HomeIcon, PlusIcon, XIcon } from 'lucide-svelte';
 	import { _ } from 'svelte-i18n';
 	import { fly } from 'svelte/transition';
 	const user = $derived($page.data.user);
 	let isMenuOpen = $state(false);
+	let isAdminRoute = $derived($page.url.pathname.startsWith('/admin'));
+	let { title }: { title?: { text: string; href: string } } = $props();
 
-	const menuItems = [
-		{ label: 'Submissions', href: '/submissions' },
-		{ label: 'Events', href: '/' }
-	];
+	let menuItems = $derived(
+		isAdminRoute
+			? [
+					{ label: 'Categories', href: '/admin/categories' },
+					{ label: 'Events', href: '/admin/events' },
+					{ label: 'Submissions', href: '/admin/submissions' },
+					{ label: 'Users', href: '/admin/users' }
+				]
+			: [
+					{ label: 'Home', href: '/' },
+					{ label: 'Submissions', href: '/submissions' },
+					{ label: 'Events', href: '/events' }
+				]
+	);
 </script>
 
 <nav>
-	<ul class="left">
-		<li><a href="/" id="title">Kreacon</a></li>
-		{#each menuItems as item}
-			<li>
-				<Button href={item.href} variant="ghost">
-					{$_(toSnakeCase(item.label), { default: item.label })}
-				</Button>
-			</li>
-		{/each}
-	</ul>
+	<!-- <BackButton /> -->
+	<div class="hidden flex-1 md:flex">
+		<a href={title?.href ?? '/'} class="group">
+			<h1>{$t(title?.text ?? 'Kreacon')}</h1>
+			<p
+				class:hidden={!isAdminRoute}
+				class="text-xs uppercase tracking-widest text-muted-foreground transition-colors group-hover:text-primary"
+			>
+				{$t('Kreacon Admin')}
+			</p>
+		</a>
+	</div>
+	<!-- TODO Breadcrumbs -->
 	<div class="md:hidden">
 		<Button
 			onclick={() => (isMenuOpen = !isMenuOpen)}
@@ -41,17 +58,40 @@
 			{/if}
 		</Button>
 	</div>
-	<ul class="right gap-sm">
-		{#if user}
+	<HorizontalMenu highlightActive={false}>
+		{#each menuItems as item}
+			<HorizontalMenuItem href={item.href}>{item.label}</HorizontalMenuItem>
+		{/each}
+	</HorizontalMenu>
+
+	<!-- User menu -->
+	<ul class="flex flex-1 items-center justify-end gap-sm">
+		{#if user && isAdminRoute}
 			<li>
 				<div class="hidden md:block">
-					<Button variant="outline" href="/submissions/create">
-						{$_('submit', { default: 'Submit' })}
+					<Button variant="outline" href="/">
+						{$t('App')}
 					</Button>
 				</div>
 				<div class="md:hidden">
-					<Button size="icon" variant="outline" href="/submissions/create">
-						<PlusIcon class="h-4 w-4" />
+					<Button size="icon" variant="outline" href="/">
+						<HomeIcon />
+					</Button>
+				</div>
+			</li>
+			<li>
+				<AccountMenu />
+			</li>
+		{:else if user}
+			<li>
+				<div class="hidden md:block">
+					<Button variant="default" href="/submissions/create">
+						{$t('Submit')}
+					</Button>
+				</div>
+				<div class="md:hidden">
+					<Button size="icon" variant="default" href="/submissions/create">
+						<PlusIcon />
 					</Button>
 				</div>
 			</li>
@@ -90,22 +130,7 @@
 {/if}
 
 <style lang="postcss">
-	#title {
-		@apply mr-2xl text-xl font-bold;
-	}
 	nav {
-		@apply flex items-center gap-sm px-sm py-sm md:px-lg;
-	}
-	ul {
-		@apply inline-flex items-center;
-		&.left {
-			@apply hidden md:inline-flex;
-		}
-		& li {
-			@apply flex items-center;
-		}
-		&.right {
-			@apply ml-auto;
-		}
+		@apply flex items-center justify-between gap-sm border-b border-b-divider px-sm py-sm md:px-xl;
 	}
 </style>

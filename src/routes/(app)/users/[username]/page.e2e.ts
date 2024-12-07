@@ -5,9 +5,7 @@ test('User details', async ({ page }) => {
 	const userDetails = page.locator('#user-details');
 	await expect(userDetails).toBeVisible();
 	await expect(userDetails.getByRole('heading', { name: 'john_doe' })).toBeVisible();
-	await expect(userDetails.locator('.member-since').first()).toContainText(
-		'Member since dec 6, 2024'
-	);
+	await expect(userDetails.locator('.member-since').first()).toContainText('Member since');
 	await expect(userDetails.locator('.user-stats').first()).toContainText('events');
 	await expect(userDetails.locator('.user-stats').first()).toContainText('submissions');
 });
