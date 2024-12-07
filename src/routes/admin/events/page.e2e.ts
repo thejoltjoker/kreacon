@@ -1,15 +1,17 @@
 import { test, expect } from '@playwright/test';
 
 test('Unauthorized access to admin pages', async ({ page }) => {
-	const response = await page.goto('http://localhost:4173/admin');
+	const response = await page.goto('/admin');
 	await expect(response?.status()).toBe(401);
 });
 
 test('test', async ({ page }) => {
-	await page.goto('http://localhost:4173/login');
+	await page.goto('/login');
 	await page.locator('input[name="email"]').fill('john.doe@example.com');
 	await page.locator('input[name="password"]').fill('password');
 	await page.getByRole('button', { name: 'Login' }).click();
+	await page.waitForURL('/profile');
+	await page.goto('/admin/events');
 	const eventsList = await page.locator('.events-list');
 	// List item should exist
 	await expect(eventsList.locator('li').first()).toContainText('Id');
@@ -23,129 +25,18 @@ test('test', async ({ page }) => {
 	await expect(eventsList.locator('li').first()).toContainText('Updated At');
 
 	// Sorting should work
+	await expect(eventsList.locator('li').first()).toContainText('LanHack Winter');
+	await expect(eventsList.locator('li').last()).toContainText('Beacon Summer');
+	const sortBySelect = await page.locator('.sort-by-select');
+	await expect(sortBySelect).toContainText('Sorted by: Newest');
+	await page.goto('/admin/events?sortBy=oldest');
+	await expect(sortBySelect).toContainText('Sorted by: Oldest');
+	await expect(eventsList.locator('li').first()).toContainText('Beacon Summer');
+	await expect(eventsList.locator('li').last()).toContainText('LanHack Winter');
 
-	//   WIP
-	//   await expect(page.locator('body')).toMatchAriaSnapshot(`
-	//     - listitem:
-	//       - button "1 Id":
-	//         - paragraph: 1
-	//         - paragraph: Id
-	//       - button /Beacon Summer \\d+ Name/:
-	//         - paragraph: /Beacon Summer \\d+/
-	//         - paragraph: Name
-	//       - button /beacon-summer-\\d+ Slug/:
-	//         - paragraph: /beacon-summer-\\d+/
-	//         - paragraph: Slug
-	//       - button /Join us for an epic LAN party at Beacon Summer \\d+! Experience non-stop gaming, thrilling tournaments, cosplay contests, tech workshops, and delicious food\\. Connect with fellow gamers, win exciting prizes, and create unforgettable memories in this action-packed event\\. Description/:
-	//         - paragraph: /Join us for an epic LAN party at Beacon Summer \\d+! Experience non-stop gaming, thrilling tournaments, cosplay contests, tech workshops, and delicious food\\. Connect with fellow gamers, win exciting prizes, and create unforgettable memories in this action-packed event\\./
-	//         - paragraph: Description
-	//       - button /\\d+ Jun \\d+, \\d+:\\d+ Submissions Open At/:
-	//         - paragraph: /\\d+ Jun \\d+, \\d+:\\d+/
-	//         - paragraph: Submissions Open At
-	//       - button /\\d+ Jun \\d+, \\d+:\\d+ Submissions Close At/:
-	//         - paragraph: /\\d+ Jun \\d+, \\d+:\\d+/
-	//         - paragraph: Submissions Close At
-	//       - button /\\d+ Jun \\d+, \\d+:\\d+ Voting Open At/:
-	//         - paragraph: /\\d+ Jun \\d+, \\d+:\\d+/
-	//         - paragraph: Voting Open At
-	//       - button /\\d+ Jul \\d+, \\d+:\\d+ Voting Close At/:
-	//         - paragraph: /\\d+ Jul \\d+, \\d+:\\d+/
-	//         - paragraph: Voting Close At
-	//       - button /\\d+ Dec \\d+, \\d+:\\d+ Created At/:
-	//         - paragraph: /\\d+ Dec \\d+, \\d+:\\d+/
-	//         - paragraph: Created At
-	//       - button /\\d+ Dec \\d+, \\d+:\\d+ Updated At/:
-	//         - paragraph: /\\d+ Dec \\d+, \\d+:\\d+/
-	//         - paragraph: Updated At
-	//       - button:
-	//         - button:
-	//           - img
-	//     `);
-	//   await page.getByRole('button', { name: 'Sorted by: Oldest' }).click();
-	//   await page.getByRole('option', { name: 'Newest' }).click();
-	//   await expect(page.locator('body')).toMatchAriaSnapshot(`
-	//     - listitem:
-	//       - button "4 Id":
-	//         - paragraph: 4
-	//         - paragraph: Id
-	//       - button /LanHack Winter \\d+ Name/:
-	//         - paragraph: /LanHack Winter \\d+/
-	//         - paragraph: Name
-	//       - button /lanhack-winter-\\d+ Slug/:
-	//         - paragraph: /lanhack-winter-\\d+/
-	//         - paragraph: Slug
-	//       - button "Gross Description":
-	//         - paragraph: Gross
-	//         - paragraph: Description
-	//       - button /\\d+ Nov \\d+, \\d+:\\d+ Submissions Open At/:
-	//         - paragraph: /\\d+ Nov \\d+, \\d+:\\d+/
-	//         - paragraph: Submissions Open At
-	//       - button /\\d+ Dec \\d+, \\d+:\\d+ Submissions Close At/:
-	//         - paragraph: /\\d+ Dec \\d+, \\d+:\\d+/
-	//         - paragraph: Submissions Close At
-	//       - button /\\d+ Nov \\d+, \\d+:\\d+ Voting Open At/:
-	//         - paragraph: /\\d+ Nov \\d+, \\d+:\\d+/
-	//         - paragraph: Voting Open At
-	//       - button /\\d+ Dec \\d+, \\d+:\\d+ Voting Close At/:
-	//         - paragraph: /\\d+ Dec \\d+, \\d+:\\d+/
-	//         - paragraph: Voting Close At
-	//       - button /\\d+ Dec \\d+, \\d+:\\d+ Created At/:
-	//         - paragraph: /\\d+ Dec \\d+, \\d+:\\d+/
-	//         - paragraph: Created At
-	//       - button /\\d+ Dec \\d+, \\d+:\\d+ Updated At/:
-	//         - paragraph: /\\d+ Dec \\d+, \\d+:\\d+/
-	//         - paragraph: Updated At
-	//       - button:
-	//         - button:
-	//           - img
-	//     `);
-	//   await page.getByPlaceholder('Search').click();
-	//   await page.getByPlaceholder('Search').fill('s');
-	//   await page.goto('http://localhost:4173/admin/events?sortBy=newest&q=s');
-	//   await page.getByPlaceholder('Search').click();
-	//   await page.getByPlaceholder('Search').fill('summe');
-	//   await page.goto('http://localhost:4173/admin/events?sortBy=newest&q=summe');
-	//   await page.getByPlaceholder('Search').click();
-	//   await page.getByPlaceholder('Search').fill('summe');
-	//   await page.goto('http://localhost:4173/admin/events?sortBy=newest&q=summe');
-	//   await page.getByPlaceholder('Search').click();
-	//   await page.getByPlaceholder('Search').fill('summe');
-	//   await page.goto('http://localhost:4173/admin/events?sortBy=newest&q=summer');
-	//   await expect(page.locator('body')).toMatchAriaSnapshot(`
-	//     - list:
-	//       - listitem:
-	//         - button "1 Id":
-	//           - paragraph: 1
-	//           - paragraph: Id
-	//         - button /Beacon Summer \\d+ Name/:
-	//           - paragraph: /Beacon Summer \\d+/
-	//           - paragraph: Name
-	//         - button /beacon-summer-\\d+ Slug/:
-	//           - paragraph: /beacon-summer-\\d+/
-	//           - paragraph: Slug
-	//         - button /Join us for an epic LAN party at Beacon Summer \\d+! Experience non-stop gaming, thrilling tournaments, cosplay contests, tech workshops, and delicious food\\. Connect with fellow gamers, win exciting prizes, and create unforgettable memories in this action-packed event\\. Description/:
-	//           - paragraph: /Join us for an epic LAN party at Beacon Summer \\d+! Experience non-stop gaming, thrilling tournaments, cosplay contests, tech workshops, and delicious food\\. Connect with fellow gamers, win exciting prizes, and create unforgettable memories in this action-packed event\\./
-	//           - paragraph: Description
-	//         - button /\\d+ Jun \\d+, \\d+:\\d+ Submissions Open At/:
-	//           - paragraph: /\\d+ Jun \\d+, \\d+:\\d+/
-	//           - paragraph: Submissions Open At
-	//         - button /\\d+ Jun \\d+, \\d+:\\d+ Submissions Close At/:
-	//           - paragraph: /\\d+ Jun \\d+, \\d+:\\d+/
-	//           - paragraph: Submissions Close At
-	//         - button /\\d+ Jun \\d+, \\d+:\\d+ Voting Open At/:
-	//           - paragraph: /\\d+ Jun \\d+, \\d+:\\d+/
-	//           - paragraph: Voting Open At
-	//         - button /\\d+ Jul \\d+, \\d+:\\d+ Voting Close At/:
-	//           - paragraph: /\\d+ Jul \\d+, \\d+:\\d+/
-	//           - paragraph: Voting Close At
-	//         - button /\\d+ Dec \\d+, \\d+:\\d+ Created At/:
-	//           - paragraph: /\\d+ Dec \\d+, \\d+:\\d+/
-	//           - paragraph: Created At
-	//         - button /\\d+ Dec \\d+, \\d+:\\d+ Updated At/:
-	//           - paragraph: /\\d+ Dec \\d+, \\d+:\\d+/
-	//           - paragraph: Updated At
-	//         - button:
-	//           - button:
-	//             - img
-	//     `);
+	// Search filter should work
+	await page.getByPlaceholder('Search').fill('lanhack');
+	await expect(eventsList.locator('li').first()).toContainText('LanHack Winter');
+	await expect(eventsList.locator('li').last()).not.toContainText('Beacon Summer');
+	await expect(page).toHaveURL(/.*[?&]q=lanhack.*/);
 });

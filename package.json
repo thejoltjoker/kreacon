@@ -26,6 +26,7 @@
 		"swa:deploy": "swa deploy",
 		"swa:start": "swa start",
 		"test:e2e": "npm run db:reset && playwright test",
+		"test:e2e:ui": "npm run db:reset && playwright test --ui",
 		"test:unit": "vitest",
 		"test": "npm run db:reset && npm run test:unit -- --run && npm run test:e2e",
 		"translate": "tsx src/lib/i18n/translate.ts"
