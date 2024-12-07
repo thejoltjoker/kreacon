@@ -4,9 +4,30 @@ import { zod } from 'sveltekit-superforms/adapters';
 import type { PageServerLoad } from './$types';
 import { message } from 'sveltekit-superforms';
 import { fail } from '@sveltejs/kit';
-export const load = (async () => {
-	const eventForm = await superValidate(zod(insertEventSchema));
+import { CalendarDateTime, parseAbsolute, parseDateTime, parseTime } from '@internationalized/date';
+import { z } from 'zod';
 
+const createEventSchema = insertEventSchema.pick({
+	description: true,
+	name: true,
+	slug: true,
+	submissionsOpenAt: true,
+	submissionsCloseAt: true,
+	votingOpenAt: true,
+	votingCloseAt: true
+});
+
+export const load = (async () => {
+	const initialValues = {
+		name: '',
+		description: '',
+		slug: '',
+		submissionsOpenAt: new Date(),
+		submissionsCloseAt: new Date(),
+		votingOpenAt: new Date(),
+		votingCloseAt: new Date()
+	};
+	const eventForm = await superValidate(initialValues, zod(createEventSchema));
 	return { eventForm };
 }) satisfies PageServerLoad;
 
