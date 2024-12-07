@@ -1,10 +1,8 @@
 <script lang="ts">
+	import { toTitleCase } from '$lib/helpers/toTitleCase';
+	import { t } from '$lib/i18n';
 	import { Tooltip } from 'bits-ui';
 	import type { PageData } from './$types';
-	import { cn } from '$lib/utils';
-	import Button from '$lib/components/Button.svelte';
-	import { TrashIcon } from 'lucide-svelte';
-	import { enhance } from '$app/forms';
 	import DeleteButton from './_components/DeleteButton.svelte';
 
 	export let data: PageData;
@@ -33,7 +31,7 @@
 										{value}
 									{/if}
 								</p>
-								<p class="truncate text-sm text-muted-foreground">{key}</p>
+								<p class="truncate text-sm text-muted-foreground">{$t(toTitleCase(key))}</p>
 							</Tooltip.Trigger>
 							<Tooltip.Content sideOffset={8}>
 								<div

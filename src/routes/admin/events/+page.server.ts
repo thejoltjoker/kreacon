@@ -10,27 +10,50 @@ import { StatusCodes } from 'http-status-codes';
 
 export const load = (async ({ url }) => {
 	const sortBy = url.searchParams.get('sortBy') ?? 'newest';
+	const searchQuery = url.searchParams.get('q');
+	let result;
 
-	const events = await db.query.events.findMany({
-		orderBy: (items) => {
-			switch (sortBy) {
-				case 'oldest':
-					return asc(items.createdAt);
-				case 'newest':
-					return desc(items.createdAt);
-				case 'name_asc':
-					return asc(items.name);
-				case 'name_desc':
-					return desc(items.name);
-				case 'random':
-					return sql`random()`;
-				default:
-					return desc(items.createdAt);
-			}
-		}
-	});
+	if (searchQuery) {
+		result = await db
+			.select()
+			.from(events)
+			.where(
+				sql`to_tsvector('english', ${events.name} || ' ' || ${events.description}) 
+					@@ websearch_to_tsquery('english', ${searchQuery})`
+			)
+			.orderBy(
+				desc(
+					sql`ts_rank(to_tsvector('english', ${events.name} || ' ' || ${events.description}),
+						websearch_to_tsquery('english', ${searchQuery}))`
+				),
+				sortBy === 'oldest'
+					? asc(events.createdAt)
+					: sortBy === 'name_asc'
+						? asc(events.name)
+						: sortBy === 'name_desc'
+							? desc(events.name)
+							: sortBy === 'random'
+								? sql`random()`
+								: desc(events.createdAt)
+			);
+	} else {
+		result = await db
+			.select()
+			.from(events)
+			.orderBy(
+				sortBy === 'oldest'
+					? asc(events.createdAt)
+					: sortBy === 'name_asc'
+						? asc(events.name)
+						: sortBy === 'name_desc'
+							? desc(events.name)
+							: sortBy === 'random'
+								? sql`random()`
+								: desc(events.createdAt)
+			);
+	}
 
-	return { events, title: { text: 'Events', href: '/admin/events' } };
+	return { events: result, title: { text: 'Events', href: '/admin/events' } };
 }) satisfies PageServerLoad;
 
 export const actions = {
