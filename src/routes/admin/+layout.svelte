@@ -1,6 +1,5 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
-	import FilterBar from './_components/FilterBar.svelte';
 	import { t } from '$lib/i18n';
 	import { page } from '$app/stores';
 

@@ -17,7 +17,6 @@
 		iconProps?: IconProps;
 		errors?: string[];
 		variant?: 'default' | 'ghost';
-		elementRef?: HTMLInputElement | HTMLTextAreaElement;
 		type?: HTMLInputTypeAttribute & HTMLTextAreaElement['type'];
 	}
 
@@ -27,11 +26,13 @@
 	} & HTMLInputAttributes;
 
 	type TextareaProps = BaseProps & {
-		type: HTMLTextAreaElement['type'];
+		type: 'textarea';
 		elementRef?: HTMLTextAreaElement;
 	} & HTMLTextareaAttributes;
 
-	type Props = InputProps | TextareaProps;
+	type Props = 
+		| (Omit<InputProps, 'type'> & { type?: Exclude<HTMLInputTypeAttribute, 'textarea'> })
+		| (Omit<TextareaProps, 'type'> & { type: 'textarea' });
 
 	let {
 		type = 'text',
@@ -42,7 +43,7 @@
 		icon: Icon,
 		errors = [],
 		variant = 'default',
-		elementRef: inputRef = $bindable(),
+		elementRef = $bindable(),
 		iconProps,
 		...props
 	}: Props = $props();
@@ -90,7 +91,7 @@
 				{name}
 				class={className}
 				bind:value
-				bind:this={inputRef}
+				bind:this={elementRef}
 			>
 			</textarea>
 			{#if Icon != null}
@@ -104,7 +105,7 @@
 			{/if}
 		{:else}
 			{@const inputProps = props as InputProps}
-			<input {...inputProps} {type} {name} class={className} bind:value bind:this={inputRef} />
+			<input {...inputProps} {type} {name} class={className} bind:value bind:this={elementRef} />
 			{#if Icon != null}
 				<Icon
 					{...iconProps}

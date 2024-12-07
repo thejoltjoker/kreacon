@@ -28,6 +28,7 @@
 </script>
 
 <DumbInput
+	type="text"
 	bind:elementRef={inputRef}
 	icon={SearchIcon}
 	iconProps={{

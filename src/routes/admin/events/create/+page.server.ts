@@ -3,7 +3,7 @@ import events, { insertEventSchema } from '$lib/server/db/schema/event';
 import { fail, redirect } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
 import kebabCase from 'lodash/kebabCase';
-import { message, superValidate } from 'sveltekit-superforms';
+import { superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import type { PageServerLoad } from './$types';
 import { StatusCodes } from 'http-status-codes';
