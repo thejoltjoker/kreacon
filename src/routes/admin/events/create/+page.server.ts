@@ -1,17 +1,17 @@
-import { insertEventSchema } from '$lib/server/db/schema/event';
-import { superValidate } from 'sveltekit-superforms';
+import db from '$lib/server/db';
+import events, { insertEventSchema } from '$lib/server/db/schema/event';
+import { fail, redirect } from '@sveltejs/kit';
+import { eq } from 'drizzle-orm';
+import kebabCase from 'lodash/kebabCase';
+import { message, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import type { PageServerLoad } from './$types';
-import { message } from 'sveltekit-superforms';
-import { fail } from '@sveltejs/kit';
-import { CalendarDateTime, parseAbsolute, parseDateTime, parseTime } from '@internationalized/date';
-import { z } from 'zod';
+import { StatusCodes } from 'http-status-codes';
 
 const createEventSchema = insertEventSchema
 	.pick({
 		description: true,
 		name: true,
-		slug: true,
 		submissionsOpenAt: true,
 		submissionsCloseAt: true,
 		votingOpenAt: true,
@@ -30,7 +30,6 @@ export const load = (async () => {
 	const initialValues = {
 		name: '',
 		description: '',
-		slug: '',
 		submissionsOpenAt: new Date(),
 		submissionsCloseAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
 		votingOpenAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
@@ -43,19 +42,30 @@ export const load = (async () => {
 export const actions = {
 	default: async ({ request }) => {
 		const form = await superValidate(request, zod(insertEventSchema));
-		console.log(form);
 
 		if (!form.valid) {
 			// Again, return { form } and things will just work.
 			return fail(400, { form });
 		}
+		let slug = kebabCase(form.data.name);
+		const existingEvent = await db.query.events.findFirst({
+			where: eq(events.slug, slug)
+		});
 
-		// TODO: Do something with the validated form.data
+		if (existingEvent) {
+			slug = `${slug}-${Math.floor(Math.random() * 10000)}`;
+		}
+
+		const [result] = await db
+			.insert(events)
+			.values({ ...form.data, slug })
+			.returning();
 
 		// Display a success status message
-		return message(form, {
-			status: 'success',
-			message: 'Event created successfully!'
-		});
+		// return message(form, {
+		// 	status: 'success',
+		// 	message: `Event created successfully! #${result?.id}`
+		// });
+		redirect(StatusCodes.TEMPORARY_REDIRECT, `/admin/events`);
 	}
 };

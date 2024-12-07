@@ -13,10 +13,10 @@
 	];
 </script>
 
-<section>
+<section class="w-full">
 	<div class="mx-auto w-full">
 		<div class="flex items-center gap-sm">
-			<Button variant="outline" icon={PlusIcon}>Add event</Button>
+			<Button href="/admin/events/create" variant="outline" icon={PlusIcon}>Add event</Button>
 			<div class="ml-auto inline-flex items-center gap-sm">
 				<!-- <DumbInput icon={SearchIcon} placeholder="Search" /> -->
 				<TextFilter />

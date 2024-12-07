@@ -2,14 +2,7 @@
 	import Button from '$lib/components/Button.svelte';
 	import DumbDate from '$lib/components/Form/DumbDate.svelte';
 	import DumbInput from '$lib/components/Form/DumbInput.svelte';
-	import {
-		CalendarDate,
-		CalendarDateTime,
-		getLocalTimeZone,
-		parseAbsolute,
-		parseZonedDateTime
-	} from '@internationalized/date';
-	import kebabCase from 'lodash/kebabCase';
+	import { CalendarDateTime, getLocalTimeZone } from '@internationalized/date';
 	import { CalendarArrowUpIcon, CalendarHeartIcon, CalendarX2Icon } from 'lucide-svelte';
 	import SuperDebug, { superForm } from 'sveltekit-superforms';
 	import type { PageData } from './$types';
@@ -17,7 +10,6 @@
 	let { data }: { data: PageData } = $props();
 
 	const { form, errors, constraints, message, enhance } = superForm(data.eventForm);
-	let slug = $derived(kebabCase($form.name));
 
 	const timezone = getLocalTimeZone();
 
@@ -88,17 +80,6 @@
 			{...$constraints.name}
 		/>
 		{#if $errors.name}<span class="invalid">{$errors.name}</span>{/if}
-		<DumbInput
-			label="Slug"
-			type="text"
-			name="slug"
-			aria-invalid={$errors.slug ? 'true' : undefined}
-			disabled
-			value={slug}
-			errors={$errors.slug}
-			{...$constraints.slug}
-		/>
-		{#if $errors.slug}<span class="invalid">{$errors.slug}</span>{/if}
 
 		<DumbInput
 			label="Description"
@@ -110,7 +91,6 @@
 		/>
 		{#if $errors.description}<span class="invalid">{$errors.description}</span>{/if}
 
-		<!-- TODO Dumb date inputs -->
 		<div class="flex gap-xl">
 			<DumbDate
 				class="flex-1"
