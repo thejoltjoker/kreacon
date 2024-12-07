@@ -5,18 +5,19 @@ import rules from './rule';
 import { timestamps } from './shared';
 import { submissions } from './submission';
 import { tickets } from './ticket';
+import { createInsertSchema } from 'drizzle-zod';
 
 export const events = pgTable(
 	'event',
 	{
 		id: serial('id').primaryKey(),
+		description: varchar({ length: 512 }),
 		name: varchar({ length: 255 }).notNull(),
 		slug: varchar({ length: 255 }).notNull().unique(),
-		description: varchar({ length: 512 }),
-		submissionsOpenAt: timestamp('submissions_open_at', { mode: 'date' }).notNull(),
 		submissionsCloseAt: timestamp('submissions_close_at', { mode: 'date' }).notNull(),
-		votingOpenAt: timestamp('voting_open_at', { mode: 'date' }).notNull(),
+		submissionsOpenAt: timestamp('submissions_open_at', { mode: 'date' }).notNull(),
 		votingCloseAt: timestamp('voting_close_at', { mode: 'date' }).notNull(),
+		votingOpenAt: timestamp('voting_open_at', { mode: 'date' }).notNull(),
 		...timestamps
 	},
 	(table) => ({
@@ -33,6 +34,8 @@ export const eventsRelations = relations(events, ({ many }) => ({
 	tickets: many(tickets),
 	rules: many(rules)
 }));
+
+export const insertEventSchema = createInsertSchema(events);
 
 export type Event = InferSelectModel<typeof events>;
 export type InsertEvent = InferInsertModel<typeof events>;

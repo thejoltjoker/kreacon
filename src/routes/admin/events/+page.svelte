@@ -1,13 +1,14 @@
 <script lang="ts">
-	import { toTitleCase } from '$lib/helpers/toTitleCase';
 	import { t } from '$lib/i18n';
 	import { Tooltip } from 'bits-ui';
+	import startCase from 'lodash/startCase';
+	import FilterBar from '../_components/FilterBar.svelte';
 	import type { PageData } from './$types';
 	import DeleteButton from './_components/DeleteButton.svelte';
-
 	export let data: PageData;
 </script>
 
+<FilterBar />
 <div class="w-full rounded-form">
 	<ul class="events-list flex w-full flex-col gap-sm">
 		{#each data.events as event}
@@ -31,7 +32,7 @@
 										{value}
 									{/if}
 								</p>
-								<p class="truncate text-sm text-muted-foreground">{$t(toTitleCase(key))}</p>
+								<p class="truncate text-sm text-muted-foreground">{$t(startCase(key))}</p>
 							</Tooltip.Trigger>
 							<Tooltip.Content sideOffset={8}>
 								<div

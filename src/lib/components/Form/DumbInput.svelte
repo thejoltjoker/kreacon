@@ -3,32 +3,35 @@
 	import { Label, type LabelRootProps } from 'bits-ui';
 	import { type IconProps, type Icon as IconType } from 'lucide-svelte';
 	import type { Snippet } from 'svelte';
-	import type { HTMLInputAttributes } from 'svelte/elements';
+	import type {
+		HTMLInputAttributes,
+		HTMLInputTypeAttribute,
+		HTMLTextareaAttributes
+	} from 'svelte/elements';
 	import { tv } from 'tailwind-variants';
 
-	const inputVariants = tv({
-		base: 'h-form w-full rounded-sm border px-md focus:outline-none',
-		variants: {
-			variant: {
-				default:
-					'focus:border-violet-500 bg-bg focus:ring-violet-500 focus:placeholder:text-muted-background-alt disabled:border-muted-foreground disabled:bg-muted-background',
-				ghost: '!border-transparent bg-transparent rounded-none !p-0 text-muted-foreground-alt'
-			}
-		},
-		defaultVariants: {
-			variant: 'default'
-		}
-	});
-
-	interface Props extends HTMLInputAttributes {
+	interface BaseProps {
 		label?: string | Snippet;
 		labelProps?: Omit<LabelRootProps, 'for'>;
 		icon?: typeof IconType;
 		iconProps?: IconProps;
 		errors?: string[];
 		variant?: 'default' | 'ghost';
-		inputRef?: HTMLInputElement;
+		elementRef?: HTMLInputElement | HTMLTextAreaElement;
+		type?: HTMLInputTypeAttribute & HTMLTextAreaElement['type'];
 	}
+
+	type InputProps = BaseProps & {
+		type?: Exclude<HTMLInputTypeAttribute, HTMLTextAreaElement['type']>;
+		elementRef?: HTMLInputElement;
+	} & HTMLInputAttributes;
+
+	type TextareaProps = BaseProps & {
+		type: HTMLTextAreaElement['type'];
+		elementRef?: HTMLTextAreaElement;
+	} & HTMLTextareaAttributes;
+
+	type Props = InputProps | TextareaProps;
 
 	let {
 		type = 'text',
@@ -39,10 +42,25 @@
 		icon: Icon,
 		errors = [],
 		variant = 'default',
-		inputRef = $bindable(),
+		elementRef: inputRef = $bindable(),
 		iconProps,
 		...props
 	}: Props = $props();
+
+	const inputVariants = tv({
+		base: cn('w-full rounded-sm border px-md focus:outline-none', type !== 'textarea' && 'h-form'),
+		variants: {
+			variant: {
+				default:
+					'focus:border-violet-500 bg-bg focus:ring-violet-500 focus:placeholder:text-muted-background-alt disabled:border-muted-foreground disabled:bg-muted-background/50 disabled:text-muted-foreground-alt',
+				ghost: '!border-transparent bg-transparent rounded-none !p-0 text-muted-foreground-alt'
+			}
+		},
+		defaultVariants: {
+			variant: 'default'
+		}
+	});
+
 	let className = $derived(
 		cn(
 			inputVariants({ variant }),
@@ -64,15 +82,38 @@
 		{/if}
 	</Label.Root>
 	<span class="relative">
-		<input {...props} {type} {name} class={className} bind:value bind:this={inputRef} />
-		{#if Icon != null}
-			<Icon
-				{...iconProps}
-				class={cn(
-					'absolute right-md top-1/2 size-5 -translate-y-1/2 text-muted-foreground transition-all duration-300',
-					iconProps?.class
-				)}
-			/>
+		{#if type === 'textarea'}
+			{@const textareaProps = props as TextareaProps}
+			<textarea
+				{...textareaProps}
+				rows={textareaProps.rows ?? 3}
+				{name}
+				class={className}
+				bind:value
+				bind:this={inputRef}
+			>
+			</textarea>
+			{#if Icon != null}
+				<Icon
+					{...iconProps}
+					class={cn(
+						'absolute right-md top-1/2 size-5 -translate-y-1/2 text-muted-foreground transition-all duration-300',
+						iconProps?.class
+					)}
+				/>
+			{/if}
+		{:else}
+			{@const inputProps = props as InputProps}
+			<input {...inputProps} {type} {name} class={className} bind:value bind:this={inputRef} />
+			{#if Icon != null}
+				<Icon
+					{...iconProps}
+					class={cn(
+						'absolute right-md top-1/2 size-5 -translate-y-1/2 text-muted-foreground transition-all duration-300',
+						iconProps?.class
+					)}
+				/>
+			{/if}
 		{/if}
 	</span>
 

@@ -16,8 +16,6 @@
 	<title>{$t(title)}</title>
 </svelte:head>
 
-<FilterBar />
-
 <div class="flex min-h-full grow flex-col items-center gap-xl">
 	{@render children()}
 </div>

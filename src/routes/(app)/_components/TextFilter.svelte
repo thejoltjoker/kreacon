@@ -28,7 +28,7 @@
 </script>
 
 <DumbInput
-	bind:inputRef
+	bind:elementRef={inputRef}
 	icon={SearchIcon}
 	iconProps={{
 		class: cn(
