@@ -4,7 +4,7 @@
 	import { type VariantProps, tv } from 'tailwind-variants';
 	import { type Icon as IconType } from 'lucide-svelte';
 	export const buttonVariants = tv({
-		base: 'ring-offset-bg font-bold inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-button transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-5 [&_svg]:shrink-0',
+		base: 'ring-offset-bg font-bold inline-flex items-center transition-colors justify-center gap-2 whitespace-nowrap rounded-button transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-5 [&_svg]:shrink-0',
 		variants: {
 			variant: {
 				default:
@@ -16,13 +16,15 @@
 				muted: 'bg-muted-background text-muted-foreground-alt hover:bg-muted-background',
 				outline: 'border-white bg-background hover:bg-white hover:text-black border text-white',
 				ghost: 'hover:bg-muted-background hover:text-white ring-white',
-				link: 'text-primary underline-offset-4 hover:underline'
+				link: 'text-primary underline-offset-4 hover:underline',
+				neutral: 'bg-inherit text-inherit h-fit rounded-none !p-0'
 			},
 			size: {
 				default: 'h-form px-2xl',
 				sm: 'h-sm',
 				lg: 'h-lg',
-				icon: 'h-form w-form px-0 py-0 overflow-hidden aspect-square'
+				icon: 'h-form w-form px-0 py-0 overflow-hidden aspect-square',
+				'square-form': 'h-form w-form px-0 py-0 overflow-hidden aspect-square rounded-form'
 			}
 		},
 		defaultVariants: {
@@ -54,16 +56,16 @@
 		type = 'button',
 		children,
 		icon: Icon = undefined,
-		...restProps
+		...props
 	}: ButtonProps = $props();
 </script>
 
 {#if href}
 	<a
 		bind:this={ref}
-		class={cn(buttonVariants({ variant, size, className }), Icon && 'pl-lg')}
+		class={cn(buttonVariants({ variant, size }), Icon && 'pl-lg', className)}
 		{href}
-		{...restProps}
+		{...props}
 	>
 		{#if Icon}
 			<Icon />
@@ -73,9 +75,9 @@
 {:else}
 	<button
 		bind:this={ref}
-		class={cn(buttonVariants({ variant, size, className }), Icon && 'pl-lg')}
+		class={cn(buttonVariants({ variant, size }), Icon && 'pl-lg', className)}
 		{type}
-		{...restProps}
+		{...props}
 	>
 		{#if Icon}
 			<Icon />

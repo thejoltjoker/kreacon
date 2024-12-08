@@ -3,9 +3,11 @@
 	import DumbDate from '$lib/components/Form/DumbDate.svelte';
 	import DumbInput from '$lib/components/Form/DumbInput.svelte';
 	import { CalendarDateTime, getLocalTimeZone } from '@internationalized/date';
-	import { CalendarArrowUpIcon, CalendarHeartIcon, CalendarX2Icon } from 'lucide-svelte';
+	import { CalendarArrowUpIcon, CalendarHeartIcon, CalendarX2Icon, PlusIcon } from 'lucide-svelte';
 	import SuperDebug, { superForm } from 'sveltekit-superforms';
 	import type { PageData } from './$types';
+	import CategoryInput from './_components/CategoryInput.svelte';
+	import Divider from '$lib/components/Divider.svelte';
 
 	let { data }: { data: PageData } = $props();
 
@@ -64,6 +66,10 @@
 
 	$effect(() => {
 		$form.votingCloseAt = votingCloseAt.toDate(timezone);
+	});
+
+	$effect(() => {
+		console.log($form.categories);
 	});
 </script>
 
@@ -137,6 +143,21 @@
 			/>
 			{#if $errors.votingCloseAt}<span class="invalid">{$errors.votingCloseAt}</span>{/if}
 		</div>
+		<Divider />
+		<div class="flex items-center justify-between">
+			<h3>Categories</h3>
+			<Button
+				icon={PlusIcon}
+				variant="outline"
+				onclick={(e) => ($form.categories = [...$form.categories, ''])}
+			>
+				Add Category
+			</Button>
+		</div>
+		{#each $form.categories as _, index}
+			<CategoryInput title={$form.categories[index]} bind:value={$form.categories[index]} />
+		{/each}
+
 		<div><Button type="submit">Submit</Button></div>
 	</form>
 </div>

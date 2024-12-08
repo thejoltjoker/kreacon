@@ -7,6 +7,8 @@ import { superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import type { PageServerLoad } from './$types';
 import { StatusCodes } from 'http-status-codes';
+import { categories } from '$lib/server/db/schema';
+import { z } from 'zod';
 
 const createEventSchema = insertEventSchema
 	.pick({
@@ -16,6 +18,9 @@ const createEventSchema = insertEventSchema
 		submissionsCloseAt: true,
 		votingOpenAt: true,
 		votingCloseAt: true
+	})
+	.extend({
+		categories: z.string().array()
 	})
 	.refine((data) => data.submissionsCloseAt > data.submissionsOpenAt, {
 		message: 'Submissions close date must be after submissions open date',
@@ -33,7 +38,8 @@ export const load = (async () => {
 		submissionsOpenAt: new Date(),
 		submissionsCloseAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
 		votingOpenAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
-		votingCloseAt: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000)
+		votingCloseAt: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000),
+		categories: ['Test']
 	};
 	const eventForm = await superValidate(initialValues, zod(createEventSchema));
 	return { eventForm };
