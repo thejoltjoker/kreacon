@@ -20,7 +20,8 @@
 					{ label: 'Categories', href: '/admin/categories' },
 					{ label: 'Events', href: '/admin/events' },
 					{ label: 'Submissions', href: '/admin/submissions' },
-					{ label: 'Users', href: '/admin/users' }
+					{ label: 'Users', href: '/admin/users' },
+					{ label: 'Tickets', href: '/admin/tickets' }
 				]
 			: [
 					{ label: 'Home', href: '/' },

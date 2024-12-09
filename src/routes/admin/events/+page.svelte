@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { CircleAlertIcon, CircleCheckIcon, PencilIcon, TrashIcon } from 'lucide-svelte';
+	import { PencilIcon, TrashIcon } from 'lucide-svelte';
 	import EntityFilterBar from '../_components/EntityFilterBar.svelte';
 	import EntityList from '../_components/EntityList.svelte';
 	import type { PageData } from './$types';
