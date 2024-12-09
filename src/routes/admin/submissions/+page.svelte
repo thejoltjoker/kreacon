@@ -1,5 +1,9 @@
 <script lang="ts">
-	import { CircleAlertIcon, CircleDotIcon, TrashIcon } from 'lucide-svelte';
+	import {
+		CircleAlertIcon,
+		CircleCheckIcon,
+		TrashIcon
+	} from 'lucide-svelte';
 	import EntityFilterBar from '../_components/EntityFilterBar.svelte';
 	import EntityList from '../_components/EntityList.svelte';
 	import type { PageData } from './$types';
@@ -19,7 +23,7 @@
 	actions={[
 		{
 			label: 'Approve',
-			icon: CircleDotIcon,
+			icon: CircleCheckIcon,
 			onClick: (value) => console.log(value),
 			class: '[&_svg]:text-primary'
 		},
@@ -27,7 +31,7 @@
 			label: 'Deny',
 			icon: CircleAlertIcon,
 			onClick: (value) => console.log(value),
-			class: '[&_svg]:text-tertiary'
+			class: '[&_svg]:text-secondary'
 		},
 		{
 			label: 'Delete',

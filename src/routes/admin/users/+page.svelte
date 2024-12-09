@@ -1,16 +1,13 @@
 <script lang="ts">
-	import { t } from '$lib/i18n';
-	import { Tooltip } from 'bits-ui';
-	import startCase from 'lodash/startCase';
-	import FilterBar from '../_components/EventFilterBar.svelte';
 	import type { PageData } from './$types';
 	import EntityList from '../_components/EntityList.svelte';
-	import { BanIcon, HammerIcon, TicketIcon } from 'lucide-svelte';
+	import { BanIcon, TicketIcon } from 'lucide-svelte';
+	import EntityFilterBar from '../_components/EntityFilterBar.svelte';
 
 	export let data: PageData;
 </script>
 
-<FilterBar />
+<EntityFilterBar entityName="users" />
 <EntityList
 	items={data.users.map((user) => ({
 		...user,

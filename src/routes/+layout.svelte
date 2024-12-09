@@ -37,7 +37,7 @@
 
 <div class="horizon">
 	<div
-		class="fixed bottom-0 left-0 -z-10 h-[50vh] w-screen bg-gradient-to-t from-[hsl(246,25%,8%)]"
+		class="fixed bottom-0 left-0 -z-10 h-[50vh] w-screen bg-gradient-to-t from-[hsl(246,30%,9%)]"
 	></div>
 	<!-- <div
 		class="fixed -bottom-[100px] left-1/2 h-[100px] w-[100px] -translate-x-1/2 scale-x-[8] rounded-full bg-transparent shadow-[0_-10px_200px_0_hsl(246,50%,30%)]"
