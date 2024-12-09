@@ -49,14 +49,14 @@
 				</div>
 			{/if}
 			<Label.Root class="flex flex-col gap-xs" for="title">
-				<h4>Title</h4>
+				<h3>Title</h3>
 				<Text {form} type="text" field="title" {disabled} />
 			</Label.Root>
 
 			<File {form} {disabled} field="media" />
 
 			<Label.Root class="flex flex-col gap-xs" for="eventId">
-				<h6>Event</h6>
+				<h3>Event</h3>
 				<Select
 					{form}
 					label="Select an event"
@@ -77,7 +77,7 @@
 			</Label.Root>
 
 			<Label.Root class="flex flex-col gap-xs" for="categoryId">
-				<h6>Category</h6>
+				<h3>Category</h3>
 				<Select
 					{form}
 					label="Select a category"

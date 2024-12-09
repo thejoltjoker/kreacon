@@ -1,24 +1,13 @@
 <script lang="ts">
-	import { t } from '$lib/i18n';
-	import { Tooltip } from 'bits-ui';
-	import startCase from 'lodash/startCase';
-	import FilterBar from '../_components/EventFilterBar.svelte';
-	import type { PageData } from './$types';
+	import { CircleAlertIcon, CircleDotIcon, TrashIcon } from 'lucide-svelte';
+	import EntityFilterBar from '../_components/EntityFilterBar.svelte';
 	import EntityList from '../_components/EntityList.svelte';
-	import {
-		CircleAlertIcon,
-		CircleCheckIcon,
-		CircleDashedIcon,
-		CircleDotIcon,
-		CircleXIcon,
-		EditIcon,
-		TrashIcon
-	} from 'lucide-svelte';
+	import type { PageData } from './$types';
 
 	export let data: PageData;
 </script>
 
-<FilterBar />
+<EntityFilterBar entityName="submissions" />
 <EntityList
 	items={data.submissions.flatMap((submission) => ({
 		...submission,
@@ -26,7 +15,7 @@
 		thumbnailUrl: submission.thumbnail.url,
 		category: submission.category.name
 	}))}
-	fields={['id', 'username', 'category', 'status']}
+	fields={['title', 'username', 'category', 'status']}
 	actions={[
 		{
 			label: 'Approve',
