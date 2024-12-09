@@ -7,4 +7,10 @@
 </script>
 
 <EntityFilterBar entityName="categories" />
-<EntityList items={data.categories} fields={['id', 'name', 'description', 'slug', 'mediaType']} />
+<EntityList items={data.categories} />
+<!-- fields={[
+		{ name: 'name', showOnMobile: true, sortable: true },
+		{ name: 'description', showOnMobile: false, sortable: false },
+		{ name: 'slug', showOnMobile: false, sortable: false },
+		{ name: 'mediaType', showOnMobile: false, sortable: false }
+	]} -->

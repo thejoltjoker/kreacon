@@ -14,21 +14,35 @@
 		[key: string]: unknown;
 		id: number | string;
 		thumbnailUrl?: string;
+		name?: string;
 	}
-	let {
-		items,
-		fields = [],
-		actions = []
-	}: { items: Item[]; fields?: string[]; actions?: EntityListActionItem[] } = $props();
 
-	let fieldsToRender = $derived(
+	interface Field {
+		name: string;
+		showOnMobile: boolean;
+		sortable: boolean;
+	}
+
+	interface EntityListProps {
+		items: Item[];
+		fields?: Field[];
+		actions?: EntityListActionItem[];
+	}
+	let { items, fields = [], actions = [] }: EntityListProps = $props();
+
+	let fieldsToRender: Field[] = $derived(
 		fields.length > 0
-			? fields.map((field) => [field, null])
-			: Object.keys(items[0] || {}).map((field) => [field, null])
+			? fields
+			: Object.entries(items[0] || {}).map(([field, value]) => ({
+					name: field,
+					showOnMobile: true,
+					sortable: false
+				}))
 	);
 
 	$effect(() => {
-		console.log(fieldsToRender);
+		console.log('fields:', fields);
+		console.log('fieldsToRender:', fieldsToRender);
 	});
 
 	const handleSortByChange = (sortBy: string) => {
@@ -53,13 +67,13 @@
 				<ImageIcon class="size-5" />
 			</div>
 		{/if}
-		{#each fieldsToRender as [key]}
-			<li class="flex flex-1 items-center">
+		{#each fieldsToRender as field}
+			<li class={cn('flex flex-1 items-center', field.showOnMobile ? '' : 'max-md:hidden')}>
 				<button
 					class="flex items-center gap-sm overflow-hidden font-bold transition-colors hover:text-shade-200"
-					onclick={() => handleSortByChange(key ?? '')}
+					onclick={() => handleSortByChange(field.name ?? '')}
 				>
-					{startCase(key ?? 'Unknown')}
+					{startCase(field.name ?? 'Unknown')}
 					<ArrowUpDownIcon class="size-5" />
 				</button>
 			</li>
@@ -77,18 +91,28 @@
 					<div
 						class="flex size-form min-w-form items-center justify-center overflow-hidden rounded-form outline outline-[1px] outline-offset-2 outline-shade-700"
 					>
-						<img src={item.thumbnailUrl} alt={item.name} class="h-full w-full object-cover" />
+						<img
+							src={item.thumbnailUrl}
+							alt={item.name ?? 'Thumbnail'}
+							class="h-full w-full object-cover"
+						/>
 					</div>
 				{/if}
-				{#each fieldsToRender as [key]}
-					{@const value = item[key]}
+				{#each fieldsToRender as field}
+					{@const value = item[field.name ?? '']}
 					<div
 						class={cn(
 							'flex flex-1 flex-col items-start overflow-hidden text-left',
-							key === 'id' && 'min-w-fit'
+							field?.showOnMobile ? '' : 'max-md:hidden',
+							field?.name === 'id' && 'min-w-fit'
 						)}
 					>
-						<p class={cn('w-full truncate text-nowrap font-bold', key === 'id' && 'font-mono')}>
+						<p
+							class={cn(
+								'w-full truncate text-nowrap font-bold',
+								field?.name === 'id' && 'font-mono'
+							)}
+						>
 							{#if value instanceof Date}
 								{value.toLocaleString('en-GB', {
 									hour: '2-digit',
@@ -104,10 +128,10 @@
 						<p
 							class={cn(
 								'font-mo truncate text-sm tracking-wide text-shade-400',
-								key === 'id' && 'text-primary'
+								field?.name === 'id' && 'text-primary'
 							)}
 						>
-							{$t(startCase(key ?? 'Unknown'))}
+							{$t(startCase(field?.name ?? 'Unknown'))}
 						</p>
 					</div>
 				{/each}
