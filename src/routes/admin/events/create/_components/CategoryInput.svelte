@@ -4,15 +4,19 @@
 	import DumbSelect from '$lib/components/Form/DumbSelect.svelte';
 	import { LockIcon, PlusIcon, UnlockIcon } from 'lucide-svelte';
 	import type { PageData } from '../$types';
-
+	import { page } from '$app/stores';
+	import { tick } from 'svelte';
+	interface Category {
+		categoryId: number;
+		rules: { text: string; isLocked: boolean }[];
+	}
 	interface Props {
-		categories: PageData['categories'];
-		title: string;
-		value: number;
-		rules: { value: string; isLocked: boolean }[];
+		category: Category;
+		setCategory: (category: Category) => void;
 	}
 
-	let { categories, title, value = $bindable(), rules = $bindable() }: Props = $props();
+	let { category, setCategory }: Props = $props();
+	let { categories } = $page.data as PageData;
 
 	let categoriesItems = $derived(
 		categories.map((category) => ({
@@ -21,17 +25,50 @@
 		}))
 	);
 
+	let rulesContainerRef: HTMLUListElement | undefined = $state(undefined);
+
 	let selectedCategory = $state('');
+
+	let title = $derived(categories.find((cat) => cat.id === category.categoryId)?.name);
+
+	const handleAddRule = async (value: string) => {
+		setCategory({ ...category, rules: [...category.rules, { text: value, isLocked: false }] });
+
+		tick().then(() => {
+			const inputs = rulesContainerRef?.querySelectorAll('.category-rule');
+			if (inputs?.length) {
+				(inputs[inputs.length - 1] as HTMLInputElement).focus();
+			}
+		});
+	};
+
+	const handleEditRule = (value: string, index: number) => {
+		setCategory({
+			...category,
+			rules: category.rules.map((rule, i) => (i === index ? { ...rule, text: value } : rule))
+		});
+	};
+
+	const handleToggleRuleIsLocked = (index: number) => {
+		setCategory({
+			...category,
+			rules: category.rules.map((rule, i) =>
+				i === index ? { ...rule, isLocked: !rule.isLocked } : rule
+			)
+		});
+	};
+
 	$effect(() => {
-		value = Number(selectedCategory);
+		console.log(rulesContainerRef);
 	});
 </script>
 
 <div class="flex w-full flex-col gap-sm rounded-form border border-divider p-xl">
-	<h4>Category: {title}</h4>
-	<!-- TODO Replace with select/combobox -->
-	<!-- <DumbInput name="categories" bind:value class="w-full" /> -->
+	<h4>Category: {title ?? 'Unknown'}</h4>
 	<DumbSelect
+		onValueChange={(value) => {
+			setCategory({ ...category, categoryId: parseInt(value) });
+		}}
 		name="categories"
 		type="single"
 		items={categoriesItems}
@@ -45,25 +82,30 @@
 			icon={PlusIcon}
 			variant="neutral"
 			class="rounded-none border-b border-transparent text-muted-foreground-alt hover:border-white hover:text-white"
-			onclick={() => rules.push({ value: '', isLocked: false })}
+			onclick={() => handleAddRule('')}
 		>
 			Add Rule
 		</Button>
 	</div>
-	<ul class="flex flex-col gap-sm">
-		{#each rules as _, index}
+	<ul class="flex flex-col gap-sm" bind:this={rulesContainerRef}>
+		{#each category.rules as _, index}
 			<li class="flex items-center gap-sm">
 				<DumbInput
+					type="text"
 					onkeydowncapture={(e: KeyboardEvent) => {
 						if (e.key === 'Enter') {
-							rules[index].isLocked = !rules[index].isLocked;
+							handleToggleRuleIsLocked(index);
+							handleAddRule('');
 						}
 					}}
-					bind:value={rules[index].value}
-					disabled={rules[index].isLocked}
-					icon={rules[index].isLocked ? LockIcon : UnlockIcon}
+					oninput={(e) => {
+						handleEditRule(e.currentTarget.value, index);
+					}}
+					class="category-rule"
+					disabled={category.rules[index].isLocked}
+					icon={category.rules[index].isLocked ? LockIcon : UnlockIcon}
 					iconProps={{
-						onclick: () => (rules[index].isLocked = !rules[index].isLocked),
+						onclick: () => handleToggleRuleIsLocked(index),
 						class:
 							'cursor-pointer text-white p-xs -mr-xs rounded-xs w-3xl h-3xl hover:bg-muted-background transition-colors'
 					}}

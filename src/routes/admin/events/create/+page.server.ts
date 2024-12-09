@@ -21,8 +21,8 @@ const createEventSchema = insertEventSchema
 	.extend({
 		categories: z
 			.object({
-				categoryId: z.number(),
-				rules: z.object({ value: z.string(), isLocked: z.boolean().default(false) }).array()
+				categoryId: z.coerce.number(),
+				rules: z.object({ text: z.string(), isLocked: z.boolean().default(false) }).array()
 			})
 			.array()
 	})
@@ -43,14 +43,15 @@ export const load = (async () => {
 		submissionsCloseAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
 		votingOpenAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
 		votingCloseAt: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000),
-		categories: [{ categoryId: 1, rules: [{ value: 'Test rule', isLocked: false }] }]
+		categories: [{ categoryId: 0, rules: [{ text: 'Test rule', isLocked: false }] }]
 	};
 	const eventForm = await superValidate(initialValues, zod(createEventSchema));
 	const categories = await db.query.categories.findMany({
 		columns: {
 			id: true,
 			name: true
-		}
+		},
+		orderBy: (table, { asc }) => [asc(table.name)]
 	});
 	return { eventForm, categories };
 }) satisfies PageServerLoad;

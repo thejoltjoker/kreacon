@@ -73,16 +73,21 @@
 	$effect(() => {
 		$form.votingCloseAt = votingCloseAt.toDate(timezone);
 	});
-
-	$effect(() => {
-		console.log($form.categories);
-	});
 </script>
 
 <div class="flex w-full max-w-screen-md flex-col gap-xl py-xl">
 	<SuperDebug data={$form} />
 	{#if $message}<h3>{JSON.stringify($message)}</h3>{/if}
-	<form method="POST" use:enhance class="flex flex-col gap-xl">
+	<form
+		method="POST"
+		use:enhance
+		class="flex flex-col gap-xl"
+		onkeydowncapture={(e) => {
+			if (e.key === 'Enter') {
+				e.preventDefault();
+			}
+		}}
+	>
 		<DumbInput
 			label="Name"
 			type="text"
@@ -162,12 +167,8 @@
 		</div>
 		{#each $form.categories as _, index}
 			<CategoryInput
-				categories={data.categories}
-				bind:rules={$form.categories[index].rules}
-				title={data.categories.find(
-					(category) => category.id === $form.categories[index].categoryId
-				)?.name ?? 'Unknown'}
-				bind:value={$form.categories[index].categoryId}
+				category={$form.categories[index]}
+				setCategory={(data) => ($form.categories[index] = data)}
 			/>
 		{/each}
 
