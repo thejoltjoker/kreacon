@@ -8,21 +8,23 @@
 	interface Props {
 		categories: PageData['categories'];
 		title: string;
-		value: string;
+		value: number;
+		rules: { value: string; isLocked: boolean }[];
 	}
 
-	let { categories, title, value = $bindable() }: Props = $props();
-
-	let rules = $state<{ value: string; isLocked: boolean }[]>([]);
+	let { categories, title, value = $bindable(), rules = $bindable() }: Props = $props();
 
 	let categoriesItems = $derived(
 		categories.map((category) => ({
-			value: category.name,
+			value: category.id.toString(),
 			label: category.name
 		}))
 	);
 
 	let selectedCategory = $state('');
+	$effect(() => {
+		value = Number(selectedCategory);
+	});
 </script>
 
 <div class="flex w-full flex-col gap-sm rounded-form border border-divider p-xl">

@@ -11,9 +11,15 @@
 
 	let { data }: { data: PageData } = $props();
 
-	const { form, errors, constraints, message, enhance } = superForm(data.eventForm);
+	const { form, errors, constraints, message, enhance } = superForm(data.eventForm, {
+		dataType: 'json'
+	});
 
 	const timezone = getLocalTimeZone();
+	interface Category {
+		categoryId: number;
+		rules: { value: string; isLocked: boolean }[];
+	}
 
 	let submissionsOpenAt = $state<CalendarDateTime>(
 		new CalendarDateTime(
@@ -149,7 +155,7 @@
 			<Button
 				icon={PlusIcon}
 				variant="outline"
-				onclick={(e) => ($form.categories = [...$form.categories, ''])}
+				onclick={(e) => ($form.categories = [...$form.categories, { categoryId: 0, rules: [] }])}
 			>
 				Add Category
 			</Button>
@@ -157,8 +163,11 @@
 		{#each $form.categories as _, index}
 			<CategoryInput
 				categories={data.categories}
-				title={$form.categories[index]}
-				bind:value={$form.categories[index]}
+				bind:rules={$form.categories[index].rules}
+				title={data.categories.find(
+					(category) => category.id === $form.categories[index].categoryId
+				)?.name ?? 'Unknown'}
+				bind:value={$form.categories[index].categoryId}
 			/>
 		{/each}
 

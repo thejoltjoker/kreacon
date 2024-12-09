@@ -19,7 +19,12 @@ const createEventSchema = insertEventSchema
 		votingCloseAt: true
 	})
 	.extend({
-		categories: z.string().array()
+		categories: z
+			.object({
+				categoryId: z.number(),
+				rules: z.object({ value: z.string(), isLocked: z.boolean().default(false) }).array()
+			})
+			.array()
 	})
 	.refine((data) => data.submissionsCloseAt > data.submissionsOpenAt, {
 		message: 'Submissions close date must be after submissions open date',
@@ -38,10 +43,15 @@ export const load = (async () => {
 		submissionsCloseAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
 		votingOpenAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
 		votingCloseAt: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000),
-		categories: ['Test']
+		categories: [{ categoryId: 1, rules: [{ value: 'Test rule', isLocked: false }] }]
 	};
 	const eventForm = await superValidate(initialValues, zod(createEventSchema));
-	const categories = await db.query.categories.findMany();
+	const categories = await db.query.categories.findMany({
+		columns: {
+			id: true,
+			name: true
+		}
+	});
 	return { eventForm, categories };
 }) satisfies PageServerLoad;
 
