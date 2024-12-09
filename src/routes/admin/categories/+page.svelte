@@ -10,7 +10,4 @@
 </script>
 
 <FilterBar />
-<EntityList
-	items={data.users.map((user) => ({ ...user, thumbnailUrl: user.picture ?? '' }))}
-	fields={['id', 'username', 'email', 'role']}
-/>
+<EntityList items={data.categories} fields={['id', 'name', 'description', 'slug', 'mediaType']} />

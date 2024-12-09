@@ -2,7 +2,7 @@
 	import { t } from '$lib/i18n';
 	import { Tooltip } from 'bits-ui';
 	import startCase from 'lodash/startCase';
-	import FilterBar from '../_components/FilterBar.svelte';
+	import FilterBar from '../_components/EventFilterBar.svelte';
 	import type { PageData } from './$types';
 	import DeleteButton from './_components/DeleteButton.svelte';
 	export let data: PageData;
