@@ -1,22 +1,41 @@
 <script lang="ts">
 	import Button from '$lib/components/Button.svelte';
 	import DumbInput from '$lib/components/Form/DumbInput.svelte';
-	import { LockIcon, PencilIcon, PlusIcon, UnlockIcon } from 'lucide-svelte';
+	import DumbSelect from '$lib/components/Form/DumbSelect.svelte';
+	import { LockIcon, PlusIcon, UnlockIcon } from 'lucide-svelte';
+	import type { PageData } from '../$types';
 
-	interface Category {
-		name: string;
-		rules: { value: string; isLocked: boolean }[];
+	interface Props {
+		categories: PageData['categories'];
+		title: string;
+		value: string;
 	}
 
-	let { value = $bindable(), title }: { value: string; title: string } = $props();
+	let { categories, title, value = $bindable() }: Props = $props();
 
 	let rules = $state<{ value: string; isLocked: boolean }[]>([]);
+
+	let categoriesItems = $derived(
+		categories.map((category) => ({
+			value: category.name,
+			label: category.name
+		}))
+	);
+
+	let selectedCategory = $state('');
 </script>
 
 <div class="flex w-full flex-col gap-sm rounded-form border border-divider p-xl">
 	<h4>Category: {title}</h4>
 	<!-- TODO Replace with select/combobox -->
-	<DumbInput name="categories" bind:value class="w-full" />
+	<!-- <DumbInput name="categories" bind:value class="w-full" /> -->
+	<DumbSelect
+		name="categories"
+		type="single"
+		items={categoriesItems}
+		bind:value={selectedCategory}
+		placeholder="Select a category"
+	/>
 
 	<div class="mt-sm flex items-center justify-between">
 		<h5>Rules</h5>
@@ -33,7 +52,7 @@
 		{#each rules as _, index}
 			<li class="flex items-center gap-sm">
 				<DumbInput
-					onkeydowncapture={(e) => {
+					onkeydowncapture={(e: KeyboardEvent) => {
 						if (e.key === 'Enter') {
 							rules[index].isLocked = !rules[index].isLocked;
 						}

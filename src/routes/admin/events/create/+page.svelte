@@ -155,7 +155,11 @@
 			</Button>
 		</div>
 		{#each $form.categories as _, index}
-			<CategoryInput title={$form.categories[index]} bind:value={$form.categories[index]} />
+			<CategoryInput
+				categories={data.categories}
+				title={$form.categories[index]}
+				bind:value={$form.categories[index]}
+			/>
 		{/each}
 
 		<div><Button type="submit">Submit</Button></div>
