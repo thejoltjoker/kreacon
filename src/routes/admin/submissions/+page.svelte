@@ -1,9 +1,5 @@
 <script lang="ts">
-	import {
-		CircleAlertIcon,
-		CircleCheckIcon,
-		TrashIcon
-	} from 'lucide-svelte';
+	import { CircleAlertIcon, CircleCheckIcon, TrashIcon } from 'lucide-svelte';
 	import EntityFilterBar from '../_components/EntityFilterBar.svelte';
 	import EntityList from '../_components/EntityList.svelte';
 	import type { PageData } from './$types';
@@ -19,7 +15,12 @@
 		thumbnailUrl: submission.thumbnail.url,
 		category: submission.category.name
 	}))}
-	fields={['title', 'username', 'category', 'status']}
+	fields={[
+		{ name: 'title', minScreen: 'all', sortable: true },
+		{ name: 'username', minScreen: 'lg', sortable: false },
+		{ name: 'category', minScreen: 'md', sortable: false },
+		{ name: 'status', minScreen: 'sm', sortable: false }
+	]}
 	actions={[
 		{
 			label: 'Approve',

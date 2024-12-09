@@ -7,10 +7,12 @@
 </script>
 
 <EntityFilterBar entityName="categories" />
-<EntityList items={data.categories} />
-<!-- fields={[
-		{ name: 'name', showOnMobile: true, sortable: true },
-		{ name: 'description', showOnMobile: false, sortable: false },
-		{ name: 'slug', showOnMobile: false, sortable: false },
-		{ name: 'mediaType', showOnMobile: false, sortable: false }
-	]} -->
+<EntityList
+	items={data.categories}
+	fields={[
+		{ name: 'name', minScreen: 'all', sortable: true },
+		{ name: 'description', minScreen: 'md', sortable: false },
+		{ name: 'slug', minScreen: 'lg', sortable: false },
+		{ name: 'mediaType', minScreen: 'sm', sortable: false }
+	]}
+/>

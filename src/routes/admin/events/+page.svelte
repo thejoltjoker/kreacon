@@ -13,12 +13,12 @@
 		...event
 	}))}
 	fields={[
-		'name',
-		'slug',
-		'submissionsOpenAt',
-		'submissionsCloseAt',
-		'votingOpenAt',
-		'votingCloseAt'
+		{ name: 'name', minScreen: 'all', sortable: true },
+		{ name: 'slug', minScreen: 'xl', sortable: false },
+		{ name: 'submissionsOpenAt', minScreen: 'sm', sortable: false },
+		{ name: 'submissionsCloseAt', minScreen: 'lg', sortable: false },
+		{ name: 'votingOpenAt', minScreen: 'sm', sortable: false },
+		{ name: 'votingCloseAt', minScreen: 'lg', sortable: false }
 	]}
 	actions={[
 		{

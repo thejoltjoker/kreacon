@@ -19,7 +19,7 @@
 
 	interface Field {
 		name: string;
-		showOnMobile: boolean;
+		minScreen: 'all' | 'sm' | 'md' | 'lg' | 'xl';
 		sortable: boolean;
 	}
 
@@ -35,7 +35,7 @@
 			? fields
 			: Object.entries(items[0] || {}).map(([field, value]) => ({
 					name: field,
-					showOnMobile: true,
+					minScreen: 'sm',
 					sortable: false
 				}))
 	);
@@ -68,7 +68,16 @@
 			</div>
 		{/if}
 		{#each fieldsToRender as field}
-			<li class={cn('flex flex-1 items-center', field.showOnMobile ? '' : 'max-md:hidden')}>
+			<li
+				class={cn(
+					'flex flex-1 items-center',
+					field.minScreen === 'all' && 'flex',
+					field.minScreen === 'sm' && 'max-sm:hidden',
+					field.minScreen === 'md' && 'max-md:hidden',
+					field.minScreen === 'lg' && 'max-lg:hidden',
+					field.minScreen === 'xl' && 'max-xl:hidden'
+				)}
+			>
 				<button
 					class="flex items-center gap-sm overflow-hidden font-bold transition-colors hover:text-shade-200"
 					onclick={() => handleSortByChange(field.name ?? '')}
@@ -103,7 +112,11 @@
 					<div
 						class={cn(
 							'flex flex-1 flex-col items-start overflow-hidden text-left',
-							field?.showOnMobile ? '' : 'max-md:hidden',
+							field.minScreen === 'all' && 'flex',
+							field.minScreen === 'sm' && 'max-sm:hidden',
+							field.minScreen === 'md' && 'max-md:hidden',
+							field.minScreen === 'lg' && 'max-lg:hidden',
+							field.minScreen === 'xl' && 'max-xl:hidden',
 							field?.name === 'id' && 'min-w-fit'
 						)}
 					>

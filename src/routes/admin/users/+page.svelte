@@ -16,11 +16,11 @@
 		submissions: user.submissions.length
 	}))}
 	fields={[
-		{ name: 'username', showOnMobile: true, sortable: true },
-		{ name: 'email', showOnMobile: false, sortable: false },
-		{ name: 'role', showOnMobile: false, sortable: false },
-		{ name: 'tickets', showOnMobile: false, sortable: false },
-		{ name: 'submissions', showOnMobile: false, sortable: false }
+		{ name: 'username', minScreen: 'all', sortable: true },
+		{ name: 'email', minScreen: 'sm', sortable: false },
+		{ name: 'role', minScreen: 'xl', sortable: false },
+		{ name: 'tickets', minScreen: 'lg', sortable: false },
+		{ name: 'submissions', minScreen: 'md', sortable: false }
 	]}
 	actions={[
 		{ label: 'Show tickets', icon: TicketIcon, onClick: (value) => console.log(value) },

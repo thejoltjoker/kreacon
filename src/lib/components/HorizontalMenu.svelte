@@ -14,6 +14,6 @@
 	let className = cn('flex items-center gap-sm', props.class);
 </script>
 
-<ul class={className} {...props}>
+<ul {...props} class={className}>
 	{@render children()}
 </ul>

@@ -58,7 +58,7 @@
 			{/if}
 		</Button>
 	</div>
-	<HorizontalMenu highlightActive={false}>
+	<HorizontalMenu highlightActive={false} class="max-md:hidden">
 		{#each menuItems as item}
 			<HorizontalMenuItem href={item.href}>{item.label}</HorizontalMenuItem>
 		{/each}
@@ -111,7 +111,7 @@
 
 <!-- Mobile menu -->
 {#if isMenuOpen}
-	<div class="absolute left-0 top-0 z-10 h-full w-full bg-black" transition:fly={{ y: -100 }}>
+	<div class="absolute left-0 top-0 z-10 h-full w-full bg-bg" transition:fly={{ y: -100 }}>
 		<div class="flex h-full items-center justify-center">
 			<ul class="flex flex-col gap-lg text-2xl">
 				{#each menuItems as item}
