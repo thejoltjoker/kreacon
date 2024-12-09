@@ -49,6 +49,7 @@ export const load = (async ({ url }) => {
 
 	return {
 		submissions: result.submissions,
-		totalCount: result.totalCount.count
+		totalCount: result.totalCount.count,
+		title: { text: 'Submissions', href: '/admin/submissions' }
 	};
 }) satisfies PageServerLoad;

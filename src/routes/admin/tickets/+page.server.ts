@@ -9,5 +9,5 @@ export const load = (async () => {
 		}
 	});
 
-	return { tickets };
+	return { tickets, title: { text: 'Tickets', href: '/admin/tickets' } };
 }) satisfies PageServerLoad;

@@ -17,9 +17,9 @@
 	}))}
 	fields={[
 		{ name: 'title', minScreen: 'all', sortable: true },
-		{ name: 'username', minScreen: 'lg', sortable: false },
-		{ name: 'category', minScreen: 'md', sortable: false },
-		{ name: 'status', minScreen: 'sm', sortable: false }
+		{ name: 'username', minScreen: 'lg', sortable: true },
+		{ name: 'category', minScreen: 'md', sortable: true },
+		{ name: 'status', minScreen: 'sm', sortable: true }
 	]}
 	actions={[
 		{

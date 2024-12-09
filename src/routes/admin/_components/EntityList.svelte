@@ -1,7 +1,8 @@
 <!-- TODO Pagination -->
-<!-- TODO Sorting functionality -->
 <!-- TODO Filtering functionality -->
 <!-- TODO Custom fields functionality -->
+<!-- TODO Refactor header component -->
+<!-- TODO Change icon when sorting -->
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
@@ -79,11 +80,14 @@
 				)}
 			>
 				<button
-					class="flex items-center gap-sm overflow-hidden font-bold transition-colors hover:text-shade-200"
+					class="flex items-center gap-sm overflow-hidden font-bold transition-colors hover:text-shade-200 disabled:text-white"
 					onclick={() => handleSortByChange(field.name ?? '')}
+					disabled={!field.sortable}
 				>
 					{startCase(field.name ?? 'Unknown')}
-					<ArrowUpDownIcon class="size-5" />
+					{#if field.sortable}
+						<ArrowUpDownIcon class="size-5" />
+					{/if}
 				</button>
 			</li>
 		{/each}
@@ -91,6 +95,7 @@
 			<Settings2Icon class="size-5" />
 		</li>
 	</ul>
+
 	<ul class="entity-list flex w-full flex-col">
 		{#each items as item}
 			<li

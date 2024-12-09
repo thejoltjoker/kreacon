@@ -6,5 +6,5 @@ export const load = (async () => {
 		with: { tickets: { columns: { id: true } }, submissions: { columns: { id: true } } }
 	});
 
-	return { users };
+	return { users, title: { text: 'Users', href: '/admin/users' } };
 }) satisfies PageServerLoad;
