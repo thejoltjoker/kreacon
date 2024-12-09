@@ -34,6 +34,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   [#46](https://github.com/thejoltjoker/kreacon/pull/46)
 - `DumbSelect` component
   [#48](https://github.com/thejoltjoker/kreacon/pull/48)
+- Admin create event page
+  [#50](https://github.com/thejoltjoker/kreacon/pull/50)
 
 ### Changed
 
