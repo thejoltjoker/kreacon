@@ -3,11 +3,24 @@
 	import DumbDate from '$lib/components/Form/DumbDate.svelte';
 	import DumbInput from '$lib/components/Form/DumbInput.svelte';
 	import { CalendarDateTime, getLocalTimeZone } from '@internationalized/date';
-	import { CalendarArrowUpIcon, CalendarHeartIcon, CalendarX2Icon, PlusIcon } from 'lucide-svelte';
+	import {
+		CalendarArrowUpIcon,
+		CalendarHeartIcon,
+		CalendarX2Icon,
+		FlameKindlingIcon,
+		LockIcon,
+		LockOpenIcon,
+		PencilIcon,
+		PencilOffIcon,
+		PlusIcon,
+		SaveIcon,
+		UnlockIcon
+	} from 'lucide-svelte';
 	import SuperDebug, { superForm } from 'sveltekit-superforms';
 	import type { PageData } from './$types';
 	import CategoryInput from './_components/CategoryInput.svelte';
 	import Divider from '$lib/components/Divider.svelte';
+	import { tick } from 'svelte';
 
 	let { data }: { data: PageData } = $props();
 
@@ -20,7 +33,7 @@
 		categoryId: number;
 		rules: { value: string; isLocked: boolean }[];
 	}
-
+	let rulesContainerRef: HTMLUListElement | undefined = $state(undefined);
 	let submissionsOpenAt = $state<CalendarDateTime>(
 		new CalendarDateTime(
 			$form.submissionsOpenAt.getFullYear(),
@@ -73,10 +86,20 @@
 	$effect(() => {
 		$form.votingCloseAt = votingCloseAt.toDate(timezone);
 	});
+
+	const handleAddRule = async () => {
+		$form.rules = [...$form.rules, { text: '', isLocked: false }];
+
+		tick().then(() => {
+			const inputs = rulesContainerRef?.querySelectorAll('.event-rule');
+			if (inputs?.length) {
+				(inputs[inputs.length - 1] as HTMLInputElement).focus();
+			}
+		});
+	};
 </script>
 
 <div class="flex w-full max-w-screen-md flex-col gap-xl py-xl">
-	<SuperDebug data={$form} />
 	{#if $message}<h3>{JSON.stringify($message)}</h3>{/if}
 	<form
 		method="POST"
@@ -90,6 +113,7 @@
 	>
 		<DumbInput
 			label="Name"
+			labelProps={{ class: 'text-h3' }}
 			type="text"
 			name="name"
 			aria-invalid={$errors.name ? 'true' : undefined}
@@ -100,6 +124,7 @@
 
 		<DumbInput
 			label="Description"
+			labelProps={{ class: 'text-h3' }}
 			type="textarea"
 			name="description"
 			aria-invalid={$errors.description ? 'true' : undefined}
@@ -156,6 +181,38 @@
 		</div>
 		<Divider />
 		<div class="flex items-center justify-between">
+			<h3>General Rules</h3>
+			<Button icon={PlusIcon} variant="outline" onclick={handleAddRule}>Add Rule</Button>
+		</div>
+		{#if $form.rules.length > 0}
+			<ul class="flex flex-col gap-sm" bind:this={rulesContainerRef}>
+				{#each $form.rules as _, index}
+					<li class="flex items-center gap-sm">
+						<DumbInput
+							type="text"
+							onkeydowncapture={(e: KeyboardEvent) => {
+								if (e.key === 'Enter') {
+									$form.rules[index].isLocked = true;
+									handleAddRule();
+								}
+							}}
+							bind:value={$form.rules[index].text}
+							class="event-rule"
+							disabled={$form.rules[index].isLocked}
+							icon={$form.rules[index].isLocked ? PencilIcon : LockOpenIcon}
+							iconProps={{
+								onclick: () => ($form.rules[index].isLocked = !$form.rules[index].isLocked),
+								class:
+									'cursor-pointer text-white p-xs -mr-xs rounded-xs w-3xl h-3xl hover:bg-muted-background transition-colors'
+							}}
+						/>
+					</li>
+				{/each}
+			</ul>
+		{/if}
+
+		<Divider />
+		<div class="flex items-center justify-between">
 			<h3>Categories</h3>
 			<Button
 				icon={PlusIcon}
@@ -171,8 +228,8 @@
 				setCategory={(data) => ($form.categories[index] = data)}
 			/>
 		{/each}
-
-		<div><Button type="submit">Submit</Button></div>
+		<Divider />
+		<div class="flex justify-center"><Button type="submit">Create Event</Button></div>
 	</form>
 </div>
 

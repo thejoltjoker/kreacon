@@ -2,7 +2,7 @@
 	import Button from '$lib/components/Button.svelte';
 	import DumbInput from '$lib/components/Form/DumbInput.svelte';
 	import DumbSelect from '$lib/components/Form/DumbSelect.svelte';
-	import { LockIcon, PlusIcon, UnlockIcon } from 'lucide-svelte';
+	import { LockIcon, PencilIcon, PlusIcon, UnlockIcon } from 'lucide-svelte';
 	import type { PageData } from '../$types';
 	import { page } from '$app/stores';
 	import { tick } from 'svelte';
@@ -103,7 +103,7 @@
 					}}
 					class="category-rule"
 					disabled={category.rules[index].isLocked}
-					icon={category.rules[index].isLocked ? LockIcon : UnlockIcon}
+					icon={category.rules[index].isLocked ? PencilIcon : UnlockIcon}
 					iconProps={{
 						onclick: () => handleToggleRuleIsLocked(index),
 						class:

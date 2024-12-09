@@ -8,6 +8,7 @@ import { zod } from 'sveltekit-superforms/adapters';
 import type { PageServerLoad } from './$types';
 import { StatusCodes } from 'http-status-codes';
 import { z } from 'zod';
+import { eventCategories, rules } from '$lib/server/db/schema';
 
 const createEventSchema = insertEventSchema
 	.pick({
@@ -24,7 +25,8 @@ const createEventSchema = insertEventSchema
 				categoryId: z.coerce.number(),
 				rules: z.object({ text: z.string(), isLocked: z.boolean().default(false) }).array()
 			})
-			.array()
+			.array(),
+		rules: z.object({ text: z.string(), isLocked: z.boolean().default(false) }).array()
 	})
 	.refine((data) => data.submissionsCloseAt > data.submissionsOpenAt, {
 		message: 'Submissions close date must be after submissions open date',
@@ -43,7 +45,7 @@ export const load = (async () => {
 		submissionsCloseAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
 		votingOpenAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
 		votingCloseAt: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000),
-		categories: [{ categoryId: 0, rules: [{ text: 'Test rule', isLocked: false }] }]
+		categories: []
 	};
 	const eventForm = await superValidate(initialValues, zod(createEventSchema));
 	const categories = await db.query.categories.findMany({
@@ -58,12 +60,12 @@ export const load = (async () => {
 
 export const actions = {
 	default: async ({ request }) => {
-		const form = await superValidate(request, zod(insertEventSchema));
+		const form = await superValidate(request, zod(createEventSchema));
 
 		if (!form.valid) {
-			// Again, return { form } and things will just work.
 			return fail(400, { form });
 		}
+
 		let slug = kebabCase(form.data.name);
 		const existingEvent = await db.query.events.findFirst({
 			where: eq(events.slug, slug)
@@ -73,11 +75,46 @@ export const actions = {
 			slug = `${slug}-${Math.floor(Math.random() * 10000)}`;
 		}
 
-		const [result] = await db
-			.insert(events)
-			.values({ ...form.data, slug })
-			.returning();
+		const event = await db.transaction(async (trx) => {
+			const [event] = await trx
+				.insert(events)
+				.values({ ...form.data, slug })
+				.returning();
 
+			const eventCategoriesData = form.data.categories
+				.map((category) => ({
+					eventId: event.id,
+					categoryId: category.categoryId
+				}))
+				.filter((category) => category.categoryId > 0);
+			const insertedEventCategories = await trx
+				.insert(eventCategories)
+				.values(eventCategoriesData)
+				.returning();
+
+			await trx.insert(rules).values([
+				// General event rules
+				...form.data.rules
+					.filter((rule) => rule.text.length > 0)
+					.map((rule) => ({
+						text: rule.text,
+						eventId: event.id
+					})),
+				// Category-specific rules
+				...form.data.categories.flatMap((category) =>
+					category.rules
+						.filter((rule) => rule.text.length > 0)
+						.map((rule) => ({
+							text: rule.text,
+							categoryId: insertedEventCategories.find((e) => e.categoryId === category.categoryId)
+								?.id
+						}))
+				)
+			]);
+
+			return { event, insertedEventCategories };
+		});
+		console.log(event);
 		// Display a success status message
 		// return message(form, {
 		// 	status: 'success',
