@@ -7,7 +7,6 @@ import { superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import type { PageServerLoad } from './$types';
 import { StatusCodes } from 'http-status-codes';
-import { categories } from '$lib/server/db/schema';
 import { z } from 'zod';
 
 const createEventSchema = insertEventSchema
@@ -42,7 +41,8 @@ export const load = (async () => {
 		categories: ['Test']
 	};
 	const eventForm = await superValidate(initialValues, zod(createEventSchema));
-	return { eventForm };
+	const categories = await db.query.categories.findMany();
+	return { eventForm, categories };
 }) satisfies PageServerLoad;
 
 export const actions = {

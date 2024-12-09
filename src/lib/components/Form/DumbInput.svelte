@@ -30,7 +30,7 @@
 		elementRef?: HTMLTextAreaElement;
 	} & HTMLTextareaAttributes;
 
-	type Props = 
+	type Props =
 		| (Omit<InputProps, 'type'> & { type?: Exclude<HTMLInputTypeAttribute, 'textarea'> })
 		| (Omit<TextareaProps, 'type'> & { type: 'textarea' });
 

@@ -4,17 +4,17 @@ import defaultTheme from 'tailwindcss/defaultTheme';
 
 export const colors = {
 	shade: {
-		'50': '#F0F0F4',
-		'100': '#DCDCE4',
-		'200': '#BEBECB',
-		'300': '#9797A9',
-		'400': '#818192',
-		'500': '#5E5E6B',
-		'600': '#474753',
-		'700': '#30303A',
-		'800': '#25252D',
-		'900': '#1A1A21',
-		'950': '#0E0E15'
+		'50': 'hsl(240 20% 95%)',
+		'100': 'hsl(240 15% 77%)',
+		'200': 'hsl(240 12% 63%)',
+		'300': 'hsl(240 8% 54%)',
+		'400': 'hsl(240 7% 40%)',
+		'500': 'hsl(240 8% 30%)',
+		'600': 'hsl(240 10% 21%)',
+		'700': 'hsl(240 10% 16%)',
+		'800': 'hsl(240 12% 12%)',
+		'900': 'hsl(240 12% 9%)',
+		'950': 'hsl(240 15% 7%)'
 	},
 	bubblegum: {
 		'50': '#FDF2F6',
@@ -189,6 +189,7 @@ export default {
 			colors: {
 				white: '#ffffff',
 				black: '#000000',
+				focus: colors.squid[300],
 				primary: { DEFAULT: colors.squid[600], light: colors.squid[500], dark: colors.squid[700] },
 				secondary: {
 					DEFAULT: colors.bubblegum[600],
