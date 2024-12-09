@@ -7,16 +7,11 @@
 		CalendarArrowUpIcon,
 		CalendarHeartIcon,
 		CalendarX2Icon,
-		FlameKindlingIcon,
-		LockIcon,
 		LockOpenIcon,
 		PencilIcon,
-		PencilOffIcon,
-		PlusIcon,
-		SaveIcon,
-		UnlockIcon
+		PlusIcon
 	} from 'lucide-svelte';
-	import SuperDebug, { superForm } from 'sveltekit-superforms';
+	import { superForm } from 'sveltekit-superforms';
 	import type { PageData } from './$types';
 	import CategoryInput from './_components/CategoryInput.svelte';
 	import Divider from '$lib/components/Divider.svelte';
@@ -29,10 +24,7 @@
 	});
 
 	const timezone = getLocalTimeZone();
-	interface Category {
-		categoryId: number;
-		rules: { value: string; isLocked: boolean }[];
-	}
+
 	let rulesContainerRef: HTMLUListElement | undefined = $state(undefined);
 	let submissionsOpenAt = $state<CalendarDateTime>(
 		new CalendarDateTime(
@@ -217,7 +209,7 @@
 			<Button
 				icon={PlusIcon}
 				variant="outline"
-				onclick={(e) => ($form.categories = [...$form.categories, { categoryId: 0, rules: [] }])}
+				onclick={() => ($form.categories = [...$form.categories, { categoryId: 0, rules: [] }])}
 			>
 				Add Category
 			</Button>
