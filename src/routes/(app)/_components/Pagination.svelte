@@ -1,16 +1,12 @@
-<script lang="ts" module>
-	import { Pagination, type PaginationRootProps } from 'bits-ui';
-	export interface PaginationProps extends PaginationRootProps {}
-</script>
-
 <script lang="ts">
+	import { Pagination, type PaginationRootProps } from 'bits-ui';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { cn } from '$lib/utils';
 
 	import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-svelte';
 
-	let { count, perPage, ...props }: PaginationProps = $props();
+	let { count, perPage, ...props }: PaginationRootProps = $props();
 
 	let searchParams = $state(new URLSearchParams($page.url.searchParams.toString()));
 	let pageNum = $derived(Number(searchParams.get('page') ?? 1));
