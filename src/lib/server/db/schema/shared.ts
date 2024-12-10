@@ -1,6 +1,7 @@
 import { pgEnum, timestamp } from 'drizzle-orm/pg-core';
 import { userRoles } from '../../../types/userRoles';
 import { submissionStatus } from '../../../types/submissionStatus';
+import { mediaTypes } from '$lib/types/mediaTypes';
 export const roleEnum = pgEnum('role', userRoles);
 export const submissionStatusEnum = pgEnum('submission_status', submissionStatus);
 export const timestamps = {
@@ -10,4 +11,4 @@ export const timestamps = {
 		.defaultNow()
 		.$onUpdate(() => new Date())
 };
-export const mediaTypeEnum = pgEnum('media_type', ['image', 'video', 'audio']);
+export const mediaTypeEnum = pgEnum('media_type', mediaTypes);
