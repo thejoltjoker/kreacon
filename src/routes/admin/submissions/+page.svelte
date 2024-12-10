@@ -41,4 +41,5 @@
 			class: 'text-destructive'
 		}
 	]}
+	pagination={data.pagination}
 />

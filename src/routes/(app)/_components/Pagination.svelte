@@ -1,11 +1,16 @@
+<script lang="ts" module>
+	import { Pagination, type PaginationRootProps } from 'bits-ui';
+	export interface PaginationProps extends PaginationRootProps {}
+</script>
+
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { cn } from '$lib/utils';
-	import { Pagination, type PaginationRootProps } from 'bits-ui';
+
 	import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-svelte';
 
-	let { count, perPage, ...props }: PaginationRootProps = $props();
+	let { count, perPage, ...props }: PaginationProps = $props();
 
 	let searchParams = $state(new URLSearchParams($page.url.searchParams.toString()));
 	let pageNum = $derived(Number(searchParams.get('page') ?? 1));
@@ -23,6 +28,11 @@
 	};
 
 	let rootClassName = cn('flex flex-col items-center', props.class);
+	let buttonBaseClass = cn(
+		'flex size-form items-center justify-center rounded-form transition-colors text-shade-400',
+		'disabled:cursor-normal disabled:text-shade-600',
+		'hover:disabled:bg-transparent hover:bg-shade-800 hover:text-white'
+	);
 </script>
 
 <Pagination.Root
@@ -35,9 +45,7 @@
 >
 	{#snippet children({ pages, range })}
 		<div class="my-xl flex items-center">
-			<Pagination.PrevButton
-				class="mr-sm inline-flex size-form items-center justify-center rounded-form bg-transparent active:scale-98 disabled:cursor-not-allowed disabled:text-muted-foreground hover:disabled:bg-transparent"
-			>
+			<Pagination.PrevButton class={cn(buttonBaseClass, 'mr-sm')}>
 				<ChevronLeftIcon class="size-6" />
 			</Pagination.PrevButton>
 			<div class="flex items-center gap-2.5">
@@ -47,20 +55,21 @@
 					{:else}
 						<Pagination.Page
 							{page}
-							class="inline-flex size-form select-none items-center justify-center rounded-form bg-transparent font-medium hover:bg-muted-background active:scale-98 disabled:cursor-not-allowed disabled:opacity-50 hover:disabled:bg-transparent data-[selected]:bg-muted-background data-[selected]:text-tertiary"
+							class={cn(
+								buttonBaseClass,
+								'data-[selected]:bg-shade-800 data-[selected]:text-white data-[selected]:hover:bg-shade-700'
+							)}
 						>
 							{page.value}
 						</Pagination.Page>
 					{/if}
 				{/each}
 			</div>
-			<Pagination.NextButton
-				class="ml-sm inline-flex size-form items-center justify-center rounded-form bg-transparent active:scale-98 disabled:cursor-not-allowed disabled:text-muted-foreground hover:disabled:bg-transparent"
-			>
+			<Pagination.NextButton class={cn(buttonBaseClass, 'ml-sm')}>
 				<ChevronRightIcon class="size-6" />
 			</Pagination.NextButton>
 		</div>
-		<p class="text-center text-sm text-muted-foreground">
+		<p class="text-center text-sm text-shade-400">
 			Showing {range.start}-{range.end} of {count}
 		</p>
 	{/snippet}

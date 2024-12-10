@@ -61,7 +61,7 @@
 	</div>
 	<HorizontalMenu highlightActive={false} class="max-md:hidden">
 		{#each menuItems as item}
-			<HorizontalMenuItem href={item.href}>{item.label}</HorizontalMenuItem>
+			<HorizontalMenuItem href={item.href}>{$t(item.label)}</HorizontalMenuItem>
 		{/each}
 	</HorizontalMenu>
 

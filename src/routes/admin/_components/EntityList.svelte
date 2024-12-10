@@ -10,6 +10,7 @@
 	import { cn } from '$lib/utils';
 	import startCase from 'lodash/startCase';
 	import { ArrowUpDownIcon, ImageIcon, Settings2Icon } from 'lucide-svelte';
+	import Pagination from '../../(app)/_components/Pagination.svelte';
 	import EntityListActions, { type EntityListActionItem } from './EntityListActions.svelte';
 	interface Item {
 		[key: string]: unknown;
@@ -28,15 +29,17 @@
 		items: Item[];
 		fields?: Field[];
 		actions?: EntityListActionItem[];
+		pagination?: { page: number; perPage: number; count: number };
 	}
-	let { items, fields = [], actions = [] }: EntityListProps = $props();
+
+	let { items, fields = [], actions = [], pagination }: EntityListProps = $props();
 
 	let fieldsToRender: Field[] = $derived(
 		fields.length > 0
 			? fields
-			: Object.entries(items[0] || {}).map(([field, value]) => ({
+			: Object.entries(items[0] || {}).map(([field, _]) => ({
 					name: field,
-					minScreen: 'sm',
+					minScreen: 'all',
 					sortable: false
 				}))
 	);
@@ -65,7 +68,7 @@
 			<div
 				class="flex size-form min-w-form items-center justify-center overflow-hidden text-shade-400"
 			>
-				<ImageIcon class="size-5" />
+				<ImageIcon class="size-5" aria-label={$t('image')} />
 			</div>
 		{/if}
 		{#each fieldsToRender as field}
@@ -84,7 +87,7 @@
 					onclick={() => handleSortByChange(field.name ?? '')}
 					disabled={!field.sortable}
 				>
-					{startCase(field.name ?? 'Unknown')}
+					{startCase($t(field.name ?? 'Unknown'))}
 					{#if field.sortable}
 						<ArrowUpDownIcon class="size-5" />
 					{/if}
@@ -107,7 +110,7 @@
 					>
 						<img
 							src={item.thumbnailUrl}
-							alt={item.name ?? 'Thumbnail'}
+							alt={item.name ?? $t('Thumbnail')}
 							class="h-full w-full object-cover"
 						/>
 					</div>
@@ -149,7 +152,7 @@
 								field?.name === 'id' && 'text-primary'
 							)}
 						>
-							{$t(startCase(field?.name ?? 'Unknown'))}
+							{startCase($t(field?.name ?? 'Unknown'))}
 						</p>
 					</div>
 				{/each}
@@ -158,3 +161,6 @@
 		{/each}
 	</ul>
 </div>
+{#if pagination}
+	<Pagination page={pagination.page} perPage={pagination.perPage} count={pagination.count} />
+{/if}

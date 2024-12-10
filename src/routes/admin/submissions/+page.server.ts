@@ -7,7 +7,7 @@ export const load = (async ({ url }) => {
 	// Add pagination and sorting params
 	const page = Number(url.searchParams.get('page') ?? '1');
 	const sortBy = url.searchParams.get('sortBy') ?? 'newest';
-	const pageSize = 30;
+	const perPage = 10;
 
 	const result = await db.transaction(async (tx) => {
 		const result = await tx.query.submissions.findMany({
@@ -38,8 +38,8 @@ export const load = (async ({ url }) => {
 						return [asc(items.status), desc(items.createdAt)];
 				}
 			},
-			limit: pageSize,
-			offset: (page - 1) * pageSize
+			limit: perPage,
+			offset: (page - 1) * perPage
 		});
 
 		const [totalCount] = await tx.select({ count: count() }).from(submissions);
@@ -49,7 +49,11 @@ export const load = (async ({ url }) => {
 
 	return {
 		submissions: result.submissions,
-		totalCount: result.totalCount.count,
+		pagination: {
+			page,
+			perPage,
+			count: result.totalCount.count
+		},
 		title: { text: 'Submissions', href: '/admin/submissions' }
 	};
 }) satisfies PageServerLoad;
