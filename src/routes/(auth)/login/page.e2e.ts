@@ -15,7 +15,7 @@ test('Should show message if login fails', async ({ page }) => {
 	await page.locator('input[name="email"]').fill('john.doe@example.com');
 	await page.locator('input[name="password"]').click();
 	await page.locator('input[name="password"]').fill('no-password');
-	await page.getByRole('button', { name: 'Login' }).click();
+	await page.getByRole('button', { name: 'Log in' }).click();
 	await page.waitForURL('/login');
 	await expect(page.locator('.message')).toHaveText('Incorrect email or password');
 });
