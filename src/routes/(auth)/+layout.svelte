@@ -13,6 +13,6 @@
 	}
 
 	.container {
-		@apply flex w-full max-w-[30rem] flex-col gap-md rounded-md border border-neutral-700 px-md py-xl md:p-2xl;
+		@apply flex w-full max-w-[30rem] flex-col gap-md rounded-md border border-shade-600 bg-bg px-md py-xl md:p-2xl;
 	}
 </style>

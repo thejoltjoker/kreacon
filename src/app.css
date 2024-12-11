@@ -74,7 +74,7 @@
 
 @layer components {
 	.error {
-		@apply text-error;
+		@apply text-destructive;
 	}
 
 	.input-valid {
