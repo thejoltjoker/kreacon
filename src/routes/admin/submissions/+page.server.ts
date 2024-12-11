@@ -7,7 +7,7 @@ export const load = (async ({ url }) => {
 	// Add pagination and sorting params
 	const page = Number(url.searchParams.get('page') ?? '1');
 	const sortBy = url.searchParams.get('sortBy') ?? 'newest';
-	const perPage = 10;
+	const perPage = 30;
 
 	const result = await db.transaction(async (tx) => {
 		const result = await tx.query.submissions.findMany({

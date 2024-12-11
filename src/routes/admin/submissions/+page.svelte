@@ -7,6 +7,7 @@
 	export let data: PageData;
 </script>
 
+<!-- TODO Figure out what to do when deleting category -->
 <EntityFilterBar entityName="submissions" />
 <EntityList
 	items={data.submissions.flatMap((submission) => ({

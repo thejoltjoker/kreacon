@@ -1,6 +1,6 @@
 {
 	"name": "kreacon",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"private": true,
 	"scripts": {
 		"dev": "vite dev",
@@ -90,6 +90,7 @@
 		"http-status-codes": "^2.3.0",
 		"lodash": "^4.17.21",
 		"lucide-svelte": "^0.460.1",
+		"mime": "^4.0.4",
 		"postgres": "^3.4.5",
 		"svelte-i18n": "^4.0.1",
 		"throttle-debounce": "^5.0.2"

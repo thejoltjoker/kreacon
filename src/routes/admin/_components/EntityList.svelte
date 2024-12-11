@@ -44,11 +44,6 @@
 				}))
 	);
 
-	$effect(() => {
-		console.log('fields:', fields);
-		console.log('fieldsToRender:', fieldsToRender);
-	});
-
 	const handleSortByChange = (sortBy: string) => {
 		const params = new URLSearchParams($page.url.searchParams);
 		if (params.get('sortBy') === `${sortBy}_asc`) {
@@ -101,6 +96,7 @@
 
 	<ul class="entity-list flex w-full flex-col">
 		{#each items as item}
+			<!-- TODO Make component -->
 			<li
 				class="flex flex-wrap gap-sm border-b border-b-divider px-xl py-sm first-of-type:pt-sm last-of-type:border-b-0 hover:bg-shade-900"
 			>
@@ -156,7 +152,7 @@
 						</p>
 					</div>
 				{/each}
-				<EntityListActions items={actions} />
+				<EntityListActions {actions} {item} />
 			</li>
 		{/each}
 	</ul>

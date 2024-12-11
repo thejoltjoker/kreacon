@@ -3,7 +3,7 @@
 	import { locale } from 'svelte-i18n';
 
 	let { data }: { data: PageData } = $props();
-	console.log(data);
+
 	const categories = data.categories;
 </script>
 

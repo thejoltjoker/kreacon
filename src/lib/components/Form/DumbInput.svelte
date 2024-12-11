@@ -18,6 +18,7 @@
 		errors?: string[];
 		variant?: 'default' | 'ghost';
 		type?: HTMLInputTypeAttribute & HTMLTextAreaElement['type'];
+		hint?: string;
 	}
 
 	type InputProps = BaseProps & {
@@ -39,6 +40,7 @@
 		label,
 		labelProps,
 		name,
+		hint,
 		value = $bindable(),
 		icon: Icon,
 		errors = [],
@@ -74,7 +76,7 @@
 	);
 </script>
 
-<div class="relative flex w-full select-text flex-col gap-xs">
+<div class="relative flex w-full select-text flex-col gap-sm">
 	<Label.Root {...labelProps} for={name} class={cn(label == null && 'hidden', labelProps?.class)}>
 		{#if typeof label === 'string'}
 			<span class="font-bold">{label}</span>
@@ -82,6 +84,9 @@
 			{@render label()}
 		{/if}
 	</Label.Root>
+	{#if hint}
+		<span class="-mt-2xs leading-none text-shade-400">{hint}</span>
+	{/if}
 	<span class="relative">
 		{#if type === 'textarea'}
 			{@const textareaProps = props as TextareaProps}
