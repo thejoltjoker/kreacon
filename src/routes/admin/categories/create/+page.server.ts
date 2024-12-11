@@ -1,25 +1,22 @@
-import { message, superValidate } from 'sveltekit-superforms/server';
-import { z } from 'zod';
-import type { PageServerLoad } from './$types';
-import { fail, redirect } from '@sveltejs/kit';
-import categories, { insertCategorySchema } from '$lib/server/db/schema/category';
-import { zod } from 'sveltekit-superforms/adapters';
 import db from '$lib/server/db';
+import categories, { createCategorySchema } from '$lib/server/db/schema/category';
 import type { MediaType } from '$lib/types/mediaTypes';
-import kebabCase from 'lodash/kebabCase';
+import { fail, redirect } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
 import { StatusCodes } from 'http-status-codes';
-
-const schema = insertCategorySchema.pick({ mediaType: true, description: true, name: true });
+import kebabCase from 'lodash/kebabCase';
+import { zod } from 'sveltekit-superforms/adapters';
+import { superValidate } from 'sveltekit-superforms/server';
+import type { PageServerLoad } from './$types';
 
 export const load = (async () => {
-	const form = await superValidate(zod(schema));
+	const form = await superValidate(zod(createCategorySchema));
 	return { form };
 }) satisfies PageServerLoad;
 
 export const actions = {
 	default: async ({ request }) => {
-		const form = await superValidate(request, zod(schema));
+		const form = await superValidate(request, zod(createCategorySchema));
 
 		if (!form.valid) {
 			return fail(400, { form });

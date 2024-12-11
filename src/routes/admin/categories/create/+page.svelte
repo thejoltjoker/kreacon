@@ -1,28 +1,21 @@
 <script lang="ts">
-	import { superForm } from 'sveltekit-superforms/client';
-	import type { PageData } from './$types';
-	import mime from 'mime/lite';
-	import { mediaTypes } from '$lib/types/mediaTypes';
-	import { t } from '$lib/i18n';
-	import Button from '$lib/components/Button.svelte';
-	import { goto } from '$app/navigation';
-	import DumbInput from '$lib/components/Form/DumbInput.svelte';
-	import DumbSelect from '$lib/components/Form/DumbSelect.svelte';
-	import startCase from 'lodash/startCase';
 	import CategoryForm from '../_components/CategoryForm.svelte';
+	import type { PageData } from './$types';
 	let { data }: { data: PageData } = $props();
 
-	const { form, errors, enhance, message } = superForm(data.form, {
-		onUpdated({ form }) {
-			if (form.valid) {
-				setTimeout(() => goto('/admin/categories'), 1000);
-			}
-		}
-	});
+	// const { form, errors, enhance, message } = superForm(data.form, {
+	// 	onUpdated({ form }) {
+	// 		if (form.valid) {
+	// 			setTimeout(() => goto('/admin/categories'), 1000);
+	// 		}
+	// 	}
+	// });
 </script>
 
 <!-- TODO Debounce check if category with same name exists and hint user -->
-<CategoryForm data={data.form} />
+<div class="flex w-full max-w-screen-md p-sm md:p-xl">
+	<CategoryForm data={data.form} />
+</div>
 <!-- <form method="POST" use:enhance class="flex flex-col gap-xl">
 	{JSON.stringify($message)}
 	<DumbInput

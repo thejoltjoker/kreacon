@@ -33,7 +33,7 @@
 		{ name: 'name', minScreen: 'all', sortable: true },
 		{ name: 'description', minScreen: 'md', sortable: false },
 		{ name: 'slug', minScreen: 'lg', sortable: false },
-		{ name: 'mediaType', minScreen: 'sm', sortable: false }
+		{ name: 'mediaType', minScreen: 'sm', sortable: true }
 	]}
 	actions={[
 		{

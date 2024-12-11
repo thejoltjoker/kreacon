@@ -4,4 +4,7 @@
 
 	let { data }: { data: PageData } = $props();
 </script>
-<CategoryForm data={data.form} />
+
+<div class="flex w-full max-w-screen-md">
+	<CategoryForm data={data.form} />
+</div>

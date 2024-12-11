@@ -16,8 +16,12 @@ export const load = (async ({ url }) => {
 						return asc(items.name);
 					case 'name_desc':
 						return desc(items.name);
+					case 'mediaType_asc':
+						return asc(items.mediaType);
+					case 'mediaType_desc':
+						return desc(items.mediaType);
 					default:
-						return desc(items.createdAt);
+						return asc(items.name);
 				}
 			},
 			limit: perPage,

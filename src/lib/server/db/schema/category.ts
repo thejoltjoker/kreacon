@@ -30,6 +30,7 @@ export const insertCategorySchema = createInsertSchema(categories).extend({
 		.string()
 		.min(1, { message: 'Name is required' })
 		.max(255, { message: 'Name is too long' }),
+	description: z.string().min(1, { message: 'Description is required' }),
 	slug: z
 		.string()
 		.min(1, { message: 'Slug is required' })
@@ -40,18 +41,18 @@ export const insertCategorySchema = createInsertSchema(categories).extend({
 });
 export const selectCategorySchema = createSelectSchema(categories);
 
-export const createCategorySchema = insertCategorySchema.pick({
-	name: true,
-	description: true,
-	mediaType: true
-});
-
-export const updateCategorySchema = createCategorySchema.extend({
-	slug: insertCategorySchema.shape.slug.optional()
-});
+export const createCategorySchema = insertCategorySchema
+	.pick({
+		name: true,
+		description: true,
+		mediaType: true,
+		slug: true
+	})
+	.extend({
+		slug: insertCategorySchema.shape.slug.optional()
+	});
 
 export type CreateCategory = z.infer<typeof createCategorySchema>;
-export type UpdateCategory = z.infer<typeof updateCategorySchema>;
 
 export type Category = InferSelectModel<typeof categories>;
 export type InsertCategory = InferInsertModel<typeof categories>;
