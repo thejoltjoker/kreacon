@@ -40,6 +40,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   [#50](https://github.com/thejoltjoker/kreacon/pull/50)
 - Allow admin to create/edit/delete categories
   [#57](https://github.com/thejoltjoker/kreacon/pull/57)
+- Create generic typed form and update login form
+  [#60](https://github.com/thejoltjoker/kreacon/pull/60)
 
 ### Changed
 

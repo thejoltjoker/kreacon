@@ -139,11 +139,11 @@ export const animals = [
 	'gopher',
 	'gorilla',
 	'grasshopper',
-	'grey seal',
+
 	'greyhound',
-	'grizzly bear',
+
 	'grouse',
-	'guinea fowl',
+
 	'guppy',
 	'hagfish',
 	'hamster',
@@ -159,7 +159,7 @@ export const animals = [
 	'hornbill',
 	'horse',
 	'hound',
-	'howler monkey',
+
 	'human',
 	'hummingbird',
 	'hyena',
@@ -176,7 +176,7 @@ export const animals = [
 	'kakapo',
 	'kangaroo',
 	'keeshond',
-	'king crab',
+
 	'kingfisher',
 	'kiwi',
 	'koala',

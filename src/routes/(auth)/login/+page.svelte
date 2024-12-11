@@ -1,17 +1,11 @@
 <script lang="ts">
-	import Button from '$lib/components/Button.svelte';
 	import Divider from '$lib/components/Divider.svelte';
-	import Link from '$lib/components/Link.svelte';
-	import { Label } from 'bits-ui';
-	import { XCircleIcon } from 'lucide-svelte';
 	import { _ } from 'svelte-i18n';
-	import { superForm } from 'sveltekit-superforms';
 	import OAuthButtons from '../_components/OAuthButtons.svelte';
 	import type { PageData } from './$types';
+	import LoginForm from './_components/LoginForm.svelte';
 
 	const { data }: { data: PageData } = $props();
-
-	const { form, errors, constraints, message, enhance } = superForm(data.form);
 </script>
 
 <div class="flex w-full flex-col gap-lg">
@@ -20,7 +14,8 @@
 		<OAuthButtons providers={[...data.providers]} />
 		<Divider>{$_('login_divider', { default: 'or sign in with email' })}</Divider>
 	{/if}
-	<form method="POST" action="?/login" use:enhance class="flex w-full flex-col gap-sm">
+	<LoginForm data={data.form} />
+	<!-- <form method="POST" action="?/login" use:enhance class="flex w-full flex-col gap-sm">
 		<Label.Root for="email" class="mb-xs flex flex-col gap-xs font-bold">
 			{$_('email', { default: 'Email' })}
 			<div class="relative">
@@ -43,6 +38,7 @@
 				<p class="error-message">{$errors.email}</p>
 			{/if}
 		</Label.Root>
+
 		<Label.Root for="password" class="mb-xs flex flex-col gap-xs font-bold">
 			{$_('password', { default: 'Password' })}
 			<div class="relative">
@@ -78,5 +74,5 @@
 			{$_('not_member', { default: 'Not a member?' })}
 			<Link href="/register">{$_('register', { default: 'Register' })}</Link>
 		</p>
-	</form>
+	</form> -->
 </div>

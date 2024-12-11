@@ -4,16 +4,17 @@ import { createLogger } from '$lib/server/logger';
 import { getOAuthClient } from '$lib/server/auth/oauth/getOAuthClient';
 import { isOAuthProvider, type OAuthProvider } from '$lib/server/auth/oauth/OAuthClient';
 import { dev } from '$app/environment';
+import { StatusCodes } from 'http-status-codes';
 const logger = createLogger('auth/login');
 export const GET: RequestHandler = async ({ params, cookies }) => {
 	const { provider } = params;
 
 	if (!provider) {
-		return redirect(302, '/login');
+		return redirect(StatusCodes.TEMPORARY_REDIRECT, '/login');
 	}
 
 	if (!isOAuthProvider(provider)) {
-		return redirect(302, '/login');
+		return redirect(StatusCodes.TEMPORARY_REDIRECT, '/login');
 	}
 
 	const client = getOAuthClient(provider as OAuthProvider);

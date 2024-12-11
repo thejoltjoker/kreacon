@@ -25,7 +25,7 @@ const createSubmissionSchema = insertSubmissionSchema
 
 export const load = (async ({ locals }) => {
 	if (!locals.user || !locals.session) {
-		redirect(302, '/login?redirect=/submissions/create');
+		redirect(StatusCodes.TEMPORARY_REDIRECT, '/login?redirect=/submissions/create');
 	}
 	const form = await superValidate(zod(createSubmissionSchema));
 	const now = new Date();
