@@ -26,9 +26,32 @@ export const insertCategorySchema = createInsertSchema(categories).extend({
 	mediaType: z.string().refine((value) => isValidMediaType(value), {
 		message: 'Invalid media type'
 	}),
-	name: z.string().min(1, { message: 'Name is required' }).max(255, { message: 'Name is too long' })
+	name: z
+		.string()
+		.min(1, { message: 'Name is required' })
+		.max(255, { message: 'Name is too long' }),
+	slug: z
+		.string()
+		.min(1, { message: 'Slug is required' })
+		.max(300, { message: 'Slug is too long' })
+		.regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, {
+			message: 'Slug must be in kebab-case format (lowercase letters, numbers, and hyphens only)'
+		})
 });
 export const selectCategorySchema = createSelectSchema(categories);
+
+export const createCategorySchema = insertCategorySchema.pick({
+	name: true,
+	description: true,
+	mediaType: true
+});
+
+export const updateCategorySchema = createCategorySchema.extend({
+	slug: insertCategorySchema.shape.slug.optional()
+});
+
+export type CreateCategory = z.infer<typeof createCategorySchema>;
+export type UpdateCategory = z.infer<typeof updateCategorySchema>;
 
 export type Category = InferSelectModel<typeof categories>;
 export type InsertCategory = InferInsertModel<typeof categories>;

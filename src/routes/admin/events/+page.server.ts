@@ -56,7 +56,6 @@ export const actions = {
 		const formData = await request.formData();
 		try {
 			const { eventId, sanityCheck } = schema.parse(Object.fromEntries(formData.entries()));
-			console.log(eventId, sanityCheck);
 
 			await db.delete(events).where(eq(events.id, Number(eventId)));
 		} catch (error) {

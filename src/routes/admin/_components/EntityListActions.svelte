@@ -2,10 +2,11 @@
 	export interface EntityListActionItem extends DropdownMenuItemProps {
 		label: string;
 		icon: typeof IconType;
-		onClick: (value: unknown) => void;
+		onClick: (item: any) => void;
 	}
 	type Props = DropdownMenu.RootProps & {
-		items: EntityListActionItem[];
+		item: any;
+		actions: EntityListActionItem[];
 		contentProps?: WithoutChild<DropdownMenu.ContentProps>;
 		class?: string;
 	};
@@ -18,7 +19,7 @@
 	import type { Icon as IconType } from 'lucide-svelte';
 	import { EllipsisIcon, InfoIcon } from 'lucide-svelte';
 
-	let { open = $bindable(false), items, contentProps, ...props }: Props = $props();
+	let { open = $bindable(false), actions, contentProps, item, ...props }: Props = $props();
 </script>
 
 <DropdownMenu.Root bind:open {...props}>
@@ -37,21 +38,21 @@
 			)}
 		>
 			<DropdownMenu.Group aria-label="Actions">
-				{#each items as { icon: Icon, label, onClick, ...item }}
+				{#each actions as { icon: Icon, label, onClick, ...actionItem }}
 					<DropdownMenu.Item
-						{...item}
+						{...actionItem}
 						textValue={label}
 						class={cn(
 							'flex cursor-pointer items-center justify-start gap-sm rounded-sm px-md py-sm transition-colors hover:bg-shade-800 data-[highlighted]:bg-shade-800',
-							item.class
+							actionItem.class
 						)}
-						onclick={onClick}
+						onclick={(e) => onClick(item)}
 					>
 						<Icon class="size-5" />
 						{label}
 					</DropdownMenu.Item>
 				{/each}
-				{#if items.length === 0}
+				{#if actions.length === 0}
 					<DropdownMenu.Item
 						textValue="No actions available"
 						class="flex items-center justify-start gap-sm  px-md py-sm text-shade-400"

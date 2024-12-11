@@ -1,13 +1,14 @@
 import { message, superValidate } from 'sveltekit-superforms/server';
 import { z } from 'zod';
 import type { PageServerLoad } from './$types';
-import { fail } from '@sveltejs/kit';
+import { fail, redirect } from '@sveltejs/kit';
 import categories, { insertCategorySchema } from '$lib/server/db/schema/category';
 import { zod } from 'sveltekit-superforms/adapters';
 import db from '$lib/server/db';
 import type { MediaType } from '$lib/types/mediaTypes';
 import kebabCase from 'lodash/kebabCase';
 import { eq } from 'drizzle-orm';
+import { StatusCodes } from 'http-status-codes';
 
 const schema = insertCategorySchema.pick({ mediaType: true, description: true, name: true });
 
@@ -24,7 +25,6 @@ export const actions = {
 			return fail(400, { form });
 		}
 
-		console.log(form.data);
 		let slug = kebabCase(form.data.name);
 		const existingCategory = await db.query.categories.findFirst({
 			where: eq(categories.slug, slug)
@@ -41,7 +41,6 @@ export const actions = {
 			mediaType: form.data.mediaType as MediaType
 		});
 
-		// TODO: Add your category creation logic here
-		return message(form, { status: 'success', message: 'Category created successfully' });
+		return redirect(StatusCodes.TEMPORARY_REDIRECT, '/admin/categories');
 	}
 };

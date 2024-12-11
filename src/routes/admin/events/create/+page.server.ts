@@ -114,7 +114,7 @@ export const actions = {
 
 			return { event, insertedEventCategories };
 		});
-		console.log(event);
+
 		// Display a success status message
 		// return message(form, {
 		// 	status: 'success',

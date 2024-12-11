@@ -15,7 +15,7 @@
 	let { title }: { title?: { text: string; href: string } } = $props();
 
 	let menuItems = $derived(
-		isAdminRoute
+		isAdminRoute && user != null
 			? [
 					{ label: 'Categories', href: '/admin/categories' },
 					{ label: 'Events', href: '/admin/events' },
