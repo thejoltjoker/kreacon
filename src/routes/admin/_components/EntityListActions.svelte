@@ -1,10 +1,13 @@
+<!-- TODO Replace `any` with generic? -->
 <script lang="ts" module>
 	export interface EntityListActionItem extends DropdownMenuItemProps {
 		label: string;
 		icon: typeof IconType;
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		onClick: (item: any) => void;
 	}
 	type Props = DropdownMenu.RootProps & {
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		item: any;
 		actions: EntityListActionItem[];
 		contentProps?: WithoutChild<DropdownMenu.ContentProps>;
@@ -46,7 +49,7 @@
 							'flex cursor-pointer items-center justify-start gap-sm rounded-sm px-md py-sm transition-colors hover:bg-shade-800 data-[highlighted]:bg-shade-800',
 							actionItem.class
 						)}
-						onclick={(e) => onClick(item)}
+						onclick={() => onClick(item)}
 					>
 						<Icon class="size-5" />
 						{label}

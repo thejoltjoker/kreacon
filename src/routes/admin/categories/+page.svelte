@@ -1,3 +1,4 @@
+<!-- TODO Layout for form page, i.e create and update -->
 <script lang="ts">
 	import type { PageData } from './$types';
 	import EntityList from '../_components/EntityList.svelte';
@@ -7,7 +8,6 @@
 	import { goto, invalidateAll } from '$app/navigation';
 
 	export let data: PageData;
-
 	const handleDelete = async (id: string) => {
 		// TODO Add confirmation dialog
 

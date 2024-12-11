@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	import Button from '$lib/components/Button.svelte';
 	import DumbInput from '$lib/components/Form/DumbInput.svelte';
 	import DumbSelect from '$lib/components/Form/DumbSelect.svelte';
@@ -6,18 +7,12 @@
 	import type { createCategorySchema } from '$lib/server/db/schema/category';
 	import { mediaTypes, type MediaType } from '$lib/types/mediaTypes';
 	import startCase from 'lodash/startCase';
-
 	import { t } from 'svelte-i18n';
 	import { superForm } from 'sveltekit-superforms';
 	import type { Infer, SuperValidated } from 'sveltekit-superforms/client';
 
-	let {
-		data
-	}: {
-		data: SuperValidated<Infer<typeof createCategorySchema>>;
-	} = $props();
-
-	const { form, errors, enhance, message } = superForm(data);
+	const superform: SuperValidated<Infer<typeof createCategorySchema>> = $page.data.form;
+	const { form, errors, enhance, message } = superForm(superform);
 </script>
 
 <form method="POST" use:enhance class="flex w-full flex-col items-center gap-xl">
@@ -67,7 +62,7 @@
 		{#if $form.mediaType}
 			<p class="text-shade-400">
 				Allowed {$form.mediaType} file types {getAllowedExtensions($form.mediaType as MediaType)
-					.map((extension) => `.${extension}`)
+					.map((extension: string) => `.${extension}`)
 					.join(', ')}
 			</p>
 		{/if}

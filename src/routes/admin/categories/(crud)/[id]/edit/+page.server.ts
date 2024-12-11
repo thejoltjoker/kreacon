@@ -7,8 +7,9 @@ import { StatusCodes } from 'http-status-codes';
 import kebabCase from 'lodash/kebabCase';
 import { zod } from 'sveltekit-superforms/adapters';
 import { superValidate } from 'sveltekit-superforms/server';
-import { adminCheck } from '../../../utils';
+
 import type { Actions, PageServerLoad } from './$types';
+import { adminCheck } from '../../../../utils';
 
 export const load = (async ({ params, locals }) => {
 	adminCheck(locals);

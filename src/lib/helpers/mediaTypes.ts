@@ -19,7 +19,7 @@ export const getAllowedMimeTypes = (mediaType: MediaType): string[] =>
 
 export const getAllowedExtensions = (mediaType: MediaType): string[] => {
 	const mimeTypes = getAllowedMimeTypes(mediaType);
-	let extensions = new Set<string>();
+	const extensions = new Set<string>();
 	for (const mimeType of mimeTypes) {
 		const exts = mime.getAllExtensions(mimeType) ?? [];
 		exts.forEach((ext) => extensions.add(ext));

@@ -75,7 +75,7 @@ export const actions = {
 			slug = `${slug}-${Math.floor(Math.random() * 10000)}`;
 		}
 
-		const event = await db.transaction(async (trx) => {
+		await db.transaction(async (trx) => {
 			const [event] = await trx
 				.insert(events)
 				.values({ ...form.data, slug })
@@ -115,11 +115,6 @@ export const actions = {
 			return { event, insertedEventCategories };
 		});
 
-		// Display a success status message
-		// return message(form, {
-		// 	status: 'success',
-		// 	message: `Event created successfully! #${result?.id}`
-		// });
 		redirect(StatusCodes.TEMPORARY_REDIRECT, `/admin/events`);
 	}
 };
