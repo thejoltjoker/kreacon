@@ -3,6 +3,7 @@ import { reactions, users } from '$lib/server/db/schema';
 import { redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import { eq, sql } from 'drizzle-orm';
+import { StatusCodes } from 'http-status-codes';
 
 export const load = (async ({ params, url }) => {
 	const username = params.username;
@@ -11,7 +12,7 @@ export const load = (async ({ params, url }) => {
 		where: eq(users.username, username)
 	});
 	if (!user) {
-		throw redirect(302, '/');
+		throw redirect(StatusCodes.TEMPORARY_REDIRECT, '/');
 	}
 	const result = await db.query.reactions.findMany({
 		where: eq(reactions.userId, user.id),

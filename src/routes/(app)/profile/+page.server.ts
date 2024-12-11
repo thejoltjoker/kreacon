@@ -9,12 +9,13 @@ import tickets, { insertTicketSchema } from '$lib/server/db/schema/ticket';
 import { api as ticketClient } from '$lib/server/services/ticket';
 import { events } from '$lib/server/db/schema';
 import type { SuperFormMessage } from '$lib/types/SuperFormMessage';
+import { StatusCodes } from 'http-status-codes';
 
 const ticketSchema = insertTicketSchema.pick({ id: true });
 
 export const load = (async ({ locals }) => {
 	if (!locals.user || !locals.session) {
-		return redirect(302, '/login');
+		return redirect(StatusCodes.TEMPORARY_REDIRECT, '/login');
 	}
 
 	const user = await db.query.users.findFirst({
@@ -38,7 +39,7 @@ export const load = (async ({ locals }) => {
 	});
 
 	if (!user) {
-		return redirect(302, '/login');
+		return redirect(StatusCodes.TEMPORARY_REDIRECT, '/login');
 	}
 
 	const tickets = user.tickets.map((t) => ({
@@ -55,7 +56,7 @@ export const load = (async ({ locals }) => {
 export const actions = {
 	updateProfile: async ({ request, locals }) => {
 		if (!locals.user || !locals.session) {
-			return redirect(302, '/login');
+			return redirect(StatusCodes.TEMPORARY_REDIRECT, '/login');
 		}
 
 		const form = await superValidate(request, zod(updateUserSchema));
@@ -79,7 +80,7 @@ export const actions = {
 
 	addTicket: async ({ request, locals }) => {
 		if (!locals.user || !locals.session) {
-			return redirect(302, '/login');
+			return redirect(StatusCodes.TEMPORARY_REDIRECT, '/login');
 		}
 
 		const ticketForm = await superValidate<Infer<typeof ticketSchema>, SuperFormMessage>(

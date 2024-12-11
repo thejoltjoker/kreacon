@@ -9,6 +9,7 @@ import { eq } from 'drizzle-orm';
 import type { RequestHandler } from './$types';
 import { createSession, generateSessionToken, setSessionTokenCookie } from '$lib/server/auth';
 import { hashPassword } from '$lib/server/utils';
+import { StatusCodes } from 'http-status-codes';
 
 const logger = createLogger('auth/callback');
 
@@ -75,5 +76,5 @@ export const GET: RequestHandler = async (event) => {
 
 	cookies.delete('oauth_state', { path: '/oauth/callback' });
 
-	throw redirect(302, '/profile');
+	throw redirect(StatusCodes.TEMPORARY_REDIRECT, '/profile');
 };

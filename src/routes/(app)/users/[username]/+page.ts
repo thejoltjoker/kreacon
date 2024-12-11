@@ -1,7 +1,8 @@
 import { redirect } from '@sveltejs/kit';
 import type { PageLoad } from './$types';
+import { StatusCodes } from 'http-status-codes';
 
 export const load = (async ({ params }) => {
-	redirect(302, `/users/${params.username}/submissions`);
+	redirect(StatusCodes.TEMPORARY_REDIRECT, `/users/${params.username}/submissions`);
 	return {};
 }) satisfies PageLoad;

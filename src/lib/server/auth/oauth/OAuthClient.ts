@@ -2,6 +2,7 @@ import { env } from '$env/dynamic/private';
 import { createLogger } from '$lib/server/logger';
 import { redirect } from '@sveltejs/kit';
 import type { OAuthAccessTokenResponse } from '../../../types/OAuthAccessTokenResponse';
+import { StatusCodes } from 'http-status-codes';
 
 const logger = createLogger('oauth');
 
@@ -96,7 +97,7 @@ export class OAuthBase {
 
 	authorize(state?: string) {
 		if (state) this.state = state;
-		return redirect(302, this.authUrl());
+		return redirect(StatusCodes.TEMPORARY_REDIRECT, this.authUrl());
 	}
 
 	async getUser(accessToken: string) {

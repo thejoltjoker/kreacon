@@ -30,5 +30,5 @@
 // 	}
 
 // 	logger.info('Email verified');
-// 	throw redirect(302, '/');
+// 	throw redirect(StatusCodes.TEMPORARY_REDIRECT, '/');
 // };

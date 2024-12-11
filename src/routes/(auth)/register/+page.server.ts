@@ -9,6 +9,7 @@ import { eq } from 'drizzle-orm';
 import { message, setError, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import type { PageServerLoad } from './$types';
+import { StatusCodes } from 'http-status-codes';
 
 const logger = createLogger('register');
 
@@ -48,7 +49,7 @@ export const actions: Actions = {
 			return message(form, { text: 'Something went wrong', status: 'error' });
 		}
 		// await sendEmailVerification(email.toString());
-		return redirect(302, '/');
+		return redirect(StatusCodes.TEMPORARY_REDIRECT, '/');
 	},
 	check: async ({ request }) => {
 		const form = await superValidate(request, zod(insertUserSchema.pick({ username: true })));
