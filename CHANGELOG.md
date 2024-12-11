@@ -38,6 +38,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   [#50](https://github.com/thejoltjoker/kreacon/pull/50)
 - Create entity listing for admin pages
   [#50](https://github.com/thejoltjoker/kreacon/pull/50)
+- Allow admin to create/edit/delete categories
+  [#57](https://github.com/thejoltjoker/kreacon/pull/57)
 
 ### Changed
 
