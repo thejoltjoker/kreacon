@@ -3,16 +3,23 @@
 </script>
 
 <script lang="ts" generics="T extends Record<string, unknown>">
+	import { cn } from '$lib/utils';
 	import { Label } from 'bits-ui';
+	import { XCircleIcon } from 'lucide-svelte';
+	import { getContext } from 'svelte';
 	import { formFieldProxy, type FormPathLeaves, type SuperForm } from 'sveltekit-superforms';
 	import StyledInput, { type StyledInputProps } from './StyledInput.svelte';
-	import { cn } from '$lib/utils';
 
 	interface TextFieldProps extends StyledInputProps {
-		superform: SuperForm<T>;
+		label: string;
 		field: FormPathLeaves<T>;
 		labelProps?: Label.RootProps;
-		label: string;
+		/**
+		 * Optional SuperForm instance. If not provided, will attempt to get from GenericForm context
+		 * Must be provided if used outside of GenericForm
+		 * @default undefined
+		 */
+		superform?: SuperForm<T>;
 	}
 
 	let {
@@ -24,6 +31,12 @@
 		...props
 	}: TextFieldProps = $props();
 
+	if (superform == null) {
+		superform = getContext<SuperForm<T>>('superform');
+		if (superform == null) {
+			throw new Error('Failed to load form context');
+		}
+	}
 	const { value, errors, constraints } = formFieldProxy(superform, field);
 </script>
 
@@ -40,5 +53,14 @@
 		{...$constraints}
 		{...props}
 	/>
-	{#if $errors}<span class="error">{$errors}</span>{/if}
+	{#if $errors}
+		<ul class="flex flex-col gap-xs text-sm">
+			{#each $errors as error}
+				<li class="inline-flex items-center gap-2xs">
+					<XCircleIcon class="size-4 text-destructive" />
+					{error}
+				</li>
+			{/each}
+		</ul>
+	{/if}
 </div>
