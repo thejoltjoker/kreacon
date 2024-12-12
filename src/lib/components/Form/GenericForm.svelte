@@ -55,7 +55,7 @@
 		...options
 	});
 
-	const { form, message, delayed, errors, allErrors, enhance } = superform;
+	const { form, enhance } = superform;
 
 	setContext('superform', superform);
 </script>

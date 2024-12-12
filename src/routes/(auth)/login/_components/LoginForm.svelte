@@ -10,7 +10,7 @@
 
 	let { data }: { data: SuperValidated<Infer<ZLoginSchema>> } = $props();
 	const superform = superForm(data, { validators: zod(loginSchema) });
-	const { form, message, enhance } = superform;
+	const { message, enhance } = superform;
 </script>
 
 <form method="POST" action="/login?/login" use:enhance class="flex w-full flex-col gap-xl">

@@ -36,10 +36,7 @@ export const actions: Actions = {
 			return fail(StatusCodes.BAD_REQUEST, { form });
 		}
 		try {
-			const [createdUser] = await db
-				.insert(users)
-				.values({ username, email, password: passwordHash })
-				.returning();
+			await db.insert(users).values({ username, email, password: passwordHash }).returning();
 
 			// const sessionToken = generateSessionToken();
 			// const session = await createSession(sessionToken, createdUser.id);
