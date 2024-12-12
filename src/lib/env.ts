@@ -33,10 +33,16 @@ const EnvSchema = z.object({
 
 export type EnvSchema = z.infer<typeof EnvSchema>;
 
-expand(config());
+expand(
+	config({
+		path: process.env.NODE_ENV === 'production' ? '.env.production' : '.env'
+	})
+);
 
 try {
-	EnvSchema.parse(process.env);
+	const parsed = EnvSchema.parse(process.env);
+	console.log('Environment is configured correctly');
+	console.log(parsed);
 } catch (error) {
 	if (error instanceof ZodError) {
 		let message = 'Missing required values in .env:\n';
