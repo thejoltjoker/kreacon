@@ -42,6 +42,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   [#57](https://github.com/thejoltjoker/kreacon/pull/57)
 - Create generic typed form and update login form
   [#60](https://github.com/thejoltjoker/kreacon/pull/60)
+- Sprinkle some fairy dust on generic form
+  Use context to pass superform data to child components
+  [#62](https://github.com/thejoltjoker/kreacon/pull/62)
 
 ### Changed
 

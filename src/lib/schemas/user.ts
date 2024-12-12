@@ -16,6 +16,9 @@ export const registerUserSchema = z.object({
 	password: passwordSchema
 });
 
+export type ZRegisterUserSchema = typeof registerUserSchema;
+export type RegisterUserSchema = z.infer<typeof registerUserSchema>;
+
 export const updateUserSchema = z.object({
 	username: z
 		.string()

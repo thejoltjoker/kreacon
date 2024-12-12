@@ -9,7 +9,7 @@ test('test', async ({ page }) => {
 	await page.goto('/login');
 	await page.locator('input[name="email"]').fill('john.doe@example.com');
 	await page.locator('input[name="password"]').fill('password');
-	await page.getByRole('button', { name: 'Login' }).click();
+	await page.locator('.login-button').click();
 	await page.waitForURL('/profile');
 	await page.goto('/admin/events');
 	const eventsList = await page.locator('.events-list');

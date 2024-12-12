@@ -6,19 +6,17 @@
 	import { loginSchema, type ZLoginSchema } from '$lib/schemas/loginSchema';
 	import type { SuperValidated, Infer } from 'sveltekit-superforms';
 	import { superForm } from 'sveltekit-superforms';
-	import SuperDebug from 'sveltekit-superforms';
 	import { zod } from 'sveltekit-superforms/adapters';
 
 	let { data }: { data: SuperValidated<Infer<ZLoginSchema>> } = $props();
 	const superform = superForm(data, { validators: zod(loginSchema) });
-	const { form, message, enhance } = superform;
+	const { message, enhance } = superform;
 </script>
 
-<SuperDebug data={$form} />
 <form method="POST" action="/login?/login" use:enhance class="flex w-full flex-col gap-xl">
 	<TextField {superform} type="email" field="email" label="Email" />
 	<TextField {superform} type="password" field="password" label="Password" />
-	<Button type="submit">Log in</Button>
+	<Button type="submit" class="login-button">Log in</Button>
 	{#if $message}
 		<p class="message text-center text-red-500">{$message.text}</p>
 	{/if}
