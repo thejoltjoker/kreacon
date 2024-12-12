@@ -32,7 +32,7 @@ export const reactionsRelations = relations(reactions, ({ one }) => ({
 
 export const insertReactionSchema = createInsertSchema(reactions, {
 	value: z.string().emoji()
-});
+}).extend({ createdAt: z.date().optional(), updatedAt: z.date().optional() });
 
 export type Reaction = InferSelectModel<typeof reactions>;
 export type InsertReaction = InferInsertModel<typeof reactions>;
