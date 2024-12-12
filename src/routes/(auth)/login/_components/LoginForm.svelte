@@ -6,7 +6,6 @@
 	import { loginSchema, type ZLoginSchema } from '$lib/schemas/loginSchema';
 	import type { SuperValidated, Infer } from 'sveltekit-superforms';
 	import { superForm } from 'sveltekit-superforms';
-	import SuperDebug from 'sveltekit-superforms';
 	import { zod } from 'sveltekit-superforms/adapters';
 
 	let { data }: { data: SuperValidated<Infer<ZLoginSchema>> } = $props();

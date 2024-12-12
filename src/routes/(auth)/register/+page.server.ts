@@ -1,7 +1,6 @@
-import { createSession, generateSessionToken, setSessionTokenCookie } from '$lib/server/auth';
 import { availableOAuthProviders } from '$lib/server/auth/oauth/getOAuthClient';
 import { db } from '$lib/server/db';
-import users, { insertUserSchema } from '$lib/server/db/schema/user';
+import users from '$lib/server/db/schema/user';
 import { createLogger } from '$lib/server/logger';
 import { hashPassword } from '$lib/server/utils';
 import { type Actions, fail, redirect } from '@sveltejs/kit';
