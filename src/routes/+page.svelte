@@ -12,4 +12,3 @@
 		<HeroSection />
 	</div>
 </div>
-<Footer />

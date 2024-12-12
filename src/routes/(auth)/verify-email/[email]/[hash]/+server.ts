@@ -1,5 +1,7 @@
 // import { createVerifyEmailToken } from '$lib/server/auth/verifyEmail';
 
+import type { RequestHandler } from './$types';
+
 // import { db } from '$lib/server/db';
 // import { users } from '$lib/server/db/schema';
 // import { error, redirect } from '@sveltejs/kit';
@@ -32,3 +34,6 @@
 // 	logger.info('Email verified');
 // 	throw redirect(StatusCodes.TEMPORARY_REDIRECT, '/');
 // };
+export const GET: RequestHandler = async ({ params }) => {
+	return new Response('Hello World');
+};

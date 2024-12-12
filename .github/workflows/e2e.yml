@@ -8,6 +8,20 @@ jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    env:
+      AZURE_APP_INSIGHTS_CONNECTION_STRING: ${{ secrets.AZURE_APP_INSIGHTS_CONNECTION_STRING }}
+      AZURE_COMMUNICATION_SERVICES_CONNECTION_STRING: ${{ secrets.AZURE_COMMUNICATION_SERVICES_CONNECTION_STRING }}
+      AZURE_COMMUNICATION_SERVICES_SENDER_ADDRESS: ${{ secrets.AZURE_COMMUNICATION_SERVICES_SENDER_ADDRESS }}
+      AZURE_STORAGE_ACCOUNT_NAME: ${{ secrets.AZURE_STORAGE_ACCOUNT_NAME }}
+      BASE_URL: ${{ secrets.BASE_URL }}
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      OAUTH_DISCORD_CLIENT_ID: ${{ secrets.OAUTH_DISCORD_CLIENT_ID }}
+      OAUTH_DISCORD_CLIENT_SECRET: ${{ secrets.OAUTH_DISCORD_CLIENT_SECRET }}
+      OAUTH_DISCORD_REDIRECT_URI: ${{ secrets.OAUTH_DISCORD_REDIRECT_URI }}
+      OAUTH_GITHUB_CLIENT_ID: ${{ secrets.OAUTH_GITHUB_CLIENT_ID }}
+      OAUTH_GITHUB_CLIENT_SECRET: ${{ secrets.OAUTH_GITHUB_CLIENT_SECRET }}
+      OAUTH_GITHUB_REDIRECT_URI: ${{ secrets.OAUTH_GITHUB_REDIRECT_URI }}
+      TICKET_API_URL: ${{ secrets.TICKET_API_URL }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -15,6 +29,10 @@ jobs:
           node-version: 20
       - name: Install dependencies
         run: npm ci
+      - name: Run migrations
+        env:
+          DB_MIGRATING: true
+        run: npm run db:migrate
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
       - name: Run Playwright tests
