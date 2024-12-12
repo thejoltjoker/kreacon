@@ -1,5 +1,4 @@
-import { config } from 'dotenv';
-import { expand } from 'dotenv-expand';
+import 'dotenv/config';
 import { ZodError, z } from 'zod';
 
 const stringBoolean = z.coerce
@@ -12,11 +11,11 @@ const stringBoolean = z.coerce
 const EnvSchema = z.object({
 	NODE_ENV: z.string().default('development'),
 	BASE_URL: z.string().url(),
-	DB_HOST: z.string(),
-	DB_USER: z.string(),
-	DB_PASSWORD: z.string(),
-	DB_NAME: z.string(),
-	DB_PORT: z.coerce.number(),
+	DB_HOST: z.string().optional(),
+	DB_USER: z.string().optional(),
+	DB_PASSWORD: z.string().optional(),
+	DB_NAME: z.string().optional(),
+	DB_PORT: z.coerce.number().optional(),
 	DATABASE_URL: z.string(),
 	DB_MIGRATING: stringBoolean,
 	DB_SEEDING: stringBoolean,
@@ -32,12 +31,6 @@ const EnvSchema = z.object({
 });
 
 export type EnvSchema = z.infer<typeof EnvSchema>;
-
-expand(
-	config({
-		path: process.env.NODE_ENV === 'production' ? '.env.production' : '.env'
-	})
-);
 
 try {
 	const parsed = EnvSchema.parse(process.env);
