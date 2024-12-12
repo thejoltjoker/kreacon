@@ -41,6 +41,7 @@
 		"argon2": "^0.41.1",
 		"bits-ui": "^1.0.0-next.64",
 		"clsx": "^2.1.1",
+		"dotenv": "^16.4.7",
 		"drizzle-orm": "^0.38.1",
 		"http-status-codes": "^2.3.0",
 		"lodash": "^4.17.21",
