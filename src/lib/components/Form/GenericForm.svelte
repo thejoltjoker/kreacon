@@ -30,6 +30,7 @@
 		invalidateAll?: boolean;
 		onFormValid?: () => void;
 		options?: FormOptions<T>;
+		debug?: boolean;
 	}
 
 	let {
@@ -41,6 +42,7 @@
 		onFormValid,
 		class: className,
 		options,
+		debug = false,
 		...props
 	}: GenericFormProps = $props();
 
@@ -61,6 +63,9 @@
 </script>
 
 <form {method} use:enhance class={cn('flex flex-col gap-sm', className)} {...props}>
+	{#if debug}
+		<SuperDebug data={$form}></SuperDebug>
+	{/if}
 	<!-- Magic way is to just rely on context,
 		but can be used with Svelte 5 snippets like this:
 		{#snippet children(superform)}
@@ -68,5 +73,3 @@
 		{/snippet} -->
 	{@render children(superform)}
 </form>
-
-<SuperDebug data={$form}></SuperDebug>
