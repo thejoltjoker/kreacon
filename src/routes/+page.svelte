@@ -8,13 +8,9 @@
 	<title>Kreacon</title>
 </svelte:head>
 
-<div class="flex min-h-screen flex-col">
-	<Navbar />
-
-	<div class="flex min-h-full grow flex-col items-center">
-		<div class="flex grow flex-col items-center justify-center">
-			<HeroSection />
-		</div>
+<div class="flex min-h-full grow flex-col items-center">
+	<div class="flex grow flex-col items-center justify-center">
+		<HeroSection />
 	</div>
-	<Footer />
 </div>
+<Footer />

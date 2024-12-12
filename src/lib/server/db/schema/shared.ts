@@ -1,7 +1,8 @@
 import { pgEnum, timestamp } from 'drizzle-orm/pg-core';
 import { userRoles } from '../../../types/userRoles';
 import { submissionStatus } from '../../../types/submissionStatus';
-import { mediaTypes } from '$lib/types/mediaTypes';
+import { mediaTypes } from '../../../types/mediaTypes';
+
 export const roleEnum = pgEnum('role', userRoles);
 export const submissionStatusEnum = pgEnum('submission_status', submissionStatus);
 export const timestamps = {
