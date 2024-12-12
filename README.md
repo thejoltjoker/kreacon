@@ -1,22 +1,10 @@
-# create-svelte
-
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
-
-## Creating a project
-
-If you're seeing this, you've probably already done this step. Congrats!
-
-```bash
-# create a new project in the current directory
-npm create svelte@latest
-
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+# Demo
 
 ## Developing
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+docker compose up
+
+Once you've created a project and installed dependencies with `npm install`, start a development server:
 
 ```bash
 npm run dev
@@ -37,31 +25,34 @@ You can preview the production build with `npm run preview`.
 
 > To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
 
-### Routes
+## Commands
 
-#### Guest Routes
-
-- [x] `GET  /register` : Show register form [RegisteredUserController@create]
-- [x] `POST /register` : Handle registration [RegisteredUserController@store]
-- [x] `GET  /login` : Show login form [AuthenticatedSessionController@create]
-- [x] `POST /login` : Handle login [AuthenticatedSessionController@store]
-- [ ] `GET  /forgot-password` : Show password reset form [PasswordResetLinkController@create]
-- [ ] `POST /forgot-password` : Send password reset link [PasswordResetLinkController@store]
-- [ ] `GET  /reset-password/{token}` : Show new password form [NewPasswordController@create]
-- [ ] `POST /reset-password` : Reset password [NewPasswordController@store]
-
-#### Authenticated Routes
-
-- [ ] `GET  /verify-email` : Show email verification prompt [EmailVerificationPromptController]
-- [ ] `GET  /verify-email/{id}/{hash}` : Verify email [VerifyEmailController]
-- [ ] `POST /email/verification-notification` : Resend verification email [EmailVerificationNotificationController@store]
-- [ ] `GET  /confirm-password` : Show confirm password view [ConfirmablePasswordController@show]
-- [ ] `POST /confirm-password` : Confirm password [ConfirmablePasswordController@store]
-- [ ] `PUT  /password` : Update password [PasswordController@update]
-- [ ] `POST /logout` : Logout [AuthenticatedSessionController@destroy]
-
-#### Profile Routes (authenticated)
-
-- [ ] `GET    /profile` : Show profile edit form [ProfileController@edit]
-- [ ] `PATCH  /profile` : Update profile information [ProfileController@update]
-- [ ] `DELETE /profile` : Delete user profile [ProfileController@destroy]
+| Command       | Description                             |
+| ------------- | --------------------------------------- |
+| `dev`         | Spin up SvelteKit dev server            |
+| `build`       | Build for production                    |
+| `preview`     | Preview production build                |
+| `check:watch` | Run Svelte check in watch mode          |
+| `check`       | Run Svelte check                        |
+| `commitlint`  | Lint commit messages                    |
+| `db:dbml`     | Generate dbml file                      |
+| `db:generate` | Generate migrations                     |
+| `db:migrate`  | Run migrations                          |
+| `db:push`     | Push current schema to database         |
+| `db:reset`    | Run migrations and seed database        |
+| `db:seed`     | Seed database                           |
+| `db:start`    | Run PostgreSQL in a docker container    |
+| `db:studio`   | Start Drizzle Studio                    |
+| `format`      | Format code                             |
+| `lint:fix`    | Lint and fix errors                     |
+| `lint`        | Lint code                               |
+| `logbook`     | Generate logbook entry                  |
+| `prepare`     | Husky                                   |
+| `swa:build`   | Build for Azure Static Web Apps         |
+| `swa:deploy`  | Deploy to Azure Static Web Apps         |
+| `swa:start`   | Start Azure Static Web Apps             |
+| `test:e2e`    | Run end-to-end tests with Playwright    |
+| `test:e2e:ui` | Run end-to-end tests with Playwright UI |
+| `test:unit`   | Run unit tests with Vitest              |
+| `test`        | Run all tests                           |
+| `translate`   | Translate i18n with Ollama              |
