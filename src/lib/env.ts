@@ -41,9 +41,9 @@ try {
 } catch (error) {
 	if (error instanceof ZodError) {
 		console.error('Environment validation failed:');
-		error.issues.forEach((issue) => {
+		for (const issue of error.issues) {
 			console.error(`- ${issue.path[0]}: ${issue.message}`);
-		});
+		}
 		process.exit(1);
 	} else {
 		console.error('Unexpected error during environment validation:', error);
