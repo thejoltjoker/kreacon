@@ -8,6 +8,8 @@ jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    environment:
+      name: 'Test'
     env:
       AZURE_APP_INSIGHTS_CONNECTION_STRING: ${{ secrets.AZURE_APP_INSIGHTS_CONNECTION_STRING }}
       AZURE_COMMUNICATION_SERVICES_CONNECTION_STRING: ${{ secrets.AZURE_COMMUNICATION_SERVICES_CONNECTION_STRING }}
