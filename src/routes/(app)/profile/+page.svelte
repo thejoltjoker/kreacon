@@ -9,8 +9,7 @@
 
 	let { data }: PageProps = $props();
 
-	let { tickets, user } = data;
-	let { accounts } = user;
+	let { tickets, user, accounts } = data;
 </script>
 
 <svelte:head>

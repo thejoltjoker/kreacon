@@ -45,6 +45,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sprinkle some fairy dust on generic form
   Use context to pass superform data to child components
   [#62](https://github.com/thejoltjoker/kreacon/pull/62)
+- Create GitHub action for end-to-end testing and deploying to Azure Web Apps
+- Create generic dropdown menu component and use for account menu
+  [#66](https://github.com/thejoltjoker/kreacon/pull/66)
 
 ### Changed
 
