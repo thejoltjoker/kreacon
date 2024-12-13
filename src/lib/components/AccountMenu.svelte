@@ -1,14 +1,19 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { DropdownMenu } from 'bits-ui';
+
 	import {
 		LayoutGridIcon,
 		LogOutIcon,
+		ShieldIcon,
 		TicketIcon,
 		UserCircle,
+		UserCircleIcon,
 		type Icon as IconType
 	} from 'lucide-svelte';
 	import Avatar from './Avatar.svelte';
+	import DropdownMenuItem from './DropdownMenuItem.svelte';
+	import DropdownMenu from './DropdownMenu.svelte';
+	import DropdownMenuSeparator from './DropdownMenuSeparator.svelte';
 
 	type MenuItem =
 		| {
@@ -24,7 +29,7 @@
 		{
 			label: 'Profile',
 			href: '/profile',
-			icon: UserCircle
+			icon: UserCircleIcon
 		},
 		{
 			label: 'Submissions',
@@ -46,56 +51,44 @@
 </script>
 
 {#snippet menuItem(label: string, href: string, Icon: typeof IconType)}
-	<DropdownMenu.Item class="z-50 min-w-48 max-w-full p-2xs">
-		<a
-			{href}
-			class="flex select-none items-center rounded-xs py-xs pl-xs pr-sm text-sm font-medium text-muted-foreground !ring-0 !ring-transparent hover:bg-muted-background hover:text-white"
-		>
-			<Icon class="text-foreground-alt mr-2 size-5" />
-			<span>{label}</span>
-		</a>
-	</DropdownMenu.Item>
+	<DropdownMenuItem icon={Icon} class="min-w-48" {href}>
+		<span>{label}</span>
+	</DropdownMenuItem>
 {/snippet}
 
-<DropdownMenu.Root>
-	<DropdownMenu.Trigger>
+<DropdownMenu
+	contentProps={{
+		collisionPadding: 20,
+		sideOffset: 8
+	}}
+>
+	{#snippet trigger()}
 		<Avatar
 			class="cursor-pointer border-white"
 			src={user?.picture ?? ''}
 			alt={user?.username ?? 'User picture'}
 		/>
-	</DropdownMenu.Trigger>
+	{/snippet}
 
-	<DropdownMenu.Content
-		collisionPadding={20}
-		class="bg-background shadow-popover z-50 w-full max-w-[20rem] rounded-sm border border-muted-foreground bg-black px-1 py-1.5"
-		sideOffset={8}
-	>
-		{#each menuItems as item}
-			{#if item === 'divider'}
-				<DropdownMenu.Separator class="my-1 -ml-1 -mr-1 block h-px bg-muted-foreground" />
-			{:else}
-				{@render menuItem(item.label, item.href, item.icon)}
-			{/if}
-		{/each}
+	<DropdownMenuItem href="/profile" icon={UserCircleIcon} class="min-w-48">
+		<span>Profile</span>
+	</DropdownMenuItem>
+	<DropdownMenuItem href={`/users/${user?.username}`} icon={LayoutGridIcon} class="min-w-48">
+		<span>Submissions</span>
+	</DropdownMenuItem>
+	<DropdownMenuItem href="/profile#tickets" icon={TicketIcon} class="min-w-48">
+		<span>Tickets</span>
+	</DropdownMenuItem>
 
-		<!-- <DropdownMenu.Item
-			class="flex h-10 select-none items-center rounded-xs py-3 pl-3 pr-1.5 text-sm font-medium !ring-0 !ring-transparent data-[highlighted]:bg-muted-foreground"
-		>
-			<div class="flex items-center">
-				<SettingsIcon class="text-foreground-alt mr-2 size-5" />
-				Submissions
-			</div>
-		</DropdownMenu.Item>
-		{@render menuItem('Settings', '/settings', SettingsIcon)}
-		<DropdownMenu.Separator class="my-1 -ml-1 -mr-1 block h-px bg-muted-foreground" />
-		<DropdownMenu.Item
-			class="flex h-10 select-none items-center rounded-xs py-3 pl-3 pr-1.5 text-sm font-medium !ring-0 !ring-transparent data-[highlighted]:bg-muted-foreground"
-		>
-			<a href="/logout" class="flex items-center">
-				<LogOutIcon class="text-foreground-alt mr-2 size-5" />
-				Sign out
-			</a>
-		</DropdownMenu.Item> -->
-	</DropdownMenu.Content>
-</DropdownMenu.Root>
+	<DropdownMenuSeparator />
+	{#if user.role === 'admin'}
+		<DropdownMenuItem href="/admin" icon={ShieldIcon} class="min-w-48">
+			<span>Admin</span>
+		</DropdownMenuItem>
+		<DropdownMenuSeparator />
+	{/if}
+
+	<DropdownMenuItem href="/logout" icon={LogOutIcon} class="min-w-48">
+		<span>Sign out</span>
+	</DropdownMenuItem>
+</DropdownMenu>

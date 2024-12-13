@@ -10,47 +10,47 @@ import { api as ticketClient } from '$lib/server/services/ticket';
 import { events } from '$lib/server/db/schema';
 import type { SuperFormMessage } from '$lib/types/SuperFormMessage';
 import { StatusCodes } from 'http-status-codes';
+import { authCheck } from '../utils';
 
 const ticketSchema = insertTicketSchema.pick({ id: true });
 
 export const load = (async ({ locals }) => {
-	if (!locals.user || !locals.session) {
-		return redirect(StatusCodes.TEMPORARY_REDIRECT, '/login');
-	}
-
-	const user = await db.query.users.findFirst({
-		where: eq(users.id, locals.user.id),
-		columns: {
-			password: false
-		},
-		with: {
-			accounts: { columns: { provider: true, providerAccountId: true } },
-			tickets: {
-				with: {
-					event: {
-						columns: {
-							id: true,
-							name: true
+	authCheck(locals, '/login');
+	if (locals.user) {
+		const user = await db.query.users.findFirst({
+			where: eq(users.id, locals.user.id),
+			columns: {
+				password: false
+			},
+			with: {
+				accounts: { columns: { provider: true, providerAccountId: true } },
+				tickets: {
+					with: {
+						event: {
+							columns: {
+								id: true,
+								name: true
+							}
 						}
 					}
 				}
 			}
+		});
+
+		if (!user) {
+			return redirect(StatusCodes.TEMPORARY_REDIRECT, '/login');
 		}
-	});
 
-	if (!user) {
-		return redirect(StatusCodes.TEMPORARY_REDIRECT, '/login');
+		const tickets = user.tickets.map((t) => ({
+			id: t.id,
+			event: t.event
+		}));
+
+		const ticketForm = await superValidate<Infer<typeof ticketSchema>, SuperFormMessage>(
+			zod(ticketSchema)
+		);
+		return { ticketForm, user, tickets };
 	}
-
-	const tickets = user.tickets.map((t) => ({
-		id: t.id,
-		event: t.event
-	}));
-
-	const ticketForm = await superValidate<Infer<typeof ticketSchema>, SuperFormMessage>(
-		zod(ticketSchema)
-	);
-	return { ticketForm, user, tickets };
 }) satisfies PageServerLoad;
 
 export const actions = {
