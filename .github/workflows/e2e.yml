@@ -27,12 +27,18 @@ jobs:
       - uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - name: Debug Secrets
+        env:
+          AZURE_POSTGRESQL_RESOURCE_GROUP: ${{ secrets.AZURE_POSTGRESQL_RESOURCE_GROUP }}
+          AZURE_POSTGRESQL_SERVER_NAME: ${{ secrets.AZURE_POSTGRESQL_SERVER_NAME }}
+        run: |
+          echo "AZURE_POSTGRESQL_RESOURCE_GROUP: $AZURE_POSTGRESQL_RESOURCE_GROUP"
+          echo "AZURE_POSTGRESQL_SERVER_NAME: $AZURE_POSTGRESQL_SERVER_NAME"
       - name: Add GitHub Actions IP to PostgreSQL firewall
         env:
           AZURE_POSTGRESQL_RESOURCE_GROUP: ${{ secrets.AZURE_POSTGRESQL_RESOURCE_GROUP }}
           AZURE_POSTGRESQL_SERVER_NAME: ${{ secrets.AZURE_POSTGRESQL_SERVER_NAME }}
         run: |
-          echo "Test var: ${{ env.MY_VAR }}"
           echo "Resource Group: $AZURE_POSTGRESQL_RESOURCE_GROUP"
           echo "Server Name: $AZURE_POSTGRESQL_SERVER_NAME"
           GITHUB_IP=$(curl -s https://api.ipify.org)
@@ -72,6 +78,6 @@ jobs:
         run: |
           az postgres flexible-server firewall-rule delete \
             --rule-name github-actions-runner \
-            --resource-group "$AZURE_POSTGRESQL_RESOURCE_GROUP" \
-            --name "$AZURE_POSTGRESQL_SERVER_NAME" \
+            --resource-group "${{ secrets.AZURE_POSTGRESQL_RESOURCE_GROUP }}" \
+            --name "${{ secrets.AZURE_POSTGRESQL_SERVER_NAME }}" \
             --yes
