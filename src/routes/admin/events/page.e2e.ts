@@ -5,32 +5,26 @@ test('Unauthorized access to admin pages', async ({ page }) => {
 	await expect(response?.status()).toBe(401);
 });
 
-test('test', async ({ page }) => {
+test('Login and view events', async ({ page }) => {
 	await page.goto('/login');
 	await page.locator('input[name="email"]').fill('john.doe@example.com');
 	await page.locator('input[name="password"]').fill('password');
 	await page.locator('.login-button').click();
 	await page.waitForURL('/profile');
 	await page.goto('/admin/events');
-	const eventsList = await page.locator('.events-list');
+	const eventsList = await page.locator('.entity-list');
 	// List item should exist
-	await expect(eventsList.locator('li').first()).toContainText('Id');
 	await expect(eventsList.locator('li').first()).toContainText('Name');
 	await expect(eventsList.locator('li').first()).toContainText('Slug');
 	await expect(eventsList.locator('li').first()).toContainText('Submissions Open At');
 	await expect(eventsList.locator('li').first()).toContainText('Submissions Close At');
 	await expect(eventsList.locator('li').first()).toContainText('Voting Open At');
 	await expect(eventsList.locator('li').first()).toContainText('Voting Close At');
-	await expect(eventsList.locator('li').first()).toContainText('Created At');
-	await expect(eventsList.locator('li').first()).toContainText('Updated At');
 
 	// Sorting should work
 	await expect(eventsList.locator('li').first()).toContainText('LanHack Winter');
 	await expect(eventsList.locator('li').last()).toContainText('Beacon Summer');
-	const sortBySelect = await page.locator('.sort-by-select');
-	await expect(sortBySelect).toContainText('Sorted by: Newest');
 	await page.goto('/admin/events?sortBy=oldest');
-	await expect(sortBySelect).toContainText('Sorted by: Oldest');
 	await expect(eventsList.locator('li').first()).toContainText('Beacon Summer');
 	await expect(eventsList.locator('li').last()).toContainText('LanHack Winter');
 

@@ -1,5 +1,6 @@
 import 'dotenv/config';
 import { ZodError, z } from 'zod';
+import { LogLevelSchema } from './types/LogLevel';
 
 const stringBoolean = z.coerce
 	.string()
@@ -20,6 +21,7 @@ const EnvSchema = z.object({
 	DB_MIGRATING: stringBoolean,
 	DB_SEEDING: stringBoolean,
 	AZURE_APP_INSIGHTS_CONNECTION_STRING: z.string().optional(),
+	LOG_LEVEL: LogLevelSchema.optional(),
 	AZURE_STORAGE_ACCOUNT_NAME: z.string().optional(),
 	OAUTH_DISCORD_CLIENT_ID: z.string(),
 	OAUTH_DISCORD_CLIENT_SECRET: z.string(),
@@ -35,7 +37,6 @@ export type EnvSchema = z.infer<typeof EnvSchema>;
 try {
 	const parsed = EnvSchema.parse(process.env);
 	console.log('Environment is configured correctly');
-	console.log(parsed);
 } catch (error) {
 	if (error instanceof ZodError) {
 		let message = 'Missing required values in .env:\n';

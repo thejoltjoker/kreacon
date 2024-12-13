@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { ApplicationInsights } from '@microsoft/applicationinsights-web';
 import { getAppInsights } from '../server/azure/insights';
+import env from '../env';
+import type { LogLevel } from '../types/LogLevel';
 
 let azureAppInsights: ApplicationInsights | undefined = undefined;
 
-if (process.env.AZURE_APP_INSIGHTS_CONNECTION_STRING) {
+if (env.AZURE_APP_INSIGHTS_CONNECTION_STRING) {
 	azureAppInsights = getAppInsights();
 }
-
-type LogLevel = 'debug' | 'info' | 'warn' | 'error';
 
 const logLevels: Record<LogLevel, number> = {
 	debug: 0,
@@ -17,18 +17,13 @@ const logLevels: Record<LogLevel, number> = {
 	error: 3
 };
 
-const currentLogLevel: LogLevel = (process.env.LOG_LEVEL as LogLevel) ?? 'info';
+const currentLogLevel: LogLevel = (env.LOG_LEVEL as LogLevel) ?? 'info';
 
 class Logger {
 	private id: string;
-	private path?: string;
 
-	constructor(id: string, path?: string) {
+	constructor(id: string) {
 		this.id = id;
-		this.path = path;
-		if (path && path.includes('/src/')) {
-			this.path = `src/${path.split('/src/').pop()}`;
-		}
 	}
 
 	private log(level: LogLevel, message: string, ...args: any[]) {
@@ -46,10 +41,9 @@ class Logger {
 			console[level](
 				`${colors.gray}${new Date().toLocaleTimeString('en-US', { hour12: false })} ${colors.cyan}[${this.id}]${colors[level]} ${message}${resetColor}`,
 				...args
-				// this.path && `${colors.gray}${this.path}${resetColor}`
 			);
-			if (process.env.AZURE_APP_INSIGHTS_CONNECTION_STRING) {
-				azureAppInsights?.trackTrace({
+			if (azureAppInsights != null) {
+				azureAppInsights.trackTrace({
 					message: `[${this.id}] ${message}`,
 					severityLevel: logLevels[level]
 				});
@@ -74,4 +68,4 @@ class Logger {
 	}
 }
 
-export const createLogger = (id: string, caller?: string) => new Logger(id, caller);
+export const createLogger = (id: string) => new Logger(id);
