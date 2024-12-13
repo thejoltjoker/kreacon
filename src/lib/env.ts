@@ -20,7 +20,7 @@ const EnvSchema = z.object({
 	DB_MIGRATING: stringBoolean,
 	DB_SEEDING: stringBoolean,
 	AZURE_APP_INSIGHTS_CONNECTION_STRING: z.string().optional(),
-	AZURE_STORAGE_ACCOUNT_NAME: z.string(),
+	AZURE_STORAGE_ACCOUNT_NAME: z.string().optional(),
 	OAUTH_DISCORD_CLIENT_ID: z.string(),
 	OAUTH_DISCORD_CLIENT_SECRET: z.string(),
 	OAUTH_DISCORD_REDIRECT_URI: z.string(),

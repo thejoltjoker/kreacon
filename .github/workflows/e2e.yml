@@ -11,10 +11,6 @@ jobs:
     environment:
       name: 'Test'
     env:
-      AZURE_APP_INSIGHTS_CONNECTION_STRING: ${{ secrets.AZURE_APP_INSIGHTS_CONNECTION_STRING }}
-      AZURE_COMMUNICATION_SERVICES_CONNECTION_STRING: ${{ secrets.AZURE_COMMUNICATION_SERVICES_CONNECTION_STRING }}
-      AZURE_COMMUNICATION_SERVICES_SENDER_ADDRESS: ${{ secrets.AZURE_COMMUNICATION_SERVICES_SENDER_ADDRESS }}
-      AZURE_STORAGE_ACCOUNT_NAME: ${{ secrets.AZURE_STORAGE_ACCOUNT_NAME }}
       BASE_URL: ${{ secrets.BASE_URL }}
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
       OAUTH_DISCORD_CLIENT_ID: ${{ secrets.OAUTH_DISCORD_CLIENT_ID }}
@@ -36,8 +32,8 @@ jobs:
           GITHUB_IP=$(curl -s https://api.ipify.org)
           az postgres flexible-server firewall-rule create \
             --rule-name github-actions-runner \
-            --resource-group ${{ env.AZURE_POSTGRESQL_RESOURCE_GROUP }} \
-            --name ${{ env.AZURE_POSTGRESQL_SERVER_NAME }} \
+            --resource-group ${{ secrets.AZURE_POSTGRESQL_RESOURCE_GROUP }} \
+            --name ${{ secrets.AZURE_POSTGRESQL_SERVER_NAME }} \
             --start-ip-address $GITHUB_IP \
             --end-ip-address $GITHUB_IP
       - uses: actions/setup-node@v4
@@ -68,6 +64,6 @@ jobs:
         run: |
           az postgres flexible-server firewall-rule delete \
             --rule-name github-actions-runner \
-            --resource-group ${{ env.AZURE_POSTGRESQL_RESOURCE_GROUP }} \
-            --name ${{ env.AZURE_POSTGRESQL_SERVER_NAME }} \
+            --resource-group ${{ secrets.AZURE_POSTGRESQL_RESOURCE_GROUP }} \
+            --name ${{ secrets.AZURE_POSTGRESQL_SERVER_NAME }} \
             --yes
