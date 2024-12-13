@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { PageData } from '../$types';
 
-	let { accounts = [] }: { accounts: PageData['user']['accounts'] } = $props();
+	let { accounts = [] }: { accounts: PageData['accounts'] } = $props();
 </script>
 
 <div class="flex w-full flex-col gap-sm">

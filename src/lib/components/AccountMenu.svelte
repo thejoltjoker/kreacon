@@ -6,7 +6,6 @@
 		LogOutIcon,
 		ShieldIcon,
 		TicketIcon,
-		UserCircle,
 		UserCircleIcon,
 		type Icon as IconType
 	} from 'lucide-svelte';

@@ -14,8 +14,8 @@
 	</div>
 	<form action="?/updateProfile" class="flex flex-col gap-xl">
 		<!-- TODO Allow updating email and username -->
-		<DumbInput variant="ghost" disabled label="Email" bind:value={user.email} />
-		<DumbInput variant="ghost" disabled label="Username" bind:value={user.username} />
+		<DumbInput variant="ghost" disabled label="Email" value={user?.email} />
+		<DumbInput variant="ghost" disabled label="Username" value={user?.username} />
 		<!-- <div class="flex justify-end">
 			<Button type="submit">Save</Button>
 		</div> -->

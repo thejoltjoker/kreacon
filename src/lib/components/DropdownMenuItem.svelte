@@ -11,7 +11,6 @@
 <script lang="ts">
 	import { cn } from '$lib/utils';
 	import { type Icon as IconType } from 'lucide-svelte';
-	import type { Snippet } from 'svelte';
 
 	let {
 		icon: Icon,

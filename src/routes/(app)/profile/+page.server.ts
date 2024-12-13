@@ -16,41 +16,43 @@ const ticketSchema = insertTicketSchema.pick({ id: true });
 
 export const load = (async ({ locals }) => {
 	authCheck(locals, '/login');
-	if (locals.user) {
-		const user = await db.query.users.findFirst({
-			where: eq(users.id, locals.user.id),
-			columns: {
-				password: false
-			},
-			with: {
-				accounts: { columns: { provider: true, providerAccountId: true } },
-				tickets: {
-					with: {
-						event: {
-							columns: {
-								id: true,
-								name: true
-							}
+
+	if (!locals.user) {
+		return redirect(StatusCodes.TEMPORARY_REDIRECT, '/login');
+	}
+
+	const userData = await db.query.users.findFirst({
+		where: eq(users.id, locals.user.id),
+		with: {
+			accounts: { columns: { provider: true, providerAccountId: true } },
+			tickets: {
+				columns: { id: true },
+				with: {
+					event: {
+						columns: {
+							id: true,
+							name: true
 						}
 					}
 				}
 			}
-		});
-
-		if (!user) {
-			return redirect(StatusCodes.TEMPORARY_REDIRECT, '/login');
 		}
+	});
 
-		const tickets = user.tickets.map((t) => ({
-			id: t.id,
-			event: t.event
-		}));
-
-		const ticketForm = await superValidate<Infer<typeof ticketSchema>, SuperFormMessage>(
-			zod(ticketSchema)
-		);
-		return { ticketForm, user, tickets };
+	if (!userData) {
+		return redirect(StatusCodes.TEMPORARY_REDIRECT, '/login');
 	}
+
+	const tickets = userData.tickets.map((t) => ({
+		id: t.id,
+		event: t.event
+	}));
+
+	const ticketForm = await superValidate<Infer<typeof ticketSchema>, SuperFormMessage>(
+		zod(ticketSchema)
+	);
+
+	return { ticketForm, accounts: userData.accounts, tickets };
 }) satisfies PageServerLoad;
 
 export const actions = {
