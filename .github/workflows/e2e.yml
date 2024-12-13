@@ -6,11 +6,10 @@ on:
     branches: [main]
 jobs:
   test:
-    timeout-minutes: 60
-    runs-on: ubuntu-latest
     environment:
       name: 'Test'
-    secrets: inherit
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
     env:
       BASE_URL: ${{ secrets.BASE_URL }}
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
