@@ -34,6 +34,6 @@ import type { RequestHandler } from './$types';
 // 	logger.info('Email verified');
 // 	throw redirect(StatusCodes.TEMPORARY_REDIRECT, '/');
 // };
-export const GET: RequestHandler = async ({ params }) => {
+export const GET: RequestHandler = async () => {
 	return new Response('Hello World');
 };

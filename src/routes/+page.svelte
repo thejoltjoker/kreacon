@@ -1,5 +1,4 @@
 <script lang="ts">
-	import Footer from './(app)/_components/Footer.svelte';
 	import HeroSection from './(app)/_components/HeroSection.svelte';
 </script>
 
