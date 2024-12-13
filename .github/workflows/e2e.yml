@@ -29,6 +29,7 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
       - name: Add GitHub Actions IP to PostgreSQL firewall
         run: |
+          echo "Test var: ${{ env.MY_VAR }}"
           echo "Resource Group: ${{ secrets.AZURE_POSTGRESQL_RESOURCE_GROUP }}"
           echo "Server Name: ${{ secrets.AZURE_POSTGRESQL_SERVER_NAME }}"
           GITHUB_IP=$(curl -s https://api.ipify.org)
