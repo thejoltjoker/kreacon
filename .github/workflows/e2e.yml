@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: 'Test'
+    secrets: inherit
     env:
       BASE_URL: ${{ secrets.BASE_URL }}
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
@@ -29,17 +30,17 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
       - name: Add GitHub Actions IP to PostgreSQL firewall
         run: |
-          echo "Resource Group: $AZURE_POSTGRESQL_RESOURCE_GROUP"
-          echo "Server Name: $AZURE_POSTGRESQL_SERVER_NAME"
+          echo "Resource Group: ${{ secrets.AZURE_POSTGRESQL_RESOURCE_GROUP }}"
+          echo "Server Name: ${{ secrets.AZURE_POSTGRESQL_SERVER_NAME }}"
           GITHUB_IP=$(curl -s https://api.ipify.org)
           echo "GitHub IP: $GITHUB_IP"
 
           az postgres flexible-server firewall-rule create \
             --rule-name github-actions-runner \
-            --resource-group $AZURE_POSTGRESQL_RESOURCE_GROUP \
-            --name $AZURE_POSTGRESQL_SERVER_NAME \
-            --start-ip-address $GITHUB_IP \
-            --end-ip-address $GITHUB_IP
+            --resource-group "${{ secrets.AZURE_POSTGRESQL_RESOURCE_GROUP }}" \
+            --name "${{ secrets.AZURE_POSTGRESQL_SERVER_NAME }}" \
+            --start-ip-address "$GITHUB_IP" \
+            --end-ip-address "$GITHUB_IP"
       - uses: actions/setup-node@v4
         with:
           node-version: 20
@@ -68,6 +69,6 @@ jobs:
         run: |
           az postgres flexible-server firewall-rule delete \
             --rule-name github-actions-runner \
-            --resource-group $AZURE_POSTGRESQL_RESOURCE_GROUP \
-            --name $AZURE_POSTGRESQL_SERVER_NAME \
+            --resource-group "$AZURE_POSTGRESQL_RESOURCE_GROUP" \
+            --name "$AZURE_POSTGRESQL_SERVER_NAME" \
             --yes
