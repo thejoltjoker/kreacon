@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import { ZodError, z } from 'zod';
+import { z } from 'zod';
 import { LogLevelSchema } from './types/LogLevel';
 
 const stringBoolean = z.coerce
@@ -18,10 +18,10 @@ const EnvSchema = z.object({
 	OAUTH_GITHUB_CLIENT_SECRET: z.string(),
 	OAUTH_GITHUB_REDIRECT_URI: z.string(),
 	TICKET_API_URL: z.string().url(),
+	OAUTH_DISCORD_CLIENT_ID: z.string(),
 	// Optional
 	DB_MIGRATING: stringBoolean,
 	DB_SEEDING: stringBoolean,
-	OAUTH_DISCORD_CLIENT_ID: z.string(),
 	AZURE_APP_INSIGHTS_CONNECTION_STRING: z.string().optional(),
 	AZURE_STORAGE_ACCOUNT_NAME: z.string().optional(),
 	DB_HOST: z.string().optional(),
