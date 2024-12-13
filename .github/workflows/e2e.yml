@@ -5,7 +5,7 @@ on:
   pull_request:
     branches: [main]
 jobs:
-  test:
+  e2e:
     environment:
       name: 'Test'
     timeout-minutes: 60
@@ -26,6 +26,10 @@ jobs:
       - uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - name: Install dependencies
+        run: npm ci
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
       - name: Add GitHub Actions IP to PostgreSQL firewall
         run: |
           GITHUB_IP=$(curl -s https://api.ipify.org)
@@ -39,8 +43,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - name: Install dependencies
-        run: npm ci
       - name: Run migrations
         env:
           DB_MIGRATING: true
@@ -49,8 +51,6 @@ jobs:
         env:
           DB_SEEDING: true
         run: npm run db:seed
-      - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
       - name: Run Playwright tests
         run: npx playwright test
       - uses: actions/upload-artifact@v4
