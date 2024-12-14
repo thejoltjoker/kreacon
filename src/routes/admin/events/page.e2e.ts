@@ -1,8 +1,11 @@
 import { test, expect } from '@playwright/test';
+import { StatusCodes } from 'http-status-codes';
 
 test('Unauthorized access to admin pages', async ({ page }) => {
 	const response = await page.goto('/admin');
-	await expect(response?.status()).toBe(401);
+	await expect(response?.status()).toBe(StatusCodes.UNAUTHORIZED);
+	// TODO Login as normal user and get 403
+	// TODO Login as admin and get 200
 });
 
 test('Login and view events', async ({ page }) => {

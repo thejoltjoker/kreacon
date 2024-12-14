@@ -6,6 +6,7 @@ import { fail } from '@sveltejs/kit';
 import { and, eq, sql } from 'drizzle-orm';
 import type { PageServerLoad } from './$types';
 import votes, { insertVoteSchema } from '$lib/server/db/schema/vote';
+import { StatusCodes } from 'http-status-codes';
 
 export const load = (async ({ params, locals }) => {
 	const { id } = params;
@@ -62,7 +63,7 @@ export const load = (async ({ params, locals }) => {
 export const actions = {
 	vote: async ({ params, locals }) => {
 		if (!locals.user || !locals.session) {
-			return fail(401, { error: 'Not signed in' });
+			return fail(StatusCodes.UNAUTHORIZED, { error: 'Not signed in' });
 		}
 
 		try {
@@ -84,7 +85,7 @@ export const actions = {
 	},
 	unvote: async ({ params, locals }) => {
 		if (!locals.user || !locals.session) {
-			return fail(401, { error: 'Not signed in' });
+			return fail(StatusCodes.UNAUTHORIZED, { error: 'Not signed in' });
 		}
 
 		try {
@@ -103,7 +104,7 @@ export const actions = {
 	},
 	react: async ({ params, locals, request }) => {
 		if (!locals.user || !locals.session) {
-			return fail(401, { error: 'Not signed in' });
+			return fail(StatusCodes.UNAUTHORIZED, { error: 'Not signed in' });
 		}
 
 		try {

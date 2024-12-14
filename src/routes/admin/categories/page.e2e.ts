@@ -1,9 +1,10 @@
 import { test, expect } from '@playwright/test';
+import { StatusCodes } from 'http-status-codes';
 
 test('Admin should be able to create, edit and delete categories', async ({ page }) => {
 	// First, try accessing the admin page without authentication
 	const response = await page.goto('/admin/categories');
-	expect(response?.status()).toBe(401);
+	expect(response?.status()).toBe(StatusCodes.UNAUTHORIZED);
 
 	// Continue with the rest of the test (login and category management)
 	await page.goto('/login');
