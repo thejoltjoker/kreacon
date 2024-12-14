@@ -1,59 +1,19 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-
 	import {
 		LayoutGridIcon,
 		LogOutIcon,
 		ShieldIcon,
 		TicketIcon,
-		UserCircleIcon,
-		type Icon as IconType
+		UserCircleIcon
 	} from 'lucide-svelte';
 	import Avatar from './Avatar.svelte';
 	import DropdownMenuItem from './DropdownMenuItem.svelte';
 	import DropdownMenu from './DropdownMenu.svelte';
 	import DropdownMenuSeparator from './DropdownMenuSeparator.svelte';
 
-	type MenuItem =
-		| {
-				label: string;
-				href: string;
-				icon: typeof IconType;
-		  }
-		| 'divider';
-
 	const user = $derived($page.data.user);
-
-	const menuItems: MenuItem[] = [
-		{
-			label: 'Profile',
-			href: '/profile',
-			icon: UserCircleIcon
-		},
-		{
-			label: 'Submissions',
-			href: `/users/${$page.data.user?.username}`,
-			icon: LayoutGridIcon
-		},
-		{
-			label: 'Tickets',
-			href: '/profile#tickets',
-			icon: TicketIcon
-		},
-		'divider',
-		{
-			label: 'Sign out',
-			href: '/logout',
-			icon: LogOutIcon
-		}
-	];
 </script>
-
-{#snippet menuItem(label: string, href: string, Icon: typeof IconType)}
-	<DropdownMenuItem icon={Icon} class="min-w-48" {href}>
-		<span>{label}</span>
-	</DropdownMenuItem>
-{/snippet}
 
 <DropdownMenu
 	contentProps={{

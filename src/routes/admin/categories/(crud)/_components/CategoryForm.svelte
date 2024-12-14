@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	import Button from '$lib/components/Button.svelte';
 	import DumbInput from '$lib/components/Form/DumbInput.svelte';
 	import DumbSelect from '$lib/components/Form/DumbSelect.svelte';
@@ -74,5 +75,11 @@
 		{#if $errors.mediaType}<span class="error">{$errors.mediaType}</span>{/if}
 	</div>
 
-	<Button type="submit">Create Category</Button>
+	<Button type="submit">
+		{#if $page.url.pathname.endsWith('/edit')}
+			Update Category
+		{:else}
+			Create Category
+		{/if}
+	</Button>
 </form>
