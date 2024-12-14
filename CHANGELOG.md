@@ -48,6 +48,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Create GitHub action for end-to-end testing and deploying to Azure Web Apps
 - Create generic dropdown menu component and use for account menu
   [#66](https://github.com/thejoltjoker/kreacon/pull/66)
+- Add tests for admin categories page
+  [#68](https://github.com/thejoltjoker/kreacon/pull/68)
 
 ### Changed
 
