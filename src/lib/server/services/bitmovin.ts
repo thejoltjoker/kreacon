@@ -18,10 +18,10 @@ import ConfigProvider from './configProvider';
  *   <li>BITMOVIN_TENANT_ORG_ID - (optional) The ID of the Organisation in which you want to perform the encoding.
  *   <li>HTTP_INPUT_FILE_PATH - The path to your input file on the provided HTTP server Example:
  *       videos/1080p_Sintel.mp4
- *   <li>S3_OUTPUT_BUCKET_NAME - The name of your S3 output bucket. Example: my-bucket-name
- *   <li>S3_OUTPUT_ACCESS_KEY - The access key of your S3 output bucket
- *   <li>S3_OUTPUT_SECRET_KEY - The secret key of your S3 output bucket
- *   <li>S3_OUTPUT_BASE_PATH - The base path on your S3 output bucket where content will be written.
+ *   <li>Azure_OUTPUT_BUCKET_NAME - The name of your Azure output bucket. Example: my-bucket-name
+ *   <li>Azure_OUTPUT_ACCESS_KEY - The access key of your Azure output bucket
+ *   <li>Azure_OUTPUT_SECRET_KEY - The secret key of your Azure output bucket
+ *   <li>Azure_OUTPUT_BASE_PATH - The base path on your Azure output bucket where content will be written.
  *       Example: /outputs
  * </ul>
  *
@@ -48,12 +48,12 @@ const bitmovinApi: BitmovinApi = new BitmovinApi({
 
 export async function main() {
 	const inputFilePath = configProvider.getHttpInputFilePath();
-	const outputFilePath = configProvider.getS3OutputBasePath();
+	const outputFilePath = configProvider.getAzureOutputBasePath();
 
 	const output = await createAzureOutput(
-		configProvider.getS3OutputBucketName(),
-		configProvider.getS3OutputAccessKey(),
-		configProvider.getS3OutputSecretKey()
+		configProvider.getAzureOutputBucketName(),
+		configProvider.getAzureOutputAccessKey(),
+		configProvider.getAzureOutputSecretKey()
 	);
 
 	const template: string = `metadata:
@@ -64,7 +64,7 @@ inputs:
   https:
     streams_encoding_https_input:
       properties:
-        host: bitmovin-sample-content.s3.eu-west-1.amazonaws.com
+        host: bitmovin-sample-content.azure.eu-west-1.amazonaws.com
         name: Bitmovin Sample Content
 
 configurations:
@@ -164,27 +164,27 @@ manifests:
 }
 
 /**
- * Creates a resource representing an AWS S3 cloud storage bucket to which generated content will
+ * Creates a resource representing an AWS Azure cloud storage bucket to which generated content will
  * be transferred. For alternative output methods see <a
  * href="https://bitmovin.com/docs/encoding/articles/supported-input-output-storages">list of
  * supported input and output storages</a>
  *
  * <p>The provided credentials need to allow <i>read</i>, <i>write</i> and <i>list</i> operations.
  * <i>delete</i> should also be granted to allow overwriting of existings files. See <a
- * href="https://bitmovin.com/docs/encoding/faqs/how-do-i-create-a-aws-s3-bucket-which-can-be-used-as-output-location">creating
- * an S3 bucket and setting permissions</a> for further information
+ * href="https://bitmovin.com/docs/encoding/faqs/how-do-i-create-a-aws-azure-bucket-which-can-be-used-as-output-location">creating
+ * an Azure bucket and setting permissions</a> for further information
  *
  * <p>For reasons of simplicity, a new output resource is created on each execution of this
  * example. In production use, this method should be replaced by a <a
- * href="https://bitmovin.com/docs/encoding/api-reference/sections/outputs#/Encoding/GetEncodingOutputsS3">get
+ * href="https://bitmovin.com/docs/encoding/api-reference/sections/outputs#/Encoding/GetEncodingOutputsAzure">get
  * call</a> retrieving an existing resource.
  *
  * <p>API endpoint:
- * https://bitmovin.com/docs/encoding/api-reference/sections/outputs#/Encoding/PostEncodingOutputsS3
+ * https://bitmovin.com/docs/encoding/api-reference/sections/outputs#/Encoding/PostEncodingOutputsAzure
  *
- * @param bucketName The name of the S3 bucket
- * @param accessKey The access key of your S3 account
- * @param secretKey The secret key of your S3 account
+ * @param bucketName The name of the Azure bucket
+ * @param accessKey The access key of your Azure account
+ * @param secretKey The secret key of your Azure account
  */
 function createAzureOutput(
 	container: string,

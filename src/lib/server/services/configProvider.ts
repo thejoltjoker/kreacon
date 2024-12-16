@@ -122,32 +122,32 @@ export default class ConfigProvider {
 		return this.getOrThrowException('HDR_CONVERSION_OUTPUT_FORMAT', 'The conversion output format');
 	}
 
-	public getS3OutputBucketName(): string {
+	public getAzureOutputBucketName(): string {
 		return this.getOrThrowException(
-			'S3_OUTPUT_BUCKET_NAME',
-			'The name of your S3 output bucket. Example: my-bucket-name'
+			'AZURE_OUTPUT_BUCKET_NAME',
+			'The name of your Azure output bucket. Example: my-bucket-name'
 		);
 	}
 
-	public getS3OutputAccessKey(): string {
+	public getAzureOutputAccessKey(): string {
 		return this.getOrThrowException(
-			'S3_OUTPUT_ACCESS_KEY',
-			'The access key of your S3 output bucket.'
+			'AZURE_OUTPUT_ACCESS_KEY',
+			'The access key of your Azure output bucket.'
 		);
 	}
 
-	public getS3OutputSecretKey(): string {
+	public getAzureOutputSecretKey(): string {
 		return this.getOrThrowException(
-			'S3_OUTPUT_SECRET_KEY',
-			'The secret key of your S3 output bucket.'
+			'AZURE_OUTPUT_SECRET_KEY',
+			'The secret key of your Azure output bucket.'
 		);
 	}
 
-	public getS3OutputBasePath(): string {
-		return ConfigProvider.prepareS3OutputBasePath(
+	public getAzureOutputBasePath(): string {
+		return ConfigProvider.prepareAzureOutputBasePath(
 			this.getOrThrowException(
-				'S3_OUTPUT_BASE_PATH',
-				'The base path on your S3 output bucket. Example: /outputs'
+				'AZURE_OUTPUT_BASE_PATH',
+				'The base path on your Azure output bucket. Example: /outputs'
 			)
 		);
 	}
@@ -274,7 +274,7 @@ export default class ConfigProvider {
 		process.exit(-1);
 	}
 
-	private static prepareS3OutputBasePath(outputBasePath: string) {
+	private static prepareAzureOutputBasePath(outputBasePath: string) {
 		if (outputBasePath.startsWith('/')) {
 			outputBasePath = outputBasePath.slice(1);
 		}
