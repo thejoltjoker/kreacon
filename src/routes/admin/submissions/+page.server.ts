@@ -42,6 +42,10 @@ export const load = (async ({ url }) => {
 						return asc(items.categoryId);
 					case 'category_desc':
 						return desc(items.categoryId);
+					case 'createdAt_asc':
+						return asc(items.createdAt);
+					case 'createdAt_desc':
+						return desc(items.createdAt);
 					default:
 						return [asc(items.status), desc(items.createdAt)];
 				}
@@ -69,7 +73,8 @@ export const load = (async ({ url }) => {
 			category: submission.category.name,
 			event: submission.event.name,
 			status: submission.status,
-			thumbnailUrl: submission.thumbnail.url
+			thumbnailUrl: submission.thumbnail.url,
+			createdAt: submission.createdAt
 		})),
 		events: Array.from(
 			new Map(
