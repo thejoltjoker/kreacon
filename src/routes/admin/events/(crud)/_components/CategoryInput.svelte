@@ -57,10 +57,6 @@
 			)
 		});
 	};
-
-	$effect(() => {
-		console.log(rulesContainerRef);
-	});
 </script>
 
 <div class="flex w-full flex-col gap-sm rounded-form border border-divider p-xl">

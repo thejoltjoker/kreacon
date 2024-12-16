@@ -6,4 +6,4 @@
 	let { data }: { data: PageData } = $props();
 </script>
 
-<EventsForm action={`/admin/events/${$page.params.id}/edit`} data={data.form} />
+<EventsForm data={data.form} />

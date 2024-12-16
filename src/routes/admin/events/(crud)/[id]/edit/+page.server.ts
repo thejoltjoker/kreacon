@@ -8,7 +8,7 @@ import kebabCase from 'lodash/kebabCase';
 import { zod } from 'sveltekit-superforms/adapters';
 import { superValidate } from 'sveltekit-superforms/server';
 import { createEventSchema, type CreateEventSchema } from '$lib/schemas/eventSchema';
-import { events } from '$lib/server/db/schema';
+import { eventCategories, events, rules } from '$lib/server/db/schema';
 import { adminCheck } from '../../../../utils';
 import type { Actions, PageServerLoad } from './$types';
 
@@ -46,45 +46,81 @@ export const load = (async ({ params, locals }) => {
 			}))
 		}))
 	};
-	console.log(formData);
-	const form = await superValidate(formData, zod(createEventSchema));
+
+	const form = await superValidate(formData, zod(createEventSchema), { id: 'edit-event-form' });
 	return { form, categories };
 }) satisfies PageServerLoad;
 
 export const actions = {
-	default: async ({ request, params, locals }) => {
-		adminCheck(locals);
-		const id = Number(params.id);
-		const form = await superValidate(request, zod(createCategorySchema));
-
-		if (!form.valid) {
-			return fail(400, { form });
-		}
-
-		let { slug } = form.data;
-
-		if (slug == null) {
-			slug = kebabCase(form.data.name);
-		}
-
-		const existingCategory = await db.query.categories.findFirst({
-			where: eq(categories.slug, slug)
+	default: async ({ request, params }) => {
+		const eventId = Number(params.id);
+		const form = await superValidate(request, zod(createEventSchema), {
+			id: 'edit-event-form'
 		});
 
-		if (existingCategory) {
+		if (!form.valid) {
+			return fail(StatusCodes.BAD_REQUEST, { form });
+		}
+
+		let slug = kebabCase(form.data.name);
+		const existingEvent = await db.query.events.findFirst({
+			where: eq(events.slug, slug)
+		});
+
+		if (existingEvent && existingEvent.id !== eventId) {
 			slug = `${slug}-${Math.floor(Math.random() * 10000)}`;
 		}
 
-		await db
-			.update(categories)
-			.set({
-				name: form.data.name,
-				slug,
-				description: form.data.description,
-				mediaType: form.data.mediaType as MediaType
-			})
-			.where(eq(categories.id, id));
+		await db.transaction(async (trx) => {
+			// Update the event
+			await trx
+				.update(events)
+				.set({ ...form.data, slug })
+				.where(eq(events.id, eventId));
 
-		return redirect(StatusCodes.TEMPORARY_REDIRECT, '/admin/categories');
+			// Delete existing relationships and rules
+			await trx.delete(rules).where(eq(rules.eventId, eventId));
+			await trx.delete(eventCategories).where(eq(eventCategories.eventId, eventId));
+
+			// Insert new categories
+			const eventCategoriesData = form.data.categories
+				.map((category) => ({
+					eventId,
+					categoryId: category.categoryId
+				}))
+				.filter((category) => category.categoryId > 0);
+
+			const insertedEventCategories =
+				eventCategoriesData.length > 0
+					? await trx.insert(eventCategories).values(eventCategoriesData).returning()
+					: [];
+
+			// Insert new rules
+			const allRules = [
+				// General event rules
+				...(form.data.rules ?? [])
+					.filter((rule) => rule.text.length > 0)
+					.map((rule) => ({
+						text: rule.text,
+						eventId
+					})),
+				// Category-specific rules
+				...(form.data.categories ?? []).flatMap((category) =>
+					(category.rules ?? [])
+						.filter((rule) => rule.text.length > 0)
+						.map((rule) => ({
+							text: rule.text,
+							categoryId: insertedEventCategories.find((e) => e.categoryId === category.categoryId)
+								?.id
+						}))
+				)
+			];
+
+			if (allRules.length > 0) {
+				await trx.insert(rules).values(allRules);
+			}
+		});
+
+		redirect(StatusCodes.TEMPORARY_REDIRECT, `/admin/events`);
 	}
 } satisfies Actions;

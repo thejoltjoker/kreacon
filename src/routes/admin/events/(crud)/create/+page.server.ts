@@ -22,7 +22,9 @@ export const load = (async ({ locals }) => {
 		votingCloseAt: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000),
 		categories: []
 	};
-	const form = await superValidate(initialValues, zod(createEventSchema));
+	const form = await superValidate(initialValues, zod(createEventSchema), {
+		id: 'create-event-form'
+	});
 	const categories = await db.query.categories.findMany({
 		columns: {
 			id: true,
@@ -35,7 +37,9 @@ export const load = (async ({ locals }) => {
 
 export const actions = {
 	default: async ({ request }) => {
-		const form = await superValidate(request, zod(createEventSchema));
+		const form = await superValidate(request, zod(createEventSchema), {
+			id: 'create-event-form'
+		});
 
 		if (!form.valid) {
 			return fail(400, { form });
@@ -62,13 +66,11 @@ export const actions = {
 					categoryId: category.categoryId
 				}))
 				.filter((category) => category.categoryId > 0);
-			
-			const insertedEventCategories = eventCategoriesData.length > 0 
-				? await trx
-					.insert(eventCategories)
-					.values(eventCategoriesData)
-					.returning()
-				: [];
+
+			const insertedEventCategories =
+				eventCategoriesData.length > 0
+					? await trx.insert(eventCategories).values(eventCategoriesData).returning()
+					: [];
 
 			const allRules = [
 				// General event rules
@@ -84,9 +86,8 @@ export const actions = {
 						.filter((rule) => rule.text.length > 0)
 						.map((rule) => ({
 							text: rule.text,
-							categoryId: insertedEventCategories.find(
-								(e) => e.categoryId === category.categoryId
-							)?.id
+							categoryId: insertedEventCategories.find((e) => e.categoryId === category.categoryId)
+								?.id
 						}))
 				)
 			];

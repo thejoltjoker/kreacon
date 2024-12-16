@@ -10,18 +10,17 @@
 	import { zod } from 'sveltekit-superforms/adapters';
 	import CategoriesSection from './CategoriesSection.svelte';
 	import EventRulesSection from './EventRulesSection.svelte';
+	import { page } from '$app/stores';
 
-	let { data, action }: { data: SuperValidated<Infer<ZCreateEventSchema>>; action: string } =
-		$props();
+	let { data }: { data: SuperValidated<Infer<ZCreateEventSchema>> } = $props();
 	const superform = superForm(data, { validators: zod(createEventSchema), dataType: 'json' });
 	const { message } = superform;
-	console.log(action);
 </script>
 
 <Form
 	debug={false}
-	{action}
 	{data}
+	dataType="json"
 	options={{ validators: zod(createEventSchema), dataType: 'json' }}
 	onkeydowncapture={(e) => {
 		if (e.key === 'Enter') {
@@ -45,7 +44,7 @@
 	<Divider />
 	<div class="flex justify-center">
 		<Button type="submit" class="submit-button">
-			{#if action.endsWith('edit')}
+			{#if $page.url.pathname.endsWith('/edit')}
 				Update Event
 			{:else}
 				Create Event
