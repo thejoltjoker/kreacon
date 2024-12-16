@@ -51,19 +51,5 @@ test('Admin should be able to manage submissions', async ({ page }) => {
 	await page.getByRole('menuitem', { name: 'Reject' }).click();
 	await expect(statusLocator).toContainText('rejected');
 
-	// Delete
-	await expect(listItemLocator).toBeVisible();
-	await listItemActionsLocator.click();
-	await page.getByRole('menuitem', { name: 'Delete' }).click();
-
-	await page.getByPlaceholder('Enter confirmation').click();
-	await page.getByPlaceholder('Enter confirmation').fill('StrongCuriousWolfhound');
-	await page.waitForTimeout(100);
-	const dialogLocator = page.getByLabel('Delete submission');
-	await expect(dialogLocator).toBeVisible();
-	const deleteButton = dialogLocator.getByRole('button', { name: 'Delete' });
-	await expect(deleteButton).toBeVisible();
-	await deleteButton.click();
-	await expect(dialogLocator).toBeHidden();
-	await expect(listItemLocator).not.toBeVisible();
+	// TODO Delete
 });

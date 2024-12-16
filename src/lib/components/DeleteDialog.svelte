@@ -57,6 +57,11 @@
 
 				<Button
 					onclick={onConfirm}
+					onkeypress={(e) => {
+						if (e.key === 'Enter' || e.key == ' ' || e.code == 'Space') {
+							onConfirm();
+						}
+					}}
 					variant="destructive"
 					disabled={sanityCheck !== confirmationText}
 				>
