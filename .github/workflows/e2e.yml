@@ -31,6 +31,8 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
       - name: Add GitHub Actions IP to PostgreSQL firewall
+        id: add-firewall-rule
+        continue-on-error: true
         run: |
           GITHUB_IP=$(curl -s https://api.ipify.org)
           echo "GitHub IP: $GITHUB_IP"
@@ -40,6 +42,7 @@ jobs:
             --name ${{vars.AZURE_POSTGRESQL_SERVER_NAME}} \
             --start-ip-address $GITHUB_IP \
             --end-ip-address $GITHUB_IP
+          echo "rule_created=true" >> $GITHUB_OUTPUT
       - uses: actions/setup-node@v4
         with:
           node-version: 20
@@ -60,7 +63,8 @@ jobs:
           path: playwright-report/
           retention-days: 30
       - name: Remove GitHub Actions IP from PostgreSQL firewall
-        if: always()
+        if: always() && steps.add-firewall-rule.outputs.rule_created == 'true'
+        continue-on-error: true
         run: |
           az postgres flexible-server firewall-rule delete \
             --rule-name github-actions-runner \
