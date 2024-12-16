@@ -51,6 +51,32 @@ export const load = (async ({ params, locals }) => {
 	return { form, categories };
 }) satisfies PageServerLoad;
 
+const generateUniqueSlug = async (
+	baseName: string,
+	eventId: number,
+	maxAttempts = 5
+): Promise<string> => {
+	let slug = kebabCase(baseName);
+	let attempt = 0;
+
+	while (attempt < maxAttempts) {
+		const suffix = attempt > 0 ? `-${Math.floor(Math.random() * 10000)}` : '';
+		const candidateSlug = `${slug}${suffix}`;
+
+		const existingEvent = await db.query.events.findFirst({
+			where: eq(events.slug, candidateSlug)
+		});
+
+		if (!existingEvent || existingEvent.id === eventId) {
+			return candidateSlug;
+		}
+
+		attempt++;
+	}
+
+	return `${slug}-${Date.now()}`;
+};
+
 export const actions = {
 	default: async ({ request, params }) => {
 		const eventId = Number(params.id);
@@ -62,14 +88,7 @@ export const actions = {
 			return fail(StatusCodes.BAD_REQUEST, { form });
 		}
 
-		let slug = kebabCase(form.data.name);
-		const existingEvent = await db.query.events.findFirst({
-			where: eq(events.slug, slug)
-		});
-
-		if (existingEvent && existingEvent.id !== eventId) {
-			slug = `${slug}-${Math.floor(Math.random() * 10000)}`;
-		}
+		const slug = await generateUniqueSlug(form.data.name, eventId);
 
 		await db.transaction(async (trx) => {
 			// Update the event
