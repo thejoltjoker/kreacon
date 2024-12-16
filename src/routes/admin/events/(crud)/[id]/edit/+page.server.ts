@@ -1,6 +1,4 @@
 import db from '$lib/server/db';
-import categories, { createCategorySchema } from '$lib/server/db/schema/category';
-import type { MediaType } from '$lib/types/mediaTypes';
 import { error, fail, redirect } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
 import { StatusCodes } from 'http-status-codes';
@@ -56,7 +54,7 @@ const generateUniqueSlug = async (
 	eventId: number,
 	maxAttempts = 5
 ): Promise<string> => {
-	let slug = kebabCase(baseName);
+	const slug = kebabCase(baseName);
 	let attempt = 0;
 
 	while (attempt < maxAttempts) {

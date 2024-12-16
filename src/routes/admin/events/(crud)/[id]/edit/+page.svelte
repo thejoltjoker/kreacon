@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { page } from '$app/stores';
 	import EventsForm from '../../_components/EventsForm.svelte';
 	import type { PageData } from './$types';
 
