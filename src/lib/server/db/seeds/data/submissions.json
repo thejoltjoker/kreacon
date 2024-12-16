@@ -639,7 +639,7 @@
 	},
 	{
 		"id": "StrongCuriousRockfish",
-		"status": "published",
+		"status": "pending",
 		"user": { "email": "alice.smith@example.com" },
 		"category": { "name": "Wild / Animation" },
 		"event": { "name": "Beacon Summer 1991" },
