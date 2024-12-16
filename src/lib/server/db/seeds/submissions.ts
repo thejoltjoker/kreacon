@@ -148,13 +148,6 @@ export const seed = async (db: db) => {
 						})
 					);
 				}
-
-				await tx
-					.update(schema.media)
-					.set({
-						submissionId: insertedSubmission.id
-					})
-					.where(eq(schema.media.id, insertedMedia.id));
 			});
 		})
 	);

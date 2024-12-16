@@ -9,7 +9,7 @@
 	const border = cn(
 		status === 'draft' && 'border border-secondary',
 		status === 'published' && 'border border-success',
-		status === 'hidden' && 'border border-destructive',
+		status === 'rejected' && 'border border-destructive',
 		status === 'pending' && 'border border-primary'
 	);
 	const className = cn(
@@ -17,7 +17,7 @@
 		border,
 		status === 'draft' && 'text-secondary',
 		status === 'published' && 'text-success',
-		status === 'hidden' && 'text-destructive',
+		status === 'rejected' && 'text-destructive',
 		status === 'pending' && 'text-primary'
 	);
 </script>

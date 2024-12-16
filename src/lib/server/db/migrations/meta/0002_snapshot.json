@@ -1,6 +1,6 @@
 {
-	"id": "083f936f-e6bd-4399-ae6a-cc9cb388d92e",
-	"prevId": "d89c87d9-7624-492b-8d89-4b3a7ddd872b",
+	"id": "8c1ad66b-9558-4115-ad87-8d8d558d7cb9",
+	"prevId": "cbe324af-d030-4c84-adea-57a3a87fc483",
 	"version": "7",
 	"dialect": "postgresql",
 	"tables": {
@@ -76,13 +76,13 @@
 				},
 				"name": {
 					"name": "name",
-					"type": "text",
+					"type": "varchar(255)",
 					"primaryKey": false,
 					"notNull": true
 				},
 				"slug": {
 					"name": "slug",
-					"type": "text",
+					"type": "varchar(300)",
 					"primaryKey": false,
 					"notNull": true
 				},
@@ -159,7 +159,7 @@
 					"tableTo": "category",
 					"columnsFrom": ["category_id"],
 					"columnsTo": ["id"],
-					"onDelete": "no action",
+					"onDelete": "cascade",
 					"onUpdate": "no action"
 				},
 				"event_category_event_id_event_id_fk": {
@@ -168,7 +168,7 @@
 					"tableTo": "event",
 					"columnsFrom": ["event_id"],
 					"columnsTo": ["id"],
-					"onDelete": "no action",
+					"onDelete": "cascade",
 					"onUpdate": "no action"
 				}
 			},
@@ -194,6 +194,12 @@
 					"primaryKey": true,
 					"notNull": true
 				},
+				"description": {
+					"name": "description",
+					"type": "varchar(512)",
+					"primaryKey": false,
+					"notNull": true
+				},
 				"name": {
 					"name": "name",
 					"type": "varchar(255)",
@@ -206,11 +212,11 @@
 					"primaryKey": false,
 					"notNull": true
 				},
-				"description": {
-					"name": "description",
-					"type": "varchar(512)",
+				"submissions_close_at": {
+					"name": "submissions_close_at",
+					"type": "timestamp",
 					"primaryKey": false,
-					"notNull": false
+					"notNull": true
 				},
 				"submissions_open_at": {
 					"name": "submissions_open_at",
@@ -218,20 +224,14 @@
 					"primaryKey": false,
 					"notNull": true
 				},
-				"submissions_close_at": {
-					"name": "submissions_close_at",
+				"voting_close_at": {
+					"name": "voting_close_at",
 					"type": "timestamp",
 					"primaryKey": false,
 					"notNull": true
 				},
 				"voting_open_at": {
 					"name": "voting_open_at",
-					"type": "timestamp",
-					"primaryKey": false,
-					"notNull": true
-				},
-				"voting_close_at": {
-					"name": "voting_close_at",
 					"type": "timestamp",
 					"primaryKey": false,
 					"notNull": true
@@ -251,7 +251,23 @@
 					"default": "now()"
 				}
 			},
-			"indexes": {},
+			"indexes": {
+				"events_search_idx": {
+					"name": "events_search_idx",
+					"columns": [
+						{
+							"expression": "to_tsvector('english', \"name\" || ' ' || \"description\")",
+							"asc": true,
+							"isExpression": true,
+							"nulls": "last"
+						}
+					],
+					"isUnique": false,
+					"concurrently": false,
+					"method": "gin",
+					"with": {}
+				}
+			},
 			"foreignKeys": {},
 			"compositePrimaryKeys": {},
 			"uniqueConstraints": {
@@ -274,12 +290,6 @@
 					"type": "serial",
 					"primaryKey": true,
 					"notNull": true
-				},
-				"submission_id": {
-					"name": "submission_id",
-					"type": "varchar",
-					"primaryKey": false,
-					"notNull": false
 				},
 				"type": {
 					"name": "type",
@@ -322,17 +332,7 @@
 				}
 			},
 			"indexes": {},
-			"foreignKeys": {
-				"media_submission_id_submission_id_fk": {
-					"name": "media_submission_id_submission_id_fk",
-					"tableFrom": "media",
-					"tableTo": "submission",
-					"columnsFrom": ["submission_id"],
-					"columnsTo": ["id"],
-					"onDelete": "no action",
-					"onUpdate": "no action"
-				}
-			},
+			"foreignKeys": {},
 			"compositePrimaryKeys": {},
 			"uniqueConstraints": {},
 			"policies": {},
@@ -634,7 +634,23 @@
 					"default": "now()"
 				}
 			},
-			"indexes": {},
+			"indexes": {
+				"submissions_search_idx": {
+					"name": "submissions_search_idx",
+					"columns": [
+						{
+							"expression": "to_tsvector('english', \"title\")",
+							"asc": true,
+							"isExpression": true,
+							"nulls": "last"
+						}
+					],
+					"isUnique": false,
+					"concurrently": false,
+					"method": "gin",
+					"with": {}
+				}
+			},
 			"foreignKeys": {
 				"submission_user_id_user_id_fk": {
 					"name": "submission_user_id_user_id_fk",
@@ -666,13 +682,13 @@
 					"name": "user_id",
 					"type": "uuid",
 					"primaryKey": false,
-					"notNull": false
+					"notNull": true
 				},
 				"event_id": {
 					"name": "event_id",
 					"type": "integer",
 					"primaryKey": false,
-					"notNull": false
+					"notNull": true
 				},
 				"created_at": {
 					"name": "created_at",
@@ -692,7 +708,13 @@
 			"indexes": {},
 			"foreignKeys": {},
 			"compositePrimaryKeys": {},
-			"uniqueConstraints": {},
+			"uniqueConstraints": {
+				"ticket_user_id_event_id_unique": {
+					"name": "ticket_user_id_event_id_unique",
+					"nullsNotDistinct": false,
+					"columns": ["user_id", "event_id"]
+				}
+			},
 			"policies": {},
 			"checkConstraints": {},
 			"isRLSEnabled": false
@@ -858,7 +880,7 @@
 		"public.submission_status": {
 			"name": "submission_status",
 			"schema": "public",
-			"values": ["draft", "pending", "published", "hidden", "deleted"]
+			"values": ["draft", "pending", "published", "rejected", "deleted", "archived"]
 		}
 	},
 	"schemas": {},

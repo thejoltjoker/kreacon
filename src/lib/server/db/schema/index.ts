@@ -5,7 +5,7 @@ export { default as categories, categoriesRelations } from './category';
 export { default as eventCategories, eventCategoriesRelations } from './eventCategory';
 export { default as rules, rulesRelations } from './rule';
 export { default as events, eventsRelations } from './event';
-export { default as media, mediaRelations } from './media';
+export { default as media } from './media';
 export { default as reactions, reactionsRelations } from './reaction';
 export { default as sessions, sessionsRelations } from './session';
 export { default as submissions, submissionsRelations } from './submission';
