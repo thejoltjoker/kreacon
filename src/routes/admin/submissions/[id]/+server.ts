@@ -6,7 +6,6 @@ import { adminCheck } from '../../utils';
 import { StatusCodes } from 'http-status-codes';
 import { submissionStatus } from '$lib/types/submissionStatus';
 import { json } from '@sveltejs/kit';
-import { insertSubmissionSchema, updateSubmissionSchema } from '$lib/server/db/schema/submission';
 import { z } from 'zod';
 
 export const PATCH: RequestHandler = async ({ request, params, locals }) => {
@@ -15,6 +14,7 @@ export const PATCH: RequestHandler = async ({ request, params, locals }) => {
 	try {
 		z.string().min(1).max(255).parse(params.id);
 	} catch (error) {
+		console.error(error);
 		return json({ error: 'Invalid ID' }, { status: StatusCodes.BAD_REQUEST });
 	}
 

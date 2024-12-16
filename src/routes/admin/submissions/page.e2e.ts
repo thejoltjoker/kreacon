@@ -64,6 +64,6 @@ test('Admin should be able to manage submissions', async ({ page }) => {
 	const deleteButton = dialogLocator.getByRole('button', { name: 'Delete' });
 	await expect(deleteButton).toBeVisible();
 	await deleteButton.click();
-	await expect(dialogLocator).not.toBeVisible();
+	await expect(dialogLocator).toBeHidden();
 	await expect(listItemLocator).not.toBeVisible();
 });
