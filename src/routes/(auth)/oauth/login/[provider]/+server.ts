@@ -1,6 +1,6 @@
 import { redirect } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import { createLogger } from '$lib/server/logger';
+import { createLogger } from '$lib/helpers/logger';
 import { getOAuthClient } from '$lib/server/auth/oauth/getOAuthClient';
 import { isOAuthProvider, type OAuthProvider } from '$lib/server/auth/oauth/OAuthClient';
 import { dev } from '$app/environment';

@@ -2,7 +2,7 @@ import { DiscordOAuth } from './DiscordOAuthClient';
 import { GithubOAuth } from './GitHubOAuthClient';
 import type { OAuthProvider } from './OAuthClient';
 import { env } from '$env/dynamic/private';
-import { createLogger } from '$lib/server/logger';
+import { createLogger } from '$lib/helpers/logger';
 
 const logger = createLogger('oauth');
 

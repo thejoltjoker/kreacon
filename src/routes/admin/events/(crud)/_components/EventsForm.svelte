@@ -15,6 +15,7 @@
 		$props();
 	const superform = superForm(data, { validators: zod(createEventSchema), dataType: 'json' });
 	const { message } = superform;
+	console.log(action);
 </script>
 
 <Form

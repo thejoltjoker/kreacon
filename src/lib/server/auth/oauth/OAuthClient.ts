@@ -1,5 +1,5 @@
 import { env } from '$env/dynamic/private';
-import { createLogger } from '$lib/server/logger';
+import { createLogger } from '$lib/helpers/logger';
 import { redirect } from '@sveltejs/kit';
 import type { OAuthAccessTokenResponse } from '../../../types/OAuthAccessTokenResponse';
 import { StatusCodes } from 'http-status-codes';
