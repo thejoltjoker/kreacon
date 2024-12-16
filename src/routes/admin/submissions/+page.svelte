@@ -6,9 +6,12 @@
 	import EventCombobox from '../../(app)/submissions/_components/EventCombobox.svelte';
 	import type { SubmissionStatus } from '$lib/types/submissionStatus';
 	import { invalidateAll } from '$app/navigation';
+	import DeleteDialog from '$lib/components/DeleteDialog.svelte';
 
 	let { data }: { data: PageData } = $props();
-	const handleApprove = async (submission: PageData['submissions'][number]) => {
+	let submissionToDelete: PageData['submissions'][number] | null = $state(null);
+	let deleteDialogOpen = $state(false);
+	const handlePublish = async (submission: PageData['submissions'][number]) => {
 		const status: SubmissionStatus = 'published';
 		await fetch(`/admin/submissions/${submission.id}`, {
 			method: 'PATCH',
@@ -16,7 +19,7 @@
 		});
 		invalidateAll();
 	};
-	const handleDeny = async (submission: PageData['submissions'][number]) => {
+	const handleReject = async (submission: PageData['submissions'][number]) => {
 		const status: SubmissionStatus = 'rejected';
 		await fetch(`/admin/submissions/${submission.id}`, {
 			method: 'PATCH',
@@ -24,14 +27,15 @@
 		});
 		invalidateAll();
 	};
+
 	const handleDelete = async (submission: PageData['submissions'][number]) => {
-		// TODO Add confirmation dialog
 		await fetch(`/admin/submissions/${submission.id}`, {
 			method: 'DELETE'
 		});
+		deleteDialogOpen = false;
+		submissionToDelete = null;
 		invalidateAll();
 	};
-	console.log(data.submissions);
 </script>
 
 <!-- TODO Figure out what to do when deleting category -->
@@ -55,23 +59,42 @@
 	]}
 	actions={[
 		{
-			label: 'Approve',
+			label: 'Publish',
 			icon: CircleCheckIcon,
-			onClick: (value) => handleApprove(value),
+			onClick: (value) => handlePublish(value),
 			class: '[&_svg]:text-primary'
 		},
 		{
-			label: 'Deny',
+			label: 'Reject',
 			icon: CircleAlertIcon,
-			onClick: (value) => handleDeny(value),
+			onClick: (value) => handleReject(value),
 			class: '[&_svg]:text-secondary'
 		},
 		{
 			label: 'Delete',
 			icon: TrashIcon,
-			onClick: (value) => handleDelete(value),
+			onClick: (value) => {
+				submissionToDelete = value;
+				deleteDialogOpen = true;
+			},
 			class: 'text-destructive'
 		}
 	]}
 	pagination={data.pagination}
 />
+
+{#if submissionToDelete}
+	<DeleteDialog
+		isOpen={deleteDialogOpen}
+		entity="submission"
+		text="Are you sure you want to delete this submission?"
+		confirmationText={submissionToDelete.id}
+		onConfirm={() => {
+			if (submissionToDelete) handleDelete(submissionToDelete);
+		}}
+		onCancel={() => {
+			deleteDialogOpen = false;
+			submissionToDelete = null;
+		}}
+	/>
+{/if}

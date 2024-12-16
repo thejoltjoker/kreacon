@@ -1,5 +1,5 @@
-import { relations, type InferInsertModel, type InferSelectModel } from 'drizzle-orm';
-import { integer, pgTable, uuid, varchar } from 'drizzle-orm/pg-core';
+import { relations, sql, type InferInsertModel, type InferSelectModel } from 'drizzle-orm';
+import { index, integer, pgTable, uuid, varchar } from 'drizzle-orm/pg-core';
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
 import { randomString } from '../../../helpers/randomString';
 import categories, { type Category } from './category';
@@ -11,25 +11,34 @@ import tickets from './ticket';
 import users from './user';
 import { votes } from './vote';
 
-export const submissions = pgTable('submission', {
-	id: varchar('id')
-		.primaryKey()
-		.$defaultFn(() => randomString()),
-	userId: uuid('user_id')
-		.references(() => users.id, { onDelete: 'cascade' })
-		.notNull(),
-	categoryId: integer('category_id').notNull(),
-	eventId: integer('event_id').notNull(),
-	mediaId: integer('media_id').notNull(),
-	status: submissionStatusEnum('status').notNull().default('draft'),
-	thumbnailId: integer('thumbnail_id').notNull(),
-	ticketId: varchar('ticket_id', { length: 255 }).notNull(),
-	title: varchar({ length: 255 }).notNull(),
-	views: integer().notNull().default(0),
-	// TODO Add license https://creativecommons.org/share-your-work/cclicenses/
-	// license: varchar({ length: 255 }).notNull(),
-	...timestamps
-});
+export const submissions = pgTable(
+	'submission',
+	{
+		id: varchar('id')
+			.primaryKey()
+			.$defaultFn(() => randomString()),
+		userId: uuid('user_id')
+			.references(() => users.id, { onDelete: 'cascade' })
+			.notNull(),
+		categoryId: integer('category_id').notNull(),
+		eventId: integer('event_id').notNull(),
+		mediaId: integer('media_id').notNull(),
+		status: submissionStatusEnum('status').notNull().default('draft'),
+		thumbnailId: integer('thumbnail_id').notNull(),
+		ticketId: varchar('ticket_id', { length: 255 }).notNull(),
+		title: varchar({ length: 255 }).notNull(),
+		views: integer().notNull().default(0),
+		// TODO Add license https://creativecommons.org/share-your-work/cclicenses/
+		// license: varchar({ length: 255 }).notNull(),
+		...timestamps
+	},
+	(table) => ({
+		searchIndex: index('submissions_search_idx').using(
+			'gin',
+			sql`to_tsvector('english', ${table.title})`
+		)
+	})
+);
 
 export const submissionsRelations = relations(submissions, ({ one, many }) => ({
 	user: one(users, {

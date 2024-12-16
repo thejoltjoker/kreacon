@@ -7,7 +7,7 @@
 	interface Props extends Dialog.RootProps {
 		title: string;
 		description: Snippet;
-		trigger: Snippet;
+		trigger?: Snippet;
 		contentProps?: WithoutChild<Dialog.ContentProps>;
 	}
 
@@ -22,9 +22,11 @@
 </script>
 
 <Dialog.Root bind:open {...restProps}>
-	<Dialog.Trigger>
-		{@render trigger()}
-	</Dialog.Trigger>
+	{#if trigger}
+		<Dialog.Trigger>
+			{@render trigger()}
+		</Dialog.Trigger>
+	{/if}
 	<Dialog.Portal>
 		<Dialog.Overlay class="fixed inset-0 z-50 bg-black/80" />
 		<Dialog.Content
