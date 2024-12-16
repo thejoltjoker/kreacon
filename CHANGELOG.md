@@ -50,6 +50,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   [#66](https://github.com/thejoltjoker/kreacon/pull/66)
 - Add tests for admin categories page
   [#68](https://github.com/thejoltjoker/kreacon/pull/68)
+- Add actions for submissions page
+  [#70](https://github.com/thejoltjoker/kreacon/pull/70)
 
 ### Changed
 
