@@ -13,7 +13,7 @@
 	} from 'lucide-svelte';
 	import { superForm } from 'sveltekit-superforms';
 	import type { PageData } from './$types';
-	import CategoryInput from './_components/CategoryInput.svelte';
+	import CategoryInput from '../_components/CategoryInput.svelte';
 	import Divider from '$lib/components/Divider.svelte';
 	import { tick } from 'svelte';
 

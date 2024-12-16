@@ -2,11 +2,13 @@ import { db } from '$lib/server/db';
 import type { PageServerLoad } from './$types';
 import { count } from 'drizzle-orm/sql/functions';
 import submissions from '$lib/server/db/schema/submission';
+import { eq } from 'drizzle-orm';
 
 export const load = (async ({ url }) => {
 	// Add pagination and sorting params
 	const page = Number(url.searchParams.get('page') ?? '1');
 	const sortBy = url.searchParams.get('sortBy') ?? 'newest';
+	const event = url.searchParams.get('event');
 	const perPage = 30;
 
 	const result = await db.transaction(async (tx) => {
@@ -14,7 +16,13 @@ export const load = (async ({ url }) => {
 			with: {
 				user: { columns: { username: true } },
 				category: { columns: { name: true } },
-				thumbnail: { columns: { url: true } }
+				thumbnail: { columns: { url: true } },
+				event: { columns: { id: true, name: true } }
+			},
+			where(fields) {
+				if (event) {
+					return eq(fields.eventId, Number(event));
+				}
 			},
 			orderBy: (items, { asc, desc }) => {
 				switch (sortBy) {
@@ -42,13 +50,34 @@ export const load = (async ({ url }) => {
 			offset: (page - 1) * perPage
 		});
 
-		const [totalCount] = await tx.select({ count: count() }).from(submissions);
+		const [totalCount] = await tx
+			.select({ count: count() })
+			.from(submissions)
+			.where(event ? eq(submissions.eventId, Number(event)) : undefined);
 
-		return { submissions: result, totalCount };
+		return {
+			submissions: result,
+			totalCount
+		};
 	});
 
 	return {
-		submissions: result.submissions,
+		submissions: result.submissions.flatMap((submission) => ({
+			id: submission.id,
+			title: submission.title,
+			username: submission.user.username,
+			category: submission.category.name,
+			event: submission.event.name,
+			status: submission.status,
+			thumbnailUrl: submission.thumbnail.url
+		})),
+		events: Array.from(
+			new Map(
+				result.submissions
+					.filter((submission) => submission.event.id != null)
+					.map((submission) => [submission.event.id, submission.event])
+			).values()
+		),
 		pagination: {
 			page,
 			perPage,

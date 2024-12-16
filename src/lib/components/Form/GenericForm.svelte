@@ -62,7 +62,7 @@
 	setContext('superform', superform);
 </script>
 
-<form {method} use:enhance class={cn('flex flex-col gap-sm', className)} {...props}>
+<form {method} use:enhance class={cn('flex w-full flex-col gap-sm', className)} {...props}>
 	{#if debug}
 		<SuperDebug data={$form}></SuperDebug>
 	{/if}

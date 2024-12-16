@@ -3,7 +3,7 @@
 	import DumbInput from '$lib/components/Form/DumbInput.svelte';
 	import DumbSelect from '$lib/components/Form/DumbSelect.svelte';
 	import { PencilIcon, PlusIcon, UnlockIcon } from 'lucide-svelte';
-	import type { PageData } from '../$types';
+	import type { PageData } from '../create2/$types';
 	import { page } from '$app/stores';
 	import { tick } from 'svelte';
 	interface Category {

@@ -7,7 +7,7 @@
 	export let data: PageData;
 </script>
 
-<EntityFilterBar entityName="users" />
+<EntityFilterBar entityName="tickets" buttons={false} />
 <EntityList
 	items={data.tickets.map((ticket) => ({
 		...ticket,
