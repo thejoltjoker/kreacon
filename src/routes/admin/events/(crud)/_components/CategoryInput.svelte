@@ -3,7 +3,7 @@
 	import DumbInput from '$lib/components/Form/DumbInput.svelte';
 	import DumbSelect from '$lib/components/Form/DumbSelect.svelte';
 	import { PencilIcon, PlusIcon, UnlockIcon } from 'lucide-svelte';
-	import type { PageData } from '../$types';
+	import type { PageData } from '../create2/$types';
 	import { page } from '$app/stores';
 	import { tick } from 'svelte';
 	interface Category {
@@ -27,7 +27,7 @@
 
 	let rulesContainerRef: HTMLUListElement | undefined = $state(undefined);
 
-	let selectedCategory = $state('');
+	let selectedCategory = $state(category.categoryId.toString() ?? '');
 
 	let title = $derived(categories.find((cat) => cat.id === category.categoryId)?.name);
 
@@ -57,10 +57,6 @@
 			)
 		});
 	};
-
-	$effect(() => {
-		console.log(rulesContainerRef);
-	});
 </script>
 
 <div class="flex w-full flex-col gap-sm rounded-form border border-divider p-xl">
@@ -91,6 +87,7 @@
 		{#each category.rules as _, index}
 			<li class="flex items-center gap-sm">
 				<DumbInput
+					value={category.rules[index].text}
 					type="text"
 					onkeydowncapture={(e: KeyboardEvent) => {
 						if (e.key === 'Enter') {

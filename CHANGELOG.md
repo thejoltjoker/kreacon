@@ -63,6 +63,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   [#41](https://github.com/thejoltjoker/kreacon/pull/41)
 - Refactor layout and unify navbar
   [#44](https://github.com/thejoltjoker/kreacon/pull/44)
+- Update admin events page, with new form
+  [#69](https://github.com/thejoltjoker/kreacon/pull/69)
 
 ### Deprecated
 

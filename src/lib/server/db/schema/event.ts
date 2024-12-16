@@ -11,7 +11,7 @@ export const events = pgTable(
 	'event',
 	{
 		id: serial('id').primaryKey(),
-		description: varchar({ length: 512 }),
+		description: varchar({ length: 512 }).notNull(),
 		name: varchar({ length: 255 }).notNull(),
 		slug: varchar({ length: 255 }).notNull().unique(),
 		submissionsCloseAt: timestamp('submissions_close_at', { mode: 'date' }).notNull(),
