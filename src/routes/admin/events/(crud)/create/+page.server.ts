@@ -52,8 +52,10 @@ import type { PageServerLoad } from './$types';
 import { StatusCodes } from 'http-status-codes';
 import { eventCategories, rules } from '$lib/server/db/schema';
 import { createEventSchema } from '$lib/schemas/eventSchema';
+import { adminCheck } from '../../../utils';
 
-export const load = (async () => {
+export const load = (async ({ locals }) => {
+	adminCheck(locals);
 	const initialValues = {
 		name: '',
 		description: '',

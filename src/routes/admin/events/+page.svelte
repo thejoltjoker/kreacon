@@ -3,8 +3,19 @@
 	import EntityFilterBar from '../_components/EntityFilterBar.svelte';
 	import EntityList from '../_components/EntityList.svelte';
 	import type { PageData } from './$types';
+	import { goto, invalidateAll } from '$app/navigation';
 
 	export let data: PageData;
+	const handleDelete = async (id: string) => {
+		// TODO Add confirmation dialog
+
+		await fetch(`/admin/events/${id}`, { method: 'DELETE' });
+		invalidateAll();
+	};
+
+	const handleEdit = (id: string) => {
+		goto(`/admin/events/${id}/edit`);
+	};
 </script>
 
 <EntityFilterBar entityName="events" />
@@ -24,12 +35,12 @@
 		{
 			label: 'Edit',
 			icon: PencilIcon,
-			onClick: (value) => console.log(value)
+			onClick: (item) => handleEdit(item.id)
 		},
 		{
 			label: 'Delete',
 			icon: TrashIcon,
-			onClick: (value) => console.log(value),
+			onClick: (item) => handleDelete(item.id),
 			class: 'text-destructive'
 		}
 	]}

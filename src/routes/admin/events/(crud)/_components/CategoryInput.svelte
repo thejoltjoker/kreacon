@@ -27,7 +27,7 @@
 
 	let rulesContainerRef: HTMLUListElement | undefined = $state(undefined);
 
-	let selectedCategory = $state('');
+	let selectedCategory = $state(category.categoryId.toString() ?? '');
 
 	let title = $derived(categories.find((cat) => cat.id === category.categoryId)?.name);
 
@@ -91,6 +91,7 @@
 		{#each category.rules as _, index}
 			<li class="flex items-center gap-sm">
 				<DumbInput
+					value={category.rules[index].text}
 					type="text"
 					onkeydowncapture={(e: KeyboardEvent) => {
 						if (e.key === 'Enter') {

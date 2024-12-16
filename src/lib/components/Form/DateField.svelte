@@ -53,11 +53,11 @@
 	};
 
 	let initialValue = new CalendarDateTime(
-		$value.getFullYear(),
-		$value.getMonth() + 1,
-		$value.getDate(),
-		$value.getHours(),
-		$value.getMinutes()
+		$value?.getFullYear() ?? new Date().getFullYear(),
+		($value?.getMonth() ?? new Date().getMonth()) + 1,
+		$value?.getDate() ?? new Date().getDate(),
+		$value?.getHours() ?? new Date().getHours(),
+		$value?.getMinutes() ?? new Date().getMinutes()
 	);
 
 	let dateFieldValue: DateValue | undefined = $state(initialValue);

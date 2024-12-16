@@ -11,13 +11,15 @@
 	import CategoriesSection from './CategoriesSection.svelte';
 	import EventRulesSection from './EventRulesSection.svelte';
 
-	let { data }: { data: SuperValidated<Infer<ZCreateEventSchema>> } = $props();
+	let { data, action }: { data: SuperValidated<Infer<ZCreateEventSchema>>; action: string } =
+		$props();
 	const superform = superForm(data, { validators: zod(createEventSchema), dataType: 'json' });
 	const { message } = superform;
 </script>
 
 <Form
-	action="/admin/events/create"
+	debug={false}
+	{action}
 	{data}
 	options={{ validators: zod(createEventSchema), dataType: 'json' }}
 	onkeydowncapture={(e) => {
@@ -41,7 +43,13 @@
 	<CategoriesSection />
 	<Divider />
 	<div class="flex justify-center">
-		<Button type="submit" class="submit-button">Create Event</Button>
+		<Button type="submit" class="submit-button">
+			{#if action.endsWith('edit')}
+				Update Event
+			{:else}
+				Create Event
+			{/if}
+		</Button>
 	</div>
 	{#if $message}
 		<p class="message text-center text-red-500">{$message.text}</p>

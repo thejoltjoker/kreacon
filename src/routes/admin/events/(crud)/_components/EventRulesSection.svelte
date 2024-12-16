@@ -4,7 +4,6 @@
 	import { LockOpenIcon, PencilIcon, PlusIcon } from 'lucide-svelte';
 	import { getContext, tick } from 'svelte';
 	import { type Infer, type SuperForm } from 'sveltekit-superforms/client';
-	import CategoryInput from './CategoryInput.svelte';
 	import DumbInput from '$lib/components/Form/DumbInput.svelte';
 
 	interface EventRulesSectionProps {

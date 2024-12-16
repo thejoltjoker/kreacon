@@ -252,6 +252,7 @@ export default class ConfigProvider {
 		return false;
 	}
 
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	private getOrThrowException(key: string, description: string): any {
 		for (const configurationName of Object.keys(this.configuration)) {
 			const subConfiguration = this.configuration[configurationName];
@@ -287,6 +288,7 @@ export default class ConfigProvider {
 		return ConfigProvider.parseKeyValueList(process.argv);
 	}
 
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	private static parsePropertiesFile(propertiesFileDirectory: string): any {
 		const propertiesFile = resolve(propertiesFileDirectory, 'examples.properties');
 
@@ -295,7 +297,7 @@ export default class ConfigProvider {
 
 			return ConfigProvider.parseKeyValueList(properties.split(EOL));
 		} catch (e) {
-			// @ts-ignore
+			// @ts-expect-error e is not typed
 			if (e.code === 'ENOENT') {
 				return [];
 			} else {
@@ -303,7 +305,7 @@ export default class ConfigProvider {
 			}
 		}
 	}
-
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	private static parseEnvironmentVariables(): any {
 		return process.env;
 	}
