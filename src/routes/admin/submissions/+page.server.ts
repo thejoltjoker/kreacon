@@ -5,6 +5,7 @@ import submissions from '$lib/server/db/schema/submission';
 import { eq } from 'drizzle-orm';
 import { sql } from 'drizzle-orm';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const getDefaultSort = (sortBy: string, items: any, asc: any, desc: any) => {
 	switch (sortBy) {
 		case 'title_asc':
@@ -40,7 +41,7 @@ export const load = (async ({ url }) => {
 	const perPage = 30;
 
 	const result = await db.transaction(async (tx) => {
-		let query = tx.query.submissions.findMany({
+		const query = tx.query.submissions.findMany({
 			with: {
 				user: { columns: { username: true } },
 				category: { columns: { name: true } },
