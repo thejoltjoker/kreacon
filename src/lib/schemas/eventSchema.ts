@@ -7,9 +7,7 @@ export const createEventSchema = z
 		submissionsOpenAt: z.coerce.date(),
 		submissionsCloseAt: z.coerce.date(),
 		votingOpenAt: z.coerce.date(),
-		votingCloseAt: z.coerce.date()
-	})
-	.extend({
+		votingCloseAt: z.coerce.date(),
 		categories: z
 			.object({
 				categoryId: z.coerce.number(),
