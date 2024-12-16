@@ -1,4 +1,4 @@
-import { isValidMediaType } from '$lib/helpers/mediaTypes';
+import { isValidMediaType } from '../../../helpers/mediaTypes';
 import { relations, type InferInsertModel, type InferSelectModel } from 'drizzle-orm';
 
 import { pgTable, serial, text, varchar } from 'drizzle-orm/pg-core';

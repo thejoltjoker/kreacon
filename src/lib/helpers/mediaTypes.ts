@@ -1,4 +1,4 @@
-import { mediaTypesWithMimeTypes, mimeTypes, type MediaType } from '$lib/types/mediaTypes';
+import { mediaTypesWithMimeTypes, mimeTypes, type MediaType } from '../types/mediaTypes';
 import mime from 'mime/lite';
 
 export const isValidMimeType = (mimeType: string) => {
