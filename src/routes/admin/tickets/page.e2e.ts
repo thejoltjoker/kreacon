@@ -21,5 +21,7 @@ test('Admin should be able to manage tickets', async ({ page }) => {
 	await expect(page.locator('.pagination')).toContainText('Showing 0-4 of 4');
 	await entityListLocator.locator('li').first().getByRole('button').nth(1).click();
 	await page.getByRole('menuitem', { name: 'Delete' }).click();
+	await expect(page.getByLabel('Delete ticket')).toBeVisible();
+	await page.getByRole('button', { name: 'Delete' }).click();
 	await expect(page.locator('.pagination')).toContainText('Showing 0-3 of 3');
 });
