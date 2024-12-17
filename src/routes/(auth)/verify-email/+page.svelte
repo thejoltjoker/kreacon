@@ -1,12 +1,12 @@
 <script lang="ts">
 	import Button from '$lib/components/Button.svelte';
-	import { _ } from 'svelte-i18n';
+	import { t } from '$lib/i18n';
 </script>
 
-<h1>{$_('verify_email', { default: 'Verify Email' })}</h1>
+<h1>{$t('Verify Email')}</h1>
 <form class="flex flex-col gap-sm">
 	TODO
-	<Button type="submit">{$_('verify_email', { default: 'Verify Email' })}</Button>
+	<Button type="submit">{$t('Verify Email')}</Button>
 </form>
 
 <style lang="postcss">

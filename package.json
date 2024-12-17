@@ -29,7 +29,8 @@
 		"test:e2e:ui": "cross-env NODE_ENV=test npm run db:reset && playwright test --ui",
 		"test:unit": "cross-env NODE_ENV=test vitest",
 		"test": "cross-env NODE_ENV=test npm run db:reset && npm run test:unit -- --run && npm run test:e2e",
-		"translate": "tsx src/lib/i18n/translate.ts"
+		"i18n:translate": "tsx src/lib/i18n/translate.ts",
+		"i18n:check": "tsx src/lib/i18n/check.ts"
 	},
 	"dependencies": {
 		"@azure/communication-email": "^1.0.0",
@@ -51,6 +52,7 @@
 		"lodash": "^4.17.21",
 		"lucide-svelte": "^0.468.0",
 		"mime": "^4.0.4",
+		"object.groupby": "^1.0.3",
 		"pg": "^8.13.1",
 		"postgres": "^3.4.5",
 		"svelte": "^5.11.2",
@@ -72,6 +74,7 @@
 		"@types/eslint": "^9.6.1",
 		"@types/jsonwebtoken": "^9.0.7",
 		"@types/lodash": "^4.17.13",
+		"@types/object.groupby": "^1.0.4",
 		"@types/pg": "^8.11.10",
 		"@types/throttle-debounce": "^5.0.2",
 		"autoprefixer": "^10.4.20",

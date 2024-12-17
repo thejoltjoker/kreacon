@@ -1,14 +1,14 @@
 <script lang="ts">
 	import Button from '$lib/components/Button.svelte';
 	import GoogleIcon from '$lib/symbols/GoogleIcon.svg?raw';
-	import { _ } from 'svelte-i18n';
+	import { t } from '$lib/i18n';
 </script>
 
 <Button>
 	<span class="icon">
 		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 		{@html GoogleIcon}
-	</span>{$_('sign_in_google', { default: 'Sign in with Google' })}
+	</span>{$t('Sign in with Google')}
 </Button>
 
 <style lang="postcss">

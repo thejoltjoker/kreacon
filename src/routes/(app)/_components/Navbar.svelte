@@ -7,7 +7,6 @@
 	import Link from '$lib/components/Link.svelte';
 	import { t } from '$lib/i18n';
 	import { AlignJustifyIcon, HomeIcon, PlusIcon, XIcon } from 'lucide-svelte';
-	import { _ } from 'svelte-i18n';
 	import { fly } from 'svelte/transition';
 	const user = $derived($page.data.user);
 	let isMenuOpen = $state(false);
@@ -101,10 +100,10 @@
 			</li>
 		{:else}
 			<li>
-				<Button href="/register" variant="outline">{$_('sign_up', { default: 'Sign up' })}</Button>
+				<Button href="/register" variant="outline">{$t('Sign up')}</Button>
 			</li>
 			<li>
-				<Button variant="white" href="/login">{$_('login', { default: 'Login' })}</Button>
+				<Button variant="white" href="/login">{$t('Log in')}</Button>
 			</li>
 		{/if}
 	</ul>

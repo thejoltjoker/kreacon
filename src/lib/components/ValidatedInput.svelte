@@ -1,8 +1,7 @@
 <script lang="ts">
 	import { Label } from 'bits-ui';
 	import { CheckCircle2Icon, LoaderCircleIcon, XCircleIcon } from 'lucide-svelte';
-	import { _ } from 'svelte-i18n';
-
+	import { t } from '$lib/i18n';
 	interface Props extends Label.RootProps {
 		label: string;
 		name: string;
@@ -30,7 +29,7 @@
 </script>
 
 <Label.Root for={name} class="flex flex-col gap-xs font-bold">
-	{$_(label, { default: label })}
+	{$t(label)}
 	<div class="relative">
 		<input
 			{type}

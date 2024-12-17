@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Divider from '$lib/components/Divider.svelte';
+	import { t } from '$lib/i18n';
 	import AccountsSection from './_components/AccountsSection.svelte';
 	import GeneralSection from './_components/GeneralSection.svelte';
 	import TicketsSection from './_components/TicketsSection.svelte';
@@ -13,7 +14,7 @@
 </script>
 
 <svelte:head>
-	<title>Profile</title>
+	<title>{$t('Profile')}</title>
 </svelte:head>
 
 <main class="flex w-full max-w-screen-md flex-col gap-4xl px-sm pt-xl md:px-xl">
