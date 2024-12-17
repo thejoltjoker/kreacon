@@ -26,12 +26,12 @@ export const PATCH: RequestHandler = async ({ request, params, locals }) => {
 
 	await db.update(submissions).set({ status }).where(eq(submissions.id, id));
 
-	return json(null, { status: StatusCodes.NO_CONTENT });
+	return new Response(null, { status: StatusCodes.NO_CONTENT });
 };
 
 export const DELETE: RequestHandler = async ({ params, locals }) => {
 	adminCheck(locals);
 	const id = params.id;
 	await db.delete(submissions).where(eq(submissions.id, id));
-	return json(null, { status: StatusCodes.NO_CONTENT });
+	return new Response(null, { status: StatusCodes.NO_CONTENT });
 };

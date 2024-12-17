@@ -24,7 +24,9 @@
 
 	let { categories, events }: { categories: Category[]; events: PageData['events'] } = $props();
 
-	let eventsItems = $derived(events.map((e) => ({ label: e.name, value: e.id.toString() })));
+	let eventsItems = $derived(
+		events.map((e: (typeof events)[number]) => ({ label: e.name, value: e.id.toString() }))
+	);
 
 	const handleCategoryChange = (categoryId: number | null) => {
 		const params = new URLSearchParams($page.url.searchParams);

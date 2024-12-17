@@ -4,6 +4,7 @@ import events from './event';
 import { timestamps } from './shared';
 import users from './user';
 import { createInsertSchema } from 'drizzle-zod';
+import { z } from 'zod';
 
 export const tickets = pgTable(
 	'ticket',
@@ -20,7 +21,9 @@ export const tickets = pgTable(
 	})
 );
 
-export const insertTicketSchema = createInsertSchema(tickets);
+export const insertTicketSchema = createInsertSchema(tickets).extend({
+	id: z.string().uuid()
+});
 
 export type Ticket = InferSelectModel<typeof tickets>;
 export type InsertTicket = InferInsertModel<typeof tickets>;
