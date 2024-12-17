@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { StatusCodes } from 'http-status-codes';
 
-test('Admin should be able to create, edit and delete categories', async ({ page }) => {
+test('Admin should be able to create and edit categories', async ({ page }) => {
 	// First, try accessing the admin page without authentication
 	const response = await page.goto('/admin/categories');
 	expect(response?.status()).toBe(StatusCodes.UNAUTHORIZED);
@@ -83,10 +83,4 @@ test('Admin should be able to create, edit and delete categories', async ({ page
         - button:
           - img
     `);
-
-	await editedCategoryLocator.getByRole('button').nth(1).click();
-	await page.getByRole('menuitem', { name: 'Delete' }).click();
-
-	// Verify category is deleted
-	await expect(editedCategoryLocator).not.toBeVisible();
 });

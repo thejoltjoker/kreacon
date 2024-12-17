@@ -5,8 +5,12 @@
 	import EntityFilterBar from '../_components/EntityFilterBar.svelte';
 	import EntityList from '../_components/EntityList.svelte';
 	import type { PageData } from './$types';
+	import AlertDialog from '$lib/components/AlertDialog.svelte';
 
 	let { data }: { data: PageData } = $props();
+
+	let ticketToDelete: PageData['tickets'][number] | null = $state(null);
+	let showConfirmDialog = $state(false);
 
 	const handleCopyDetails = (value: PageData['tickets'][number]) => {
 		const details = JSON.stringify({
@@ -23,6 +27,8 @@
 		await fetch(`/admin/tickets/${ticket.id}`, {
 			method: 'DELETE'
 		});
+		showConfirmDialog = false;
+		ticketToDelete = null;
 		invalidateAll();
 	};
 </script>
@@ -55,10 +61,38 @@
 		{
 			label: 'Delete',
 			icon: TrashIcon,
-			onClick: handleDelete,
+			onClick: (value) => {
+				ticketToDelete = value;
+				showConfirmDialog = true;
+			},
 			class: 'text-destructive'
 		}
 	]}
 	pagination={data.pagination}
 />
-<!-- TODO Make simple confirmation modal -->
+
+{#if ticketToDelete}
+	<AlertDialog
+		bind:open={showConfirmDialog}
+		variant="destructive"
+		confirmText="Delete"
+		onConfirm={() => {
+			if (ticketToDelete) handleDelete(ticketToDelete);
+		}}
+		onCancel={() => {
+			ticketToDelete = null;
+		}}
+	>
+		{#snippet title()}
+			Delete ticket
+		{/snippet}
+		{#snippet description()}
+			Are you sure you want to delete <span class="font-bold">{ticketToDelete?.user.username}</span
+			>'s ticket for <span class="font-bold">{ticketToDelete?.event}</span>?<br />
+			<span class="font-mono text-sm text-shade-400">ID: {ticketToDelete?.id}</span>
+			<br />
+			<br />
+			<span class="text-shade-400">This action cannot be undone.</span>
+		{/snippet}
+	</AlertDialog>
+{/if}

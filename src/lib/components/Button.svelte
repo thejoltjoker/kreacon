@@ -5,18 +5,18 @@
 	import { type VariantProps, tv } from 'tailwind-variants';
 	import { type Icon as IconType } from 'lucide-svelte';
 	export const buttonVariants = tv({
-		base: 'ring-offset-bg font-bold inline-flex items-center transition-colors justify-center gap-2 whitespace-nowrap rounded-button transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-5 [&_svg]:shrink-0',
+		base: 'ring-offset-shade-900 font-bold inline-flex items-center transition-colors justify-center gap-2 whitespace-nowrap rounded-button transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-5 [&_svg]:shrink-0',
 		variants: {
 			variant: {
 				default:
-					'bg-primary hover:bg-primary/20 border-primary border hover:text-white text-white ring-white',
+					'bg-primary hover:bg-primary/20 border-primary border hover:text-white text-white ring-shade-400',
 				white:
 					'bg-white border-white border text-black hover:text-muted-background hover:bg-muted-background hover:text-white',
 				destructive:
-					'bg-destructive text-black ring-white hover:bg-destructive/20 border-destructive border hover:text-white',
-				muted: 'bg-muted-background text-muted-foreground-alt hover:bg-muted-background',
+					'bg-destructive text-black ring-shade-400 hover:bg-destructive/20 border-destructive border hover:text-white',
+				muted: 'bg-shade-700 text-white hover:text-white hover:bg-shade-400 ring-shade-400',
 				outline: 'border-white bg-background hover:bg-white hover:text-black border text-white',
-				ghost: 'hover:bg-muted-background hover:text-white ring-white',
+				ghost: 'hover:bg-muted-background hover:text-white ring-shade-400',
 				link: 'text-primary underline-offset-4 hover:underline',
 				neutral: 'bg-inherit text-inherit h-fit rounded-none !p-0'
 			},

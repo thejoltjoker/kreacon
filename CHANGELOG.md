@@ -56,6 +56,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   [#72](https://github.com/thejoltjoker/kreacon/pull/72)
 - Add actions for admin tickets page
   [#74](https://github.com/thejoltjoker/kreacon/pull/74)
+- `AlertDialog` component, remove admin ability to delete entities
+  [#76](https://github.com/thejoltjoker/kreacon/pull/76)
 
 ### Changed
 

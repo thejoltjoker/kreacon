@@ -38,7 +38,7 @@ test('Login and view events', async ({ page }) => {
 	await expect(page).toHaveURL(/.*[?&]q=lanhack.*/);
 });
 
-test('Admin should be able to create, edit and delete events', async ({ page }) => {
+test('Admin should be able to create and edit events', async ({ page }) => {
 	await page.goto('/admin/events');
 	// First, try accessing the admin page without authentication
 	const response = await page.goto('/admin/categories');
@@ -92,8 +92,10 @@ test('Admin should be able to create, edit and delete events', async ({ page }) 
 		.locator('input[type="text"]')
 		.press('Enter');
 	await page.getByRole('button', { name: 'Create Event' }).click();
-	// TODO Replace bits locator
-	await page.locator('#bits-120').getByRole('button').click();
+	await page.waitForURL('/admin/events');
+	const entityListLocator = page.locator('.entity-list');
+	const listItemLocator = entityListLocator.locator('li').filter({ hasText: 'My test event' });
+	await listItemLocator.getByRole('button').nth(1).click();
 	await page.getByRole('menuitem', { name: 'Edit' }).click();
 	await page.locator('input[name="name"]').click();
 	await page.locator('input[name="name"]').fill('My test event edited');
@@ -145,13 +147,9 @@ test('Admin should be able to create, edit and delete events', async ({ page }) 
         - button:
           - img
     `);
-	// TODO Replace bits locator
+
 	const itemLocator = page.locator('li').filter({ hasText: 'My test event edited' });
 	await itemLocator.getByRole('button').nth(1).click();
 	await page.locator('html').click();
-	await expect(itemLocator.getByText('My test event edited Namemy-')).toBeVisible();
-	// TODO Replace bits locator
-	await itemLocator.getByRole('button').nth(1).click();
-	await page.getByRole('menuitem', { name: 'Delete' }).click();
-	await expect(itemLocator.getByText('My test event edited Namemy-')).not.toBeVisible();
+	await expect(itemLocator.getByText('My test event edited')).toBeVisible();
 });

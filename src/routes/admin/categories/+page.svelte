@@ -1,20 +1,14 @@
 <!-- TODO Layout for form page, i.e create and update -->
 <script lang="ts">
-	import type { PageData } from './$types';
-	import EntityList from '../_components/EntityList.svelte';
-	import EntityFilterBar from '../_components/EntityFilterBar.svelte';
-	import { PencilIcon, PlusIcon, TrashIcon } from 'lucide-svelte';
+	import { goto } from '$app/navigation';
 	import Button from '$lib/components/Button.svelte';
-	import { goto, invalidateAll } from '$app/navigation';
+	import { PencilIcon, PlusIcon } from 'lucide-svelte';
+	import EntityFilterBar from '../_components/EntityFilterBar.svelte';
+	import EntityList from '../_components/EntityList.svelte';
+	import type { PageData } from './$types';
 
-	export let data: PageData;
-	const handleDelete = async (id: string) => {
-		// TODO Add confirmation dialog
-
-		await fetch(`/admin/categories/${id}`, { method: 'DELETE' });
-		invalidateAll();
-	};
-
+	let { data }: { data: PageData } = $props();
+	// TODO Allow admin to archive category
 	const handleEdit = (id: string) => {
 		goto(`/admin/categories/${id}/edit`);
 	};
@@ -40,12 +34,6 @@
 			label: 'Edit',
 			icon: PencilIcon,
 			onClick: (item) => handleEdit(item.id)
-		},
-		{
-			label: 'Delete',
-			icon: TrashIcon,
-			onClick: (item) => handleDelete(item.id),
-			class: 'text-destructive'
 		}
 	]}
 	pagination={data.pagination}

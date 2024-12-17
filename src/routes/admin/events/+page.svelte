@@ -1,17 +1,11 @@
 <script lang="ts">
-	import { PencilIcon, TrashIcon } from 'lucide-svelte';
+	import { goto } from '$app/navigation';
+	import { PencilIcon } from 'lucide-svelte';
 	import EntityFilterBar from '../_components/EntityFilterBar.svelte';
 	import EntityList from '../_components/EntityList.svelte';
 	import type { PageData } from './$types';
-	import { goto, invalidateAll } from '$app/navigation';
-
-	export let data: PageData;
-	const handleDelete = async (id: string) => {
-		// TODO Add confirmation dialog
-
-		await fetch(`/admin/events/${id}`, { method: 'DELETE' });
-		invalidateAll();
-	};
+	// TODO Allow admin to archive event
+	let { data }: { data: PageData } = $props();
 
 	const handleEdit = (id: string) => {
 		goto(`/admin/events/${id}/edit`);
@@ -36,12 +30,6 @@
 			label: 'Edit',
 			icon: PencilIcon,
 			onClick: (item) => handleEdit(item.id)
-		},
-		{
-			label: 'Delete',
-			icon: TrashIcon,
-			onClick: (item) => handleDelete(item.id),
-			class: 'text-destructive'
 		}
 	]}
 />
