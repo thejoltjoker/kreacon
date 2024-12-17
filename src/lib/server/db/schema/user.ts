@@ -1,5 +1,5 @@
 import { relations, type InferInsertModel, type InferSelectModel } from 'drizzle-orm';
-import { pgTable, timestamp, uuid, varchar } from 'drizzle-orm/pg-core';
+import { pgEnum, pgTable, timestamp, uuid, varchar } from 'drizzle-orm/pg-core';
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
 import { registerUserSchema } from '../../../schemas/user';
 import accounts from './account';
@@ -8,7 +8,10 @@ import { roleEnum, timestamps } from './shared';
 import submissions from './submission';
 import tickets from './ticket';
 import votes from './vote';
+import { z } from 'zod';
+import { userStatus } from '../../../types/userStatus';
 
+export const userStatusEnum = pgEnum('status', userStatus);
 export const users = pgTable('user', {
 	id: uuid('id').defaultRandom().primaryKey(),
 	username: varchar({ length: 255 }).notNull().unique(),
@@ -17,6 +20,7 @@ export const users = pgTable('user', {
 	password: varchar({ length: 255 }).notNull(),
 	role: roleEnum('role').notNull().default('user'),
 	picture: varchar({ length: 255 }),
+	status: userStatusEnum('status').notNull().default('active'),
 	...timestamps
 });
 
@@ -35,7 +39,9 @@ export const insertUserSchema = createInsertSchema(users).merge(registerUserSche
 	picture: true
 });
 
-export const updateUserSchema = insertUserSchema.partial();
+export const updateUserSchema = insertUserSchema
+	.partial()
+	.merge(z.object({ status: z.enum(userStatus) }));
 
 export const selectUserSchema = createSelectSchema(users);
 

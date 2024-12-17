@@ -52,6 +52,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   [#68](https://github.com/thejoltjoker/kreacon/pull/68)
 - Add actions for submissions page
   [#70](https://github.com/thejoltjoker/kreacon/pull/70)
+- Add actions for admin users page
+  [#72](https://github.com/thejoltjoker/kreacon/pull/72)
 
 ### Changed
 

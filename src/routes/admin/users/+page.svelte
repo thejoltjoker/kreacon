@@ -3,32 +3,53 @@
 	import EntityList from '../_components/EntityList.svelte';
 	import { BanIcon, TicketIcon } from 'lucide-svelte';
 	import EntityFilterBar from '../_components/EntityFilterBar.svelte';
+	import { goto, invalidateAll } from '$app/navigation';
+	import type { UserStatus } from '$lib/types/userStatus';
 
-	export let data: PageData;
+	let { data }: { data: PageData } = $props();
+	let users = $derived(
+		data.users.map((user) => ({
+			...user,
+			thumbnailUrl: user.picture ?? '',
+			tickets: user.tickets.length,
+			submissions: user.submissions.length
+		}))
+	);
+
+	const handleBan = async (user: (typeof users)[number]) => {
+		const status: UserStatus = 'banned';
+		await fetch(`/admin/users/${user.username}`, {
+			method: 'PATCH',
+			body: JSON.stringify({ status })
+		});
+		await invalidateAll();
+	};
 </script>
 
 <EntityFilterBar entityName="users" buttons={false} />
 <EntityList
-	items={data.users.map((user) => ({
-		...user,
-		thumbnailUrl: user.picture ?? '',
-		tickets: user.tickets.length,
-		submissions: user.submissions.length
-	}))}
+	items={users}
 	fields={[
 		{ name: 'username', minScreen: 'all', sortable: true },
 		{ name: 'email', minScreen: 'sm', sortable: false },
-		{ name: 'role', minScreen: 'xl', sortable: false },
+		{ name: 'role', minScreen: 'xl', sortable: true },
 		{ name: 'tickets', minScreen: 'lg', sortable: false },
-		{ name: 'submissions', minScreen: 'md', sortable: false }
+		{ name: 'submissions', minScreen: 'md', sortable: false },
+		{ name: 'status', minScreen: 'xl', sortable: false },
+		{ name: 'createdAt', minScreen: 'xl', sortable: true }
 	]}
 	actions={[
-		{ label: 'Show tickets', icon: TicketIcon, onClick: (value) => console.log(value) },
+		{
+			label: 'Show tickets',
+			icon: TicketIcon,
+			onClick: (value) => goto(`/admin/tickets?username=${value.username}`)
+		},
 		{
 			label: 'Ban user',
 			icon: BanIcon,
-			onClick: (value) => console.log(value),
+			onClick: (value) => handleBan(value),
 			class: 'text-destructive'
 		}
 	]}
+	pagination={data.pagination}
 />

@@ -1,5 +1,5 @@
 {
-	"id": "beede712-1f7e-4cdc-be23-cb522c7117ea",
+	"id": "cbcdcaef-5860-4a33-8897-066c424e7b62",
 	"prevId": "00000000-0000-0000-0000-000000000000",
 	"version": "7",
 	"dialect": "postgresql",
@@ -291,12 +291,6 @@
 					"primaryKey": true,
 					"notNull": true
 				},
-				"submission_id": {
-					"name": "submission_id",
-					"type": "varchar",
-					"primaryKey": false,
-					"notNull": false
-				},
 				"type": {
 					"name": "type",
 					"type": "media_type",
@@ -338,17 +332,7 @@
 				}
 			},
 			"indexes": {},
-			"foreignKeys": {
-				"media_submission_id_submission_id_fk": {
-					"name": "media_submission_id_submission_id_fk",
-					"tableFrom": "media",
-					"tableTo": "submission",
-					"columnsFrom": ["submission_id"],
-					"columnsTo": ["id"],
-					"onDelete": "no action",
-					"onUpdate": "no action"
-				}
-			},
+			"foreignKeys": {},
 			"compositePrimaryKeys": {},
 			"uniqueConstraints": {},
 			"policies": {},
@@ -650,7 +634,23 @@
 					"default": "now()"
 				}
 			},
-			"indexes": {},
+			"indexes": {
+				"submissions_search_idx": {
+					"name": "submissions_search_idx",
+					"columns": [
+						{
+							"expression": "to_tsvector('english', \"title\")",
+							"asc": true,
+							"isExpression": true,
+							"nulls": "last"
+						}
+					],
+					"isUnique": false,
+					"concurrently": false,
+					"method": "gin",
+					"with": {}
+				}
+			},
 			"foreignKeys": {
 				"submission_user_id_user_id_fk": {
 					"name": "submission_user_id_user_id_fk",
@@ -768,6 +768,14 @@
 					"primaryKey": false,
 					"notNull": false
 				},
+				"status": {
+					"name": "status",
+					"type": "status",
+					"typeSchema": "public",
+					"primaryKey": false,
+					"notNull": true,
+					"default": "'active'"
+				},
 				"created_at": {
 					"name": "created_at",
 					"type": "timestamp",
@@ -881,6 +889,11 @@
 			"name": "submission_status",
 			"schema": "public",
 			"values": ["draft", "pending", "published", "rejected", "deleted", "archived"]
+		},
+		"public.status": {
+			"name": "status",
+			"schema": "public",
+			"values": ["active", "banned"]
 		}
 	},
 	"schemas": {},

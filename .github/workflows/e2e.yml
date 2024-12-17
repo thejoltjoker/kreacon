@@ -61,7 +61,7 @@ jobs:
         with:
           name: playwright-report
           path: playwright-report/
-          retention-days: 30
+          retention-days: 3
       - name: Remove GitHub Actions IP from PostgreSQL firewall
         if: always() && steps.add-firewall-rule.outputs.rule_created == 'true'
         continue-on-error: true

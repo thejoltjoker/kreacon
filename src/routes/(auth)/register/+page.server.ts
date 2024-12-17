@@ -4,7 +4,7 @@ import users from '$lib/server/db/schema/user';
 
 import { hashPassword } from '$lib/server/utils';
 import { type Actions, fail, redirect } from '@sveltejs/kit';
-import { eq } from 'drizzle-orm';
+import { eq, or } from 'drizzle-orm';
 import { message, setError, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import type { PageServerLoad } from './$types';
@@ -29,13 +29,27 @@ export const actions: Actions = {
 		const { username, password, email } = form.data;
 
 		const passwordHash = await hashPassword(password);
-		const existingUsername = await db.query.users.findFirst({
-			where: eq(users.username, username)
+		const existingUser = await db.query.users.findFirst({
+			where: or(eq(users.username, username), eq(users.email, email))
 		});
-		if (existingUsername) {
-			setError(form, 'username', 'Username is already taken.');
+
+		if (existingUser != null) {
+			if (existingUser.status === 'banned') {
+				logger.error('User is banned.', { username });
+				return message(form, { text: 'Something went wrong', status: 'error' });
+			}
+
+			if (existingUser.username === username) {
+				logger.error('Username is already taken.', { username });
+				setError(form, 'username', 'Username is already taken.');
+				return fail(StatusCodes.BAD_REQUEST, { form });
+			}
+
+			logger.error('Email is already taken.', { email });
+			setError(form, 'email', 'Email is already taken.');
 			return fail(StatusCodes.BAD_REQUEST, { form });
 		}
+
 		try {
 			await db.insert(users).values({ username, email, password: passwordHash }).returning();
 
@@ -43,7 +57,7 @@ export const actions: Actions = {
 			// const session = await createSession(sessionToken, createdUser.id);
 			// setSessionTokenCookie(event, sessionToken, session.expiresAt);
 		} catch (e) {
-			logger.error(JSON.stringify(e));
+			logger.error('Failed to register user', e);
 			return message(form, { text: 'Something went wrong', status: 'error' });
 		}
 		// await sendEmailVerification(email.toString());
