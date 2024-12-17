@@ -3,29 +3,38 @@
 	import EntityList from '../_components/EntityList.svelte';
 	import { BanIcon, TicketIcon } from 'lucide-svelte';
 	import EntityFilterBar from '../_components/EntityFilterBar.svelte';
-	import { goto } from '$app/navigation';
+	import { goto, invalidateAll } from '$app/navigation';
 
-	export let data: PageData;
+	let { data }: { data: PageData } = $props();
+	let users = $derived(
+		data.users.map((user) => ({
+			...user,
+			thumbnailUrl: user.picture ?? '',
+			tickets: user.tickets.length,
+			submissions: user.submissions.length
+		}))
+	);
 
-	const handleBan = (user: User) => {
-		console.log(user);
+	const handleBan = async (user: (typeof users)[number]) => {
+		await fetch(`/admin/users/${user.username}`, {
+			method: 'PATCH',
+			body: JSON.stringify({ banned: true })
+		});
+		await invalidateAll();
 	};
 </script>
 
 <EntityFilterBar entityName="users" buttons={false} />
 <EntityList
-	items={data.users.map((user) => ({
-		...user,
-		thumbnailUrl: user.picture ?? '',
-		tickets: user.tickets.length,
-		submissions: user.submissions.length
-	}))}
+	items={users}
 	fields={[
 		{ name: 'username', minScreen: 'all', sortable: true },
 		{ name: 'email', minScreen: 'sm', sortable: false },
-		{ name: 'role', minScreen: 'xl', sortable: false },
+		{ name: 'role', minScreen: 'xl', sortable: true },
 		{ name: 'tickets', minScreen: 'lg', sortable: false },
-		{ name: 'submissions', minScreen: 'md', sortable: false }
+		{ name: 'submissions', minScreen: 'md', sortable: false },
+		{ name: 'banned', minScreen: 'xl', sortable: false },
+		{ name: 'createdAt', minScreen: 'xl', sortable: true }
 	]}
 	actions={[
 		{
@@ -36,8 +45,9 @@
 		{
 			label: 'Ban user',
 			icon: BanIcon,
-			onClick: (value) => console.log(value),
+			onClick: (value) => handleBan(value),
 			class: 'text-destructive'
 		}
 	]}
+	pagination={data.pagination}
 />

@@ -1,5 +1,5 @@
 import { relations, type InferInsertModel, type InferSelectModel } from 'drizzle-orm';
-import { pgTable, timestamp, uuid, varchar } from 'drizzle-orm/pg-core';
+import { boolean, pgTable, timestamp, uuid, varchar } from 'drizzle-orm/pg-core';
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
 import { registerUserSchema } from '../../../schemas/user';
 import accounts from './account';
@@ -8,6 +8,7 @@ import { roleEnum, timestamps } from './shared';
 import submissions from './submission';
 import tickets from './ticket';
 import votes from './vote';
+import { z } from 'zod';
 
 export const users = pgTable('user', {
 	id: uuid('id').defaultRandom().primaryKey(),
@@ -17,6 +18,7 @@ export const users = pgTable('user', {
 	password: varchar({ length: 255 }).notNull(),
 	role: roleEnum('role').notNull().default('user'),
 	picture: varchar({ length: 255 }),
+	banned: boolean().notNull().default(false),
 	...timestamps
 });
 
@@ -35,7 +37,7 @@ export const insertUserSchema = createInsertSchema(users).merge(registerUserSche
 	picture: true
 });
 
-export const updateUserSchema = insertUserSchema.partial();
+export const updateUserSchema = insertUserSchema.partial().merge(z.object({ banned: z.boolean() }));
 
 export const selectUserSchema = createSelectSchema(users);
 

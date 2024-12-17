@@ -39,6 +39,10 @@ export const actions = {
 			return message(form, { status: 'error', text: 'Incorrect email or password' });
 		}
 
+		if (existingUser.banned) {
+			return message(form, { status: 'error', text: 'Something went wrong' });
+		}
+
 		const sessionToken = generateSessionToken();
 		const session = await createSession(sessionToken, existingUser.id);
 		setSessionTokenCookie(event, sessionToken, session.expiresAt);
