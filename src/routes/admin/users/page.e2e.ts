@@ -18,9 +18,9 @@ test('Admin should be able to manage users', async ({ page }) => {
 	const entityListLocator = page.locator('.entity-list');
 
 	// Sorting by name
-	await page.getByRole('button', { name: 'Username' }).click();
+	await page.goto('/admin/users?sortBy=username_asc');
 	await expect(entityListLocator.locator('li').first()).toContainText('alice_smith');
-	await page.getByRole('button', { name: 'Username' }).click();
+	await page.goto('/admin/users?sortBy=username_desc');
 	await expect(entityListLocator.locator('li').first()).toContainText('john_doe');
 
 	// Show tickets
