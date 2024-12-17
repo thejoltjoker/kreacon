@@ -70,7 +70,7 @@
 	]}
 	pagination={data.pagination}
 />
-<!-- TODO Make simple confirmation modal -->
+
 {#if ticketToDelete}
 	<AlertDialog
 		bind:open={showConfirmDialog}
