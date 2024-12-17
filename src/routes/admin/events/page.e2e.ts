@@ -92,8 +92,10 @@ test('Admin should be able to create and edit events', async ({ page }) => {
 		.locator('input[type="text"]')
 		.press('Enter');
 	await page.getByRole('button', { name: 'Create Event' }).click();
-	// TODO Replace bits locator
-	await page.locator('#bits-120').getByRole('button').click();
+	await page.waitForURL('/admin/events');
+	const entityListLocator = page.locator('.entity-list');
+	const listItemLocator = entityListLocator.locator('li').filter({ hasText: 'My test event' });
+	await listItemLocator.getByRole('button').nth(1).click();
 	await page.getByRole('menuitem', { name: 'Edit' }).click();
 	await page.locator('input[name="name"]').click();
 	await page.locator('input[name="name"]').fill('My test event edited');
