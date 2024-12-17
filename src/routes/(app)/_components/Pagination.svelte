@@ -5,6 +5,7 @@
 	import { cn } from '$lib/utils';
 
 	import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-svelte';
+	import { t } from '$lib/i18n';
 
 	let { count, perPage, ...props }: PaginationRootProps = $props();
 
@@ -66,7 +67,8 @@
 			</Pagination.NextButton>
 		</div>
 		<p class="text-center text-sm text-shade-400">
-			Showing {range.start}-{range.end} of {count}
+			{$t('Showing')}{' '}
+			{range.start}-{range.end} of {count}
 		</p>
 	{/snippet}
 </Pagination.Root>

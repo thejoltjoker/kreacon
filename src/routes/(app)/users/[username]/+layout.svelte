@@ -6,6 +6,7 @@
 	import SortBySelect from '../../_components/SortBySelect.svelte';
 	import type { LayoutData } from './$types';
 	import UserInfo from './_components/UserInfo.svelte';
+	import { t } from '$lib/i18n';
 
 	let { data, children }: { data: LayoutData; children: Snippet } = $props();
 
@@ -14,9 +15,9 @@
 		label: string;
 		disabled?: boolean;
 	}[] = [
-		{ label: 'Newest', value: 'newest' },
-		{ label: 'Oldest', value: 'oldest' },
-		{ label: 'Random', value: 'random' }
+		{ label: $t('Newest'), value: 'newest' },
+		{ label: $t('Oldest'), value: 'oldest' },
+		{ label: $t('Random'), value: 'random' }
 	];
 
 	let defaultSortBy = 'newest';
@@ -36,14 +37,14 @@
 					'sortBy'
 				) ?? defaultSortBy}"
 			>
-				Submissions
+				{$t('Submissions')}
 			</HorizontalMenuItem>
 			<HorizontalMenuItem
 				href="/users/{data.profileUser.username}/reactions?sortBy={$page.url.searchParams.get(
 					'sortBy'
 				) ?? defaultSortBy}"
 			>
-				Reactions
+				{$t('Reactions')}
 			</HorizontalMenuItem>
 
 			<div class="ml-auto">

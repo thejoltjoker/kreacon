@@ -9,15 +9,16 @@
 	import SortBySelect from '../../_components/SortBySelect.svelte';
 	import { onMount } from 'svelte';
 	import Button from '$lib/components/Button.svelte';
+	import { t } from '$lib/i18n';
 
 	const sortByItems: {
 		value: string;
 		label: string;
 		disabled?: boolean;
 	}[] = [
-		{ label: 'Newest', value: 'newest' },
-		{ label: 'Oldest', value: 'oldest' },
-		{ label: 'Random', value: 'random' }
+		{ label: $t('Newest'), value: 'newest' },
+		{ label: $t('Oldest'), value: 'oldest' },
+		{ label: $t('Random'), value: 'random' }
 		// TODO Sort by reactions count
 		// { label: 'Reactions', value: 'reactions' }
 	];

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
+	import { t } from '$lib/i18n';
 	import { Select } from 'bits-ui';
 	import { ArrowDownUpIcon, DotIcon } from 'lucide-svelte';
 
@@ -27,7 +28,7 @@
 	<Select.Trigger
 		class="select-trigger sort-by-select flex gap-sm text-nowrap border-white font-bold"
 	>
-		<p>Sorted by: <span>{selectedLabel ?? placeholder}</span></p>
+		<p>{$t('Sorted by')}{': '}<span>{selectedLabel ?? placeholder}</span></p>
 
 		<ArrowDownUpIcon class="size-5" />
 	</Select.Trigger>
