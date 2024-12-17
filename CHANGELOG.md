@@ -58,6 +58,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   [#74](https://github.com/thejoltjoker/kreacon/pull/74)
 - `AlertDialog` component, remove admin ability to delete entities
   [#76](https://github.com/thejoltjoker/kreacon/pull/76)
+- Add i18n report script to check for missing translations
+  [#78](https://github.com/thejoltjoker/kreacon/pull/78)
 
 ### Changed
 
