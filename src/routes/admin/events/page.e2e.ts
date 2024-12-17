@@ -63,16 +63,12 @@ test('Admin should be able to create, edit and delete events', async ({ page }) 
 	await page.locator('input[name="description"]').fill('This is a test description');
 	await page.locator('input[name="description"]').press('Tab');
 	await page.getByRole('spinbutton', { name: 'month, Submissions Open At' }).press('Tab');
-	await page.getByLabel('16').press('Tab');
 	await page.getByRole('spinbutton', { name: 'year, Submissions Open At' }).press('Tab');
 	await page.getByRole('spinbutton', { name: 'hour, Submissions Open At' }).press('Tab');
 	await page.getByRole('spinbutton', { name: 'minute, Submissions Open At' }).press('Tab');
 	await page.getByRole('spinbutton', { name: 'month, Submissions Close At' }).press('Tab');
 	await page.getByRole('spinbutton', { name: 'day, Submissions Close At' }).press('Tab');
 	await page.getByRole('spinbutton', { name: 'year, Submissions Close At' }).press('ArrowUp');
-	await page.getByLabel('2025').press('ArrowUp');
-	await page.getByLabel('2026').press('ArrowDown');
-	await page.getByLabel('2025').press('ArrowDown');
 	await page.getByRole('spinbutton', { name: 'year, Submissions Close At' }).press('ArrowLeft');
 	await page.getByRole('spinbutton', { name: 'day, Submissions Close At' }).press('ArrowLeft');
 	await page.getByRole('spinbutton', { name: 'month, Submissions Close At' }).press('ArrowRight');
