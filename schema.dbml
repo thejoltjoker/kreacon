@@ -9,6 +9,20 @@ enum role {
   admin
 }
 
+enum submission_status {
+  draft
+  pending
+  published
+  rejected
+  deleted
+  archived
+}
+
+enum status {
+  active
+  banned
+}
+
 table account {
   user_id uuid [not null]
   provider varchar(255) [not null]
@@ -23,40 +37,57 @@ table account {
 
 table category {
   id serial [pk, not null, increment]
-  name text [not null]
-  description varchar(512)
-  media_type media_type
+  name varchar(255) [not null]
+  slug varchar(300) [not null, unique]
+  description text [not null]
+  media_type media_type [not null]
   created_at timestamp [not null, default: `now()`]
   updated_at timestamp [not null, default: `now()`]
 }
 
-table categories_to_events {
+table event_category {
+  id serial [pk, not null, increment]
   category_id integer [not null]
   event_id integer [not null]
 
   indexes {
-    (event_id, category_id) [pk]
+    (event_id, category_id) [name: 'event_category_event_id_category_id_unique', unique]
   }
 }
 
 table event {
   id serial [pk, not null, increment]
+  description varchar(512) [not null]
   name varchar(255) [not null]
-  description varchar(512)
-  submissions_open_at timestamp [not null]
+  slug varchar(255) [not null, unique]
   submissions_close_at timestamp [not null]
-  voting_open_at timestamp [not null]
+  submissions_open_at timestamp [not null]
   voting_close_at timestamp [not null]
+  voting_open_at timestamp [not null]
   created_at timestamp [not null, default: `now()`]
   updated_at timestamp [not null, default: `now()`]
+
+  indexes {
+    (name, description) [name: 'events_search_idx']
+  }
 }
 
 table media {
   id serial [pk, not null, increment]
-  submission_id varchar
   type media_type [not null]
   url varchar(255) [not null]
+  filename varchar(255) [not null]
   alt varchar(255)
+  created_at timestamp [not null, default: `now()`]
+  updated_at timestamp [not null, default: `now()`]
+}
+
+table prize {
+  id serial [pk, not null, increment]
+  text text [not null]
+  position integer [not null]
+  value integer
+  category_id integer
   created_at timestamp [not null, default: `now()`]
   updated_at timestamp [not null, default: `now()`]
 }
@@ -73,6 +104,15 @@ table reaction {
   }
 }
 
+table rule {
+  id serial [pk, not null, increment]
+  text text [not null]
+  event_id integer
+  category_id integer
+  created_at timestamp [not null, default: `now()`]
+  updated_at timestamp [not null, default: `now()`]
+}
+
 table session {
   id varchar(255) [pk, not null]
   user_id uuid [not null]
@@ -87,20 +127,29 @@ table submission {
   category_id integer [not null]
   event_id integer [not null]
   media_id integer [not null]
+  status submission_status [not null, default: 'draft']
+  thumbnail_id integer [not null]
   ticket_id varchar(255) [not null]
   title varchar(255) [not null]
   views integer [not null, default: 0]
-  thumbnail_id integer [not null]
   created_at timestamp [not null, default: `now()`]
   updated_at timestamp [not null, default: `now()`]
+
+  indexes {
+    title [name: 'submissions_search_idx']
+  }
 }
 
-table tickets {
+table ticket {
   id varchar(255) [pk, not null]
-  user_id uuid
-  event_id integer
+  user_id uuid [not null]
+  event_id integer [not null]
   created_at timestamp [not null, default: `now()`]
   updated_at timestamp [not null, default: `now()`]
+
+  indexes {
+    (user_id, event_id) [name: 'ticket_user_id_event_id_unique', unique]
+  }
 }
 
 table user {
@@ -111,6 +160,7 @@ table user {
   password varchar(255) [not null]
   role role [not null, default: 'user']
   picture varchar(255)
+  status status [not null, default: 'active']
   created_at timestamp [not null, default: `now()`]
   updated_at timestamp [not null, default: `now()`]
 }
@@ -128,15 +178,19 @@ table vote {
 
 ref: account.user_id > user.id
 
-ref: categories_to_events.category_id > category.id
+ref: event_category.category_id > category.id
 
-ref: categories_to_events.event_id > event.id
+ref: event_category.event_id > event.id
 
-ref: submission.thumbnail_id - media.id
+ref: prize.category_id > event_category.id
 
 ref: reaction.user_id > user.id
 
 ref: reaction.submission_id > submission.id
+
+ref: rule.category_id > event_category.id
+
+ref: rule.event_id > event.id
 
 ref: session.user_id - user.id
 
@@ -144,13 +198,15 @@ ref: submission.user_id > user.id
 
 ref: submission.category_id > category.id
 
-ref: submission.ticket_id - tickets.id
+ref: submission.ticket_id - ticket.id
 
 ref: submission.event_id > event.id
 
-ref: tickets.user_id > user.id
+ref: submission.thumbnail_id - media.id
 
-ref: tickets.event_id > event.id
+ref: ticket.user_id > user.id
+
+ref: ticket.event_id > event.id
 
 ref: vote.user_id > user.id
 
