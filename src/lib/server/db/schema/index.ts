@@ -1,5 +1,5 @@
 export { roleEnum, mediaTypeEnum, submissionStatusEnum } from './shared';
-export { default as users, usersRelations } from './user';
+export { default as users, usersRelations, userStatusEnum } from './user';
 export { default as accounts, accountsRelations } from './account';
 export { default as categories, categoriesRelations } from './category';
 export { default as eventCategories, eventCategoriesRelations } from './eventCategory';

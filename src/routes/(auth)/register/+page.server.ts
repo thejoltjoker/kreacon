@@ -34,7 +34,7 @@ export const actions: Actions = {
 		});
 
 		if (existingUser != null) {
-			if (existingUser.banned) {
+			if (existingUser.status === 'banned') {
 				logger.error('User is banned.', { username });
 				return message(form, { text: 'Something went wrong', status: 'error' });
 			}
@@ -57,7 +57,7 @@ export const actions: Actions = {
 			// const session = await createSession(sessionToken, createdUser.id);
 			// setSessionTokenCookie(event, sessionToken, session.expiresAt);
 		} catch (e) {
-			logger.error(JSON.stringify(e));
+			logger.error('Failed to register user', e);
 			return message(form, { text: 'Something went wrong', status: 'error' });
 		}
 		// await sendEmailVerification(email.toString());

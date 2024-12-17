@@ -1,6 +1,7 @@
 CREATE TYPE "public"."media_type" AS ENUM('image', 'video', 'audio');--> statement-breakpoint
 CREATE TYPE "public"."role" AS ENUM('user', 'admin');--> statement-breakpoint
 CREATE TYPE "public"."submission_status" AS ENUM('draft', 'pending', 'published', 'rejected', 'deleted', 'archived');--> statement-breakpoint
+CREATE TYPE "public"."status" AS ENUM('active', 'banned');--> statement-breakpoint
 CREATE TABLE "account" (
 	"user_id" uuid NOT NULL,
 	"provider" varchar(255) NOT NULL,
@@ -44,7 +45,6 @@ CREATE TABLE "event" (
 --> statement-breakpoint
 CREATE TABLE "media" (
 	"id" serial PRIMARY KEY NOT NULL,
-	"submission_id" varchar,
 	"type" "media_type" NOT NULL,
 	"url" varchar(255) NOT NULL,
 	"filename" varchar(255) NOT NULL,
@@ -121,6 +121,7 @@ CREATE TABLE "user" (
 	"password" varchar(255) NOT NULL,
 	"role" "role" DEFAULT 'user' NOT NULL,
 	"picture" varchar(255),
+	"status" "status" DEFAULT 'active' NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL,
 	CONSTRAINT "user_username_unique" UNIQUE("username"),
@@ -138,9 +139,9 @@ CREATE TABLE "vote" (
 ALTER TABLE "account" ADD CONSTRAINT "account_user_id_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."user"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "event_category" ADD CONSTRAINT "event_category_category_id_category_id_fk" FOREIGN KEY ("category_id") REFERENCES "public"."category"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "event_category" ADD CONSTRAINT "event_category_event_id_event_id_fk" FOREIGN KEY ("event_id") REFERENCES "public"."event"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE "media" ADD CONSTRAINT "media_submission_id_submission_id_fk" FOREIGN KEY ("submission_id") REFERENCES "public"."submission"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "session" ADD CONSTRAINT "session_user_id_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."user"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "submission" ADD CONSTRAINT "submission_user_id_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."user"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "vote" ADD CONSTRAINT "vote_submission_id_submission_id_fk" FOREIGN KEY ("submission_id") REFERENCES "public"."submission"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "vote" ADD CONSTRAINT "vote_user_id_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."user"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
-CREATE INDEX "events_search_idx" ON "event" USING gin (to_tsvector('english', "name" || ' ' || "description"));
+CREATE INDEX "events_search_idx" ON "event" USING gin (to_tsvector('english', "name" || ' ' || "description"));--> statement-breakpoint
+CREATE INDEX "submissions_search_idx" ON "submission" USING gin (to_tsvector('english', "title"));

@@ -14,7 +14,7 @@ export const load = (async ({ locals, url }) => {
 	const sortBy = url.searchParams.get('sortBy') ?? 'newest';
 	const pageSize = 30;
 
-	const result = await db.transaction(async (tx) => {
+	const queryResult = await db.transaction(async (tx) => {
 		const result = await tx.query.submissions.findMany({
 			with: {
 				user: { columns: { id: true, username: true, picture: true } },
@@ -29,6 +29,7 @@ export const load = (async ({ locals, url }) => {
 						: eq(submissions.status, 'published'),
 					event ? eq(submissions.eventId, Number(event)) : undefined,
 					category ? eq(submissions.categoryId, Number(category)) : undefined
+					// TODO Filter out banned users submissions
 				),
 			orderBy: (items, { asc, desc }) => {
 				switch (sortBy) {
@@ -78,8 +79,8 @@ export const load = (async ({ locals, url }) => {
 		).values()
 	).sort((a, b) => (a.name > b.name ? 1 : -1));
 	return {
-		submissions: result.submissions,
-		totalCount: result.totalCount.count,
+		submissions: queryResult.submissions,
+		totalCount: queryResult.totalCount.count,
 		categories,
 		user: locals.user,
 		events
