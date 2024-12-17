@@ -16,7 +16,7 @@ export const PATCH: RequestHandler = async ({ params, locals, request }) => {
 	try {
 		const { status } = updateUserSchema.parse(body);
 		await db.update(users).set({ status }).where(eq(users.username, username));
-		return json(null, { status: StatusCodes.NO_CONTENT });
+		return new Response(null, { status: StatusCodes.NO_CONTENT });
 	} catch (error) {
 		logger.error('Failed to ban user', error);
 		return json({ error: 'Invalid request body' }, { status: StatusCodes.BAD_REQUEST });

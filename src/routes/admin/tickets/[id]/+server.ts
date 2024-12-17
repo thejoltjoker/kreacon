@@ -18,5 +18,5 @@ export const DELETE: RequestHandler = async ({ params }) => {
 	}
 
 	await db.delete(tickets).where(eq(tickets.id, params.id));
-	return json(null, { status: StatusCodes.NO_CONTENT });
+	return new Response(null, { status: StatusCodes.NO_CONTENT });
 };

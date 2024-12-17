@@ -23,7 +23,7 @@
 		goto(`?${searchParams.toString()}`);
 	};
 
-	let rootClassName = cn('flex flex-col items-center', props.class);
+	let rootClassName = cn('flex flex-col items-center pagination', props.class);
 	let buttonBaseClass = cn(
 		'flex size-form items-center justify-center rounded-form transition-colors text-shade-400',
 		'disabled:cursor-normal disabled:text-shade-600',
