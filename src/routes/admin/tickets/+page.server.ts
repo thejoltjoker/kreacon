@@ -36,6 +36,7 @@ export const load = (async ({ locals, url }) => {
 				} else if (event) {
 					return eq(fields.eventId, Number(event));
 				}
+				return undefined;
 			},
 			orderBy: (items, { desc }) => {
 				switch (sortBy) {
