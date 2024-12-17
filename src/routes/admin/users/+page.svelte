@@ -3,8 +3,13 @@
 	import EntityList from '../_components/EntityList.svelte';
 	import { BanIcon, TicketIcon } from 'lucide-svelte';
 	import EntityFilterBar from '../_components/EntityFilterBar.svelte';
+	import { goto } from '$app/navigation';
 
 	export let data: PageData;
+
+	const handleBan = (user: User) => {
+		console.log(user);
+	};
 </script>
 
 <EntityFilterBar entityName="users" buttons={false} />
@@ -23,7 +28,11 @@
 		{ name: 'submissions', minScreen: 'md', sortable: false }
 	]}
 	actions={[
-		{ label: 'Show tickets', icon: TicketIcon, onClick: (value) => console.log(value) },
+		{
+			label: 'Show tickets',
+			icon: TicketIcon,
+			onClick: (value) => goto(`/admin/tickets?username=${value.username}`)
+		},
 		{
 			label: 'Ban user',
 			icon: BanIcon,
