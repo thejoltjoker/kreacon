@@ -82,7 +82,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
-- Features that have been removed
+- Removed the abundance of seed data to shorten time for testing
+  [#80](https://github.com/thejoltjoker/kreacon/pull/80)
 
 ### Fixed
 
