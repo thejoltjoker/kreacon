@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import Avatar from '$lib/components/Avatar.svelte';
-	import { Pagination } from 'bits-ui';
-	import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-svelte';
+
+	import { t } from '$lib/i18n';
+	import Pagination from '../_components/Pagination.svelte';
 	import type { PageData } from './$types';
 	import FilterBar from './_components/FilterBar.svelte';
 	import StatusIcon from './_components/StatusIcon.svelte';
@@ -22,13 +22,6 @@
 	// TODO Handling edge cases (first/last page)
 	// TODO Recovery from failed requests
 	// TODO Combining pagination with filtering/sorting
-
-	const handlePageChange = (p: number) => {
-		const params = new URLSearchParams(searchParams.toString());
-		params.set('page', p.toString());
-		searchParams = params;
-		goto(`?${searchParams.toString()}`);
-	};
 </script>
 
 <div class="w-full px-sm md:px-xl">
@@ -68,7 +61,7 @@
 				>
 					<Avatar
 						src={submission.user?.picture ?? ''}
-						alt={submission.user?.username ?? 'User picture'}
+						username={submission.user?.username ?? $t('Unknown')}
 						size="auto"
 					/>
 					<p>{submission.user?.username}</p>
@@ -84,39 +77,7 @@
 	{/each}
 </div>
 <div class="flex w-full items-center justify-center">
-	<Pagination.Root page={pageNum} count={totalCount} perPage={30} onPageChange={handlePageChange}>
-		{#snippet children({ pages, range })}
-			<div class="my-8 flex items-center">
-				<Pagination.PrevButton
-					class="hover:bg-dark-10 mr-[25px] inline-flex size-10 items-center justify-center rounded-[9px] bg-transparent active:scale-98 disabled:cursor-not-allowed disabled:text-muted-foreground hover:disabled:bg-transparent"
-				>
-					<ChevronLeftIcon class="size-6" />
-				</Pagination.PrevButton>
-				<div class="flex items-center gap-2.5">
-					{#each pages as page (page.key)}
-						{#if page.type === 'ellipsis'}
-							<div class="text-foreground-alt select-none text-[15px] font-medium">...</div>
-						{:else}
-							<Pagination.Page
-								{page}
-								class="inline-flex size-10 select-none items-center justify-center rounded-[9px] bg-transparent text-[15px] font-medium hover:bg-muted-background active:scale-98 disabled:cursor-not-allowed disabled:opacity-50 hover:disabled:bg-transparent data-[selected]:bg-muted-background data-[selected]:text-primary"
-							>
-								{page.value}
-							</Pagination.Page>
-						{/if}
-					{/each}
-				</div>
-				<Pagination.NextButton
-					class="hover:bg-dark-10 ml-[29px] inline-flex size-10 items-center justify-center rounded-[9px] bg-transparent active:scale-98 disabled:cursor-not-allowed disabled:text-muted-foreground hover:disabled:bg-transparent"
-				>
-					<ChevronRightIcon class="size-6" />
-				</Pagination.NextButton>
-			</div>
-			<p class="text-center text-[13px] text-muted-foreground">
-				Showing {range.start} - {range.end}
-			</p>
-		{/snippet}
-	</Pagination.Root>
+	<Pagination page={pageNum} count={totalCount} perPage={30} />
 </div>
 
 <style>

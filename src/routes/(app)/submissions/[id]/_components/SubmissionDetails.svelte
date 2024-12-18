@@ -18,7 +18,7 @@
 	<div class="author">
 		<Avatar
 			src={submission?.user?.picture ?? ''}
-			alt={submission?.user?.username ?? 'User picture'}
+			username={submission?.user?.username ?? 'Unknown'}
 		/>
 		<p class="w-full font-bold">{submission?.user?.username}</p>
 		<a href={`/users/${submission?.user?.username}`}>

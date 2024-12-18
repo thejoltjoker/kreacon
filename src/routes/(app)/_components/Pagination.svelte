@@ -42,7 +42,7 @@
 >
 	{#snippet children({ pages, range })}
 		<div class="my-xl flex items-center">
-			<Pagination.PrevButton class={cn(buttonBaseClass, 'mr-sm')}>
+			<Pagination.PrevButton aria-label="Previous page" class={cn(buttonBaseClass, 'mr-sm')}>
 				<ChevronLeftIcon class="size-6" />
 			</Pagination.PrevButton>
 			<div class="flex items-center gap-2.5">
@@ -62,11 +62,11 @@
 					{/if}
 				{/each}
 			</div>
-			<Pagination.NextButton class={cn(buttonBaseClass, 'ml-sm')}>
+			<Pagination.NextButton aria-label="Next page" class={cn(buttonBaseClass, 'ml-sm')}>
 				<ChevronRightIcon class="size-6" />
 			</Pagination.NextButton>
 		</div>
-		<p class="text-center text-sm text-shade-400">
+		<p class="text-center text-sm text-shade-300">
 			{$t('Showing')}{' '}
 			{range.start}-{range.end} of {count}
 		</p>

@@ -25,7 +25,7 @@
 		<Avatar
 			class="cursor-pointer border-white"
 			src={user?.picture ?? ''}
-			alt={user?.username ?? 'User picture'}
+			username={user?.username}
 		/>
 	{/snippet}
 

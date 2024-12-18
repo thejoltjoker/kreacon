@@ -43,7 +43,7 @@
 		<a href={`/users/${submission?.user?.username}`} class="flex items-center gap-4">
 			<Avatar
 				src={submission?.user?.picture ?? ''}
-				alt={submission?.user?.username ?? ''}
+				username={submission?.user?.username ?? 'Unknown'}
 				class="h-12 w-12"
 			/>
 			<div class="flex flex-col">

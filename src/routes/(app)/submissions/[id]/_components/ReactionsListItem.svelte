@@ -33,10 +33,7 @@
 	<a href="/users/{reaction.user.username}" class="flex items-center justify-between gap-sm">
 		<div class="flex gap-sm">
 			<div>
-				<Avatar
-					src={reaction.user?.picture ?? ''}
-					alt={reaction.user?.username ?? 'User picture'}
-				/>
+				<Avatar src={reaction.user?.picture ?? ''} username={reaction.user?.username} />
 			</div>
 			<div class="flex w-full flex-col">
 				<p class="text-sm font-bold">{reaction.user?.username}</p>
