@@ -5,6 +5,7 @@
 	import { page } from '$app/stores';
 	import { Popover } from 'bits-ui';
 	import { SmilePlusIcon } from 'lucide-svelte';
+	import { t } from '$lib/i18n';
 
 	const user = $derived($page.data.user);
 
@@ -32,10 +33,10 @@
 		sideOffset={5}
 	>
 		{#if user == null}
-			<p>You must be logged in to share your reaction.</p>
-			<Button href="/login?redirect=/submissions/{submissionId}">Log in</Button>
+			<p>{$t('You must be logged in to share your reaction.')}</p>
+			<Button href="/login?redirect=/submissions/{submissionId}">{$t('Log in')}</Button>
 		{:else if !isAllowedToReact}
-			<p>You already reacted to this submission.</p>
+			<p>{$t('You already reacted to this submission.')}</p>
 		{:else}
 			<!-- TODO Allow user to change reaction -->
 			<form method="POST" action="?/react" use:enhance={handleSubmit}>

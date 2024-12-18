@@ -1,23 +1,22 @@
 <script lang="ts">
-	import { _ } from 'svelte-i18n';
 	import { page } from '$app/stores';
+	import { t } from '$lib/i18n';
 </script>
 
 <aside>
 	<ul>
 		<li>
-			<a href="/profile" class:active={$page.url.pathname === '/profile'}
-				>{$_('general', { default: 'General' })}</a
+			<a href="/profile" class:active={$page.url.pathname === '/profile'}>{$t('General')}</a>
 			>
 		</li>
 		<li>
 			<a href="/profile/password" class:active={$page.url.pathname === '/profile/password'}
-				>{$_('password', { default: 'Password' })}</a
+				>{$t('Password')}</a
 			>
 		</li>
 		<li>
 			<a href="/profile/tickets" class:active={$page.url.pathname === '/profile/tickets'}
-				>{$_('tickets', { default: 'Tickets' })}</a
+				>{$t('Tickets')}</a
 			>
 		</li>
 	</ul>

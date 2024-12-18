@@ -57,35 +57,36 @@ npm run build
 
 ## Commands
 
-| Command       | Description                             |
-| ------------- | --------------------------------------- |
-| `dev`         | Spin up SvelteKit dev server            |
-| `build`       | Build for production                    |
-| `preview`     | Preview production build                |
-| `check:watch` | Run Svelte check in watch mode          |
-| `check`       | Run Svelte check                        |
-| `commitlint`  | Lint commit messages                    |
-| `db:dbml`     | Generate dbml file                      |
-| `db:generate` | Generate migrations                     |
-| `db:migrate`  | Run migrations                          |
-| `db:push`     | Push current schema to database         |
-| `db:reset`    | Run migrations and seed database        |
-| `db:seed`     | Seed database                           |
-| `db:start`    | Run PostgreSQL in a docker container    |
-| `db:studio`   | Start Drizzle Studio                    |
-| `format`      | Format code                             |
-| `lint:fix`    | Lint and fix errors                     |
-| `lint`        | Lint code                               |
-| `logbook`     | Generate logbook entry                  |
-| `prepare`     | Husky                                   |
-| `swa:build`   | Build for Azure Static Web Apps         |
-| `swa:deploy`  | Deploy to Azure Static Web Apps         |
-| `swa:start`   | Start Azure Static Web Apps             |
-| `test:e2e`    | Run end-to-end tests with Playwright    |
-| `test:e2e:ui` | Run end-to-end tests with Playwright UI |
-| `test:unit`   | Run unit tests with Vitest              |
-| `test`        | Run all tests                           |
-| `translate`   | Translate i18n with Ollama              |
+| Command          | Description                             |
+| ---------------- | --------------------------------------- |
+| `dev`            | Spin up SvelteKit dev server            |
+| `build`          | Build for production                    |
+| `preview`        | Preview production build                |
+| `check:watch`    | Run Svelte check in watch mode          |
+| `check`          | Run Svelte check                        |
+| `commitlint`     | Lint commit messages                    |
+| `db:dbml`        | Generate dbml file                      |
+| `db:generate`    | Generate migrations                     |
+| `db:migrate`     | Run migrations                          |
+| `db:push`        | Push current schema to database         |
+| `db:reset`       | Run migrations and seed database        |
+| `db:seed`        | Seed database                           |
+| `db:start`       | Run PostgreSQL in a docker container    |
+| `db:studio`      | Start Drizzle Studio                    |
+| `format`         | Format code                             |
+| `lint:fix`       | Lint and fix errors                     |
+| `lint`           | Lint code                               |
+| `logbook`        | Generate logbook entry                  |
+| `prepare`        | Husky                                   |
+| `swa:build`      | Build for Azure Static Web Apps         |
+| `swa:deploy`     | Deploy to Azure Static Web Apps         |
+| `swa:start`      | Start Azure Static Web Apps             |
+| `test:e2e`       | Run end-to-end tests with Playwright    |
+| `test:e2e:ui`    | Run end-to-end tests with Playwright UI |
+| `test:unit`      | Run unit tests with Vitest              |
+| `test`           | Run all tests                           |
+| `i18n:translate` | Translate i18n with Ollama              |
+| `i18n:check`     | Check i18n coverage                     |
 
 ## Environment variables
 

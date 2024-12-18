@@ -21,6 +21,7 @@
 				</span></a
 			>
 			<h1 class="mx-auto mt-4 max-w-3xl text-balance text-4xl font-semibold lg:mb-7 lg:text-7xl">
+				<!-- TODO Use $t() -->
 				{$_('hero.title', { default: 'Show off your creative skills' })}
 			</h1>
 			<p class="m mx-auto max-w-3xl text-neutral-200 lg:text-xl">

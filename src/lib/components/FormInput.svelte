@@ -3,8 +3,9 @@
 </script>
 
 <script lang="ts" generics="T extends Record<string, unknown>">
+	import { t } from '$lib/i18n';
+
 	import { Label } from 'bits-ui';
-	import { _ } from 'svelte-i18n';
 
 	import { formFieldProxy } from 'sveltekit-superforms';
 	import type { SuperForm, FormPathLeaves } from 'sveltekit-superforms';
@@ -21,7 +22,7 @@
 </script>
 
 <Label.Root class="label flex flex-col gap-xs font-bold" for={field}>
-	{$_(label, { default: label })}
+	{$t(label)}
 
 	<div class="control">
 		<input

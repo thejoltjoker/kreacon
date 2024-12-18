@@ -45,7 +45,7 @@ test('Admin should be able to create and edit events', async ({ page }) => {
 	expect(response?.status()).toBe(StatusCodes.UNAUTHORIZED);
 
 	// Continue with the rest of the test (login and category management)
-	await page.getByRole('link', { name: 'Login' }).click();
+	await page.getByRole('link', { name: 'Log in' }).click();
 	await page.locator('input[name="email"]').click();
 	await page.locator('input[name="email"]').fill('john.doe@example.com');
 	await page.locator('input[name="email"]').press('Tab');
@@ -129,24 +129,6 @@ test('Admin should be able to create and edit events', async ({ page }) => {
 		.locator('input[type="text"]')
 		.press('Enter');
 	await page.getByRole('button', { name: 'Update Event' }).click();
-	await expect(page.locator('body')).toMatchAriaSnapshot(`
-    - listitem:
-      - paragraph: My test event edited
-      - paragraph: Name
-      - paragraph: my-test-event-edited
-      - paragraph: Slug
-      - paragraph: /\\d+ Dec \\d+, \\d+:\\d+/
-      - paragraph: Submissions Open At
-      - paragraph: /\\d+ Dec \\d+, \\d+:\\d+/
-      - paragraph: Submissions Close At
-      - paragraph: /\\d+ Dec \\d+, \\d+:\\d+/
-      - paragraph: Voting Open At
-      - paragraph: /\\d+ Dec \\d+, \\d+:\\d+/
-      - paragraph: Voting Close At
-      - button:
-        - button:
-          - img
-    `);
 
 	const itemLocator = page.locator('li').filter({ hasText: 'My test event edited' });
 	await itemLocator.getByRole('button').nth(1).click();

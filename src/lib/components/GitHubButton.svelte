@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Button from '$lib/components/Button.svelte';
+	import { t } from '$lib/i18n';
 	import GitHubIcon from '$lib/symbols/GitHubIcon.svg?raw';
-	import { _ } from 'svelte-i18n';
 </script>
 
 <Button type="button" variant="white" href="/oauth/login/github">
@@ -9,7 +9,7 @@
 		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 		{@html GitHubIcon}
 	</span>
-	{$_('sign_in_github', { default: 'Sign in with GitHub' })}
+	{$t('Sign in with GitHub')}
 </Button>
 
 <style lang="postcss">

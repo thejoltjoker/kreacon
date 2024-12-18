@@ -6,8 +6,8 @@ test('User details', async ({ page }) => {
 	await expect(userDetails).toBeVisible();
 	await expect(userDetails.getByRole('heading', { name: 'john_doe' })).toBeVisible();
 	await expect(userDetails.locator('.member-since').first()).toContainText('Member since');
-	await expect(userDetails.locator('.user-stats').first()).toContainText('events');
-	await expect(userDetails.locator('.user-stats').first()).toContainText('submissions');
+	await expect(userDetails.locator('.user-stats').first()).toContainText('Events');
+	await expect(userDetails.locator('.user-stats').first()).toContainText('Submissions');
 });
 
 test('Redirects to submissions', async ({ page }) => {
