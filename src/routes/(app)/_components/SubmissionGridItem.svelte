@@ -35,7 +35,7 @@
 			href={`/users/${submission.user.username}`}
 			class="pointer-events-auto inline-flex h-form w-fit translate-y-0 items-center gap-sm rounded-full p-xs pr-md transition-all duration-300 group-hover:bg-black/75 group-hover:backdrop-blur md:-translate-y-sm md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100"
 		>
-			<Avatar src={submission.user.picture ?? ''} alt={submission.user.username} size="auto" />
+			<Avatar src={submission.user.picture ?? ''} size="auto" username={submission.user.username} />
 			<p>{submission.user.username}</p>
 		</a>
 		<div

@@ -10,7 +10,7 @@
 
 	let { data }: PageProps = $props();
 
-	let { tickets, user, accounts } = data;
+	let { tickets, accounts } = data;
 </script>
 
 <svelte:head>
@@ -18,7 +18,7 @@
 </svelte:head>
 
 <main class="flex w-full max-w-screen-md flex-col gap-4xl px-sm pt-xl md:px-xl">
-	<GeneralSection {user} />
+	<GeneralSection />
 	<Divider />
 	<TicketsSection {tickets} form={data.ticketForm} />
 	<Divider />

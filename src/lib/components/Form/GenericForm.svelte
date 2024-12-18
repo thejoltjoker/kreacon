@@ -56,7 +56,6 @@
 		},
 		...options
 	});
-
 	const { form, enhance } = superform;
 
 	setContext('superform', superform);

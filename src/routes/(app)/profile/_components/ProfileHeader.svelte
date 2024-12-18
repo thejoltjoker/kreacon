@@ -8,7 +8,7 @@
 {#if user}
 	<section>
 		<!-- TODO Set default picture in db -->
-		<Avatar src={user.picture ?? ''} alt={user.username ?? 'User avatar'} />
+		<Avatar src={user.picture ?? ''} username={user.username} />
 		<div class="flex flex-col">
 			<p class="text-xl font-bold">{user.username}</p>
 			<p class="text-sm text-muted-foreground">
