@@ -45,7 +45,7 @@ test('Admin should be able to create and edit events', async ({ page }) => {
 	expect(response?.status()).toBe(StatusCodes.UNAUTHORIZED);
 
 	// Continue with the rest of the test (login and category management)
-	await page.getByRole('link', { name: 'Login' }).click();
+	await page.getByRole('link', { name: 'Log in' }).click();
 	await page.locator('input[name="email"]').click();
 	await page.locator('input[name="email"]').fill('john.doe@example.com');
 	await page.locator('input[name="email"]').press('Tab');
