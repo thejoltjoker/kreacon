@@ -10,5 +10,5 @@ export default defineConfig({
 		trace: 'retain-on-failure'
 	},
 	testMatch: '**/**/*.e2e.ts',
-	timeout: 10000
+	timeout: 5000
 });
