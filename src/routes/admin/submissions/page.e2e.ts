@@ -23,13 +23,14 @@ test('Admin should be able to manage submissions', async ({ page }) => {
 	await page.locator('a[href="/admin/submissions"]').click();
 	await page.waitForURL('/admin/submissions');
 	const entityListLocator = page.locator('.entity-list');
-	await expect(entityListLocator.locator('li').first()).toContainText('Truisms');
+	// Show newest first
+	await expect(entityListLocator.locator('li').first()).toContainText('Stegosaurus at Sunset');
 
 	// Sort by title
 	await page.getByRole('button', { name: 'Title' }).click();
-	await expect(entityListLocator.locator('li').first()).toContainText('99 Cent');
+	await expect(entityListLocator.locator('li').first()).toContainText('Gentle Giants');
 	await page.getByRole('button', { name: 'Title' }).click();
-	await expect(entityListLocator.locator('li').first()).toContainText('Your Body is');
+	await expect(entityListLocator.locator('li').first()).toContainText('T-Rex in Morning Light');
 
 	// TODO Don't use bits selector
 	const listItemLocator = entityListLocator.locator('li').first();

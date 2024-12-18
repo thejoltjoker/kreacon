@@ -17,11 +17,11 @@ test('Admin should be able to manage tickets', async ({ page }) => {
 	await page.goto('/admin/tickets');
 	const entityListLocator = page.locator('.entity-list');
 	await page.getByLabel('Filter by event').click();
-	await page.getByRole('option', { name: 'Beacon Winter 1991' }).click();
-	await expect(page.locator('.pagination')).toContainText('Showing 0-4 of 4');
+	await page.getByRole('option', { name: 'Mesozoic Masterpieces' }).click();
+	await expect(page.locator('.pagination')).toContainText('Showing 0-2 of 2');
 	await entityListLocator.locator('li').first().getByRole('button').nth(1).click();
 	await page.getByRole('menuitem', { name: 'Delete' }).click();
 	await expect(page.getByLabel('Delete ticket')).toBeVisible();
 	await page.getByRole('button', { name: 'Delete' }).click();
-	await expect(page.locator('.pagination')).toContainText('Showing 0-3 of 3');
+	await expect(page.locator('.pagination')).toContainText('Showing 0-1 of 1');
 });
