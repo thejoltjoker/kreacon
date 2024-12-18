@@ -1,50 +1,20 @@
 [
 	{
-		"name": "Combined Demo",
-		"slug": "combined-demo",
-		"mediaType": "video",
-		"description": "A comprehensive showcase combining graphics, music, sound, and effects into a single cohesive experience. Entries should demonstrate technical and artistic skills while dazzling audiences with innovation and creativity."
+		"name": "Dinosaur Photography",
+		"slug": "dinosaur-photography",
+		"mediaType": "image",
+		"description": "Professional photographs of dinosaur fossils, museum exhibits, and paleontological dig sites. Captures the majesty of prehistoric remains and the exciting process of discovery."
 	},
 	{
-		"name": "Prerendered Music",
-		"slug": "prerendered-music",
+		"name": "Prehistoric Sounds",
+		"slug": "prehistoric-sounds",
 		"mediaType": "audio",
-		"description": "Professional quality music compositions, from electronic beats to classical pieces and band recordings. Emphasizes originality and production quality in professionally mixed and mastered tracks."
+		"description": "Recreated sounds of the Mesozoic era. Includes interpretations of dinosaur calls, environmental ambience, and the atmospheric sounds of ancient Earth."
 	},
 	{
-		"name": "Tracked Music",
-		"slug": "tracked-music",
-		"mediaType": "audio",
-		"description": "Music created using tracker software like MilkyTracker or FastTracker, combining samples and patterns within technical constraints. Perfect for both nostalgic chiptunes and modern tracked compositions."
-	},
-	{
-		"name": "Freestyle Graphics",
-		"slug": "freestyle-graphics",
-		"mediaType": "image",
-		"description": "Unrestricted artistic expression encompassing hand-drawn illustrations, photo manipulation, pixel art, and 3D renders. Showcases creative process and unique artistic style."
-	},
-	{
-		"name": "Oldschool Graphics",
-		"slug": "oldschool-graphics",
-		"mediaType": "image",
-		"description": "Low-resolution artwork created under classic technical constraints (max 320x200, 8-bit colors). Celebrates the charm and technical mastery of retro graphics creation."
-	},
-	{
-		"name": "Freestyle Photo",
-		"slug": "freestyle-photo",
-		"mediaType": "image",
-		"description": "Photography focused on composition, lighting, and timing with minimal editing allowed. Celebrates the artistry of capturing perfect moments through the lens."
-	},
-	{
-		"name": "Stop Motion",
-		"slug": "stop-motion",
+		"name": "Dinosaur Animations",
+		"slug": "dinosaur-animations",
 		"mediaType": "video",
-		"description": "Frame-by-frame animations that blend meticulous planning with creative storytelling. Perfect for artists crafting dynamic sequences that can range from playful to dramatic."
-	},
-	{
-		"name": "Wild / Animation",
-		"slug": "wild-animation",
-		"mediaType": "video",
-		"description": "A category for experimental animations, music videos, and entries that defy traditional categories. Welcomes innovative formats and unconventional approaches to digital creativity."
+		"description": "Animated sequences bringing prehistoric life to motion. Shows reconstructed dinosaur behaviors, ancient ecosystems, and interpretations of how these magnificent creatures might have lived."
 	}
 ]

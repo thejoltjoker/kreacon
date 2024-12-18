@@ -1,8 +1,7 @@
 // Ids to use:
-// StrongCuriousPorcupine
 // StrongCuriousDachshund
-// StrongCuriousMandrill
-// StrongCuriousWolverine
+//
+//
 // StrongCuriousChimpanzee
 // StrongCuriousLoach
 // StrongCuriousKakapo
@@ -130,7 +129,8 @@ export const seed = async (db: db) => {
 						userId: userId,
 						ticketId: ticketId,
 						mediaId: insertedMedia.id,
-						thumbnailId: insertedThumbnail ?? insertedMedia.id
+						thumbnailId: insertedThumbnail ?? insertedMedia.id,
+						createdAt: submission.createdAt ? new Date(submission.createdAt) : new Date()
 					})
 					.returning();
 

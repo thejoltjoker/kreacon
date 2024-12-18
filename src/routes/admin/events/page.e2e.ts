@@ -25,17 +25,17 @@ test('Login and view events', async ({ page }) => {
 	await expect(eventsList.locator('li').first()).toContainText('Voting Close At');
 
 	// Sorting should work
-	await expect(eventsList.locator('li').first()).toContainText('LanHack Winter');
-	await expect(eventsList.locator('li').last()).toContainText('Beacon Summer');
+	await expect(eventsList.locator('li').first()).toContainText('Dino Days');
+	await expect(eventsList.locator('li').last()).toContainText('Mesozoic Masterpieces');
 	await page.goto('/admin/events?sortBy=oldest');
-	await expect(eventsList.locator('li').first()).toContainText('Beacon Summer');
-	await expect(eventsList.locator('li').last()).toContainText('LanHack Winter');
+	await expect(eventsList.locator('li').first()).toContainText('Mesozoic Masterpieces');
+	await expect(eventsList.locator('li').last()).toContainText('Dino Days');
 
 	// Search filter should work
-	await page.getByPlaceholder('Search').fill('lanhack');
-	await expect(eventsList.locator('li').first()).toContainText('LanHack Winter');
-	await expect(eventsList.locator('li').last()).not.toContainText('Beacon Summer');
-	await expect(page).toHaveURL(/.*[?&]q=lanhack.*/);
+	await page.getByPlaceholder('Search').fill('dino');
+	await expect(eventsList.locator('li').first()).toContainText('Dino Days');
+	await expect(eventsList.locator('li').last()).not.toContainText('Mesozoic Masterpieces');
+	await expect(page).toHaveURL(/.*[?&]q=dino.*/);
 });
 
 test('Admin should be able to create and edit events', async ({ page }) => {
@@ -79,16 +79,16 @@ test('Admin should be able to create and edit events', async ({ page }) => {
 	await page.getByRole('textbox').nth(3).press('Enter');
 	await page.getByRole('button', { name: 'Add Category' }).click();
 	await page.getByRole('button', { name: 'Select a category' }).click();
-	await page.getByRole('option', { name: 'Combined Demo' }).click();
+	await page.getByRole('option', { name: 'Dinosaur Photography' }).click();
 	await page.getByRole('button', { name: 'Add Rule' }).nth(1).click();
 	await page
 		.locator('form div')
-		.filter({ hasText: 'Category: Combined Demo' })
+		.filter({ hasText: 'Category: Dinosaur Photography' })
 		.locator('input[type="text"]')
 		.fill('First category rule');
 	await page
 		.locator('form div')
-		.filter({ hasText: 'Category: Combined Demo' })
+		.filter({ hasText: 'Category: Dinosaur Photography' })
 		.locator('input[type="text"]')
 		.press('Enter');
 	await page.getByRole('button', { name: 'Create Event' }).click();
@@ -116,16 +116,16 @@ test('Admin should be able to create and edit events', async ({ page }) => {
 	await page.locator('li:nth-child(3) > div > .relative > .w-full').fill('third rule added');
 	await page.getByRole('button', { name: 'Add Category' }).click();
 	await page.getByRole('button', { name: 'Select a category' }).click();
-	await page.getByRole('option', { name: 'Tracked Music' }).click();
+	await page.getByRole('option', { name: 'Prehistoric Sounds' }).click();
 	await page.getByRole('button', { name: 'Add Rule' }).nth(2).click();
 	await page
 		.locator('form div')
-		.filter({ hasText: 'Category: Tracked Music' })
+		.filter({ hasText: 'Category: Prehistoric Sounds' })
 		.locator('input[type="text"]')
 		.fill('added category');
 	await page
 		.locator('form div')
-		.filter({ hasText: 'Category: Tracked Music' })
+		.filter({ hasText: 'Category: Prehistoric Sounds' })
 		.locator('input[type="text"]')
 		.press('Enter');
 	await page.getByRole('button', { name: 'Update Event' }).click();

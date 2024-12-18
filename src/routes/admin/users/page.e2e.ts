@@ -24,11 +24,11 @@ test('Admin should be able to manage users', async ({ page }) => {
 	await expect(entityListLocator.locator('li').first()).toContainText('john_doe');
 
 	// Show tickets
-	const listItemLocator = entityListLocator.locator('li', { hasText: 'jane_doe' });
+	const listItemLocator = entityListLocator.locator('li', { hasText: 'alice_smith' });
 	const listItemActionsLocator = listItemLocator.getByRole('button').nth(1);
 	await listItemActionsLocator.click();
 	await page.getByRole('menuitem', { name: 'Show tickets' }).click();
-	await page.waitForURL('/admin/tickets?username=jane_doe');
+	await page.waitForURL('/admin/tickets?username=alice_smith');
 
 	// Ban user
 	await page.goto('/admin/users');

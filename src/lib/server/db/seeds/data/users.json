@@ -4,17 +4,8 @@
 		"email": "john.doe@example.com",
 		"username": "john_doe",
 		"password": "password",
-		"emailVerifiedAt": "2024-03-20T00:00:00.000Z",
+		"emailVerifiedAt": "2024-01-01T00:00:00.000Z",
 		"picture": "/images/john.doe.webp",
-		"role": "admin"
-	},
-	{
-		"id": "726a0536-c092-4e47-807d-7b6118e821ea",
-		"email": "jane.doe@example.com",
-		"username": "jane_doe",
-		"password": "password",
-		"emailVerifiedAt": "2024-03-20T00:00:00.000Z",
-		"picture": "/images/jane.doe.webp",
 		"role": "admin"
 	},
 	{
@@ -24,15 +15,6 @@
 		"password": "password",
 		"emailVerifiedAt": "2024-03-20T00:00:00.000Z",
 		"picture": "/images/alice.smith.webp",
-		"role": "user"
-	},
-	{
-		"id": "3d115b8f-9be0-4937-b3d9-5576919568b4",
-		"email": "bob.jones@example.com",
-		"username": "bob_jones",
-		"password": "password",
-		"emailVerifiedAt": "2024-03-20T00:00:00.000Z",
-		"picture": "/images/bob.jones.webp",
 		"role": "user"
 	}
 ]
