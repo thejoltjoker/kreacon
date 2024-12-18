@@ -7,7 +7,7 @@ test('User should be able to update their information', async ({ page }) => {
 
 	// Login and access profile page
 	await page.goto('/login');
-	await page.locator('input[name="email"]').fill('john.doe@example.com');
+	await page.locator('input[name="email"]').fill('wilma.flintstone@example.com');
 	await page.locator('input[name="password"]').fill('password');
 	await page.keyboard.press('Enter');
 	await page.waitForURL('/profile');
@@ -15,7 +15,7 @@ test('User should be able to update their information', async ({ page }) => {
 	const generalSection = page.locator('section', { hasText: 'General' });
 	// Should show the current username
 	await expect(generalSection.locator('input[name="username"]')).toBeVisible();
-	await expect(generalSection.locator('input[name="username"]')).toHaveValue('john_doe');
+	await expect(generalSection.locator('input[name="username"]')).toHaveValue('wilma_flintstone');
 
 	// Should show the edit button and change to cancel when editing
 	const editButton = generalSection.getByRole('button', { name: 'Edit' });
@@ -23,7 +23,7 @@ test('User should be able to update their information', async ({ page }) => {
 	await expect(generalSection.locator('form')).toContainText('Cancel');
 
 	// Should update the username
-	await expect(generalSection.locator('input[name="username"]')).toHaveValue('john_doe');
+	await expect(generalSection.locator('input[name="username"]')).toHaveValue('wilma_flintstone');
 	await expect(generalSection.locator('form')).toContainText('Cancel');
 	await generalSection.locator('input[name="username"]').fill('jane_doe');
 	await generalSection.getByRole('button', { name: 'Update' }).click();
@@ -38,10 +38,10 @@ test('User should be able to update their information', async ({ page }) => {
 	await expect(generalSection.locator('form')).toContainText('Cancel');
 	await expect(generalSection.getByRole('button', { name: 'Update' })).toBeVisible();
 
-	// Change username back to john_doe
-	await generalSection.locator('input[name="username"]').fill('john_doe');
+	// Change username back to wilma_flintstone
+	await generalSection.locator('input[name="username"]').fill('wilma_flintstone');
 	await generalSection.getByRole('button', { name: 'Update' }).click();
-	await expect(generalSection.locator('input[name="username"]')).toHaveValue('john_doe');
+	await expect(generalSection.locator('input[name="username"]')).toHaveValue('wilma_flintstone');
 	await expect(generalSection.locator('form')).toContainText('Edit');
 	await expect(generalSection.getByText('Profile updated successfully!')).toBeVisible();
 
