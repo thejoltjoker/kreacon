@@ -10,22 +10,25 @@
 	import { getContext } from 'svelte';
 	import { formFieldProxy, type FormPathLeaves, type SuperForm } from 'sveltekit-superforms';
 	import StyledInput, { type StyledInputProps } from './StyledInput.svelte';
+	import StyledSelect, { type StyledSelectProps } from './StyledSelect.svelte';
 
-	interface TextFieldProps extends StyledInputProps {
+	type SelectFieldProps = StyledSelectProps & {
 		label: string;
 		field: FormPathLeaves<T>;
 		labelProps?: Label.RootProps;
 		icon?: typeof IconType;
 		iconProps?: IconProps;
+		placeholder?: string;
 		/**
 		 * Optional SuperForm instance. If not provided, will attempt to get from GenericForm context
 		 * Must be provided if used outside of GenericForm
 		 * @default undefined
 		 */
 		superform?: SuperForm<T>;
-	}
+	};
 
 	let {
+		type = 'single',
 		superform,
 		field,
 		labelProps,
@@ -33,8 +36,10 @@
 		class: className,
 		icon: Icon,
 		iconProps,
+		items,
+		placeholder,
 		...props
-	}: TextFieldProps = $props();
+	}: SelectFieldProps = $props();
 
 	if (superform == null) {
 		superform = getContext<SuperForm<T>>('superform');
@@ -50,15 +55,17 @@
 		{label}
 	</Label.Root>
 	<span class="relative">
-		<StyledInput
+		<!-- eslint-disable-next-line @typescript-eslint/no-explicit-any -->
+		<StyledSelect
+			{placeholder}
 			name={field}
 			id={field}
-			type="text"
+			{type}
+			{items}
 			class={cn($errors && 'input-invalid', className)}
 			aria-invalid={$errors ? 'true' : undefined}
-			bind:value={$value}
+			bind:value={$value as any}
 			{...$constraints}
-			{...props}
 		/>
 		{#if Icon != null}
 			<Icon

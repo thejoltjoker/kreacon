@@ -1,36 +1,42 @@
 <script lang="ts">
 	import Button from '$lib/components/Button.svelte';
-	import File from '$lib/components/Form/File.svelte';
-	import Form from '$lib/components/Form/Form.svelte';
-	import Select from '$lib/components/Form/Select.svelte';
-	import Text from '$lib/components/Form/Text.svelte';
-	import { Label, type SelectItemProps } from 'bits-ui';
-	import { superForm } from 'sveltekit-superforms';
+	import GenericForm from '$lib/components/Form/GenericForm.svelte';
+	import SelectField from '$lib/components/Form/SelectField.svelte';
+	import TextField from '$lib/components/Form/TextField.svelte';
+	// import File from '$lib/components/Form/File.svelte';
+	// import Form from '$lib/components/Form/Form.svelte';
+	// import Select from '$lib/components/Form/Select.svelte';
+	// import Text from '$lib/components/Form/Text.svelte';
+	// import { Label, type SelectItemProps } from 'bits-ui';
+	// import { superForm } from 'sveltekit-superforms';
 	import type { PageData } from './$types';
+	import SubmissionForm from './_components/SubmissionForm.svelte';
 
 	let { data }: { data: PageData } = $props();
 
-	const form = superForm(data.form, { resetForm: false });
-	const formData = form.form;
-	let showSuccessAnimation = $state(false);
-	let disabled = $state(false);
-	let categories: SelectItemProps[] = $state([]);
+	// const form = superForm(data.form, { resetForm: false });
+	// const formData = form.form;
+	// let showSuccessAnimation = $state(false);
+	// let disabled = $state(false);
+	// let categories: SelectItemProps[] = $state([]);
 
-	const { message } = form;
+	// const { message } = form;
 
-	$effect(() => {
-		const event = data.events?.find((e) => e.eventId?.toString() === $formData.eventId.toString());
-		categories =
-			event?.categories?.map((c) => ({
-				label: c.name ?? 'Unknown',
-				value: c.id.toString(),
-				disabled: c.isDisabled ?? false
-			})) ?? [];
-	});
+	// $effect(() => {
+	// 	const event = data.events?.find((e) => e.eventId?.toString() === $formData.eventId.toString());
+	// 	categories =
+	// 		event?.categories?.map((c) => ({
+	// 			label: c.name ?? 'Unknown',
+	// 			value: c.id.toString(),
+	// 			disabled: c.isDisabled ?? false
+	// 		})) ?? [];
+	// });
 </script>
 
-<div class="w-full max-w-screen-md">
-	<!-- <SuperDebug data={$formData} /> -->
+<section class="w-full max-w-screen-md">
+	<SubmissionForm />
+</section>
+<!-- <div class="w-full max-w-screen-md">
 	{#if data.form}
 		<Form
 			{form}
@@ -87,9 +93,7 @@
 				/>
 			</Label.Root>
 
-			<!-- TODO File input for thumbnail, generate locally, wasm? -->
-
 			<Button type="submit">Submit</Button>
 		</Form>
 	{/if}
-</div>
+</div> -->

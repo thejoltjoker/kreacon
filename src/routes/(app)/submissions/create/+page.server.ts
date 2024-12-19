@@ -1,27 +1,14 @@
-import { fail, message, superValidate } from 'sveltekit-superforms';
-import type { Actions, PageServerLoad } from './$types';
-import { zod } from 'sveltekit-superforms/adapters';
-import submissions, { insertSubmissionSchema } from '$lib/server/db/schema/submission';
-import { error, redirect } from '@sveltejs/kit';
+import { saveFile } from '$lib/helpers/saveFile';
+import { createSubmissionSchema } from '$lib/schemas/submission';
 import db from '$lib/server/db';
 import { media, tickets, users } from '$lib/server/db/schema';
+import submissions from '$lib/server/db/schema/submission';
+import { error, redirect } from '@sveltejs/kit';
 import { and, eq } from 'drizzle-orm';
-import { z } from 'zod';
 import { StatusCodes } from 'http-status-codes';
-import { saveFile } from '$lib/helpers/saveFile';
-
-const createSubmissionSchema = insertSubmissionSchema
-	.pick({ categoryId: true, eventId: true, title: true })
-	.extend({
-		media: z
-			.instanceof(File, { message: 'Please upload a file.' })
-			.refine((f) => f.size < 1_000_000_000, 'Max 1 GB upload size.')
-			.optional(),
-		thumbnail: z
-			.instanceof(File, { message: 'Please upload a file.' })
-			.refine((f) => f.size < 2_000_000, 'Max 2 MB upload size.')
-			.optional()
-	});
+import { fail, message, superValidate } from 'sveltekit-superforms';
+import { zod } from 'sveltekit-superforms/adapters';
+import type { Actions, PageServerLoad } from './$types';
 
 export const load = (async ({ locals }) => {
 	if (!locals.user || !locals.session) {

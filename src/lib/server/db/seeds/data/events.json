@@ -100,5 +100,35 @@
 			}
 		],
 		"tickets": [{ "username": "john_doe" }, { "username": "alice_smith" }]
+	},
+	{
+		"name": "Fossil Finds",
+		"slug": "fossil-finds",
+		"description": "A special exhibition focusing on recent paleontological discoveries. Share your best fossil photography and help bring these ancient remnants to life.",
+		"submissionsOpenAt": "2023-06-01T00:00:00Z",
+		"submissionsCloseAt": "2033-06-01T23:59:59Z",
+		"votingOpenAt": "2023-06-01T00:00:00Z",
+		"votingCloseAt": "2033-06-01T23:59:59Z",
+		"rules": [
+			{
+				"text": "Submissions must not use copyrighted material without explicit rights or licenses."
+			}
+		],
+		"categories": [
+			{
+				"name": "Dinosaur Photography",
+				"prizes": [
+					{ "text": "Professional Camera Lens", "position": 1 },
+					{ "text": "Photography Light Kit", "position": 2 },
+					{ "text": "Camera Bag", "position": 3 }
+				],
+				"rules": [
+					{ "text": "The 'General Rules' apply to all competition categories." },
+					{ "text": "Photos must be taken at recognized museums or dig sites" },
+					{ "text": "Maximum file size 20MB per photograph" }
+				]
+			}
+		],
+		"tickets": [{ "username": "john_doe" }]
 	}
 ]

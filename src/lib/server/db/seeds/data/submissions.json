@@ -5,7 +5,7 @@
 		"user": { "email": "john.doe@example.com" },
 		"title": "T-Rex in Morning Light",
 		"category": { "name": "Dinosaur Photography" },
-		"event": { "name": "Mesozoic Masterpieces" },
+		"event": { "name": "Dino Days" },
 		"createdAt": "2024-02-15T00:00:00.000Z",
 		"media": {
 			"type": "image",
