@@ -1,5 +1,5 @@
 import { saveFile } from '$lib/helpers/saveFile';
-import { createSubmissionSchema } from '$lib/schemas/submission';
+import { createSubmissionSchema, type CreateSubmissionSchema } from '$lib/schemas/submission';
 import db from '$lib/server/db';
 import { media, tickets, users } from '$lib/server/db/schema';
 import submissions from '$lib/server/db/schema/submission';
@@ -14,6 +14,7 @@ export const load = (async ({ locals }) => {
 	if (!locals.user || !locals.session) {
 		redirect(StatusCodes.TEMPORARY_REDIRECT, '/login?redirect=/submissions/create');
 	}
+
 	const form = await superValidate(zod(createSubmissionSchema));
 	const now = new Date();
 
@@ -60,13 +61,6 @@ export const load = (async ({ locals }) => {
 		};
 	});
 
-	form.data = {
-		title: '',
-		categoryId: 0,
-		eventId: 0,
-		media: undefined,
-		thumbnail: undefined
-	};
 	const title = { text: 'Create Submission' };
 	return {
 		form,

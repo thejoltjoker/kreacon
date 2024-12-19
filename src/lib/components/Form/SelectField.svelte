@@ -5,7 +5,7 @@
 <script lang="ts" generics="T extends Record<string, unknown>">
 	import { type IconProps, type Icon as IconType } from 'lucide-svelte';
 	import { cn } from '$lib/utils';
-	import { Label } from 'bits-ui';
+	import { Label, type SelectRootProps } from 'bits-ui';
 	import { XCircleIcon } from 'lucide-svelte';
 	import { getContext } from 'svelte';
 	import { formFieldProxy, type FormPathLeaves, type SuperForm } from 'sveltekit-superforms';
@@ -28,16 +28,17 @@
 	};
 
 	let {
-		type = 'single',
-		superform,
-		field,
-		labelProps,
-		label,
 		class: className,
+		field,
 		icon: Icon,
 		iconProps,
 		items,
+		label,
+		labelProps,
 		placeholder,
+		superform,
+		type = 'single',
+
 		...props
 	}: SelectFieldProps = $props();
 
@@ -47,6 +48,7 @@
 			throw new Error('Failed to load form context');
 		}
 	}
+
 	const { value, errors, constraints } = formFieldProxy(superform, field);
 </script>
 
@@ -57,15 +59,16 @@
 	<span class="relative">
 		<!-- eslint-disable-next-line @typescript-eslint/no-explicit-any -->
 		<StyledSelect
-			{placeholder}
-			name={field}
-			id={field}
-			{type}
 			{items}
-			class={cn($errors && 'input-invalid', className)}
+			{placeholder}
+			{type}
 			aria-invalid={$errors ? 'true' : undefined}
 			bind:value={$value as any}
+			class={cn($errors && 'input-invalid', className)}
+			id={field}
+			name={field}
 			{...$constraints}
+			{...props as any}
 		/>
 		{#if Icon != null}
 			<Icon

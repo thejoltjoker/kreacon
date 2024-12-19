@@ -20,6 +20,7 @@ const EnvSchema = z.object({
 	TICKET_API_URL: z.string().url(),
 	OAUTH_DISCORD_CLIENT_ID: z.string(),
 	// Optional
+	PUBLIC_MAX_UPLOAD_SIZE: z.coerce.number().default(1024 * 1024 * 1024),
 	DB_MIGRATING: stringBoolean,
 	DB_SEEDING: stringBoolean,
 	AZURE_APP_INSIGHTS_CONNECTION_STRING: z.string().optional(),
