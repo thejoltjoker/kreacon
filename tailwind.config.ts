@@ -248,6 +248,7 @@ export default {
 		}
 	},
 	safelist: [
+		'media-tooltip',
 		'border-red-500',
 		'border-green-500',
 		'border-violet-500',

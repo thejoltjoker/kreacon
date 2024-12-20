@@ -74,6 +74,13 @@
 	.input {
 		@apply h-form w-full rounded-sm border border-muted-foreground bg-bg px-3 py-2 focus:border-violet-500 focus:outline-none focus:ring-violet-500;
 	}
+
+	media-tooltip {
+		--media-font-weight: theme('fontWeight.bold');
+		--media-font-size: theme('fontSize.sm');
+		--media-font-family: theme('fontFamily.sans');
+		--media-tooltip-background-color: red;
+	}
 }
 
 @layer components {

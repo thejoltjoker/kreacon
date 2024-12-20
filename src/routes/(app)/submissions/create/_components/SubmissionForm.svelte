@@ -9,7 +9,19 @@
 	import MediaRow from './MediaRow.svelte';
 	import Button from '$lib/components/Button.svelte';
 
+	import { ArrowBigDownDashIcon, FacebookIcon, PlayIcon } from 'lucide-svelte';
+	import AudioPlayer from '../../[id]/_components/AudioPlayer.svelte';
+
 	let openRows = $state(['accordion-event']);
+	let mockMedia = {
+		id: 1,
+		type: 'audio' as const,
+		url: 'https://stream.mux.com/O4h5z00885HEucNNa1rV02wZapcGp01FXXoJd35AHmGX7g/audio.m4a',
+		filename: 'audio.m4a',
+		alt: null,
+		createdAt: new Date(),
+		updatedAt: new Date()
+	};
 </script>
 
 <Accordion.Root bind:value={openRows} type="multiple">
