@@ -32,7 +32,7 @@
 		<CategoryRow bind:openRows />
 		<TextField field="title" label="Title" labelProps={{ class: 'text-2xl font-bold' }} />
 		<MediaRow />
-		<div class="h-[400px] w-full">
+		<div class="h-[240px] w-full">
 			<FileField
 				mediaType="image"
 				maxFileSize={1024 * 1024 * 2}

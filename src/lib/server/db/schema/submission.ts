@@ -4,6 +4,7 @@ import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
 import { randomString } from '../../../helpers/randomString';
 import categories, { type Category } from './category';
 import events from './event';
+import { files } from './file';
 import media, { type Media } from './media';
 import reactions from './reaction';
 import { submissionStatusEnum, timestamps } from './shared';
@@ -22,14 +23,16 @@ export const submissions = pgTable(
 			.notNull(),
 		categoryId: integer('category_id').notNull(),
 		eventId: integer('event_id').notNull(),
-		mediaId: integer('media_id').notNull(),
-		status: submissionStatusEnum('status').notNull().default('draft'),
-		thumbnailId: integer('thumbnail_id').notNull(),
 		ticketId: varchar('ticket_id', { length: 255 }).notNull(),
+		status: submissionStatusEnum('status').notNull().default('draft'),
 		title: varchar({ length: 255 }).notNull(),
 		views: integer().notNull().default(0),
 		// TODO Add license https://creativecommons.org/share-your-work/cclicenses/
 		// license: varchar({ length: 255 }).notNull(),
+		// Files
+		mediaId: integer('media_id').notNull(),
+		thumbnailId: integer('thumbnail_id').notNull(),
+		proofId: uuid('proof_id'),
 		...timestamps
 	},
 	(table) => ({
@@ -66,6 +69,10 @@ export const submissionsRelations = relations(submissions, ({ one, many }) => ({
 	thumbnail: one(media, {
 		fields: [submissions.thumbnailId],
 		references: [media.id]
+	}),
+	proof: one(files, {
+		fields: [submissions.proofId],
+		references: [files.id]
 	})
 }));
 

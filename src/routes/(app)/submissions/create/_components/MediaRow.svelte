@@ -18,6 +18,7 @@
 	);
 </script>
 
-<div class="h-[400px] w-full">
+<!-- TODO Disable if no category picked -->
+<div class="h-[240px] w-full">
 	<FileField {mediaType} field="media" label="File" labelProps={{ class: 'text-2xl font-bold' }} />
 </div>
