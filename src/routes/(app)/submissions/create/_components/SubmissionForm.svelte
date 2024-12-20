@@ -24,6 +24,7 @@
 	};
 </script>
 
+<!-- TODO Show loading state -->
 <Accordion.Root bind:value={openRows} type="multiple">
 	<!-- {JSON.stringify(openRows)} -->
 	<GenericForm debug data={$page.data.form} class="my-3xl gap-3xl">

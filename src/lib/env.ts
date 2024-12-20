@@ -19,12 +19,12 @@ const EnvSchema = z.object({
 	OAUTH_GITHUB_REDIRECT_URI: z.string(),
 	TICKET_API_URL: z.string().url(),
 	OAUTH_DISCORD_CLIENT_ID: z.string(),
+	AZURE_STORAGE_ACCOUNT_NAME: z.string(),
 	// Optional
 	PUBLIC_MAX_UPLOAD_SIZE: z.coerce.number().default(1024 * 1024 * 1024),
 	DB_MIGRATING: stringBoolean,
 	DB_SEEDING: stringBoolean,
 	AZURE_APP_INSIGHTS_CONNECTION_STRING: z.string().optional(),
-	AZURE_STORAGE_ACCOUNT_NAME: z.string().optional(),
 	DB_HOST: z.string().optional(),
 	DB_NAME: z.string().optional(),
 	DB_PASSWORD: z.string().optional(),

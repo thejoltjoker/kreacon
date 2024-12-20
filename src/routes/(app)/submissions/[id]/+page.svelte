@@ -87,7 +87,11 @@
 
 	<!-- Media -->
 	<div class="flex flex-col items-center">
-		{#if submission?.media?.type === 'audio'}
+		{#if submission?.media.type === 'video'}
+			<video src={submission?.media.url} controls>
+				<track kind="captions" src="" />
+			</video>
+		{:else if submission?.media?.type === 'audio'}
 			<AudioPlayer media={submission?.media} />
 		{:else}
 			<SubmissionMedia media={submission?.media} />

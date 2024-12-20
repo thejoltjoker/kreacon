@@ -9,6 +9,7 @@ import { StatusCodes } from 'http-status-codes';
 import { fail, message, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import type { Actions, PageServerLoad } from './$types';
+import { azureUploadBlob, upload, uploadFile } from '$lib/server/azure/storage';
 
 export const load = (async ({ locals }) => {
 	if (!locals.user || !locals.session) {
@@ -125,8 +126,19 @@ export const actions = {
 		// TODO Save file to blob storage
 
 		let mediaPath: string | undefined = undefined;
+		let mediaUrl: string | undefined = undefined;
 		if (form.data.media != null) {
 			mediaPath = await saveFile(form.data.media);
+			if (category.mediaType === 'image') {
+				mediaUrl = await upload.image(form.data.media);
+			} else if (category.mediaType === 'video') {
+				mediaUrl = await upload.video(form.data.media);
+			} else if (category.mediaType === 'audio') {
+				mediaUrl = await upload.audio(form.data.media);
+			}
+		}
+		if (mediaUrl == null) {
+			return error(StatusCodes.BAD_REQUEST, { message: 'Failed to upload media' });
 		}
 
 		let id: string | null = null;
@@ -137,10 +149,10 @@ export const actions = {
 						? await tx
 								.insert(media)
 								.values({
-									url: mediaPath,
+									url: mediaUrl,
 									filename: (form.data.media?.name ?? '') + Date.now(),
 									alt: form.data.title,
-									type: 'image'
+									type: category.mediaType
 								})
 								.returning()
 						: [];
