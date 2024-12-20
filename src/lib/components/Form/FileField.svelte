@@ -15,6 +15,8 @@
 	import { getExtensionsForMedia, getMimeTypesForMedia } from '$lib/helpers/mediaTypes';
 	import type { Writable } from 'svelte/store';
 	import { getEnctype } from './enctype.svelte';
+	import AudioPlayer from '../AudioPlayer.svelte';
+	import 'media-chrome';
 	// TODO Default file type
 
 	interface FileFieldProps extends Omit<HTMLInputAttributes, 'accept' | 'type'> {
@@ -96,33 +98,65 @@
 	});
 </script>
 
+{#snippet audioPreview(url: string)}
+	<AudioPlayer {url} />
+{/snippet}
+
+{#snippet videoPreview(url: string)}
+	<div class="flex h-full w-full flex-col gap-xs">
+		<media-controller class="h-full">
+			<video slot="media" src={url} crossOrigin="" playsInline class="h-full w-full">
+				<track label="English" kind="captions" srcLang="en" src="./captions.vtt" />
+				<track label="thumbnails" default kind="metadata" src="./thumbnails.vtt" />
+			</video>
+			<media-control-bar>
+				<media-play-button></media-play-button>
+				<media-mute-button></media-mute-button>
+				<media-time-range></media-time-range>
+				<media-time-display></media-time-display>
+				<media-fullscreen-button></media-fullscreen-button>
+			</media-control-bar>
+		</media-controller>
+	</div>
+{/snippet}
+
+{#snippet imagePreview(url: string, filename: string, label: string)}
+	<div class="grid h-full">
+		<div
+			class="col-[1] row-[1] flex items-center justify-center overflow-hidden rounded-lg text-2xl font-bold text-white transition-colors"
+		>
+			{filename}
+		</div>
+		<div class="col-[1] row-[1] h-full w-full overflow-hidden rounded-lg blur-sm">
+			<img
+				src={url}
+				alt={`${label} preview`}
+				class="rounded-lg object-contain object-center opacity-20"
+			/>
+		</div>
+	</div>
+{/snippet}
+
 <div class="flex h-full w-full flex-col gap-xs">
 	<Label.Root for={field} {...labelProps} class={cn('font-bold', labelProps?.class)}>
 		{label}
 	</Label.Root>
 	{#if $value && $value instanceof FileList && $value.length > 0}
-		<div
-			class="grid h-full items-center justify-center overflow-hidden rounded-form border border-muted-foreground"
-		>
-			<div
-				class="col-[1] row-[1] overflow-hidden rounded-lg text-center text-2xl font-bold text-white transition-colors"
-			>
-				{$value[0].name}
-			</div>
-			<div class="col-[1] row-[1] overflow-hidden rounded-lg blur-sm">
-				<img
-					src={filePreview}
-					alt={`${label} preview`}
-					class="h-full w-full rounded-lg object-contain opacity-20"
-				/>
-			</div>
+		<div class="debug flex flex-col items-center justify-center overflow-hidden">
+			{#if mediaType === 'audio' && filePreview}
+				{@render audioPreview(filePreview)}
+			{:else if mediaType === 'image' && filePreview}
+				{@render imagePreview(filePreview, $value[0].name, label)}
+			{:else if mediaType === 'video' && filePreview}
+				{@render videoPreview(filePreview)}
+			{/if}
 		</div>
 	{:else}
 		<div
 			role="presentation"
 			id="drop_zone"
 			class={cn(
-				'flex h-full flex-col items-center justify-center rounded-form border-2 border-dashed border-muted-foreground transition',
+				'flex h-full flex-col items-center justify-center rounded-form border-2 border-dashed border-shade-600 transition',
 				isDragging && 'border-primary bg-squid-950/25 !text-white'
 			)}
 			ondrop={onFileDrop}

@@ -7,6 +7,9 @@ export const createSubmissionSchema = z.object({
 	media: z
 		.instanceof(File, { message: 'Please upload a file.' })
 		.refine((f) => f.size < 1_000_000_000, 'Max 1 GB upload size.'),
+	// .refine((file) => {
+	// 	return ACCEPTED_FILE_TYPES.includes(file.type);
+	//   }, 'File must be a PNG'),
 	thumbnail: z
 		.instanceof(File, { message: 'Please upload a file.' })
 		.refine((f) => f.size < 2_000_000, 'Max 2 MB upload size.')
