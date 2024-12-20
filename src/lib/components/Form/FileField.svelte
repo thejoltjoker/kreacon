@@ -3,22 +3,26 @@
 </script>
 
 <script lang="ts" generics="T extends Record<string, unknown>">
-	import mime from 'mime';
 	import { t } from '$lib/i18n';
 	import { cn } from '$lib/utils';
 	import { Label } from 'bits-ui';
 	import { XCircleIcon } from 'lucide-svelte';
-	import { getContext } from 'svelte';
-	import type { HTMLInputAttributes } from 'svelte/elements';
+	import { getContext, onMount } from 'svelte';
+	import type { HTMLFormAttributes, HTMLInputAttributes } from 'svelte/elements';
 	import { fileFieldProxy, type FormPathLeaves, type SuperForm } from 'sveltekit-superforms';
-	import { type MimeType } from '$lib/types/mediaTypes';
+	import { type MediaType, type MimeType } from '$lib/types/mediaTypes';
 	import { env } from '$env/dynamic/public';
+	import { getExtensionsForMedia, getMimeTypesForMedia } from '$lib/helpers/mediaTypes';
+	import type { Writable } from 'svelte/store';
+	import { getEnctype } from './enctype.svelte';
+	// TODO Default file type
 
 	interface FileFieldProps extends Omit<HTMLInputAttributes, 'accept' | 'type'> {
 		label: string;
 		field: FormPathLeaves<T>;
-		accept: MimeType[];
+		mediaType: MediaType;
 		labelProps?: Label.RootProps;
+		maxFileSize?: number;
 		/**
 		 * Optional SuperForm instance. If not provided, will attempt to get from GenericForm context
 		 * Must be provided if used outside of GenericForm
@@ -32,12 +36,11 @@
 		field,
 		labelProps,
 		label,
-		accept,
-		class: className,
+		mediaType,
+		maxFileSize = Number(env.PUBLIC_MAX_UPLOAD_SIZE) || 10 * 1024 * 1024,
 		...props
 	}: FileFieldProps = $props();
 
-	let max_upload_size = Number(env.PUBLIC_MAX_UPLOAD_SIZE) ?? 1024 * 1024 * 1024;
 	if (superform == null) {
 		superform = getContext<SuperForm<T>>('superform');
 		if (superform == null) {
@@ -47,12 +50,6 @@
 	const { value, errors, constraints } = fileFieldProxy(superform, field);
 	let isDragging = $state(false);
 	let fileInput: HTMLInputElement | null = $state(null);
-	let dropZoneClassName = $derived(
-		cn(
-			'flex min-h-[30vh] aspect-square flex-col items-center justify-center border-2 border-dashed border-muted-foreground rounded-form transition',
-			isDragging && 'bg-squid-950/25 border-primary !text-white'
-		)
-	);
 
 	let filePreview = $derived(
 		$value && $value instanceof FileList && $value.length > 0
@@ -86,9 +83,17 @@
 
 	const handleRemove = () => {
 		isDragging = false;
+		$value = undefined as unknown as FileList;
 	};
 
-	let extensions = $derived(accept.flatMap((m) => Array.from(mime.getAllExtensions(m) || [])));
+	let accept: MimeType[] = $derived(getMimeTypesForMedia(mediaType));
+	// let extensions = $derived(accept.flatMap((m) => Array.from(mime.getAllExtensions(m) || [])));
+	let extensions = $derived(getExtensionsForMedia(mediaType));
+
+	let enctype = getEnctype();
+	onMount(() => {
+		enctype.set('multipart/form-data');
+	});
 </script>
 
 <div class="flex h-full w-full flex-col gap-xs">
@@ -97,15 +102,18 @@
 	</Label.Root>
 	{#if $value && $value instanceof FileList && $value.length > 0}
 		<div
-			class="flex items-center justify-center overflow-hidden rounded-form border border-muted-foreground"
+			class="grid h-full items-center justify-center overflow-hidden rounded-form border border-muted-foreground"
 		>
-			<div class="overflow-hidden rounded-lg">
+			<div
+				class="col-[1] row-[1] overflow-hidden rounded-lg text-center text-2xl font-bold text-white transition-colors"
+			>
+				{$value[0].name}
+			</div>
+			<div class="col-[1] row-[1] overflow-hidden rounded-lg blur-sm">
 				<img
-					src={$value instanceof FileList && $value.length > 0
-						? URL.createObjectURL($value[0] as Blob)
-						: null}
-					alt=""
-					class="h-full w-full rounded-lg object-contain"
+					src={filePreview}
+					alt={`${label} preview`}
+					class="h-full w-full rounded-lg object-contain opacity-20"
 				/>
 			</div>
 		</div>
@@ -113,7 +121,10 @@
 		<div
 			role="presentation"
 			id="drop_zone"
-			class={dropZoneClassName}
+			class={cn(
+				'flex h-full flex-col items-center justify-center rounded-form border-2 border-dashed border-muted-foreground transition',
+				isDragging && 'border-primary bg-squid-950/25 !text-white'
+			)}
 			ondrop={onFileDrop}
 			ondragover={onDragOver}
 			ondragleave={onDragOut}
@@ -135,16 +146,32 @@
 				{`${$t('Supported file types')}: ${extensions.join(', ')}`}
 			</p>
 		</div>
-		<div class="flex justify-between">
-			<p class="text-shade-300">
-				{`${$t('Supported file types')}: ${extensions.join(', ')}`}
-			</p>
-			<p class="text-shade-300">
-				{`${$t('Max size')} ${max_upload_size / 1024 / 1024} MB`}
-			</p>
-		</div>
 	{/if}
-
+	<div class="flex items-center justify-between">
+		{#if $value && $value instanceof FileList && $value.length > 0}
+			<button
+				type="button"
+				onclick={chooseFile}
+				class="text-shade-300 transition-colors hover:text-white"
+			>
+				{`${$t('Browse for a different file')}`}
+			</button>
+			<button
+				type="button"
+				onclick={handleRemove}
+				class="text-destructive transition-colors hover:text-pomodoro-400"
+			>
+				{`${$t('Remove file')}`}
+			</button>
+		{:else}
+			<p class="text-sm text-shade-300">
+				{`${$t('Supported file types')}: ${extensions.join(', ')}`}, {`${$t('Max size')} ${maxFileSize / 1024 / 1024} MB`}
+			</p>
+			<button type="button" onclick={chooseFile} class="text-white">
+				{`${$t('Browse')}`}
+			</button>
+		{/if}
+	</div>
 	{#if $errors}
 		<ul class="flex flex-col gap-xs text-sm">
 			{#each $errors as error}

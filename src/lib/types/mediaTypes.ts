@@ -6,8 +6,11 @@ export const MimeTypeMap = {
 	audio: ['audio/mpeg', 'audio/wav']
 } as const;
 
+export const ExtensionMap = {
+	image: ['bmp', 'gif', 'jpeg', 'jpg', 'png', 'webp'],
+	video: ['mp4', 'mov', 'mpg', 'mpeg'],
+	audio: ['mp3', 'wav']
+} as const;
+
 export type MediaType = (typeof MediaTypes)[number];
 export type MimeType = (typeof MimeTypeMap)[MediaType][number];
-
-export const getAllMimeTypes = () => Object.values(MimeTypeMap).flat();
-export const getMimeTypesForMedia = (mediaType: MediaType) => MimeTypeMap[mediaType];

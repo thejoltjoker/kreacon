@@ -62,6 +62,10 @@
 		@apply border border-red-500;
 	}
 
+	.debug-green {
+		@apply border border-green-500;
+	}
+
 	/* input[type='text'], */
 	input[type='email'],
 	input[type='password'] {

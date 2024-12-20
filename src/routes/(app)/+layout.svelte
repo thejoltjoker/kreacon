@@ -15,6 +15,6 @@
 	<title>{$t(title)}</title>
 </svelte:head>
 
-<div class="flex h-full min-h-full grow flex-col items-center gap-xl">
+<div class="flex h-full grow flex-col items-center gap-xl">
 	{@render children()}
 </div>

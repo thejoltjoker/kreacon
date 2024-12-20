@@ -4,6 +4,7 @@
 	import type { CreateSubmissionSchema } from '$lib/schemas/submission';
 	import { getContext } from 'svelte';
 	import type { SuperForm } from 'sveltekit-superforms/client';
+	import type { PageData } from '../$types';
 
 	let { openRows = $bindable() }: { openRows: string[] } = $props();
 	let { form } = getContext<SuperForm<CreateSubmissionSchema>>('superform');
@@ -16,11 +17,11 @@
 	type="single"
 	placeholder="Select an event"
 	labelProps={{ class: 'text-2xl font-bold' }}
-	items={$page.data.events.map((e) => ({
+	items={$page.data.events.map((e: PageData['events'][number]) => ({
 		label: e.name ?? 'Unknown',
 		value: e.eventId?.toString() ?? ''
 	}))}
-	onValueChange={(value: string | number) => {
+	onValueChange={() => {
 		$form.categoryId = 0;
 		// const deselected = value == null || value === 0 || value === '';
 		// if (deselected) {

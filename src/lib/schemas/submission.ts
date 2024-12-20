@@ -1,4 +1,3 @@
-import type { Thumbnail } from '@bitmovin/api-sdk';
 import { z } from 'zod';
 
 export const createSubmissionSchema = z.object({

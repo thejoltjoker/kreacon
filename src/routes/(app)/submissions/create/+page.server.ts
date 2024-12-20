@@ -1,5 +1,5 @@
 import { saveFile } from '$lib/helpers/saveFile';
-import { createSubmissionSchema, type CreateSubmissionSchema } from '$lib/schemas/submission';
+import { createSubmissionSchema } from '$lib/schemas/submission';
 import db from '$lib/server/db';
 import { media, tickets, users } from '$lib/server/db/schema';
 import submissions from '$lib/server/db/schema/submission';

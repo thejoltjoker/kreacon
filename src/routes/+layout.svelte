@@ -26,7 +26,7 @@
 </svelte:head>
 
 {#if ready}
-	<div class="flex h-full min-h-screen flex-col">
+	<div class="flex min-h-screen flex-col">
 		<Navbar title={$page.data.title} />
 
 		{@render children()}

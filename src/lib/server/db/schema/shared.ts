@@ -1,5 +1,5 @@
 import { pgEnum, timestamp } from 'drizzle-orm/pg-core';
-import { mediaTypes } from '../../../types/mediaTypes';
+import { MediaTypes } from '../../../types/mediaTypes';
 import { submissionStatus } from '../../../types/submissionStatus';
 import { userRoles } from '../../../types/userRoles';
 
@@ -12,4 +12,4 @@ export const timestamps = {
 		.defaultNow()
 		.$onUpdate(() => new Date())
 };
-export const mediaTypeEnum = pgEnum('media_type', mediaTypes);
+export const mediaTypeEnum = pgEnum('media_type', MediaTypes);

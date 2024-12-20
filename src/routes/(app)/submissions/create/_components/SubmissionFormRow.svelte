@@ -24,7 +24,7 @@
 		</Accordion.Trigger>
 	</Accordion.Header>
 	<Accordion.Content
-		class="data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down overflow-hidden"
+		class="overflow-hidden data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down"
 	>
 		{@render children()}
 	</Accordion.Content>

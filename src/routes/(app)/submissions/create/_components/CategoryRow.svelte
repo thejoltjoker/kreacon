@@ -6,7 +6,6 @@
 	import { getContext } from 'svelte';
 	import type { SuperForm } from 'sveltekit-superforms/client';
 	import { type PageData } from '../$types';
-	import SubmissionFormRow from './SubmissionFormRow.svelte';
 
 	let { openRows = $bindable() }: { openRows: string[] } = $props();
 	let events: PageData['events'] = $state($page.data.events);
@@ -14,7 +13,6 @@
 	let { form } = getContext<SuperForm<CreateSubmissionSchema>>('superform');
 
 	$effect(() => {
-		console.log($form);
 		const event = events?.find((e) => e.eventId?.toString() === $form.eventId.toString());
 		categories =
 			event?.categories?.map((c) => ({

@@ -9,6 +9,7 @@
 	import type { SuperForm, SuperValidated } from 'sveltekit-superforms';
 	import SuperDebug, { superForm } from 'sveltekit-superforms';
 	import type { FormOptions } from 'sveltekit-superforms/client';
+	import { setEnctype } from './enctype.svelte';
 
 	interface GenericFormProps extends Omit<HTMLFormAttributes, 'children'> {
 		children: Snippet<
@@ -43,6 +44,7 @@
 		class: className,
 		options,
 		debug = false,
+		enctype: enctypeOverride,
 		...props
 	}: GenericFormProps = $props();
 
@@ -58,6 +60,8 @@
 	});
 	const { form, enhance } = superform;
 
+	let enctype = setEnctype(enctypeOverride);
+
 	setContext('superform', superform);
 </script>
 
@@ -66,6 +70,7 @@
 	use:enhance
 	class={cn('flex w-full flex-col gap-sm', className)}
 	datatype={dataType}
+	enctype={$enctype}
 	{...props}
 >
 	{#if debug}

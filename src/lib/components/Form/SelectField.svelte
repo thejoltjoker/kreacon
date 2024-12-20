@@ -5,11 +5,10 @@
 <script lang="ts" generics="T extends Record<string, unknown>">
 	import { type IconProps, type Icon as IconType } from 'lucide-svelte';
 	import { cn } from '$lib/utils';
-	import { Label, type SelectRootProps } from 'bits-ui';
+	import { Label } from 'bits-ui';
 	import { XCircleIcon } from 'lucide-svelte';
 	import { getContext } from 'svelte';
 	import { formFieldProxy, type FormPathLeaves, type SuperForm } from 'sveltekit-superforms';
-	import StyledInput, { type StyledInputProps } from './StyledInput.svelte';
 	import StyledSelect, { type StyledSelectProps } from './StyledSelect.svelte';
 
 	type SelectFieldProps = StyledSelectProps & {
@@ -57,7 +56,7 @@
 		{label}
 	</Label.Root>
 	<span class="relative">
-		<!-- eslint-disable-next-line @typescript-eslint/no-explicit-any -->
+		<!-- eslint-disable @typescript-eslint/no-explicit-any -->
 		<StyledSelect
 			{items}
 			{placeholder}

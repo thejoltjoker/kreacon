@@ -1,11 +1,15 @@
 import mime from 'mime/lite';
 import {
-	getAllMimeTypes,
-	getMimeTypesForMedia,
+	ExtensionMap,
+	MimeTypeMap,
 	MediaTypes,
 	type MediaType,
 	type MimeType
 } from '../types/mediaTypes';
+
+export const getAllMimeTypes = () => Object.values(MimeTypeMap).flat();
+export const getMimeTypesForMedia = (mediaType: MediaType) => [...MimeTypeMap[mediaType]];
+export const getExtensionsForMedia = (mediaType: MediaType) => [...ExtensionMap[mediaType]];
 
 export const isValidMimeType = (mimeType: string) => {
 	const extension = mime.getExtension(mimeType);

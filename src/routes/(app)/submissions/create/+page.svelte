@@ -1,18 +1,14 @@
 <script lang="ts">
-	import Button from '$lib/components/Button.svelte';
-	import GenericForm from '$lib/components/Form/GenericForm.svelte';
-	import SelectField from '$lib/components/Form/SelectField.svelte';
-	import TextField from '$lib/components/Form/TextField.svelte';
 	// import File from '$lib/components/Form/File.svelte';
 	// import Form from '$lib/components/Form/Form.svelte';
 	// import Select from '$lib/components/Form/Select.svelte';
 	// import Text from '$lib/components/Form/Text.svelte';
 	// import { Label, type SelectItemProps } from 'bits-ui';
 	// import { superForm } from 'sveltekit-superforms';
-	import type { PageData } from './$types';
+	// import type { PageData } from './$types';
 	import SubmissionForm from './_components/SubmissionForm.svelte';
 
-	let { data }: { data: PageData } = $props();
+	// let { data }: { data: PageData } = $props();
 
 	// const form = superForm(data.form, { resetForm: false });
 	// const formData = form.form;
