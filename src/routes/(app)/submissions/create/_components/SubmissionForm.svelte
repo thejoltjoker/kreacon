@@ -59,14 +59,14 @@
 	<GenericForm
 		debug
 		data={$page.data.form}
-		class="my-3xl gap-3xl"
+		class="my-3xl gap-3xl px-sm md:px-xl"
 		options={{ onSubmit: ({ customRequest }) => customRequest(fileUploadWithProgress) }}
 	>
 		<EventRow bind:openRows />
 		<CategoryRow bind:openRows />
 		<TextField field="title" label="Title" labelProps={{ class: 'text-2xl font-bold' }} />
 		<MediaRow />
-		<div class="h-[240px] w-full">
+		<div class="h-[340px] w-full">
 			<FileField
 				mediaType="image"
 				maxFileSize={1024 * 1024 * 2}

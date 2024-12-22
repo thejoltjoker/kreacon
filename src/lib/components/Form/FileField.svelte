@@ -6,7 +6,7 @@
 	import { t } from '$lib/i18n';
 	import { cn } from '$lib/utils';
 	import { Label } from 'bits-ui';
-	import { XCircleIcon } from 'lucide-svelte';
+	import { FolderOpenIcon, ImageIcon, TrashIcon, XCircleIcon, XIcon } from 'lucide-svelte';
 	import { getContext, onMount } from 'svelte';
 	import type { HTMLFormAttributes, HTMLInputAttributes } from 'svelte/elements';
 	import {
@@ -27,6 +27,7 @@
 	import 'media-chrome';
 	import snakeCase from 'lodash/snakeCase';
 	import { getUrlSchema, type GetUrlSchema } from '../../../routes/api/uploads/get-url/schema';
+	import Button from '../Button.svelte';
 
 	// TODO Default file type
 
@@ -214,6 +215,7 @@
 	});
 </script>
 
+<!-- TODO Move preview to separate component -->
 {#snippet audioPreview(url: string)}
 	<AudioPlayer {url} />
 {/snippet}
@@ -253,10 +255,96 @@
 	</div>
 {/snippet}
 
+{#snippet inProgress()}
+	<div class="grid rounded-form border border-primary">
+		<div class="z-10 col-[1] row-[1] flex items-center gap-sm p-sm">
+			<div class="thumbnail size-form overflow-hidden rounded-sm">
+				<img
+					src="https://picsum.photos/200/300"
+					class="h-full w-full object-cover"
+					alt="Entry thumbnail"
+				/>
+			</div>
+			<div class="flex flex-col">
+				<p class="font-bold text-white">filename.png</p>
+				<p class="text-sm text-shade-300" aria-live="polite">
+					Uploading... {progress}%
+				</p>
+			</div>
+			<div class="ml-auto">
+				<Button variant="outline" size="icon" aria-label="Cancel upload">
+					<XIcon />
+				</Button>
+			</div>
+		</div>
+		<div class="relative col-[1] row-[1] h-full overflow-hidden rounded-form">
+			<progress
+				class="progress absolute left-0 top-0 z-0 h-full w-full bg-transparent"
+				max="100"
+				value={50}
+				aria-label="Upload progress"
+			></progress>
+		</div>
+	</div>
+{/snippet}
+
+{#snippet completed()}
+	<div class="grid rounded-form border border-white">
+		<div class="z-10 col-[1] row-[1] flex items-center gap-sm p-sm">
+			<div class="thumbnail size-form overflow-hidden rounded-sm">
+				<img
+					src="https://picsum.photos/200/300"
+					class="h-full w-full object-cover"
+					alt="Entry thumbnail"
+				/>
+			</div>
+			<div class="flex flex-col">
+				<p class="font-bold text-white">filename.png</p>
+				<p class="text-sm text-shade-300">Finished uploading.</p>
+			</div>
+			<div class="ml-auto">
+				<Button variant="outline" size="icon">
+					<TrashIcon />
+				</Button>
+			</div>
+		</div>
+	</div>
+{/snippet}
+
+{#snippet pick()}
+	<div class="grid rounded-form border border-dashed border-shade-600">
+		<div class="z-10 col-[1] row-[1] flex items-center gap-sm p-sm">
+			<div
+				class="thumbnail hidden size-form min-h-form min-w-form items-center justify-center overflow-hidden rounded-sm bg-shade-700 text-shade-400 md:flex"
+			>
+				<ImageIcon />
+			</div>
+			<div class="flex flex-col">
+				<p class="hidden font-bold text-white md:block">Drag and drop here or browse for a file</p>
+				<p class="font-bold text-white md:hidden">Browse for a file</p>
+				<p class="text-sm text-shade-300">
+					{`${$t('Supported file types')}: ${extensions.join(', ')}`}
+				</p>
+			</div>
+			<div class="ml-auto">
+				<Button variant="outline" class="hidden md:block">Browse...</Button>
+				<Button variant="outline" size="icon" class="md:hidden">
+					<FolderOpenIcon />
+				</Button>
+			</div>
+		</div>
+	</div>
+{/snippet}
+
 <div class="flex h-full w-full flex-col gap-xs">
 	<Label.Root for={field} {...labelProps} class={cn('font-bold', labelProps?.class)}>
 		{label}
 	</Label.Root>
+
+	<!-- TODO Building out the new in progress component WIP -->
+	{@render pick()}
+	{@render inProgress()}
+	{@render completed()}
 	{#if files && files instanceof FileList && files.length > 0}
 		<div class="debug flex flex-col items-center justify-center overflow-hidden">
 			{#if mediaType === 'audio' && filePreview}
@@ -363,7 +451,21 @@
 	{/if}
 </div>
 
-<div>
-	{progress}%
-	<input type="file" />
-</div>
+<style lang="postcss">
+	progress {
+		-webkit-appearance: none;
+		appearance: none;
+	}
+
+	progress::-webkit-progress-bar {
+		@apply bg-transparent;
+	}
+
+	progress::-webkit-progress-value {
+		@apply bg-squid-950 transition-all duration-200;
+	}
+
+	progress::-moz-progress-bar {
+		@apply bg-squid-950 transition-all duration-200;
+	}
+</style>
