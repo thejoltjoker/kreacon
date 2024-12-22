@@ -19,7 +19,7 @@ export const users = pgTable('user', {
 	emailVerifiedAt: timestamp('email_verified_at', { mode: 'date' }),
 	password: varchar({ length: 255 }).notNull(),
 	role: roleEnum('role').notNull().default('user'),
-	picture: varchar({ length: 255 }),
+	picture: varchar({ length: 255 }), // TODO Change to file id
 	status: userStatusEnum('status').notNull().default('active'),
 	...timestamps
 });

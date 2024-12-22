@@ -62,13 +62,13 @@ export const submissionsRelations = relations(submissions, ({ one, many }) => ({
 	}),
 	reactions: many(reactions),
 	votes: many(votes),
-	media: one(media, {
+	media: one(files, {
 		fields: [submissions.mediaId],
-		references: [media.id]
+		references: [files.id]
 	}),
-	thumbnail: one(media, {
+	thumbnail: one(files, {
 		fields: [submissions.thumbnailId],
-		references: [media.id]
+		references: [files.id]
 	}),
 	proof: one(files, {
 		fields: [submissions.proofId],

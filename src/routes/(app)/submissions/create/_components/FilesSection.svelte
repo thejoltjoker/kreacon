@@ -5,7 +5,7 @@
 	let progress = $state(0);
 	const getUploadUrl = async (file: File) => {
 		const data: GetUrlSchema = {
-			container: 'kreacon-dev-uploads',
+			container: 'uploads',
 			name: `${crypto.randomUUID()}_${snakeCase(file.name)}`,
 			type: file.type
 		};

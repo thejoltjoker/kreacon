@@ -124,6 +124,7 @@ export const actions = {
 		}
 
 		// TODO Save file to blob storage
+		// TODO Get checksum from blob storage
 
 		let mediaPath: string | undefined = undefined;
 		let mediaUrl: string | undefined = undefined;
