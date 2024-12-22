@@ -11,6 +11,7 @@
 
 	import { ArrowBigDownDashIcon, FacebookIcon, PlayIcon } from 'lucide-svelte';
 	import AudioPlayer from '../../[id]/_components/AudioPlayer.svelte';
+	import type { SubmitFunction } from '@sveltejs/kit';
 
 	let openRows = $state(['accordion-event']);
 	let mockMedia = {
@@ -22,12 +23,45 @@
 		createdAt: new Date(),
 		updatedAt: new Date()
 	};
+	let progress = $state(0);
+	function fileUploadWithProgress(input: Parameters<SubmitFunction>[0]) {
+		return new Promise<XMLHttpRequest>((resolve) => {
+			const xhr = new XMLHttpRequest();
+
+			xhr.upload.onprogress = function (event) {
+				progress = Math.round((100 * event.loaded) / event.total);
+			};
+
+			xhr.onload = function () {
+				if (xhr.readyState === xhr.DONE) {
+					progress = 0;
+					resolve(xhr);
+				}
+			};
+
+			xhr.open('POST', input.action, true);
+			xhr.send(input.formData);
+		});
+	}
+
+	// const { form, enhance } = superForm(data.form, {
+	// 	onSubmit({ customRequest }) {
+	// 		customRequest(fileUploadWithProgress);
+	// 	}
+	// });
 </script>
 
+<!-- TODO Store state in url -->
 <!-- TODO Show loading state -->
+{progress}
 <Accordion.Root bind:value={openRows} type="multiple">
 	<!-- {JSON.stringify(openRows)} -->
-	<GenericForm debug data={$page.data.form} class="my-3xl gap-3xl">
+	<GenericForm
+		debug
+		data={$page.data.form}
+		class="my-3xl gap-3xl"
+		options={{ onSubmit: ({ customRequest }) => customRequest(fileUploadWithProgress) }}
+	>
 		<EventRow bind:openRows />
 		<CategoryRow bind:openRows />
 		<TextField field="title" label="Title" labelProps={{ class: 'text-2xl font-bold' }} />

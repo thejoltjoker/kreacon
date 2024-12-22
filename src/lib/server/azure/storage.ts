@@ -1,19 +1,24 @@
 import env from '$lib/env';
-import { fileTypeFromFile } from 'file-type';
 import { xxhash } from '$lib/helpers/hashing';
 import { createLogger } from '$lib/helpers/logger';
 import { DefaultAzureCredential } from '@azure/identity';
 import {
+	BlobSASPermissions,
 	BlobServiceClient,
+	ContainerSASPermissions,
+	generateBlobSASQueryParameters,
+	SASProtocol,
+	StorageSharedKeyCredential,
 	type BlockBlobUploadOptions,
 	type ContainerCreateOptions
 } from '@azure/storage-blob';
-import fs from 'fs';
 import { fileTypeFromBuffer } from 'file-type';
 export const blobServiceClient = new BlobServiceClient(
 	`https://${env.AZURE_STORAGE_ACCOUNT_NAME}.blob.core.windows.net`,
 	new DefaultAzureCredential()
 );
+
+export const DEFAULT_STORAGE_CONTAINER = 'kreacon-dev-uploads';
 
 const logger = createLogger('azure-storage');
 
@@ -29,6 +34,51 @@ export const getOrCreateContainer = async (
 
 export const getUploadsContainer = async () => {
 	return await getOrCreateContainer('kreacon-dev-uploads', { access: 'blob' });
+};
+
+export const generateBlobSasUrl = async (
+	containerName: string,
+	blobName: string,
+	expiryMinutes: number = 30
+) => {
+	const sharedKeyCredential = new StorageSharedKeyCredential(
+		env.AZURE_STORAGE_ACCOUNT_NAME,
+		env.AZURE_STORAGE_ACCOUNT_KEY
+	);
+
+	const blobServiceClient = new BlobServiceClient(
+		`https://${env.AZURE_STORAGE_ACCOUNT_NAME}.blob.core.windows.net`,
+		sharedKeyCredential
+	);
+
+	const containerClient = blobServiceClient.getContainerClient(containerName);
+	const blobClient = containerClient.getBlobClient(blobName);
+
+	// SAS
+	const startsOn = new Date();
+	const expiresOn = new Date(startsOn.valueOf() + 1000 * 60 * expiryMinutes);
+
+	const permissions = BlobSASPermissions.from({
+		create: true,
+		write: true
+	});
+
+	const blobSasUrl = blobClient.generateSasUrl({ permissions, expiresOn });
+
+	// const blobSAS = generateBlobSASQueryParameters(
+	// 	{
+	// 		containerName,
+	// 		blobName,
+	// 		permissions: BlobSASPermissions.parse('racwd'),
+	// 		startsOn: new Date(),
+	// 		expiresOn: new Date(new Date().valueOf() + 86400)
+	// 	},
+	// 	sharedKeyCredential
+	// ).toString();
+
+	// const sasUrl = blobClient.url + '?' + blobSAS;
+
+	return blobSasUrl;
 };
 
 // TODO
@@ -95,3 +145,7 @@ export const upload = {
 		return await uploadFile(file);
 	}
 };
+
+generateBlobSasUrl(DEFAULT_STORAGE_CONTAINER, 'imag2e.jpg').then((sasToken) => {
+	console.log(sasToken);
+});

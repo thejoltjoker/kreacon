@@ -47,10 +47,10 @@
 		--media-range-track-background: theme('colors.shade.950');
 		--media-range-track-border-radius: 9999px;
 	}
-	media-tooltip {
+	/* media-tooltip {
 		--media-font-weight: theme('fontWeight.bold');
 		--media-font-size: theme('fontSize.sm');
 		--media-font-family: theme('fontFamily.sans');
 		--media-tooltip-background-color: red;
-	}
+	} */
 </style>

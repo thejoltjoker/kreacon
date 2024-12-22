@@ -1,4 +1,5 @@
 <script lang="ts">
+	import FilesSection from './_components/FilesSection.svelte';
 	// import File from '$lib/components/Form/File.svelte';
 	// import Form from '$lib/components/Form/Form.svelte';
 	// import Select from '$lib/components/Form/Select.svelte';
@@ -30,7 +31,8 @@
 </script>
 
 <section class="w-full max-w-screen-md">
-	<SubmissionForm />
+	<FilesSection />
+	<!-- <SubmissionForm /> -->
 </section>
 <!-- <div class="w-full max-w-screen-md">
 	{#if data.form}

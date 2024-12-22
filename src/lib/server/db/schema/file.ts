@@ -5,12 +5,10 @@ import { timestamps } from './shared';
 
 export const files = pgTable('file', {
 	id: uuid().defaultRandom().primaryKey(),
-	category: varchar({ length: 255 }),
-	contentType: varchar({ length: 127 }).notNull(),
-	container: varchar({ length: 255 }),
+	type: varchar({ length: 127 }).notNull(),
 	url: varchar({ length: 255 }).notNull(),
-	filename: varchar({ length: 255 }).notNull(),
-	size: integer(),
+	name: varchar({ length: 255 }).notNull(),
+	size: integer().notNull(),
 	checksum: varchar({ length: 255 }),
 	metadata: jsonb(),
 	...timestamps

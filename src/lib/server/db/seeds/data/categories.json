@@ -16,5 +16,17 @@
 		"slug": "dinosaur-animations",
 		"mediaType": "video",
 		"description": "Animated sequences bringing prehistoric life to motion. Shows reconstructed dinosaur behaviors, ancient ecosystems, and interpretations of how these magnificent creatures might have lived."
+	},
+	{
+		"name": "Tracked Music",
+		"slug": "tracked-music",
+		"mediaType": "audio",
+		"description": "Music that has been created in a tracker software. This includes music from the 8-bit era, as well as more modern tracker music."
+	},
+	{
+		"name": "Stop Motion",
+		"slug": "stop-motion",
+		"mediaType": "video",
+		"description": "Stop motion videos of dinosaurs, prehistoric animals, and other prehistoric creatures."
 	}
 ]

@@ -177,6 +177,7 @@ export const actions = {
 			redirect(StatusCodes.SEE_OTHER, `/submissions/${id}`);
 		}
 
+		// TODO Remove permissions from blob store
 		return message(form, { text: 'Form posted successfully!', status: 'success' });
 	}
 } satisfies Actions;
