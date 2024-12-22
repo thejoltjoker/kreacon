@@ -97,25 +97,28 @@ export const seed = async (db: db) => {
 			);
 
 			await db.transaction(async (tx) => {
-				let insertedThumbnail: number | null = null;
+				let insertedThumbnail: string | null = null;
 
 				if (submission.thumbnail) {
 					const [result] = await tx
-						.insert(schema.media)
+						.insert(schema.files)
 						.values({
 							...submission.thumbnail,
 							type: submission.thumbnail.type as MediaType,
-							filename: submission.thumbnail.url
+							name: submission.thumbnail.url,
+							size: 0
 						})
 						.returning();
 					insertedThumbnail = result.id;
 				}
 
 				const [insertedMedia] = await tx
-					.insert(schema.media)
+					.insert(schema.files)
 					.values({
 						...submission.media,
-						type: submission.media.type as MediaType
+						type: submission.media.type as MediaType,
+						name: submission.media.url,
+						size: 0
 					})
 					.returning();
 

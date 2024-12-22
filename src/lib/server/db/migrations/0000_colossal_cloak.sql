@@ -43,6 +43,18 @@ CREATE TABLE "event" (
 	CONSTRAINT "event_slug_unique" UNIQUE("slug")
 );
 --> statement-breakpoint
+CREATE TABLE "file" (
+	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"type" varchar(127) NOT NULL,
+	"url" varchar(255) NOT NULL,
+	"name" varchar(255) NOT NULL,
+	"size" integer NOT NULL,
+	"checksum" varchar(255),
+	"metadata" jsonb,
+	"created_at" timestamp DEFAULT now() NOT NULL,
+	"updated_at" timestamp DEFAULT now() NOT NULL
+);
+--> statement-breakpoint
 CREATE TABLE "media" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"type" "media_type" NOT NULL,
@@ -94,12 +106,13 @@ CREATE TABLE "submission" (
 	"user_id" uuid NOT NULL,
 	"category_id" integer NOT NULL,
 	"event_id" integer NOT NULL,
-	"media_id" integer NOT NULL,
-	"status" "submission_status" DEFAULT 'draft' NOT NULL,
-	"thumbnail_id" integer NOT NULL,
 	"ticket_id" varchar(255) NOT NULL,
+	"status" "submission_status" DEFAULT 'draft' NOT NULL,
 	"title" varchar(255) NOT NULL,
 	"views" integer DEFAULT 0 NOT NULL,
+	"media_id" uuid NOT NULL,
+	"thumbnail_id" uuid NOT NULL,
+	"proof_id" uuid,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL
 );

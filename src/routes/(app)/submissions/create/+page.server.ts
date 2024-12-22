@@ -1,7 +1,7 @@
 import { saveFile } from '$lib/helpers/saveFile';
 import { createSubmissionSchema } from '$lib/schemas/submission';
 import db from '$lib/server/db';
-import { media, tickets, users } from '$lib/server/db/schema';
+import { files, media, tickets, users } from '$lib/server/db/schema';
 import submissions from '$lib/server/db/schema/submission';
 import { error, redirect } from '@sveltejs/kit';
 import { and, eq } from 'drizzle-orm';
@@ -148,12 +148,16 @@ export const actions = {
 				const [insertedMedia] =
 					mediaPath != null
 						? await tx
-								.insert(media)
+								.insert(files)
 								.values({
 									url: mediaUrl,
-									filename: (form.data.media?.name ?? '') + Date.now(),
-									alt: form.data.title,
-									type: category.mediaType
+									name: (form.data.media?.name ?? '') + Date.now(),
+									type: category.mediaType,
+									size: form.data.media?.size ?? 0,
+									metadata: {
+										alt: form.data.title,
+										caption: form.data.title
+									}
 								})
 								.returning()
 						: [];

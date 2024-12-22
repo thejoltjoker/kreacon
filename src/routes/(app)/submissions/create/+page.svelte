@@ -32,7 +32,7 @@
 
 <section class="w-full max-w-screen-md">
 	<FilesSection />
-	<!-- <SubmissionForm /> -->
+	<SubmissionForm />
 </section>
 <!-- <div class="w-full max-w-screen-md">
 	{#if data.form}

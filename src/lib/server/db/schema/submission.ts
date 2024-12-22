@@ -30,8 +30,8 @@ export const submissions = pgTable(
 		// TODO Add license https://creativecommons.org/share-your-work/cclicenses/
 		// license: varchar({ length: 255 }).notNull(),
 		// Files
-		mediaId: integer('media_id').notNull(),
-		thumbnailId: integer('thumbnail_id').notNull(),
+		mediaId: uuid('media_id').notNull(),
+		thumbnailId: uuid('thumbnail_id').notNull(),
 		proofId: uuid('proof_id'),
 		...timestamps
 	},

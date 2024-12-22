@@ -9,7 +9,15 @@
 	import { XCircleIcon } from 'lucide-svelte';
 	import { getContext, onMount } from 'svelte';
 	import type { HTMLFormAttributes, HTMLInputAttributes } from 'svelte/elements';
-	import { fileFieldProxy, type FormPathLeaves, type SuperForm } from 'sveltekit-superforms';
+	import {
+		fileFieldProxy,
+		formFieldProxy,
+		type FormFieldProxy,
+		type FormPathLeaves,
+		type FormPathType,
+		type InputConstraint,
+		type SuperForm
+	} from 'sveltekit-superforms';
 	import { type MediaType, type MimeType } from '$lib/types/mediaTypes';
 	import { env } from '$env/dynamic/public';
 	import { getExtensionsForMedia, getMimeTypesForMedia } from '$lib/helpers/mediaTypes';
@@ -17,9 +25,12 @@
 	import { getEnctype } from './enctype.svelte';
 	import AudioPlayer from '../AudioPlayer.svelte';
 	import 'media-chrome';
+	import snakeCase from 'lodash/snakeCase';
+	import { getUrlSchema, type GetUrlSchema } from '../../../routes/api/uploads/get-url/schema';
+
 	// TODO Default file type
 
-	interface FileFieldProps extends Omit<HTMLInputAttributes, 'accept' | 'type'> {
+	type BaseFileFieldProps = Omit<HTMLInputAttributes, 'accept' | 'type'> & {
 		label: string;
 		field: FormPathLeaves<T>;
 		mediaType: MediaType;
@@ -31,7 +42,22 @@
 		 * @default undefined
 		 */
 		superform?: SuperForm<T>;
-	}
+	};
+
+	type StandardBehaviorProps = BaseFileFieldProps & {
+		behavior: 'standard';
+	};
+
+	type ManagedBehaviorProps = BaseFileFieldProps & {
+		behavior: 'managed' | 'auto';
+		/**
+		 * Optional callback when upload completes in managed mode
+		 * @param fileId The database ID of the uploaded file
+		 */
+		onUploadComplete?: (fileId: string) => void;
+	};
+
+	type FileFieldProps = StandardBehaviorProps | ManagedBehaviorProps;
 
 	let {
 		superform,
@@ -39,9 +65,13 @@
 		labelProps,
 		label,
 		mediaType,
+		behavior = 'auto',
 		maxFileSize = Number(env.PUBLIC_MAX_UPLOAD_SIZE) || 10 * 1024 * 1024,
+
 		...props
 	}: FileFieldProps = $props();
+
+	const onUploadComplete = (props as ManagedBehaviorProps).onUploadComplete;
 
 	if (superform == null) {
 		superform = getContext<SuperForm<T>>('superform');
@@ -49,9 +79,29 @@
 			throw new Error('Failed to load form context');
 		}
 	}
-	const { value, errors, constraints } = fileFieldProxy(superform, field);
-	let isDragging = $state(false);
+	const { form } = superform;
+
 	let fileInput: HTMLInputElement | null = $state(null);
+	let files: FileList | undefined = $state();
+	let isDragging = $state(false);
+	let progress = $state(0);
+	let mode = $derived(
+		behavior === 'auto' ? (typeof $form[field] === 'string' ? 'managed' : 'standard') : behavior
+	);
+	let accept: MimeType[] = $derived(getMimeTypesForMedia(mediaType));
+	let extensions = $derived(getExtensionsForMedia(mediaType));
+
+	let enctype = getEnctype();
+
+	let superFieldProxy;
+	if (
+		behavior === 'auto' ? (typeof $form[field] === 'string' ? 'managed' : 'standard') : behavior
+	) {
+		superFieldProxy = formFieldProxy(superform, field);
+	} else {
+		superFieldProxy = fileFieldProxy(superform, field);
+	}
+	const { value, errors, constraints } = superFieldProxy;
 
 	let filePreview = $derived(
 		$value && $value instanceof FileList && $value.length > 0
@@ -88,13 +138,79 @@
 		$value = undefined as unknown as FileList;
 	};
 
-	let accept: MimeType[] = $derived(getMimeTypesForMedia(mediaType));
-	// let extensions = $derived(accept.flatMap((m) => Array.from(mime.getAllExtensions(m) || [])));
-	let extensions = $derived(getExtensionsForMedia(mediaType));
+	const getUploadUrl = async (file: File) => {
+		const data: GetUrlSchema = {
+			container: 'uploads',
+			name: `${crypto.randomUUID()}_${snakeCase(file.name)}`,
+			type: file.type
+		};
 
-	let enctype = getEnctype();
-	onMount(() => {
-		enctype.set('multipart/form-data');
+		const parsed = getUrlSchema.parse(data);
+
+		const response = await fetch(`${env.PUBLIC_BASE_URL}/api/uploads/get-url`, {
+			method: 'POST',
+			body: JSON.stringify(parsed)
+		});
+		return await response.json();
+	};
+
+	const uploadFile = async (url: string, file: File) => {
+		return new Promise((resolve, reject) => {
+			const xhr = new XMLHttpRequest();
+
+			xhr.open('PUT', url, true);
+			xhr.setRequestHeader('Content-Type', file.type);
+			xhr.setRequestHeader('x-ms-blob-type', 'BlockBlob');
+			xhr.setRequestHeader('x-ms-version', '2020-04-08');
+
+			xhr.upload.onprogress = (event) => {
+				progress = Math.floor((event.loaded / event.total) * 100);
+			};
+
+			xhr.onload = () => {
+				if (xhr.status >= 200 && xhr.status < 300) {
+					progress = 100;
+					resolve(xhr.response);
+				} else {
+					reject(new Error(`Upload failed with status ${xhr.status}`));
+				}
+			};
+
+			xhr.onerror = () => {
+				reject(new Error('Upload failed'));
+			};
+
+			xhr.onabort = () => {
+				reject(new Error('Upload aborted'));
+			};
+
+			xhr.send(file);
+		});
+	};
+
+	const handleFileChange = async (
+		event: Event & {
+			currentTarget: EventTarget & HTMLInputElement;
+		}
+	) => {
+		const file = event.currentTarget.files?.[0];
+		if (!file) return;
+		// TODO Generate checksum
+		const sas = await getUploadUrl(file);
+		try {
+			await uploadFile(sas.url, file);
+			onUploadComplete?.(sas.id);
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
+	$effect(() => {
+		if (mode === 'standard') enctype.set('multipart/form-data');
+	});
+
+	$effect(() => {
+		if (mode === 'standard' && files != null) $value = files;
 	});
 </script>
 
@@ -141,12 +257,12 @@
 	<Label.Root for={field} {...labelProps} class={cn('font-bold', labelProps?.class)}>
 		{label}
 	</Label.Root>
-	{#if $value && $value instanceof FileList && $value.length > 0}
+	{#if files && files instanceof FileList && files.length > 0}
 		<div class="debug flex flex-col items-center justify-center overflow-hidden">
 			{#if mediaType === 'audio' && filePreview}
 				{@render audioPreview(filePreview)}
 			{:else if mediaType === 'image' && filePreview}
-				{@render imagePreview(filePreview, $value[0].name, label)}
+				{@render imagePreview(filePreview, files[0].name, label)}
 			{:else if mediaType === 'video' && filePreview}
 				{@render videoPreview(filePreview)}
 			{/if}
@@ -182,7 +298,7 @@
 		</div>
 	{/if}
 	<div class="flex items-center justify-between">
-		{#if $value && $value instanceof FileList && $value.length > 0}
+		{#if files && files instanceof FileList && files.length > 0}
 			<button
 				type="button"
 				onclick={chooseFile}
@@ -216,16 +332,38 @@
 			{/each}
 		</ul>
 	{/if}
-	<input
-		bind:this={fileInput}
-		bind:files={$value as FileList}
-		aria-invalid={$errors ? 'true' : undefined}
-		accept={accept.join(', ')}
-		type="file"
-		name={field}
-		id={field}
-		hidden
-		{...$constraints}
-		{...props}
-	/>
+
+	{#if mode === 'managed'}
+		<input
+			bind:this={fileInput}
+			bind:files
+			aria-invalid={$errors ? 'true' : undefined}
+			accept={accept.join(', ')}
+			type="file"
+			name={field + '-file'}
+			id={field + '-file'}
+			hidden
+			{...props}
+			onchange={(event) => handleFileChange(event)}
+		/>
+		<input type="text" name={field} id={field} {...$constraints} />
+	{:else}
+		<input
+			bind:this={fileInput}
+			bind:files={files as FileList}
+			aria-invalid={$errors ? 'true' : undefined}
+			accept={accept.join(', ')}
+			type="file"
+			name={field}
+			id={field}
+			hidden
+			{...$constraints}
+			{...props}
+		/>
+	{/if}
+</div>
+
+<div>
+	{progress}%
+	<input type="file" />
 </div>

@@ -5,22 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1734428692199,
-      "tag": "0000_shocking_cardiac",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1734716045524,
-      "tag": "0001_easy_bushwacker",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1734826135827,
-      "tag": "0002_flowery_iron_man",
+      "when": 1734850394821,
+      "tag": "0000_colossal_cloak",
       "breakpoints": true
     }
   ]
