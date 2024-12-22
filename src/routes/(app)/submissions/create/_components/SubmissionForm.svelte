@@ -66,7 +66,7 @@
 		<CategoryRow bind:openRows />
 		<TextField field="title" label="Title" labelProps={{ class: 'text-2xl font-bold' }} />
 		<MediaRow />
-		<div class="h-[340px] w-full">
+		<div class="w-full">
 			<FileField
 				mediaType="image"
 				maxFileSize={1024 * 1024 * 2}
@@ -75,6 +75,9 @@
 				labelProps={{ class: 'text-2xl font-bold' }}
 			/>
 		</div>
-		<Button type="submit">Submit</Button>
+		<div class="inline-flex gap-sm">
+			<Button type="submit" variant="outline" class="flex-1">Go back</Button>
+			<Button type="submit" class="flex-1">Continue</Button>
+		</div>
 	</GenericForm>
 </Accordion.Root>

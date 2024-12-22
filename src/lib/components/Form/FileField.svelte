@@ -3,31 +3,36 @@
 </script>
 
 <script lang="ts" generics="T extends Record<string, unknown>">
+	import { env } from '$env/dynamic/public';
+	import { getExtensionsForMedia, getMimeTypesForMedia } from '$lib/helpers/mediaTypes';
 	import { t } from '$lib/i18n';
+	import { type MediaType, type MimeType } from '$lib/types/mediaTypes';
 	import { cn } from '$lib/utils';
 	import { Label } from 'bits-ui';
-	import { FolderOpenIcon, ImageIcon, TrashIcon, XCircleIcon, XIcon } from 'lucide-svelte';
-	import { getContext, onMount } from 'svelte';
-	import type { HTMLFormAttributes, HTMLInputAttributes } from 'svelte/elements';
+	import snakeCase from 'lodash/snakeCase';
+	import {
+		CheckCircle2Icon,
+		FileIcon,
+		FolderOpenIcon,
+		LoaderCircleIcon,
+		RefreshCcwIcon,
+		TrashIcon,
+		UploadIcon,
+		XCircleIcon,
+		XIcon
+	} from 'lucide-svelte';
+	import 'media-chrome';
+	import { getContext } from 'svelte';
+	import type { HTMLInputAttributes } from 'svelte/elements';
 	import {
 		fileFieldProxy,
 		formFieldProxy,
-		type FormFieldProxy,
 		type FormPathLeaves,
-		type FormPathType,
-		type InputConstraint,
 		type SuperForm
 	} from 'sveltekit-superforms';
-	import { type MediaType, type MimeType } from '$lib/types/mediaTypes';
-	import { env } from '$env/dynamic/public';
-	import { getExtensionsForMedia, getMimeTypesForMedia } from '$lib/helpers/mediaTypes';
-	import type { Writable } from 'svelte/store';
-	import { getEnctype } from './enctype.svelte';
-	import AudioPlayer from '../AudioPlayer.svelte';
-	import 'media-chrome';
-	import snakeCase from 'lodash/snakeCase';
 	import { getUrlSchema, type GetUrlSchema } from '../../../routes/api/uploads/get-url/schema';
 	import Button from '../Button.svelte';
+	import { getEnctype } from './enctype.svelte';
 
 	// TODO Default file type
 
@@ -37,6 +42,7 @@
 		mediaType: MediaType;
 		labelProps?: Label.RootProps;
 		maxFileSize?: number;
+		behavior?: 'standard' | 'managed' | 'auto';
 		/**
 		 * Optional SuperForm instance. If not provided, will attempt to get from GenericForm context
 		 * Must be provided if used outside of GenericForm
@@ -46,11 +52,11 @@
 	};
 
 	type StandardBehaviorProps = BaseFileFieldProps & {
-		behavior: 'standard';
+		behavior?: 'standard';
 	};
 
 	type ManagedBehaviorProps = BaseFileFieldProps & {
-		behavior: 'managed' | 'auto';
+		behavior?: 'managed' | 'auto';
 		/**
 		 * Optional callback when upload completes in managed mode
 		 * @param fileId The database ID of the uploaded file
@@ -85,13 +91,13 @@
 	let fileInput: HTMLInputElement | null = $state(null);
 	let files: FileList | undefined = $state();
 	let isDragging = $state(false);
-	let progress = $state(0);
+	let progress = $state(30);
 	let mode = $derived(
 		behavior === 'auto' ? (typeof $form[field] === 'string' ? 'managed' : 'standard') : behavior
 	);
 	let accept: MimeType[] = $derived(getMimeTypesForMedia(mediaType));
 	let extensions = $derived(getExtensionsForMedia(mediaType));
-
+	let currentState: 'idle' | 'ready' | 'uploading' | 'complete' | 'error' = $state('idle');
 	let enctype = getEnctype();
 
 	let superFieldProxy;
@@ -132,6 +138,9 @@
 
 	const chooseFile = () => {
 		fileInput?.click();
+		if (mode === 'standard') {
+			currentState = 'ready';
+		}
 	};
 
 	const handleRemove = () => {
@@ -215,124 +224,109 @@
 	});
 </script>
 
-<!-- TODO Move preview to separate component -->
-{#snippet audioPreview(url: string)}
-	<AudioPlayer {url} />
-{/snippet}
-
-{#snippet videoPreview(url: string)}
-	<div class="flex h-full w-full flex-col gap-xs">
-		<media-controller class="h-full">
-			<video slot="media" src={url} crossOrigin="" playsInline class="h-full w-full">
-				<track label="English" kind="captions" srcLang="en" src="./captions.vtt" />
-				<track label="thumbnails" default kind="metadata" src="./thumbnails.vtt" />
-			</video>
-			<media-control-bar>
-				<media-play-button></media-play-button>
-				<media-mute-button></media-mute-button>
-				<media-time-range></media-time-range>
-				<media-time-display></media-time-display>
-				<media-fullscreen-button></media-fullscreen-button>
-			</media-control-bar>
-		</media-controller>
-	</div>
-{/snippet}
-
-{#snippet imagePreview(url: string, filename: string, label: string)}
-	<div class="grid h-full">
-		<div
-			class="col-[1] row-[1] flex items-center justify-center overflow-hidden rounded-lg text-2xl font-bold text-white transition-colors"
-		>
-			{filename}
-		</div>
-		<div class="col-[1] row-[1] h-full w-full overflow-hidden rounded-lg blur-sm">
-			<img
-				src={url}
-				alt={`${label} preview`}
-				class="rounded-lg object-contain object-center opacity-20"
-			/>
-		</div>
-	</div>
-{/snippet}
-
-{#snippet inProgress()}
-	<div class="grid rounded-form border border-primary">
-		<div class="z-10 col-[1] row-[1] flex items-center gap-sm p-sm">
-			<div class="thumbnail size-form overflow-hidden rounded-sm">
-				<img
-					src="https://picsum.photos/200/300"
-					class="h-full w-full object-cover"
-					alt="Entry thumbnail"
-				/>
-			</div>
-			<div class="flex flex-col">
-				<p class="font-bold text-white">filename.png</p>
-				<p class="text-sm text-shade-300" aria-live="polite">
-					Uploading... {progress}%
-				</p>
-			</div>
-			<div class="ml-auto">
-				<Button variant="outline" size="icon" aria-label="Cancel upload">
-					<XIcon />
-				</Button>
-			</div>
-		</div>
-		<div class="relative col-[1] row-[1] h-full overflow-hidden rounded-form">
-			<progress
-				class="progress absolute left-0 top-0 z-0 h-full w-full bg-transparent"
-				max="100"
-				value={50}
-				aria-label="Upload progress"
-			></progress>
-		</div>
-	</div>
-{/snippet}
-
-{#snippet completed()}
-	<div class="grid rounded-form border border-white">
-		<div class="z-10 col-[1] row-[1] flex items-center gap-sm p-sm">
-			<div class="thumbnail size-form overflow-hidden rounded-sm">
-				<img
-					src="https://picsum.photos/200/300"
-					class="h-full w-full object-cover"
-					alt="Entry thumbnail"
-				/>
-			</div>
-			<div class="flex flex-col">
-				<p class="font-bold text-white">filename.png</p>
-				<p class="text-sm text-shade-300">Finished uploading.</p>
-			</div>
-			<div class="ml-auto">
-				<Button variant="outline" size="icon">
-					<TrashIcon />
-				</Button>
-			</div>
-		</div>
-	</div>
-{/snippet}
-
-{#snippet pick()}
-	<div class="grid rounded-form border border-dashed border-shade-600">
+<!-- TODO Make separate component -->
+{#snippet dropZone()}
+	<div
+		role="presentation"
+		ondragover={onDragOver}
+		ondragend={onDragOut}
+		ondrop={onFileDrop}
+		class={cn(
+			'grid rounded-form border border-shade-600 transition-colors hover:bg-shade-900',
+			(isDragging || currentState === 'uploading') && 'border-primary',
+			currentState === 'complete' && 'border-white',
+			currentState === 'error' && 'border-destructive'
+		)}
+	>
 		<div class="z-10 col-[1] row-[1] flex items-center gap-sm p-sm">
 			<div
-				class="thumbnail hidden size-form min-h-form min-w-form items-center justify-center overflow-hidden rounded-sm bg-shade-700 text-shade-400 md:flex"
+				class={cn(
+					'thumbnail hidden size-form min-h-form min-w-form items-center justify-center overflow-hidden rounded-sm bg-shade-700 text-shade-400 md:flex',
+					currentState === 'ready' && 'text-white',
+					currentState === 'uploading' && 'bg-shade-950/50 text-primary',
+					currentState === 'complete' && 'text-white',
+					currentState === 'error' && 'text-destructive'
+				)}
 			>
-				<ImageIcon />
+				{#if currentState === 'idle'}
+					<UploadIcon />
+				{:else if currentState === 'ready'}
+					<FileIcon />
+				{:else if currentState === 'uploading'}
+					<LoaderCircleIcon class="animate-spin" />
+				{:else if currentState === 'complete'}
+					<CheckCircle2Icon />
+				{:else if currentState === 'error'}
+					<XCircleIcon />
+				{/if}
 			</div>
 			<div class="flex flex-col">
-				<p class="hidden font-bold text-white md:block">Drag and drop here or browse for a file</p>
-				<p class="font-bold text-white md:hidden">Browse for a file</p>
-				<p class="text-sm text-shade-300">
-					{`${$t('Supported file types')}: ${extensions.join(', ')}`}
-				</p>
+				{#if isDragging}
+					<p class="font-bold text-white">Let go to start uploading</p>
+					<p class="text-sm text-shade-300">Drop anywhere</p>
+				{:else if currentState === 'idle'}
+					<p class="hidden font-bold text-white sm:block">
+						Drag and drop here or browse for a file
+					</p>
+					<p class="font-bold text-white sm:hidden">Browse for a file</p>
+					<p class="text-sm text-shade-300">No file chosen</p>
+				{:else if currentState === 'ready'}
+					<p class="font-bold text-white">{files?.[0]?.name ?? 'Unknown'}</p>
+					<p class="text-sm text-shade-300">
+						{mode === 'standard'
+							? `${Math.round((files?.[0]?.size ?? 0) / 1024 / 1024)} MB`
+							: $t('Ready to upload')}
+					</p>
+				{:else if currentState === 'uploading'}
+					<p class="font-bold text-white">{files?.[0]?.name ?? 'Unknown'}</p>
+					<p class="text-sm text-shade-300" aria-live="polite">
+						Uploading... {progress}%
+					</p>
+				{:else if currentState === 'complete'}
+					<p class="font-bold text-white">{files?.[0]?.name ?? 'Unknown'}</p>
+					<p class="text-sm text-shade-300">Upload complete</p>
+				{:else if currentState === 'error'}
+					<p class="font-bold text-white">{files?.[0]?.name ?? 'Unknown'}</p>
+					<p class="text-sm text-shade-300">Upload failed</p>
+				{/if}
 			</div>
-			<div class="ml-auto">
-				<Button variant="outline" class="hidden md:block">Browse...</Button>
-				<Button variant="outline" size="icon" class="md:hidden">
-					<FolderOpenIcon />
-				</Button>
+			<div class={cn('ml-auto', isDragging && 'hidden')}>
+				{#if currentState === 'complete'}
+					<Button variant="outline" size="icon" onclick={handleRemove}>
+						<TrashIcon />
+					</Button>
+				{:else if currentState === 'uploading' || currentState === 'ready'}
+					<Button variant="outline" size="icon" onclick={handleRemove}>
+						<XIcon />
+					</Button>
+				{:else if currentState === 'error'}
+					<Button variant="outline" class="hidden sm:block" onclick={chooseFile}>
+						{$t('Try again')}
+					</Button>
+					<Button variant="outline" size="icon" class="sm:hidden" onclick={chooseFile}>
+						<RefreshCcwIcon />
+					</Button>
+				{:else}
+					<Button variant="outline" class="hidden sm:block" onclick={chooseFile}>
+						{$t('Browse...')}
+					</Button>
+					<Button variant="outline" size="icon" class="sm:hidden" onclick={chooseFile}>
+						<FolderOpenIcon />
+					</Button>
+				{/if}
 			</div>
 		</div>
+		{#if currentState === 'uploading'}
+			<div class="relative col-[1] row-[1] h-full overflow-hidden rounded-form">
+				<progress
+					class="progress absolute left-0 top-0 z-0 h-full w-full bg-transparent"
+					max="100"
+					value={progress}
+					aria-label="Upload progress"
+				>
+				</progress>
+			</div>
+		{/if}
 	</div>
 {/snippet}
 
@@ -341,74 +335,13 @@
 		{label}
 	</Label.Root>
 
-	<!-- TODO Building out the new in progress component WIP -->
-	{@render pick()}
-	{@render inProgress()}
-	{@render completed()}
-	{#if files && files instanceof FileList && files.length > 0}
-		<div class="debug flex flex-col items-center justify-center overflow-hidden">
-			{#if mediaType === 'audio' && filePreview}
-				{@render audioPreview(filePreview)}
-			{:else if mediaType === 'image' && filePreview}
-				{@render imagePreview(filePreview, files[0].name, label)}
-			{:else if mediaType === 'video' && filePreview}
-				{@render videoPreview(filePreview)}
-			{/if}
-		</div>
-	{:else}
-		<div
-			role="presentation"
-			id="drop_zone"
-			class={cn(
-				'flex h-full flex-col items-center justify-center rounded-form border-2 border-dashed border-shade-600 transition',
-				isDragging && 'border-primary bg-squid-950/25 !text-white'
-			)}
-			ondrop={onFileDrop}
-			ondragover={onDragOver}
-			ondragleave={onDragOut}
-		>
-			{#if isDragging}
-				<p class="text-2xl font-bold text-white">Let go to add your file</p>
-			{:else}
-				<p class="text-shade-300">
-					<button
-						type="button"
-						onclick={chooseFile}
-						class="text-2xl font-bold text-white transition-colors hover:text-primary"
-					>
-						{$t('Drag and drop or click to upload')}
-					</button>
-				</p>
-			{/if}
-			<p class="text-shade-300">
-				{`${$t('Supported file types')}: ${extensions.join(', ')}`}
-			</p>
-		</div>
-	{/if}
-	<div class="flex items-center justify-between">
-		{#if files && files instanceof FileList && files.length > 0}
-			<button
-				type="button"
-				onclick={chooseFile}
-				class="text-shade-300 transition-colors hover:text-white"
-			>
-				{`${$t('Browse for a different file')}`}
-			</button>
-			<button
-				type="button"
-				onclick={handleRemove}
-				class="text-destructive transition-colors hover:text-pomodoro-400"
-			>
-				{`${$t('Remove file')}`}
-			</button>
-		{:else}
-			<p class="text-sm text-shade-300">
-				{`${$t('Supported file types')}: ${extensions.join(', ')}`}, {`${$t('Max size')} ${maxFileSize / 1024 / 1024} MB`}
-			</p>
-			<button type="button" onclick={chooseFile} class="text-white">
-				{`${$t('Browse')}`}
-			</button>
-		{/if}
+	{@render dropZone()}
+
+	<div class="flex justify-between">
+		<p class="text-sm text-shade-300">
+			{`${$t('Supported file types')}: ${extensions.join(', ')}`}
+		</p>
+		<p class="text-sm text-shade-300">Max. 1GB</p>
 	</div>
 	{#if $errors}
 		<ul class="flex flex-col gap-xs text-sm">
