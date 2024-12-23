@@ -2,7 +2,20 @@
 	import MediaRow from './MediaRow.svelte';
 	import FileField from '$lib/components/Form/FileField.svelte';
 	import Divider from '$lib/components/Divider.svelte';
+	import { createSubmissionSchema, type CreateSubmissionSchema } from '$lib/schemas/submission';
+	import { getContext } from 'svelte';
+	import type { SuperForm } from 'sveltekit-superforms';
 	// TODO Add proof field
+	let { form } = getContext<SuperForm<CreateSubmissionSchema>>('superform');
+	let { isValid = $bindable() }: { isValid: boolean } = $props();
+	$effect(() => {
+		isValid = createSubmissionSchema
+			.pick({
+				mediaId: true,
+				thumbnailId: true // proofId: true
+			})
+			.safeParse($form).success;
+	});
 </script>
 
 <section>

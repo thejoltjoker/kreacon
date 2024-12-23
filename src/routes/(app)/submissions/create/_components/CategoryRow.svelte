@@ -17,8 +17,6 @@
 			})) ?? []
 	);
 	let { form } = getContext<SuperForm<CreateSubmissionSchema>>('superform');
-
-	$inspect(categories);
 </script>
 
 <SelectField

@@ -63,7 +63,6 @@
 	let enctype = setEnctype(enctypeOverride);
 
 	setContext('superform', superform);
-	$inspect(superform);
 </script>
 
 <form

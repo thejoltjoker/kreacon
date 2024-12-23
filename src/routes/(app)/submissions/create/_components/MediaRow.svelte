@@ -18,7 +18,6 @@
 	let mediaType: MediaType = $derived(
 		categories.find((c) => String(c.id) === String($form.categoryId))?.mediaType ?? 'image'
 	);
-	$inspect(superform);
 </script>
 
 <!-- TODO Disable if no category picked -->

@@ -2,15 +2,22 @@
 	import EventRow from './EventRow.svelte';
 	import CategoryRow from './CategoryRow.svelte';
 	import { page } from '$app/stores';
-	import type { CreateSubmissionSchema } from '$lib/schemas/submission';
+	import { createSubmissionSchema, type CreateSubmissionSchema } from '$lib/schemas/submission';
 	import type { SuperForm } from 'sveltekit-superforms';
 	import { getContext } from 'svelte';
 	import type { PageData } from '../$types';
 	import Link from '$lib/components/Link.svelte';
 
+	let { isValid = $bindable() }: { isValid: boolean } = $props();
 	let { form } = getContext<SuperForm<CreateSubmissionSchema>>('superform');
 	let events: PageData['events'] = $state($page.data.events);
 	let event = $derived(events?.find((e) => e.eventId?.toString() === $form.eventId.toString()));
+
+	$effect(() => {
+		isValid = createSubmissionSchema
+			.pick({ eventId: true, categoryId: true })
+			.safeParse($form).success;
+	});
 </script>
 
 <section class="flex flex-col gap-xl">

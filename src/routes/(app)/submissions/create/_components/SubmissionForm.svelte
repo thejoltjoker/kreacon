@@ -8,8 +8,13 @@
 	import EntrySection from './EntrySection.svelte';
 	import FilesSection from './FilesSection.svelte';
 	import FinishSection from './FinishSection.svelte';
+	import { zod } from 'sveltekit-superforms/adapters';
+	import { createSubmissionSchema } from '$lib/schemas/submission';
 
 	let currentTab = $state('1');
+	let step1Valid = $state(false);
+	let step2Valid = $state(false);
+	let step3Valid = $state(false);
 
 	const tabs = ['Entry', 'Files', 'Finishing up'];
 </script>
@@ -37,8 +42,13 @@
 <!-- TODO Store state in url -->
 <!-- TODO Disable continue if not valid selections -->
 <!-- TODO Redirect to tab 1 if not valid selections -->
+<!-- TODO Show add ticket form if no valid tickets -->
 <Tabs.Root bind:value={currentTab} controlledValue disabled>
-	<GenericForm data={$page.data.form} class="my-3xl gap-3xl px-sm md:px-xl">
+	<GenericForm
+		data={$page.data.form}
+		class="my-3xl gap-3xl px-sm md:px-xl"
+		options={{ validators: zod(createSubmissionSchema) }}
+	>
 		<Tabs.List class="flex w-full justify-evenly">
 			{#each tabs as t, index}
 				{@render tab(String(index + 1), t)}
@@ -48,15 +58,21 @@
 		<Divider class="my-xl" />
 
 		<Tabs.Content value="1">
-			<EntrySection />
+			<EntrySection bind:isValid={step1Valid} />
 		</Tabs.Content>
 		<Tabs.Content value="2">
-			<FilesSection />
+			<FilesSection bind:isValid={step2Valid} />
 		</Tabs.Content>
 		<Tabs.Content value="3">
-			<FinishSection />
+			<FinishSection bind:isValid={step3Valid} />
 		</Tabs.Content>
 		<Divider variant="invisible" />
-		<ButtonsSection bind:currentTab tabsCount={tabs.length} />
+		<ButtonsSection
+			bind:currentTab
+			tabsCount={tabs.length}
+			{step1Valid}
+			{step2Valid}
+			{step3Valid}
+		/>
 	</GenericForm>
 </Tabs.Root>

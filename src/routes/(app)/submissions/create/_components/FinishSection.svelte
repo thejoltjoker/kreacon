@@ -4,11 +4,20 @@
 	import TextField from '$lib/components/Form/TextField.svelte';
 	import Link from '$lib/components/Link.svelte';
 	import { licenseCode } from '$lib/schemas/license';
-
+	import { createSubmissionSchema, type CreateSubmissionSchema } from '$lib/schemas/submission';
+	import { getContext } from 'svelte';
+	import type { SuperForm } from 'sveltekit-superforms';
+	let { isValid = $bindable() }: { isValid: boolean } = $props();
 	const licenses: StyledSelectItem[] = licenseCode.map((code) => ({
 		label: code.toUpperCase(),
 		value: code
 	}));
+
+	let { form } = getContext<SuperForm<CreateSubmissionSchema>>('superform');
+
+	$effect(() => {
+		isValid = createSubmissionSchema.pick({ title: true, license: true }).safeParse($form).success;
+	});
 </script>
 
 <section>
