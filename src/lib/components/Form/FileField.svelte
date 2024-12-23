@@ -250,14 +250,13 @@
 			currentTarget: EventTarget & HTMLInputElement;
 		}
 	) => {
-		console.log('handleFileChange', event);
 		files = event.currentTarget.files;
 		if (!files) return;
 		currentState = 'uploading';
 		// TODO Generate checksum
 		const sas = await getUploadUrl(files[0]);
 		blobUrl = sas.url;
-		console.log('sas', sas);
+
 		try {
 			await uploadFile(sas.url, files[0]);
 			onUploadComplete?.(sas.fileId);
@@ -439,6 +438,7 @@
 		</ul>
 	{/if}
 
+	<!-- Hidden input elements -->
 	{#if mode === 'managed'}
 		<input
 			bind:this={fileInput}
@@ -450,6 +450,8 @@
 			id={field + '-file'}
 			{...props}
 			onchange={(event) => handleFileChange(event)}
+			hidden
+			form={Date.now().toString()}
 		/>
 		<input
 			type="text"
@@ -457,6 +459,7 @@
 			id={field}
 			value={$value}
 			class="bg-black text-white"
+			hidden
 			{...$constraints}
 		/>
 	{:else}
@@ -468,6 +471,7 @@
 			type="file"
 			name={field}
 			id={field}
+			hidden
 			{...$constraints}
 			{...props}
 		/>

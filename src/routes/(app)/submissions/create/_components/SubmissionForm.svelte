@@ -37,7 +37,7 @@
 <!-- TODO Store state in url -->
 <!-- TODO Show loading state -->
 <Tabs.Root bind:value={currentTab} controlledValue disabled>
-	<GenericForm debug data={$page.data.form} class="my-3xl gap-3xl px-sm md:px-xl">
+	<GenericForm data={$page.data.form} class="my-3xl gap-3xl px-sm md:px-xl">
 		<Tabs.List class="flex w-full justify-evenly">
 			{#each tabs as t, index}
 				{@render tab(String(index + 1), t)}
@@ -48,14 +48,14 @@
 
 		<Tabs.Content value="1">
 			<EntrySection />
-			<!-- </Tabs.Content>
-		<Tabs.Content value="2"> -->
+		</Tabs.Content>
+		<Tabs.Content value="2">
 			<FilesSection />
-			<!-- </Tabs.Content>
-		<Tabs.Content value="3"> -->
+		</Tabs.Content>
+		<Tabs.Content value="3">
 			<FinishSection />
 		</Tabs.Content>
 		<Divider variant="invisible" />
-		<ButtonsSection bind:currentTab tabsCount={1} />
+		<ButtonsSection bind:currentTab tabsCount={tabs.length} />
 	</GenericForm>
 </Tabs.Root>
