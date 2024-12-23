@@ -4,7 +4,7 @@
 	import DumbInput from '$lib/components/Form/DumbInput.svelte';
 	import DumbSelect from '$lib/components/Form/DumbSelect.svelte';
 	import { getAllowedExtensions } from '$lib/helpers/mediaTypes';
-	import { createCategorySchema } from '$lib/server/db/schema/category';
+	import type { createCategorySchema } from '$lib/schemas/categorySchema';
 	import { MediaTypes, type MediaType } from '$lib/types/mediaTypes';
 	import startCase from 'lodash/startCase';
 
