@@ -41,19 +41,6 @@ export const insertCategorySchema = createInsertSchema(categories).extend({
 });
 export const selectCategorySchema = createSelectSchema(categories);
 
-export const createCategorySchema = insertCategorySchema
-	.pick({
-		name: true,
-		description: true,
-		mediaType: true,
-		slug: true
-	})
-	.extend({
-		slug: insertCategorySchema.shape.slug.optional()
-	});
-
-export type CreateCategory = z.infer<typeof createCategorySchema>;
-
 export type Category = InferSelectModel<typeof categories>;
 export type InsertCategory = InferInsertModel<typeof categories>;
 

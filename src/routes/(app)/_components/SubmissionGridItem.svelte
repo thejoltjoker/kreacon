@@ -1,13 +1,13 @@
 <script lang="ts">
 	import Avatar from '$lib/components/Avatar.svelte';
 	import type { Category } from '$lib/server/db/schema/category';
-	import type { Media } from '$lib/server/db/schema/media';
+	import type { SelectFile } from '$lib/server/db/schema/file';
 	import type { Submission } from '$lib/server/db/schema/submission';
 	import type { PublicUser } from '$lib/server/db/schema/user';
 	import StatusIcon from '../submissions/_components/StatusIcon.svelte';
 
 	interface Props {
-		submission: Submission & { category: Category; thumbnail: Media; user: PublicUser };
+		submission: Submission & { category: Category; thumbnail: SelectFile; user: PublicUser };
 	}
 
 	let { submission }: Props = $props();

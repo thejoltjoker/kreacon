@@ -1,5 +1,5 @@
 {
-	"id": "cbcdcaef-5860-4a33-8897-066c424e7b62",
+	"id": "046ca4e1-2de7-4de4-9f60-9165b1b4abb8",
 	"prevId": "00000000-0000-0000-0000-000000000000",
 	"version": "7",
 	"dialect": "postgresql",
@@ -277,6 +277,76 @@
 					"columns": ["slug"]
 				}
 			},
+			"policies": {},
+			"checkConstraints": {},
+			"isRLSEnabled": false
+		},
+		"public.file": {
+			"name": "file",
+			"schema": "",
+			"columns": {
+				"id": {
+					"name": "id",
+					"type": "uuid",
+					"primaryKey": true,
+					"notNull": true,
+					"default": "gen_random_uuid()"
+				},
+				"type": {
+					"name": "type",
+					"type": "varchar(127)",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"url": {
+					"name": "url",
+					"type": "varchar(255)",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"name": {
+					"name": "name",
+					"type": "varchar(255)",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"size": {
+					"name": "size",
+					"type": "integer",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"checksum": {
+					"name": "checksum",
+					"type": "varchar(255)",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"metadata": {
+					"name": "metadata",
+					"type": "jsonb",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"created_at": {
+					"name": "created_at",
+					"type": "timestamp",
+					"primaryKey": false,
+					"notNull": true,
+					"default": "now()"
+				},
+				"updated_at": {
+					"name": "updated_at",
+					"type": "timestamp",
+					"primaryKey": false,
+					"notNull": true,
+					"default": "now()"
+				}
+			},
+			"indexes": {},
+			"foreignKeys": {},
+			"compositePrimaryKeys": {},
+			"uniqueConstraints": {},
 			"policies": {},
 			"checkConstraints": {},
 			"isRLSEnabled": false
@@ -580,9 +650,9 @@
 					"primaryKey": false,
 					"notNull": true
 				},
-				"media_id": {
-					"name": "media_id",
-					"type": "integer",
+				"ticket_id": {
+					"name": "ticket_id",
+					"type": "varchar(255)",
 					"primaryKey": false,
 					"notNull": true
 				},
@@ -593,18 +663,6 @@
 					"primaryKey": false,
 					"notNull": true,
 					"default": "'draft'"
-				},
-				"thumbnail_id": {
-					"name": "thumbnail_id",
-					"type": "integer",
-					"primaryKey": false,
-					"notNull": true
-				},
-				"ticket_id": {
-					"name": "ticket_id",
-					"type": "varchar(255)",
-					"primaryKey": false,
-					"notNull": true
 				},
 				"title": {
 					"name": "title",
@@ -618,6 +676,31 @@
 					"primaryKey": false,
 					"notNull": true,
 					"default": 0
+				},
+				"license": {
+					"name": "license",
+					"type": "license",
+					"typeSchema": "public",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"media_id": {
+					"name": "media_id",
+					"type": "uuid",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"thumbnail_id": {
+					"name": "thumbnail_id",
+					"type": "uuid",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"proof_id": {
+					"name": "proof_id",
+					"type": "uuid",
+					"primaryKey": false,
+					"notNull": false
 				},
 				"created_at": {
 					"name": "created_at",
@@ -875,6 +958,11 @@
 		}
 	},
 	"enums": {
+		"public.license": {
+			"name": "license",
+			"schema": "public",
+			"values": ["cc-by", "cc-by-sa", "cc-by-nc", "cc-by-nc-sa", "cc-by-nd", "cc-by-nc-nd", "cc0"]
+		},
 		"public.media_type": {
 			"name": "media_type",
 			"schema": "public",

@@ -25,11 +25,11 @@ test('Login and view events', async ({ page }) => {
 	await expect(eventsList.locator('li').first()).toContainText('Voting Close At');
 
 	// Sorting should work
-	await expect(eventsList.locator('li').first()).toContainText('Dino Days');
+	await expect(eventsList.locator('li').first()).toContainText('Beacon 2025');
 	await expect(eventsList.locator('li').last()).toContainText('Mesozoic Masterpieces');
 	await page.goto('/admin/events?sortBy=oldest');
 	await expect(eventsList.locator('li').first()).toContainText('Mesozoic Masterpieces');
-	await expect(eventsList.locator('li').last()).toContainText('Dino Days');
+	await expect(eventsList.locator('li').last()).toContainText('Beacon 2025');
 
 	// Search filter should work
 	await page.getByPlaceholder('Search').fill('dino');

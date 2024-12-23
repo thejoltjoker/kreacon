@@ -4,8 +4,8 @@
 	import DumbInput from '$lib/components/Form/DumbInput.svelte';
 	import DumbSelect from '$lib/components/Form/DumbSelect.svelte';
 	import { getAllowedExtensions } from '$lib/helpers/mediaTypes';
-	import type { createCategorySchema } from '$lib/server/db/schema/category';
-	import { mediaTypes, type MediaType } from '$lib/types/mediaTypes';
+	import type { createCategorySchema } from '$lib/schemas/categorySchema';
+	import { MediaTypes, type MediaType } from '$lib/types/mediaTypes';
 	import startCase from 'lodash/startCase';
 
 	import { t } from 'svelte-i18n';
@@ -63,7 +63,7 @@
 			name="mediaType"
 			type="single"
 			bind:value={$form.mediaType}
-			items={mediaTypes.map((mediaType) => ({ value: mediaType, label: startCase($t(mediaType)) }))}
+			items={MediaTypes.map((mediaType) => ({ value: mediaType, label: startCase($t(mediaType)) }))}
 		/>
 		{#if $form.mediaType}
 			<p class="text-shade-400">

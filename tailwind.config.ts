@@ -1,5 +1,6 @@
 import type { Config } from 'tailwindcss';
-import twForms from '@tailwindcss/forms';
+import animate from 'tailwindcss-animate';
+import forms from '@tailwindcss/forms';
 import defaultTheme from 'tailwindcss/defaultTheme';
 
 export const colors = {
@@ -13,7 +14,7 @@ export const colors = {
 		'600': 'hsl(240 10% 21%)',
 		'700': 'hsl(240 10% 16%)',
 		'800': 'hsl(240 12% 12%)',
-		'900': 'hsl(240 12% 9%)',
+		'900': 'hsl(240 14% 9%)',
 		'950': 'hsl(240 15% 7%)'
 	},
 	bubblegum: {
@@ -224,10 +225,30 @@ export default {
 				error: { DEFAULT: colors.pomodoro[500] },
 				bg: { DEFAULT: colors.shade[950], dark: colors.shade[950] },
 				...colors
+			},
+			keyframes: {
+				'accordion-down': {
+					from: { height: '0' },
+					to: { height: 'var(--bits-accordion-content-height)' }
+				},
+				'accordion-up': {
+					from: { height: 'var(--bits-accordion-content-height)' },
+					to: { height: '0' }
+				},
+				'caret-blink': {
+					'0%,70%,100%': { opacity: '1' },
+					'20%,50%': { opacity: '0' }
+				}
+			},
+			animation: {
+				'accordion-down': 'accordion-down 0.2s ease-out',
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'caret-blink': 'caret-blink 1.25s ease-out infinite'
 			}
 		}
 	},
 	safelist: [
+		'media-tooltip',
 		'border-red-500',
 		'border-green-500',
 		'border-violet-500',
@@ -246,5 +267,5 @@ export default {
 		'border'
 	],
 	darkMode: 'selector',
-	plugins: [twForms]
+	plugins: [forms, animate]
 } as Config;

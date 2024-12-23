@@ -5,7 +5,8 @@ export const loginSchema = z.object({
 		.string()
 		.email({ message: 'Invalid email address' })
 		.max(128, { message: 'Email is too long' }),
-	password: z.string().max(128, { message: 'Password is too long' })
+	password: z.string().max(128, { message: 'Password is too long' }),
+	redirect: z.string().optional()
 });
 
 export type ZLoginSchema = typeof loginSchema;

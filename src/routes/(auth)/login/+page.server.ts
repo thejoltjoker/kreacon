@@ -47,6 +47,9 @@ export const actions = {
 		const session = await createSession(sessionToken, existingUser.id);
 		setSessionTokenCookie(event, sessionToken, session.expiresAt);
 
+		if (form.data.redirect != null) {
+			return redirect(StatusCodes.TEMPORARY_REDIRECT, form.data.redirect);
+		}
 		return redirect(StatusCodes.TEMPORARY_REDIRECT, '/profile');
 	}
 } satisfies Actions;

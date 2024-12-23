@@ -4,9 +4,10 @@ import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
 import { randomString } from '../../../helpers/randomString';
 import categories, { type Category } from './category';
 import events from './event';
-import media, { type Media } from './media';
+import { files } from './file';
+import { type Media } from './media';
 import reactions from './reaction';
-import { submissionStatusEnum, timestamps } from './shared';
+import { licenseEnum, submissionStatusEnum, timestamps } from './shared';
 import tickets from './ticket';
 import users from './user';
 import { votes } from './vote';
@@ -22,14 +23,15 @@ export const submissions = pgTable(
 			.notNull(),
 		categoryId: integer('category_id').notNull(),
 		eventId: integer('event_id').notNull(),
-		mediaId: integer('media_id').notNull(),
-		status: submissionStatusEnum('status').notNull().default('draft'),
-		thumbnailId: integer('thumbnail_id').notNull(),
 		ticketId: varchar('ticket_id', { length: 255 }).notNull(),
+		status: submissionStatusEnum('status').notNull().default('draft'),
 		title: varchar({ length: 255 }).notNull(),
 		views: integer().notNull().default(0),
-		// TODO Add license https://creativecommons.org/share-your-work/cclicenses/
-		// license: varchar({ length: 255 }).notNull(),
+		license: licenseEnum('license').notNull(),
+		// Files
+		mediaId: uuid('media_id').notNull(),
+		thumbnailId: uuid('thumbnail_id').notNull(),
+		proofId: uuid('proof_id'),
 		...timestamps
 	},
 	(table) => ({
@@ -59,13 +61,17 @@ export const submissionsRelations = relations(submissions, ({ one, many }) => ({
 	}),
 	reactions: many(reactions),
 	votes: many(votes),
-	media: one(media, {
+	media: one(files, {
 		fields: [submissions.mediaId],
-		references: [media.id]
+		references: [files.id]
 	}),
-	thumbnail: one(media, {
+	thumbnail: one(files, {
 		fields: [submissions.thumbnailId],
-		references: [media.id]
+		references: [files.id]
+	}),
+	proof: one(files, {
+		fields: [submissions.proofId],
+		references: [files.id]
 	})
 }));
 

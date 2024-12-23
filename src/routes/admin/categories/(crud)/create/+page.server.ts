@@ -1,5 +1,5 @@
 import db from '$lib/server/db';
-import categories, { createCategorySchema } from '$lib/server/db/schema/category';
+
 import type { MediaType } from '$lib/types/mediaTypes';
 import { fail, redirect } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
@@ -8,6 +8,8 @@ import kebabCase from 'lodash/kebabCase';
 import { zod } from 'sveltekit-superforms/adapters';
 import { superValidate } from 'sveltekit-superforms/server';
 import type { PageServerLoad } from './$types';
+import { createCategorySchema } from '$lib/schemas/categorySchema';
+import { categories } from '$lib/server/db/schema';
 
 export const load = (async () => {
 	const form = await superValidate(zod(createCategorySchema));

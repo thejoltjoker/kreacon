@@ -1,32 +1,19 @@
-import { fail, message, superValidate } from 'sveltekit-superforms';
-import type { Actions, PageServerLoad } from './$types';
-import { zod } from 'sveltekit-superforms/adapters';
-import submissions, { insertSubmissionSchema } from '$lib/server/db/schema/submission';
-import { error, redirect } from '@sveltejs/kit';
+import { createSubmissionSchema } from '$lib/schemas/submission';
 import db from '$lib/server/db';
-import { media, tickets, users } from '$lib/server/db/schema';
+import { tickets, users } from '$lib/server/db/schema';
+import submissions from '$lib/server/db/schema/submission';
+import { error, redirect } from '@sveltejs/kit';
 import { and, eq } from 'drizzle-orm';
-import { z } from 'zod';
 import { StatusCodes } from 'http-status-codes';
-import { saveFile } from '$lib/helpers/saveFile';
-
-const createSubmissionSchema = insertSubmissionSchema
-	.pick({ categoryId: true, eventId: true, title: true })
-	.extend({
-		media: z
-			.instanceof(File, { message: 'Please upload a file.' })
-			.refine((f) => f.size < 1_000_000_000, 'Max 1 GB upload size.')
-			.optional(),
-		thumbnail: z
-			.instanceof(File, { message: 'Please upload a file.' })
-			.refine((f) => f.size < 2_000_000, 'Max 2 MB upload size.')
-			.optional()
-	});
+import { fail, message, superValidate } from 'sveltekit-superforms';
+import { zod } from 'sveltekit-superforms/adapters';
+import type { Actions, PageServerLoad } from './$types';
 
 export const load = (async ({ locals }) => {
 	if (!locals.user || !locals.session) {
 		redirect(StatusCodes.TEMPORARY_REDIRECT, '/login?redirect=/submissions/create');
 	}
+
 	const form = await superValidate(zod(createSubmissionSchema));
 	const now = new Date();
 
@@ -35,7 +22,9 @@ export const load = (async ({ locals }) => {
 		with: {
 			tickets: {
 				with: {
-					event: { with: { eventCategories: { with: { category: true } } } }
+					event: {
+						with: { eventCategories: { with: { category: true, rules: true } }, rules: true }
+					}
 				}
 			},
 			submissions: true
@@ -53,6 +42,7 @@ export const load = (async ({ locals }) => {
 	const events = userTickets.map((ticket) => {
 		const mappedCategories = ticket.event?.eventCategories.map((ce) => ({
 			...ce.category,
+			rules: ce.rules.map((r) => r.text),
 			isDisabled: userData?.submissions.some((s) => {
 				const currentEvent = s.eventId === ticket.event?.id;
 				const currentCategory = s.categoryId === ce.category.id;
@@ -69,17 +59,11 @@ export const load = (async ({ locals }) => {
 			submissionsOpenAt: ticket.event?.submissionsOpenAt,
 			// ticketId: ticket.id,
 			votingCloseAt: ticket.event?.votingCloseAt,
-			votingOpenAt: ticket.event?.votingOpenAt
+			votingOpenAt: ticket.event?.votingOpenAt,
+			rules: ticket.event?.rules.map((r) => r.text)
 		};
 	});
 
-	form.data = {
-		title: '',
-		categoryId: 0,
-		eventId: 0,
-		media: undefined,
-		thumbnail: undefined
-	};
 	const title = { text: 'Create Submission' };
 	return {
 		form,
@@ -98,7 +82,7 @@ export const actions = {
 
 		console.log('Massaging form data');
 		console.log('form', form);
-		console.log('media', form.data.media);
+		console.log('media', form.data.mediaId);
 		if (!form.valid) return fail(StatusCodes.BAD_REQUEST, { form });
 
 		const userData = await db.query.users.findFirst({
@@ -141,42 +125,25 @@ export const actions = {
 			return error(StatusCodes.BAD_REQUEST, { message: 'Category not available for this event' });
 		}
 
-		// TODO Save file to blob storage
-
-		let mediaPath: string | undefined = undefined;
-		if (form.data.media != null) {
-			mediaPath = await saveFile(form.data.media);
-		}
+		// TODO Get checksum from blob storage
 
 		let id: string | null = null;
 		try {
-			await db.transaction(async (tx) => {
-				const [insertedMedia] =
-					mediaPath != null
-						? await tx
-								.insert(media)
-								.values({
-									url: mediaPath,
-									filename: (form.data.media?.name ?? '') + Date.now(),
-									alt: form.data.title,
-									type: 'image'
-								})
-								.returning()
-						: [];
-				const [result] = await tx
-					.insert(submissions)
-					.values({
-						...form.data,
-						userId: user.id,
-						ticketId: ticket.id,
-						status: 'pending',
-						mediaId: insertedMedia?.id,
-						// TODO Add thumbnail
-						thumbnailId: insertedMedia?.id
-					})
-					.returning();
-				id = result?.id;
-			});
+			const [result] = await db
+				.insert(submissions)
+				.values({
+					...form.data,
+					userId: user.id,
+					ticketId: ticket.id,
+					status: 'pending',
+					mediaId: form.data.mediaId,
+					// TODO Add thumbnail
+					thumbnailId: form.data.thumbnailId,
+					proofId: form.data.proofId,
+					license: form.data.license
+				})
+				.returning();
+			id = result?.id;
 		} catch {
 			return error(StatusCodes.INTERNAL_SERVER_ERROR, { message: 'Failed to create submission' });
 		}
@@ -184,6 +151,7 @@ export const actions = {
 			redirect(StatusCodes.SEE_OTHER, `/submissions/${id}`);
 		}
 
+		// TODO Remove permissions from blob store
 		return message(form, { text: 'Form posted successfully!', status: 'success' });
 	}
 } satisfies Actions;

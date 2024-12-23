@@ -1,55 +1,139 @@
 import env from '$lib/env';
-import { DefaultAzureCredential } from '@azure/identity';
-import { BlobServiceClient } from '@azure/storage-blob';
+import { xxhash } from '$lib/helpers/hashing';
+import { createLogger } from '$lib/helpers/logger';
+import type { AzureStorageContainer } from '$lib/types/AzureStorageContainer';
+import {
+	BlobSASPermissions,
+	BlobServiceClient,
+	StorageSharedKeyCredential,
+	type BlockBlobUploadOptions,
+	type ContainerCreateOptions
+} from '@azure/storage-blob';
+import { fileTypeFromBuffer } from 'file-type';
 
-export const blobServiceClient = new BlobServiceClient(
-	`https://${env.AZURE_STORAGE_ACCOUNT_NAME}.blob.core.windows.net`,
-	new DefaultAzureCredential()
-);
+const logger = createLogger('azure-storage');
 
-export const containerClient = blobServiceClient.getContainerClient(
-	'kreacon-dev-storage-container'
-);
+export const DEFAULT_STORAGE_CONTAINER: AzureStorageContainer = 'uploads';
 
-// TODO
-// export const uploadBlob = async (file: Buffer | Blob, contentType: string) => {
-// 	let fileBuffer;
-// 	if (file instanceof Blob) {
-// 		fileBuffer = await file.arrayBuffer();
-// 	} else {
-// 		fileBuffer = file;
-// 	}
-// 	const blobName = createHash('sha256').update(fileBuffer).digest('hex');
-// 	const blockBlobClient = containerClient.getBlockBlobClient(blobName);
+export const getOrCreateContainer = async (
+	blobServiceClient: BlobServiceClient,
+	containerName: AzureStorageContainer,
+	options?: ContainerCreateOptions
+) => {
+	const containerClient = blobServiceClient.getContainerClient(containerName);
+	await containerClient.createIfNotExists(options);
+	logger.info(`Container was created successfully.\n\tURL: ${containerClient.url}`);
+	return containerClient;
+};
 
-// 	try {
-// 		// Create a new block blob with the appropriate content type
-// 		const options = {
-// 			blobHTTPHeaders: {
-// 				blobContentType: contentType
-// 			}
-// 		};
-// 		const uploadBlobResponse = await blockBlobClient.upload(
-// 			fileBuffer,
-// 			fileBuffer.byteLength,
-// 			options
-// 		);
-// 		console.log(`Uploaded block blob ${blobName} successfully`);
+export const getUploadsContainer = async () => {
+	return await getOrCreateContainer(getBlobServiceClient(), 'uploads', {
+		access: 'blob'
+	});
+};
 
-// 		// Return the blob URL for future reference
-// 		return blockBlobClient.url;
-// 	} catch (err: unknown) {
-// 		console.error('Failed to upload blob:', err);
-// 		throw err;
-// 	}
-// };
+export const getBlobServiceClient = () => {
+	const sharedKeyCredential = new StorageSharedKeyCredential(
+		env.AZURE_STORAGE_ACCOUNT_NAME,
+		env.AZURE_STORAGE_ACCOUNT_KEY
+	);
+	return new BlobServiceClient(
+		`https://${env.AZURE_STORAGE_ACCOUNT_NAME}.blob.core.windows.net`,
+		sharedKeyCredential
+	);
+};
 
-// Form
-// const formData = await request.formData();
-// const file = formData.get('photo') as File;
-// const buffer = Buffer.from(await file.arrayBuffer());
-// const imageUrl = await uploadBlob(buffer, file.type);
+export const generateBlobSasUrl = async (
+	containerName: AzureStorageContainer,
+	blobName: string,
+	expiryMinutes: number = 30
+) => {
+	const blobServiceClient = getBlobServiceClient();
 
-// Buffer
-// const buffer = fs.readFileSync('path/to/photo.jpg');
-// const imageUrl = await uploadBlob(buffer, 'image/jpeg');
+	const containerClient = await getOrCreateContainer(blobServiceClient, containerName);
+	const blobClient = containerClient.getBlobClient(blobName);
+
+	const startsOn = new Date();
+	const expiresOn = new Date(startsOn.valueOf() + 1000 * 60 * expiryMinutes);
+
+	const permissions = BlobSASPermissions.from({
+		create: true,
+		write: true,
+		delete: true
+	});
+
+	const blobSasUrl = blobClient.generateSasUrl({ permissions, expiresOn });
+
+	return blobSasUrl;
+};
+
+export const azureUploadBlob = async (
+	filename: string,
+	data: Buffer | ArrayBuffer,
+	contentType: string,
+	containerName?: string,
+	options?: BlockBlobUploadOptions
+) => {
+	const blobServiceClient = getBlobServiceClient();
+	const containerClient = await getOrCreateContainer(
+		blobServiceClient,
+		(containerName ?? 'uploads') as AzureStorageContainer,
+		{
+			access: 'blob'
+		}
+	);
+	const blockBlobClient = containerClient.getBlockBlobClient(filename);
+
+	try {
+		const uploadOptions: BlockBlobUploadOptions = {
+			blobHTTPHeaders: {
+				blobContentType: contentType
+			},
+			...options
+		};
+		await blockBlobClient.upload(data, data.byteLength, uploadOptions);
+		logger.info(`Uploaded blob ${filename} successfully`);
+
+		return blockBlobClient.url;
+	} catch (err: unknown) {
+		logger.error('Failed to upload blob:', err);
+		throw err;
+	}
+};
+
+export const uploadFile = async (file: File, container?: string) => {
+	const buffer = Buffer.from(await file.arrayBuffer());
+	return await uploadBuffer(buffer, container);
+};
+
+export const uploadBuffer = async (buffer: Buffer | ArrayBuffer, container?: string) => {
+	// Convert Buffer to Uint8Array if needed
+	const bufferAsUint8Array = buffer instanceof Buffer ? new Uint8Array(buffer) : buffer;
+	const fileType = await fileTypeFromBuffer(bufferAsUint8Array);
+	if (fileType == null || fileType.ext == null || fileType.mime == null) {
+		throw new Error('Failed to determine file type');
+	}
+	const { ext, mime } = fileType;
+	const checksum = xxhash(buffer);
+	const blobName = `${checksum}.${ext}`;
+	return await azureUploadBlob(blobName, buffer, mime, container);
+};
+
+// Client
+export const upload = {
+	thumbnail: async (file: File) => {
+		return await uploadFile(file);
+	},
+	video: async (file: File) => {
+		return await uploadFile(file);
+	},
+	audio: async (file: File) => {
+		return await uploadFile(file);
+	},
+	image: async (file: File) => {
+		return await uploadFile(file);
+	},
+	avatar: async (file: File) => {
+		return await uploadFile(file);
+	}
+};

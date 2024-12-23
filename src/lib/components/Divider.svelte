@@ -19,6 +19,7 @@
 
 	export type DividerProps = WithChildren & {
 		variant?: DividerVariant;
+		class?: string;
 	};
 </script>
 
@@ -26,16 +27,16 @@
 	import { Separator } from 'bits-ui';
 	import { cn } from '$lib/utils';
 
-	let { children, variant = 'default' }: DividerProps = $props();
+	let { children, variant = 'default', class: className }: DividerProps = $props();
 	let classes = dividerVariants({ variant });
 </script>
 
 {#if children}
 	<div class="flex h-form items-center gap-sm text-center text-sm">
-		<div class={cn('flex-1', classes)}></div>
+		<div class={cn('flex-1', classes, className)}></div>
 		{@render children()}
-		<div class={cn('flex-1', classes)}></div>
+		<div class={cn('flex-1', classes, className)}></div>
 	</div>
 {:else}
-	<Separator.Root class={cn(classes)} />
+	<Separator.Root class={cn(classes, className)} />
 {/if}

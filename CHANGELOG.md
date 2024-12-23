@@ -77,6 +77,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   [#44](https://github.com/thejoltjoker/kreacon/pull/44)
 - Update admin events page, with new form
   [#69](https://github.com/thejoltjoker/kreacon/pull/69)
+- Update user create submission page with multi step form
+  [#84](https://github.com/thejoltjoker/kreacon/pull/84)
 
 ### Deprecated
 

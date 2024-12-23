@@ -10,7 +10,6 @@ const stringBoolean = z.coerce
 	.default('false');
 
 const EnvSchema = z.object({
-	BASE_URL: z.string().url(),
 	DATABASE_URL: z.string(),
 	OAUTH_DISCORD_CLIENT_SECRET: z.string(),
 	OAUTH_DISCORD_REDIRECT_URI: z.string(),
@@ -19,11 +18,14 @@ const EnvSchema = z.object({
 	OAUTH_GITHUB_REDIRECT_URI: z.string(),
 	TICKET_API_URL: z.string().url(),
 	OAUTH_DISCORD_CLIENT_ID: z.string(),
+	AZURE_STORAGE_ACCOUNT_NAME: z.string(),
+	AZURE_STORAGE_ACCOUNT_KEY: z.string(),
 	// Optional
+	PUBLIC_BASE_URL: z.string().default(''),
+	PUBLIC_MAX_UPLOAD_SIZE: z.coerce.number().default(1024 * 1024 * 1024),
 	DB_MIGRATING: stringBoolean,
 	DB_SEEDING: stringBoolean,
 	AZURE_APP_INSIGHTS_CONNECTION_STRING: z.string().optional(),
-	AZURE_STORAGE_ACCOUNT_NAME: z.string().optional(),
 	DB_HOST: z.string().optional(),
 	DB_NAME: z.string().optional(),
 	DB_PASSWORD: z.string().optional(),

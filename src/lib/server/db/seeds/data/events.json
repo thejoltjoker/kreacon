@@ -100,5 +100,96 @@
 			}
 		],
 		"tickets": [{ "username": "john_doe" }, { "username": "alice_smith" }]
+	},
+	{
+		"name": "Fossil Finds",
+		"slug": "fossil-finds",
+		"description": "A special exhibition focusing on recent paleontological discoveries. Share your best fossil photography and help bring these ancient remnants to life.",
+		"submissionsOpenAt": "2023-06-01T00:00:00Z",
+		"submissionsCloseAt": "2033-06-01T23:59:59Z",
+		"votingOpenAt": "2023-06-01T00:00:00Z",
+		"votingCloseAt": "2033-06-01T23:59:59Z",
+		"rules": [
+			{
+				"text": "Submissions must not use copyrighted material without explicit rights or licenses."
+			}
+		],
+		"categories": [
+			{
+				"name": "Dinosaur Photography",
+				"prizes": [
+					{ "text": "Professional Camera Lens", "position": 1 },
+					{ "text": "Photography Light Kit", "position": 2 },
+					{ "text": "Camera Bag", "position": 3 }
+				],
+				"rules": [
+					{ "text": "The 'General Rules' apply to all competition categories." },
+					{ "text": "Photos must be taken at recognized museums or dig sites" },
+					{ "text": "Maximum file size 20MB per photograph" }
+				]
+			}
+		],
+		"tickets": [{ "username": "john_doe" }]
+	},
+	{
+		"name": "Beacon 2025",
+		"slug": "beacon-2025",
+		"description": "A LAN party for gamers, by gamers.",
+		"submissionsOpenAt": "2025-02-14T00:00:00Z",
+		"submissionsCloseAt": "2025-02-15T23:59:59Z",
+		"votingOpenAt": "2025-02-16T00:00:00Z",
+		"votingCloseAt": "2025-02-16T15:00:00Z",
+		"rules": [
+			{
+				"text": "Submissions must not use copyrighted material without explicit rights or licenses."
+			},
+			{
+				"text": "The Submission mustn't have been shown/played at any similar event/demoparty/creative workshop before this event."
+			},
+			{
+				"text": "the submission shouldn't have been publicly spread and known before the party."
+			},
+			{
+				"text": "Keep it family friendly, and not offensive. "
+			},
+			{
+				"text": "We reserve the right to reject any submission if we feel they don't comply with all of the rules."
+			},
+			{
+				"text": "Proof should be provided in a .zip file, where requested."
+			},
+			{
+				"text": "Maximum play time is 10 minutes."
+			},
+			{ "text": "Beacon may use the submission in marketing etc." },
+			{
+				"text": "Maximum file size is 1GB. We recommend using https://handbrake.fr/ to compress your submission."
+			}
+		],
+		"categories": [
+			{
+				"name": "Tracked Music",
+				"prizes": [],
+				"rules": [
+					{ "text": "Your mod must fit on a floppy (1.44 MB max)." },
+					{ "text": "Keep it under 4 minutes." },
+					{ "text": "Maximum 32 channels." },
+					{ "text": "The submission must include a rendered version (MP3/WAV)." },
+					{ "text": "The submission must include the original module file." },
+					{
+						"text": "Must be made in a proper tracker format (check out: https://en.wikipedia.org/wiki/Module_file)"
+					}
+				]
+			},
+			{
+				"name": "Stop Motion",
+				"prizes": [],
+				"rules": [
+					{ "text": "The 'General Rules' apply to all competition categories." },
+					{ "text": "The submission must be a stop motion video." }
+				]
+			}
+		],
+		"tickets": [{ "username": "john_doe" }]
 	}
 ]

@@ -52,6 +52,7 @@
 	<span class="relative">
 		<StyledInput
 			name={field}
+			id={field}
 			type="text"
 			class={cn($errors && 'input-invalid', className)}
 			aria-invalid={$errors ? 'true' : undefined}
