@@ -17,11 +17,7 @@
 			})) ?? []
 	);
 	let { form } = getContext<SuperForm<CreateSubmissionSchema>>('superform');
-	// let rules = $derived(
-	// 	events
-	// 		?.find((e) => e.eventId?.toString() === $form.eventId.toString())
-	// 		?.categories?.find((c) => c.id.toString() === $form.categoryId.toString())?.rules
-	// );
+
 	$inspect(categories);
 </script>
 

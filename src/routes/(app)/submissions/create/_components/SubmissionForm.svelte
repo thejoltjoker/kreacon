@@ -35,7 +35,8 @@
 {/snippet}
 
 <!-- TODO Store state in url -->
-<!-- TODO Show loading state -->
+<!-- TODO Disable continue if not valid selections -->
+<!-- TODO Redirect to tab 1 if not valid selections -->
 <Tabs.Root bind:value={currentTab} controlledValue disabled>
 	<GenericForm data={$page.data.form} class="my-3xl gap-3xl px-sm md:px-xl">
 		<Tabs.List class="flex w-full justify-evenly">
