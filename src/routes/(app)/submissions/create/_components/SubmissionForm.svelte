@@ -11,6 +11,8 @@
 	import { zod } from 'sveltekit-superforms/adapters';
 	import { createSubmissionSchema } from '$lib/schemas/submission';
 
+	// TODO Improve navigation guard
+	// TODO Use more semantic naming for tabs
 	let currentTab = $state('1');
 	let step1Valid = $state(false);
 	let step2Valid = $state(false);

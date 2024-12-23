@@ -1,8 +1,7 @@
 import { z } from 'zod';
 
-
 export const licenseCode = [
-    'cc-by',
+	'cc-by',
 	'cc-by-sa',
 	'cc-by-nc',
 	'cc-by-nc-sa',
