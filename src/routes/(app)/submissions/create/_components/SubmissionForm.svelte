@@ -40,7 +40,6 @@
 {/snippet}
 
 <!-- TODO Store state in url -->
-<!-- TODO Disable continue if not valid selections -->
 <!-- TODO Redirect to tab 1 if not valid selections -->
 <!-- TODO Show add ticket form if no valid tickets -->
 <Tabs.Root bind:value={currentTab} controlledValue disabled>
