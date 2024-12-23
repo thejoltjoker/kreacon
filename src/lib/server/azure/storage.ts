@@ -2,13 +2,9 @@ import env from '$lib/env';
 import { xxhash } from '$lib/helpers/hashing';
 import { createLogger } from '$lib/helpers/logger';
 import type { AzureStorageContainer } from '$lib/types/AzureStorageContainer';
-import { DefaultAzureCredential } from '@azure/identity';
 import {
 	BlobSASPermissions,
 	BlobServiceClient,
-	ContainerSASPermissions,
-	generateBlobSASQueryParameters,
-	SASProtocol,
 	StorageSharedKeyCredential,
 	type BlockBlobUploadOptions,
 	type ContainerCreateOptions
@@ -81,7 +77,7 @@ export const azureUploadBlob = async (
 	const blobServiceClient = getBlobServiceClient();
 	const containerClient = await getOrCreateContainer(
 		blobServiceClient,
-		containerName ?? 'uploads',
+		(containerName ?? 'uploads') as AzureStorageContainer,
 		{
 			access: 'blob'
 		}
@@ -111,7 +107,9 @@ export const uploadFile = async (file: File, container?: string) => {
 };
 
 export const uploadBuffer = async (buffer: Buffer | ArrayBuffer, container?: string) => {
-	const fileType = await fileTypeFromBuffer(buffer);
+	// Convert Buffer to Uint8Array if needed
+	const bufferAsUint8Array = buffer instanceof Buffer ? new Uint8Array(buffer) : buffer;
+	const fileType = await fileTypeFromBuffer(bufferAsUint8Array);
 	if (fileType == null || fileType.ext == null || fileType.mime == null) {
 		throw new Error('Failed to determine file type');
 	}

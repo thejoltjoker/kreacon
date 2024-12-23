@@ -1,13 +1,12 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
-	import type { HTMLAttributes } from 'svelte/elements';
+	import type { HTMLAnchorAttributes } from 'svelte/elements';
 	import { twMerge } from 'tailwind-merge';
-	interface Props extends HTMLAttributes<HTMLAnchorElement> {
-		href: string;
+	interface LinkProps extends HTMLAnchorAttributes {
 		children: Snippet;
 	}
 
-	let { href, children, ...props }: Props = $props();
+	let { href, children, ...props }: LinkProps = $props();
 
 	const className = twMerge(
 		'underline decoration-primary decoration-2 hover:text-primary hover:no-underline hover:opacity-100',

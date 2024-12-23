@@ -31,6 +31,7 @@ import * as schema from '../../db/schema';
 import data from './data/submissions.json';
 import type { MediaType } from '$lib/types/mediaTypes';
 import type { SubmissionStatus } from '$lib/types/submissionStatus';
+import type { LicenseCode } from '$lib/schemas/license';
 
 async function getUserIdFromEmail(db: db, email: string) {
 	const user = await db.query.users.findFirst({
@@ -133,7 +134,8 @@ export const seed = async (db: db) => {
 						ticketId: ticketId,
 						mediaId: insertedMedia.id,
 						thumbnailId: insertedThumbnail ?? insertedMedia.id,
-						createdAt: submission.createdAt ? new Date(submission.createdAt) : new Date()
+						createdAt: submission.createdAt ? new Date(submission.createdAt) : new Date(),
+						license: submission.license as LicenseCode
 					})
 					.returning();
 

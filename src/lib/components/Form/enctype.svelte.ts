@@ -5,7 +5,7 @@ import { writable, type Writable } from 'svelte/store';
 export const setEnctype = (
 	value: HTMLFormAttributes['enctype'] = 'application/x-www-form-urlencoded'
 ) => {
-	let enctype: Writable<HTMLFormAttributes['enctype']> = writable(value);
+	const enctype: Writable<HTMLFormAttributes['enctype']> = writable(value);
 	setContext('enctype', enctype);
 	return enctype;
 };

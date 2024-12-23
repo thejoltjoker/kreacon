@@ -1,12 +1,14 @@
 import { z } from 'zod';
+import { licenseEnum } from './license';
 
 export const createSubmissionSchema = z.object({
 	categoryId: z.coerce.number(),
 	eventId: z.coerce.number(),
 	title: z.string(),
-	media: z.string().uuid(),
-	thumbnail: z.string().uuid(),
-	proof: z.string().uuid().optional()
+	mediaId: z.string().uuid(),
+	thumbnailId: z.string().uuid(),
+	proofId: z.string().uuid().optional(),
+	license: licenseEnum
 });
 
 export type ZCreateSubmissionSchema = typeof createSubmissionSchema;

@@ -6,11 +6,9 @@
 	import type { SuperForm } from 'sveltekit-superforms/client';
 	import type { PageData } from '../$types';
 
-	let { openRows = $bindable() }: { openRows: string[] } = $props();
 	let { form } = getContext<SuperForm<CreateSubmissionSchema>>('superform');
 </script>
 
-<!-- <SubmissionFormRow title="Event" value="accordion-event"> -->
 <SelectField
 	field="eventId"
 	label="Event"
@@ -23,26 +21,5 @@
 	}))}
 	onValueChange={() => {
 		$form.categoryId = 0;
-		// const deselected = value == null || value === 0 || value === '';
-		// if (deselected) {
-		// 	openRows = openRows.filter((row) => row !== 'accordion-category');
-		// }
-		// else {
-		//     if (!openRows.includes('accordion-category')) {
-		//         openRows.push('accordion-category');
-		//     }
-		// }
 	}}
 />
-<!-- onValueChange={(value: string | number) => {
-    const deselected = value == null || value === 0 || value === '';
-    if (deselected) {
-        openRows = openRows.filter((row) => row !== 'accordion-category');
-        $form.categoryId = -1;
-    } else {
-        if (!openRows.includes('accordion-category')) {
-            openRows.push('accordion-category');
-        }
-    }
-}} -->
-<!-- </SubmissionFormRow> -->

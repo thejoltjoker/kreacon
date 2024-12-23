@@ -5,9 +5,9 @@ import { randomString } from '../../../helpers/randomString';
 import categories, { type Category } from './category';
 import events from './event';
 import { files } from './file';
-import media, { type Media } from './media';
+import { type Media } from './media';
 import reactions from './reaction';
-import { submissionStatusEnum, timestamps } from './shared';
+import { licenseEnum, submissionStatusEnum, timestamps } from './shared';
 import tickets from './ticket';
 import users from './user';
 import { votes } from './vote';
@@ -27,8 +27,7 @@ export const submissions = pgTable(
 		status: submissionStatusEnum('status').notNull().default('draft'),
 		title: varchar({ length: 255 }).notNull(),
 		views: integer().notNull().default(0),
-		// TODO Add license https://creativecommons.org/share-your-work/cclicenses/
-		// license: varchar({ length: 255 }).notNull(),
+		license: licenseEnum('license').notNull(),
 		// Files
 		mediaId: uuid('media_id').notNull(),
 		thumbnailId: uuid('thumbnail_id').notNull(),

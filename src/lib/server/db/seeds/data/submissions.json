@@ -7,6 +7,7 @@
 		"category": { "name": "Dinosaur Photography" },
 		"event": { "name": "Dino Days" },
 		"createdAt": "2024-02-15T00:00:00.000Z",
+		"license": "cc-by",
 		"media": {
 			"type": "image",
 			"url": "/images/StrongCuriousChihuahua.png",
@@ -34,6 +35,7 @@
 		"category": { "name": "Prehistoric Sounds" },
 		"event": { "name": "Mesozoic Masterpieces" },
 		"createdAt": "2024-01-23T00:00:00.000Z",
+		"license": "cc-by",
 		"media": {
 			"type": "image",
 			"url": "/images/StrongCuriousPorcupine.png",
@@ -61,6 +63,7 @@
 		"category": { "name": "Dinosaur Animations" },
 		"event": { "name": "Dino Days" },
 		"createdAt": "2024-01-05T00:00:00.000Z",
+		"license": "cc-by",
 		"media": {
 			"type": "image",
 			"url": "/images/StrongCuriousMandrill.png",
@@ -88,6 +91,7 @@
 		"category": { "name": "Dinosaur Photography" },
 		"event": { "name": "Dino Days" },
 		"createdAt": "2024-03-15T00:00:00.000Z",
+		"license": "cc-by",
 		"media": {
 			"type": "image",
 			"url": "/images/StrongCuriousWolverine.png",
@@ -115,6 +119,7 @@
 		"category": { "name": "Dinosaur Photography" },
 		"event": { "name": "Mesozoic Masterpieces" },
 		"createdAt": "2023-12-01T00:00:00.000Z",
+		"license": "cc-by",
 		"media": {
 			"type": "image",
 			"url": "/images/StrongCuriousGiraffe.png",

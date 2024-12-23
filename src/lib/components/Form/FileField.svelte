@@ -33,7 +33,6 @@
 	import { getUrlSchema, type GetUrlSchema } from '../../../routes/api/uploads/get-url/schema';
 	import Button from '../Button.svelte';
 	import { getEnctype } from './enctype.svelte';
-	import { blob } from 'drizzle-orm/sqlite-core';
 
 	// TODO Default file type
 
@@ -114,11 +113,11 @@
 	}
 	const { value, errors, constraints } = superFieldProxy;
 
-	let filePreview = $derived(
-		$value && $value instanceof FileList && $value.length > 0
-			? URL.createObjectURL($value[0] as Blob)
-			: null
-	);
+	// let filePreview = $derived(
+	// 	$value && $value instanceof FileList && $value.length > 0
+	// 		? URL.createObjectURL($value[0] as Blob)
+	// 		: null
+	// );
 
 	const onDragOver = (event: DragEvent) => {
 		event.stopPropagation();
@@ -152,6 +151,7 @@
 				try {
 					await uploadFile(sas.url, files[0]);
 					onUploadComplete?.(sas.fileId);
+					// eslint-disable-next-line @typescript-eslint/no-explicit-any
 					$value = sas.fileId as any; //TODO Fix proper types
 					currentState = 'complete';
 				} catch (error) {
@@ -168,6 +168,7 @@
 			currentState = 'ready';
 		}
 	};
+
 	const deleteBlob = async (url: string) => {
 		await fetch(url, {
 			method: 'DELETE'
@@ -183,7 +184,8 @@
 
 	const reset = () => {
 		files = undefined;
-		mode === 'standard' ? ($value = undefined as unknown as FileList) : ($value = '' as any);
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		$value = mode === 'standard' ? (undefined as unknown as FileList) : ('' as any);
 		currentState = 'idle';
 		progress = 0;
 	};
@@ -236,9 +238,9 @@
 				reject(new Error('Upload failed'));
 			};
 
-			xhr.onabort = () => {
-				reject(new Error('Upload aborted'));
-			};
+			// xhr.onabort = () => {
+			// 	reject(new Error('Upload aborted'));
+			// };
 
 			xhr.send(file);
 		});
@@ -259,6 +261,7 @@
 		try {
 			await uploadFile(sas.url, files[0]);
 			onUploadComplete?.(sas.fileId);
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			$value = sas.fileId as any; //TODO Fix proper types
 			currentState = 'complete';
 		} catch (error) {
@@ -445,11 +448,17 @@
 			type="file"
 			name={field + '-file'}
 			id={field + '-file'}
-			hidden
 			{...props}
 			onchange={(event) => handleFileChange(event)}
 		/>
-		<input type="text" name={field} id={field} {...$constraints} hidden />
+		<input
+			type="text"
+			name={field}
+			id={field}
+			value={$value}
+			class="bg-black text-white"
+			{...$constraints}
+		/>
 	{:else}
 		<input
 			bind:this={fileInput}
@@ -459,7 +468,6 @@
 			type="file"
 			name={field}
 			id={field}
-			hidden
 			{...$constraints}
 			{...props}
 		/>

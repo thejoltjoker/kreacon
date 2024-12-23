@@ -1,3 +1,4 @@
+CREATE TYPE "public"."license" AS ENUM('cc-by', 'cc-by-sa', 'cc-by-nc', 'cc-by-nc-sa', 'cc-by-nd', 'cc-by-nc-nd', 'cc0');--> statement-breakpoint
 CREATE TYPE "public"."media_type" AS ENUM('image', 'video', 'audio');--> statement-breakpoint
 CREATE TYPE "public"."role" AS ENUM('user', 'admin');--> statement-breakpoint
 CREATE TYPE "public"."submission_status" AS ENUM('draft', 'pending', 'published', 'rejected', 'deleted', 'archived');--> statement-breakpoint
@@ -110,6 +111,7 @@ CREATE TABLE "submission" (
 	"status" "submission_status" DEFAULT 'draft' NOT NULL,
 	"title" varchar(255) NOT NULL,
 	"views" integer DEFAULT 0 NOT NULL,
+	"license" "license" NOT NULL,
 	"media_id" uuid NOT NULL,
 	"thumbnail_id" uuid NOT NULL,
 	"proof_id" uuid,

@@ -9,7 +9,7 @@ import { getUrlSchema } from './schema';
 
 const logger = createLogger('api/uploads/get-url');
 
-export const POST: RequestHandler = async ({ locals, request }) => {
+export const POST: RequestHandler = async ({ request }) => {
 	// TODO Uncomment this
 	// if (!isAuthenticated(locals)) {
 	// 	return error(StatusCodes.UNAUTHORIZED, { message: 'Unauthorized' });

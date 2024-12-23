@@ -1,7 +1,6 @@
-import { saveFile } from '$lib/helpers/saveFile';
 import { createSubmissionSchema } from '$lib/schemas/submission';
 import db from '$lib/server/db';
-import { files, media, tickets, users } from '$lib/server/db/schema';
+import { tickets, users } from '$lib/server/db/schema';
 import submissions from '$lib/server/db/schema/submission';
 import { error, redirect } from '@sveltejs/kit';
 import { and, eq } from 'drizzle-orm';
@@ -9,7 +8,6 @@ import { StatusCodes } from 'http-status-codes';
 import { fail, message, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import type { Actions, PageServerLoad } from './$types';
-import { azureUploadBlob, upload, uploadFile } from '$lib/server/azure/storage';
 
 export const load = (async ({ locals }) => {
 	if (!locals.user || !locals.session) {
@@ -24,7 +22,9 @@ export const load = (async ({ locals }) => {
 		with: {
 			tickets: {
 				with: {
-					event: { with: { eventCategories: { with: { category: true } } } }
+					event: {
+						with: { eventCategories: { with: { category: true, rules: true } }, rules: true }
+					}
 				}
 			},
 			submissions: true
@@ -42,6 +42,7 @@ export const load = (async ({ locals }) => {
 	const events = userTickets.map((ticket) => {
 		const mappedCategories = ticket.event?.eventCategories.map((ce) => ({
 			...ce.category,
+			rules: ce.rules.map((r) => r.text),
 			isDisabled: userData?.submissions.some((s) => {
 				const currentEvent = s.eventId === ticket.event?.id;
 				const currentCategory = s.categoryId === ce.category.id;
@@ -58,7 +59,8 @@ export const load = (async ({ locals }) => {
 			submissionsOpenAt: ticket.event?.submissionsOpenAt,
 			// ticketId: ticket.id,
 			votingCloseAt: ticket.event?.votingCloseAt,
-			votingOpenAt: ticket.event?.votingOpenAt
+			votingOpenAt: ticket.event?.votingOpenAt,
+			rules: ticket.event?.rules.map((r) => r.text)
 		};
 	});
 
@@ -80,7 +82,7 @@ export const actions = {
 
 		console.log('Massaging form data');
 		console.log('form', form);
-		console.log('media', form.data.media);
+		console.log('media', form.data.mediaId);
 		if (!form.valid) return fail(StatusCodes.BAD_REQUEST, { form });
 
 		const userData = await db.query.users.findFirst({
@@ -134,9 +136,11 @@ export const actions = {
 					userId: user.id,
 					ticketId: ticket.id,
 					status: 'pending',
-					mediaId: form.data.media,
+					mediaId: form.data.mediaId,
 					// TODO Add thumbnail
-					thumbnailId: form.data.media
+					thumbnailId: form.data.thumbnailId,
+					proofId: form.data.proofId,
+					license: form.data.license
 				})
 				.returning();
 			id = result?.id;

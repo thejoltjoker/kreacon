@@ -1,5 +1,5 @@
 {
-  "id": "143a90fd-d1a2-4208-91f1-501c56170504",
+  "id": "046ca4e1-2de7-4de4-9f60-9165b1b4abb8",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -706,6 +706,13 @@
           "notNull": true,
           "default": 0
         },
+        "license": {
+          "name": "license",
+          "type": "license",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
         "media_id": {
           "name": "media_id",
           "type": "uuid",
@@ -1002,6 +1009,19 @@
     }
   },
   "enums": {
+    "public.license": {
+      "name": "license",
+      "schema": "public",
+      "values": [
+        "cc-by",
+        "cc-by-sa",
+        "cc-by-nc",
+        "cc-by-nc-sa",
+        "cc-by-nd",
+        "cc-by-nc-nd",
+        "cc0"
+      ]
+    },
     "public.media_type": {
       "name": "media_type",
       "schema": "public",

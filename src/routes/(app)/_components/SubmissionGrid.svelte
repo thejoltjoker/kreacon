@@ -1,7 +1,6 @@
 <script lang="ts">
 	import type { Category } from '$lib/server/db/schema/category';
 	import type { SelectFile } from '$lib/server/db/schema/file';
-	import type { Media } from '$lib/server/db/schema/media';
 	import type { Submission } from '$lib/server/db/schema/submission';
 	import type { PublicUser } from '$lib/server/db/schema/user';
 	import SubmissionGridItem from './SubmissionGridItem.svelte';

@@ -3,10 +3,9 @@
 </script>
 
 <script lang="ts" generics="T extends Record<string, unknown>">
-	import { type IconProps, type Icon as IconType } from 'lucide-svelte';
 	import { cn } from '$lib/utils';
 	import { Label } from 'bits-ui';
-	import { XCircleIcon } from 'lucide-svelte';
+	import { XCircleIcon, type IconProps, type Icon as IconType } from 'lucide-svelte';
 	import { getContext } from 'svelte';
 	import { formFieldProxy, type FormPathLeaves, type SuperForm } from 'sveltekit-superforms';
 	import StyledSelect, { type StyledSelectProps } from './StyledSelect.svelte';

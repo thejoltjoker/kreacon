@@ -60,12 +60,12 @@
 <Select.Root bind:value={value as any} {...props}>
 	<Select.Trigger
 		class={cn(
-			'inline-flex h-form w-full items-center justify-between rounded-form border border-shade-600 bg-shade-950 pl-md pr-sm transition hover:border-shade-600/80 hover:bg-shade-900 data-[state=open]:border-violet-500',
+			'inline-flex h-form w-full items-center justify-between rounded-form border border-shade-600 bg-shade-950 pl-md pr-sm text-shade-300 transition hover:border-shade-600/80 hover:bg-shade-900 data-[state=open]:border-violet-500',
 			value != null &&
 				value !== '' &&
 				String(value) !== '0' &&
 				!Array.isArray(value) &&
-				'border-white hover:border-white',
+				'border-white text-white hover:border-white',
 			className
 		)}
 	>
