@@ -35,7 +35,7 @@
 					{#if submission?.media?.type === 'image'}
 						<img
 							src={`${submission?.media?.url}`}
-							alt={submission?.media?.alt}
+							alt={submission?.media?.name}
 							class="h-full w-full object-cover object-center"
 						/>
 					{:else if submission?.media?.type === 'audio'}

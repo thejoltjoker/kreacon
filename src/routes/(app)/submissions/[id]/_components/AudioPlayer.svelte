@@ -1,9 +1,10 @@
 <script lang="ts">
 	import Button from '$lib/components/Button.svelte';
+	import type { SelectFile } from '$lib/server/db/schema/file';
 	import type { Media } from '$lib/server/db/schema/media';
 	import { PlayIcon, PauseIcon } from 'lucide-svelte';
 
-	let { media }: { media: Media } = $props();
+	let { media }: { media: SelectFile } = $props();
 
 	let audioElement: HTMLAudioElement;
 	let currentTime = $state(0);

@@ -4,16 +4,9 @@ export const createSubmissionSchema = z.object({
 	categoryId: z.coerce.number(),
 	eventId: z.coerce.number(),
 	title: z.string(),
-	media: z
-		.instanceof(File, { message: 'Please upload a file.' })
-		.refine((f) => f.size < 1_000_000_000, 'Max 1 GB upload size.'),
-	// .refine((file) => {
-	// 	return ACCEPTED_FILE_TYPES.includes(file.type);
-	//   }, 'File must be a PNG'),
-	// media: z.string().uuid(),
-	thumbnail: z
-		.instanceof(File, { message: 'Please upload a file.' })
-		.refine((f) => f.size < 2_000_000, 'Max 2 MB upload size.')
+	media: z.string().uuid(),
+	thumbnail: z.string().uuid(),
+	proof: z.string().uuid().optional()
 });
 
 export type ZCreateSubmissionSchema = typeof createSubmissionSchema;

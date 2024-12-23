@@ -33,6 +33,7 @@
 	import { getUrlSchema, type GetUrlSchema } from '../../../routes/api/uploads/get-url/schema';
 	import Button from '../Button.svelte';
 	import { getEnctype } from './enctype.svelte';
+	import { blob } from 'drizzle-orm/sqlite-core';
 
 	// TODO Default file type
 
@@ -43,6 +44,7 @@
 		labelProps?: Label.RootProps;
 		maxFileSize?: number;
 		behavior?: 'standard' | 'managed' | 'auto';
+		debug?: boolean;
 		/**
 		 * Optional SuperForm instance. If not provided, will attempt to get from GenericForm context
 		 * Must be provided if used outside of GenericForm
@@ -74,7 +76,7 @@
 		mediaType,
 		behavior = 'auto',
 		maxFileSize = Number(env.PUBLIC_MAX_UPLOAD_SIZE) || 10 * 1024 * 1024,
-
+		debug = false,
 		...props
 	}: FileFieldProps = $props();
 
@@ -88,10 +90,10 @@
 	}
 	const { form } = superform;
 
-	let fileInput: HTMLInputElement | null = $state(null);
-	let files: FileList | undefined = $state();
+	let fileInput: HTMLInputElement | undefined = $state();
+	let files: FileList | null | undefined = $state();
 	let isDragging = $state(false);
-	let progress = $state(30);
+	let progress = $state(0);
 	let mode = $derived(
 		behavior === 'auto' ? (typeof $form[field] === 'string' ? 'managed' : 'standard') : behavior
 	);
@@ -99,6 +101,8 @@
 	let extensions = $derived(getExtensionsForMedia(mediaType));
 	let currentState: 'idle' | 'ready' | 'uploading' | 'complete' | 'error' = $state('idle');
 	let enctype = getEnctype();
+	let xhr: XMLHttpRequest | undefined = $state();
+	let blobUrl: string | undefined = $state();
 
 	let superFieldProxy;
 	if (
@@ -127,13 +131,35 @@
 		isDragging = false;
 	};
 
-	const onFileDrop = (event: DragEvent) => {
+	const onFileDrop = async (event: DragEvent) => {
 		event.preventDefault();
-		const input = event.dataTransfer;
-		if (input?.files && input.files.length > 0) {
-			$value = input.files;
-		}
 		isDragging = false;
+		currentState = 'ready';
+		const input = event.dataTransfer;
+		console.log('input', input);
+		if (mode === 'standard') {
+			if (input?.files && input.files.length > 0) {
+				$value = input.files;
+			}
+		} else {
+			if (input?.files && input.files.length > 0) {
+				files = input.files;
+				currentState = 'uploading';
+				// TODO Generate checksum
+				const sas = await getUploadUrl(files[0]);
+				blobUrl = sas.url;
+				console.log('sas', sas);
+				try {
+					await uploadFile(sas.url, files[0]);
+					onUploadComplete?.(sas.fileId);
+					$value = sas.fileId as any; //TODO Fix proper types
+					currentState = 'complete';
+				} catch (error) {
+					console.error(error);
+					currentState = 'error';
+				}
+			}
+		}
 	};
 
 	const chooseFile = () => {
@@ -142,31 +168,50 @@
 			currentState = 'ready';
 		}
 	};
-
+	const deleteBlob = async (url: string) => {
+		await fetch(url, {
+			method: 'DELETE'
+		});
+	};
 	const handleRemove = () => {
-		isDragging = false;
-		$value = undefined as unknown as FileList;
+		xhr?.abort();
+		if (mode === 'managed' && blobUrl != null) {
+			deleteBlob(blobUrl);
+		}
+		reset();
+	};
+
+	const reset = () => {
+		files = undefined;
+		mode === 'standard' ? ($value = undefined as unknown as FileList) : ($value = '' as any);
+		currentState = 'idle';
+		progress = 0;
 	};
 
 	const getUploadUrl = async (file: File) => {
+		const uuid = crypto.randomUUID();
 		const data: GetUrlSchema = {
+			uuid,
 			container: 'uploads',
-			name: `${crypto.randomUUID()}_${snakeCase(file.name)}`,
+			name: `${uuid}_${snakeCase(file.name)}`,
 			type: file.type
 		};
 
 		const parsed = getUrlSchema.parse(data);
 
-		const response = await fetch(`${env.PUBLIC_BASE_URL}/api/uploads/get-url`, {
+		const response = await fetch(`${env.PUBLIC_BASE_URL ?? ''}/api/uploads/get-url`, {
 			method: 'POST',
 			body: JSON.stringify(parsed)
 		});
-		return await response.json();
+
+		const responseData: { url: string; fileId: string } = await response.json();
+
+		return responseData;
 	};
 
-	const uploadFile = async (url: string, file: File) => {
-		return new Promise((resolve, reject) => {
-			const xhr = new XMLHttpRequest();
+	const uploadFile = async (url: string, file: File): Promise<void> =>
+		new Promise((resolve, reject) => {
+			xhr = new XMLHttpRequest();
 
 			xhr.open('PUT', url, true);
 			xhr.setRequestHeader('Content-Type', file.type);
@@ -178,6 +223,7 @@
 			};
 
 			xhr.onload = () => {
+				if (xhr == null) return;
 				if (xhr.status >= 200 && xhr.status < 300) {
 					progress = 100;
 					resolve(xhr.response);
@@ -196,22 +242,28 @@
 
 			xhr.send(file);
 		});
-	};
 
 	const handleFileChange = async (
 		event: Event & {
 			currentTarget: EventTarget & HTMLInputElement;
 		}
 	) => {
-		const file = event.currentTarget.files?.[0];
-		if (!file) return;
+		console.log('handleFileChange', event);
+		files = event.currentTarget.files;
+		if (!files) return;
+		currentState = 'uploading';
 		// TODO Generate checksum
-		const sas = await getUploadUrl(file);
+		const sas = await getUploadUrl(files[0]);
+		blobUrl = sas.url;
+		console.log('sas', sas);
 		try {
-			await uploadFile(sas.url, file);
-			onUploadComplete?.(sas.id);
+			await uploadFile(sas.url, files[0]);
+			onUploadComplete?.(sas.fileId);
+			$value = sas.fileId as any; //TODO Fix proper types
+			currentState = 'complete';
 		} catch (error) {
 			console.error(error);
+			currentState = 'error';
 		}
 	};
 
@@ -224,16 +276,46 @@
 	});
 </script>
 
+{#snippet debugView()}
+	<div class="rounded-form bg-shade-800 p-sm font-mono">
+		<p class="text-shade-400"># state</p>
+		<p><span class="text-tertiary">blobUrl:</span> {blobUrl ?? typeof blobUrl}</p>
+		<p><span class="text-tertiary">currentState:</span> {currentState ?? typeof currentState}</p>
+		<p><span class="text-tertiary">isDragging:</span> {isDragging ?? typeof isDragging}</p>
+		<p>
+			<span class="text-tertiary">fileInput:</span>
+			{JSON.stringify(fileInput) ?? typeof fileInput}
+		</p>
+		<p><span class="text-tertiary">files:</span> {JSON.stringify(files) ?? typeof files}</p>
+		<p><span class="text-tertiary">progress:</span> {progress ?? typeof progress}</p>
+		<p><span class="text-tertiary">value:</span> {JSON.stringify($value) ?? typeof $value}</p>
+		<p><span class="text-tertiary">xhr:</span> {xhr ?? typeof xhr}</p>
+
+		<p class="text-shade-400"># props</p>
+		<p><span class="text-tertiary">behavior:</span> {behavior ?? typeof behavior}</p>
+		<p><span class="text-tertiary">maxFileSize:</span> {maxFileSize ?? typeof maxFileSize}</p>
+
+		<p class="text-shade-400"># derived</p>
+		<p><span class="text-tertiary">accept:</span> {JSON.stringify(accept)}</p>
+		<p><span class="text-tertiary">extensions:</span> {JSON.stringify(extensions)}</p>
+		<p><span class="text-tertiary">mode:</span> {mode ?? typeof mode}</p>
+	</div>
+{/snippet}
+
+{#if debug}
+	{@render debugView()}
+{/if}
 <!-- TODO Make separate component -->
 {#snippet dropZone()}
 	<div
 		role="presentation"
-		ondragover={onDragOver}
-		ondragend={onDragOut}
 		ondrop={onFileDrop}
+		ondragover={onDragOver}
+		ondragleave={onDragOut}
 		class={cn(
 			'grid rounded-form border border-shade-600 transition-colors hover:bg-shade-900',
-			(isDragging || currentState === 'uploading') && 'border-primary',
+			isDragging && 'border-primary bg-primary/10',
+			currentState === 'uploading' && 'border-primary',
 			currentState === 'complete' && 'border-white',
 			currentState === 'error' && 'border-destructive'
 		)}
@@ -244,7 +326,7 @@
 					'thumbnail hidden size-form min-h-form min-w-form items-center justify-center overflow-hidden rounded-sm bg-shade-700 text-shade-400 md:flex',
 					currentState === 'ready' && 'text-white',
 					currentState === 'uploading' && 'bg-shade-950/50 text-primary',
-					currentState === 'complete' && 'text-white',
+					currentState === 'complete' && 'text-success',
 					currentState === 'error' && 'text-destructive'
 				)}
 			>
@@ -274,7 +356,7 @@
 					<p class="font-bold text-white">{files?.[0]?.name ?? 'Unknown'}</p>
 					<p class="text-sm text-shade-300">
 						{mode === 'standard'
-							? `${Math.round((files?.[0]?.size ?? 0) / 1024 / 1024)} MB`
+							? `${((files?.[0]?.size ?? 0) / 1024 / 1024).toFixed(2)} MB`
 							: $t('Ready to upload')}
 					</p>
 				{:else if currentState === 'uploading'}
@@ -341,7 +423,7 @@
 		<p class="text-sm text-shade-300">
 			{`${$t('Supported file types')}: ${extensions.join(', ')}`}
 		</p>
-		<p class="text-sm text-shade-300">Max. 1GB</p>
+		<p class="text-sm text-shade-300">Max. {maxFileSize / 1024 / 1024} MB</p>
 	</div>
 	{#if $errors}
 		<ul class="flex flex-col gap-xs text-sm">
@@ -367,7 +449,7 @@
 			{...props}
 			onchange={(event) => handleFileChange(event)}
 		/>
-		<input type="text" name={field} id={field} {...$constraints} />
+		<input type="text" name={field} id={field} {...$constraints} hidden />
 	{:else}
 		<input
 			bind:this={fileInput}
@@ -388,10 +470,11 @@
 	progress {
 		-webkit-appearance: none;
 		appearance: none;
+		@apply transition-all;
 	}
 
 	progress::-webkit-progress-bar {
-		@apply bg-transparent;
+		@apply bg-transparent transition-all;
 	}
 
 	progress::-webkit-progress-value {

@@ -3,6 +3,7 @@ import { z } from 'zod';
 import mime from 'mime';
 
 export const getUrlSchema = z.object({
+	uuid: z.string().uuid(),
 	checksum: z.string().optional(),
 	container: z.enum(azureStorageContainer, {
 		message: 'Invalid container name'

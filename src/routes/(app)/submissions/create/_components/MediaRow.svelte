@@ -20,5 +20,5 @@
 
 <!-- TODO Disable if no category picked -->
 <div class="w-full">
-	<FileField {mediaType} field="media" label="File" labelProps={{ class: 'text-2xl font-bold' }} />
+	<FileField {mediaType} field="media" label="Media" labelProps={{ class: 'text-2xl font-bold' }} />
 </div>

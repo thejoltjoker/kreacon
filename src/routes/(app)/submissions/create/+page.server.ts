@@ -123,58 +123,23 @@ export const actions = {
 			return error(StatusCodes.BAD_REQUEST, { message: 'Category not available for this event' });
 		}
 
-		// TODO Save file to blob storage
 		// TODO Get checksum from blob storage
-
-		let mediaPath: string | undefined = undefined;
-		let mediaUrl: string | undefined = undefined;
-		if (form.data.media != null) {
-			mediaPath = await saveFile(form.data.media);
-			if (category.mediaType === 'image') {
-				mediaUrl = await upload.image(form.data.media);
-			} else if (category.mediaType === 'video') {
-				mediaUrl = await upload.video(form.data.media);
-			} else if (category.mediaType === 'audio') {
-				mediaUrl = await upload.audio(form.data.media);
-			}
-		}
-		if (mediaUrl == null) {
-			return error(StatusCodes.BAD_REQUEST, { message: 'Failed to upload media' });
-		}
 
 		let id: string | null = null;
 		try {
-			await db.transaction(async (tx) => {
-				const [insertedMedia] =
-					mediaPath != null
-						? await tx
-								.insert(files)
-								.values({
-									url: mediaUrl,
-									name: (form.data.media?.name ?? '') + Date.now(),
-									type: category.mediaType,
-									size: form.data.media?.size ?? 0,
-									metadata: {
-										alt: form.data.title,
-										caption: form.data.title
-									}
-								})
-								.returning()
-						: [];
-				const [result] = await tx
-					.insert(submissions)
-					.values({
-						...form.data,
-						userId: user.id,
-						ticketId: ticket.id,
-						status: 'pending',
-						mediaId: insertedMedia?.id,
-						// TODO Add thumbnail
-						thumbnailId: insertedMedia?.id
-					})
-					.returning();
-				id = result?.id;
-			});
+			const [result] = await db
+				.insert(submissions)
+				.values({
+					...form.data,
+					userId: user.id,
+					ticketId: ticket.id,
+					status: 'pending',
+					mediaId: form.data.media,
+					// TODO Add thumbnail
+					thumbnailId: form.data.media
+				})
+				.returning();
+			id = result?.id;
 		} catch {
 			return error(StatusCodes.INTERNAL_SERVER_ERROR, { message: 'Failed to create submission' });
 		}

@@ -110,7 +110,7 @@
 				variant="outline"
 				size="icon"
 				href={submission?.media.url}
-				download={submission?.media.filename ?? undefined}
+				download={submission?.media.name ?? undefined}
 			>
 				<DownloadIcon />
 			</Button>

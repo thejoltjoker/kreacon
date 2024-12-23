@@ -14,17 +14,14 @@ import {
 	type ContainerCreateOptions
 } from '@azure/storage-blob';
 import { fileTypeFromBuffer } from 'file-type';
-export const blobServiceClient = new BlobServiceClient(
-	`https://${env.AZURE_STORAGE_ACCOUNT_NAME}.blob.core.windows.net`,
-	new DefaultAzureCredential()
-);
 
 const logger = createLogger('azure-storage');
 
 export const DEFAULT_STORAGE_CONTAINER: AzureStorageContainer = 'uploads';
 
 export const getOrCreateContainer = async (
-	containerName: string,
+	blobServiceClient: BlobServiceClient,
+	containerName: AzureStorageContainer,
 	options?: ContainerCreateOptions
 ) => {
 	const containerClient = blobServiceClient.getContainerClient(containerName);
@@ -34,7 +31,20 @@ export const getOrCreateContainer = async (
 };
 
 export const getUploadsContainer = async () => {
-	return await getOrCreateContainer('kreacon-dev-uploads', { access: 'blob' });
+	return await getOrCreateContainer(getBlobServiceClient(), 'uploads', {
+		access: 'blob'
+	});
+};
+
+export const getBlobServiceClient = () => {
+	const sharedKeyCredential = new StorageSharedKeyCredential(
+		env.AZURE_STORAGE_ACCOUNT_NAME,
+		env.AZURE_STORAGE_ACCOUNT_KEY
+	);
+	return new BlobServiceClient(
+		`https://${env.AZURE_STORAGE_ACCOUNT_NAME}.blob.core.windows.net`,
+		sharedKeyCredential
+	);
 };
 
 export const generateBlobSasUrl = async (
@@ -42,17 +52,9 @@ export const generateBlobSasUrl = async (
 	blobName: string,
 	expiryMinutes: number = 30
 ) => {
-	const sharedKeyCredential = new StorageSharedKeyCredential(
-		env.AZURE_STORAGE_ACCOUNT_NAME,
-		env.AZURE_STORAGE_ACCOUNT_KEY
-	);
+	const blobServiceClient = getBlobServiceClient();
 
-	const blobServiceClient = new BlobServiceClient(
-		`https://${env.AZURE_STORAGE_ACCOUNT_NAME}.blob.core.windows.net`,
-		sharedKeyCredential
-	);
-
-	const containerClient = blobServiceClient.getContainerClient(containerName);
+	const containerClient = await getOrCreateContainer(blobServiceClient, containerName);
 	const blobClient = containerClient.getBlobClient(blobName);
 
 	const startsOn = new Date();
@@ -60,7 +62,8 @@ export const generateBlobSasUrl = async (
 
 	const permissions = BlobSASPermissions.from({
 		create: true,
-		write: true
+		write: true,
+		delete: true
 	});
 
 	const blobSasUrl = blobClient.generateSasUrl({ permissions, expiresOn });
@@ -75,9 +78,14 @@ export const azureUploadBlob = async (
 	containerName?: string,
 	options?: BlockBlobUploadOptions
 ) => {
-	const containerClient = await getOrCreateContainer(containerName ?? 'uploads', {
-		access: 'blob'
-	});
+	const blobServiceClient = getBlobServiceClient();
+	const containerClient = await getOrCreateContainer(
+		blobServiceClient,
+		containerName ?? 'uploads',
+		{
+			access: 'blob'
+		}
+	);
 	const blockBlobClient = containerClient.getBlockBlobClient(filename);
 
 	try {

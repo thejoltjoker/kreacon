@@ -30,6 +30,7 @@ export const POST: RequestHandler = async ({ locals, request }) => {
 		const [file] = await db
 			.insert(files)
 			.values({
+				id: data.uuid,
 				name: data.name,
 				type: data.type,
 				url: sasUrl,
