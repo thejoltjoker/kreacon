@@ -1,7 +1,7 @@
 [
 	{
-		"name": "Dinosaur Photography",
-		"slug": "dinosaur-photography",
+		"name": "Archeological Photography",
+		"slug": "archeological-photography",
 		"mediaType": "image",
 		"description": "Professional photographs of dinosaur fossils, museum exhibits, and paleontological dig sites. Captures the majesty of prehistoric remains and the exciting process of discovery."
 	},
@@ -12,21 +12,75 @@
 		"description": "Recreated sounds of the Mesozoic era. Includes interpretations of dinosaur calls, environmental ambience, and the atmospheric sounds of ancient Earth."
 	},
 	{
-		"name": "Dinosaur Animations",
-		"slug": "dinosaur-animations",
+		"name": "Zoological Animations",
+		"slug": "zoological-animations",
 		"mediaType": "video",
 		"description": "Animated sequences bringing prehistoric life to motion. Shows reconstructed dinosaur behaviors, ancient ecosystems, and interpretations of how these magnificent creatures might have lived."
+	},
+	{
+		"name": "Combined Demo",
+		"slug": "combined-demo",
+		"mediaType": "video",
+		"description": "For creators who blend music, visuals, and effects into jaw-dropping experiences. Make the crowd gasp, cheer, and ask, \"How'd they pull that off?\""
+	},
+	{
+		"name": "Prerendered Music",
+		"slug": "prerendered-music",
+		"mediaType": "audio",
+		"description": "Whether it's eurodance, DnB, remastered chiptunes, or a band jam, bring the beats!"
 	},
 	{
 		"name": "Tracked Music",
 		"slug": "tracked-music",
 		"mediaType": "audio",
-		"description": "Music that has been created in a tracker software. This includes music from the 8-bit era, as well as more modern tracker music."
+		"description": "Old-school vibes meet modern grooves. Tracker enthusiasts, this is your stage."
+	},
+	{
+		"name": "Freestyle Graphics",
+		"slug": "freestyle-graphics",
+		"mediaType": "image",
+		"description": "From pixel art to raytracing, or hand-drawn masterpieces, unleash your imagination."
+	},
+	{
+		"name": "Oldschool Graphics",
+		"slug": "oldschool-graphics",
+		"mediaType": "image",
+		"description": "Minimal canvas, maximum impact. Show off your skills under strict retro rules."
+	},
+	{
+		"name": "Freestyle Photo",
+		"slug": "freestyle-photo",
+		"mediaType": "image",
+		"description": "Calling all photographers! Show us your most captivating shots."
 	},
 	{
 		"name": "Stop Motion",
 		"slug": "stop-motion",
 		"mediaType": "video",
-		"description": "Stop motion videos of dinosaurs, prehistoric animals, and other prehistoric creatures."
+		"description": "If you love animating the inanimate, this is your moment."
+	},
+	{
+		"name": "Wild",
+		"slug": "wild",
+		"mediaType": "video",
+		"description": "Got something that defies categorization? Wild is your playground. From music videos to mind-bending demos, anything goes."
+	},
+	{
+		"name": "GenAI Photo",
+		"slug": "genai-photo",
+		"mediaType": "image",
+		"description": "AI-generated images mimicking real-life photography. Your entry should leverage AI tools to generate photorealistic images."
+	},
+	{
+		"name": "GenAI Graphics",
+		"slug": "genai-graphics",
+		"mediaType": "image",
+		"description": "AI-generated visual art, where artificial intelligence takes the lead in the creation process."
+	},
+	{
+		"name": "GenAI Music",
+		"slug": "genai-music",
+		"mediaType": "audio",
+		"description": "Music created primarily with artificial intelligence. Your track should showcase the capabilities of AI in generating or enhancing musical compositions."
 	}
 ]

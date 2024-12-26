@@ -93,12 +93,12 @@ export const adjectives = [
 	'best',
 	'bewitched',
 	'big',
-	'big-hearted',
+
 	'biodegradable',
-	'bite-sized',
+
 	'bitter',
 	'black',
-	'black-and-white',
+
 	'bland',
 	'blank',
 	'blaring',
@@ -161,7 +161,7 @@ export const adjectives = [
 	'classic',
 	'clean',
 	'clear',
-	'clear-cut',
+
 	'clever',
 	'close',
 	'closed',
@@ -300,7 +300,7 @@ export const adjectives = [
 	'earnest',
 	'early',
 	'easy',
-	'easy-going',
+
 	'ecstatic',
 	'edible',
 	'educated',
@@ -349,8 +349,7 @@ export const adjectives = [
 	'expert',
 	'extraneous',
 	'extroverted',
-	'extra-large',
-	'extra-small',
+
 	'fabulous',
 	'failing',
 	'faint',
@@ -364,8 +363,7 @@ export const adjectives = [
 	'fantastic',
 	'far',
 	'faraway',
-	'far-flung',
-	'far-off',
+
 	'fast',
 	'fat',
 	'fatal',
@@ -461,7 +459,7 @@ export const adjectives = [
 	'glum',
 	'golden',
 	'good',
-	'good-natured',
+
 	'gorgeous',
 	'graceful',
 	'gracious',
@@ -498,9 +496,9 @@ export const adjectives = [
 	'handsome',
 	'handy',
 	'happy',
-	'happy-go-lucky',
+
 	'hard',
-	'hard-to-find',
+
 	'harmful',
 	'harmless',
 	'harmonious',
@@ -519,7 +517,7 @@ export const adjectives = [
 	'hidden',
 	'hideous',
 	'high',
-	'high-level',
+
 	'hilarious',
 	'hoarse',
 	'hollow',
@@ -550,8 +548,7 @@ export const adjectives = [
 	'ignorant',
 	'ill',
 	'illegal',
-	'ill-fated',
-	'ill-informed',
+
 	'illiterate',
 	'illustrious',
 	'imaginary',
@@ -609,7 +606,7 @@ export const adjectives = [
 	'itchy',
 	'jaded',
 	'jagged',
-	'jam-packed',
+
 	'jaunty',
 	'jealous',
 	'jittery',
@@ -672,7 +669,7 @@ export const adjectives = [
 	'lone',
 	'lonely',
 	'long',
-	'long-term',
+
 	'loose',
 	'lopsided',
 	'lost',
@@ -689,7 +686,7 @@ export const adjectives = [
 	'lustrous',
 	'luxurious',
 	'mad',
-	'made-up',
+
 	'magnificent',
 	'majestic',
 	'major',
@@ -793,7 +790,7 @@ export const adjectives = [
 	'offensive',
 	'official',
 	'old',
-	'old-fashioned',
+
 	'only',
 	'open',
 	'optimal',
@@ -905,7 +902,7 @@ export const adjectives = [
 	'querulous',
 	'questionable',
 	'quick',
-	'quick-witted',
+
 	'quiet',
 	'quintessential',
 	'quirky',
@@ -982,10 +979,9 @@ export const adjectives = [
 	'scrawny',
 	'second',
 	'secondary',
-	'second-hand',
+
 	'secret',
-	'self-assured',
-	'self-reliant',
+
 	'selfish',
 	'sentimental',
 	'separate',
@@ -1007,7 +1003,7 @@ export const adjectives = [
 	'shocking',
 	'shoddy',
 	'short',
-	'short-term',
+
 	'showy',
 	'shrill',
 	'shy',
@@ -1112,7 +1108,7 @@ export const adjectives = [
 	'superficial',
 	'superior',
 	'supportive',
-	'sure-footed',
+
 	'surprised',
 	'suspicious',
 	'svelte',
@@ -1297,7 +1293,7 @@ export const adjectives = [
 	'whopping',
 	'wicked',
 	'wide',
-	'wide-eyed',
+
 	'wiggly',
 	'wild',
 	'willing',

@@ -37,7 +37,7 @@ export const eventsRelations = relations(events, ({ many }) => ({
 
 export const insertEventSchema = createInsertSchema(events);
 
-export type Event = InferSelectModel<typeof events>;
+export type SelectEvent = InferSelectModel<typeof events>;
 export type InsertEvent = InferInsertModel<typeof events>;
 
 export default events;

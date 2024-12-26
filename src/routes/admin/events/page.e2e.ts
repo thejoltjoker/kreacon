@@ -79,16 +79,16 @@ test('Admin should be able to create and edit events', async ({ page }) => {
 	await page.getByRole('textbox').nth(3).press('Enter');
 	await page.getByRole('button', { name: 'Add Category' }).click();
 	await page.getByRole('button', { name: 'Select a category' }).click();
-	await page.getByRole('option', { name: 'Dinosaur Photography' }).click();
+	await page.getByRole('option', { name: 'Archeological Photography' }).click();
 	await page.getByRole('button', { name: 'Add Rule' }).nth(1).click();
 	await page
 		.locator('form div')
-		.filter({ hasText: 'Category: Dinosaur Photography' })
+		.filter({ hasText: 'Category: Archeological Photography' })
 		.locator('input[type="text"]')
 		.fill('First category rule');
 	await page
 		.locator('form div')
-		.filter({ hasText: 'Category: Dinosaur Photography' })
+		.filter({ hasText: 'Category: Archeological Photography' })
 		.locator('input[type="text"]')
 		.press('Enter');
 	await page.getByRole('button', { name: 'Create Event' }).click();
