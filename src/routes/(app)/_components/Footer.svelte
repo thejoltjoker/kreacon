@@ -12,7 +12,7 @@
 	});
 </script>
 
-<footer class="mt-xl flex w-full flex-wrap items-center justify-between px-xl py-xl text-shade-300">
+<footer class="flex w-full flex-wrap items-center justify-between px-xl py-xl text-shade-300">
 	<p class="flex-1">Kreacon &copy; {new Date().getFullYear()}</p>
 	<ul class="flex flex-1 items-center justify-center gap-sm">
 		{#each Object.keys(locales) as lc}

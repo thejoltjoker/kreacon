@@ -16,6 +16,7 @@ export const events = pgTable(
 		slug: varchar({ length: 255 }).notNull().unique(),
 		submissionsCloseAt: timestamp('submissions_close_at', { mode: 'date' }).notNull(),
 		submissionsOpenAt: timestamp('submissions_open_at', { mode: 'date' }).notNull(),
+		tagline: varchar({ length: 255 }).notNull(),
 		votingCloseAt: timestamp('voting_close_at', { mode: 'date' }).notNull(),
 		votingOpenAt: timestamp('voting_open_at', { mode: 'date' }).notNull(),
 		...timestamps
@@ -37,7 +38,7 @@ export const eventsRelations = relations(events, ({ many }) => ({
 
 export const insertEventSchema = createInsertSchema(events);
 
-export type Event = InferSelectModel<typeof events>;
+export type SelectEvent = InferSelectModel<typeof events>;
 export type InsertEvent = InferInsertModel<typeof events>;
 
 export default events;

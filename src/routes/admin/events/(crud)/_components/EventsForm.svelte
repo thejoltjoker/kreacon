@@ -29,6 +29,7 @@
 	}}
 >
 	<TextField type="text" field="name" label="Name" />
+	<TextField type="text" field="tagline" label="Tagline" />
 	<TextField type="text" field="description" label="Description" />
 
 	<div class="grid grid-cols-2 gap-sm">

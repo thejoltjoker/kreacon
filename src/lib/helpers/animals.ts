@@ -238,7 +238,6 @@ export const animals = [
 	'okapi',
 	'olm',
 	'opossum',
-	'orang-utan',
 	'orangutan',
 	'oriole',
 	'ostrich',

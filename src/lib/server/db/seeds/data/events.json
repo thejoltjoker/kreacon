@@ -2,6 +2,7 @@
 	{
 		"name": "Mesozoic Masterpieces",
 		"slug": "mesozoic-masterpieces",
+		"tagline": "Bring the Jurassic world to life through creative multimedia at our Mesozoic showcase.",
 		"description": "Step back into the age of dinosaurs with our Mesozoic-themed creative showcase. From thundering T-rexes to soaring Pterodactyls, bring the Jurassic world to life through photography, sound, and animation.",
 		"submissionsOpenAt": "2023-12-01T00:00:00Z",
 		"submissionsCloseAt": "2023-12-15T23:59:59Z",
@@ -17,7 +18,7 @@
 		],
 		"categories": [
 			{
-				"name": "Dinosaur Photography",
+				"name": "Archeological Photography",
 				"prizes": [
 					{ "text": "Professional Camera Lens", "position": 1 },
 					{ "text": "Photography Light Kit", "position": 2 },
@@ -39,7 +40,7 @@
 				]
 			},
 			{
-				"name": "Dinosaur Animations",
+				"name": "Zoological Animations",
 				"rules": [{ "text": "The 'General Rules' apply to all competition categories." }],
 				"prizes": [
 					{ "text": "3D Animation Software License", "position": 1 },
@@ -53,6 +54,7 @@
 	{
 		"name": "Dino Days",
 		"slug": "dino-days",
+		"tagline": "Capture the wonder and majesty of dinosaurs through creative multimedia.",
 		"description": "Join us for an extraordinary celebration of prehistoric life. This festival invites artists to capture the wonder and majesty of dinosaurs through creative photography, sound design, and animation.",
 		"submissionsOpenAt": "2023-12-01T00:00:00Z",
 		"submissionsCloseAt": "2030-12-15T23:59:59Z",
@@ -68,7 +70,7 @@
 		],
 		"categories": [
 			{
-				"name": "Dinosaur Photography",
+				"name": "Archeological Photography",
 				"prizes": [
 					{ "text": "Professional Camera Lens", "position": 1 },
 					{ "text": "Photography Light Kit", "position": 2 },
@@ -90,7 +92,7 @@
 				]
 			},
 			{
-				"name": "Dinosaur Animations",
+				"name": "Zoological Animations",
 				"rules": [{ "text": "The 'General Rules' apply to all competition categories." }],
 				"prizes": [
 					{ "text": "3D Animation Software License", "position": 1 },
@@ -104,6 +106,7 @@
 	{
 		"name": "Fossil Finds",
 		"slug": "fossil-finds",
+		"tagline": "Share your best fossil photography and help bring these ancient remnants to life.",
 		"description": "A special exhibition focusing on recent paleontological discoveries. Share your best fossil photography and help bring these ancient remnants to life.",
 		"submissionsOpenAt": "2023-06-01T00:00:00Z",
 		"submissionsCloseAt": "2033-06-01T23:59:59Z",
@@ -116,7 +119,7 @@
 		],
 		"categories": [
 			{
-				"name": "Dinosaur Photography",
+				"name": "Archeological Photography",
 				"prizes": [
 					{ "text": "Professional Camera Lens", "position": 1 },
 					{ "text": "Photography Light Kit", "position": 2 },
@@ -132,14 +135,19 @@
 		"tickets": [{ "username": "john_doe" }]
 	},
 	{
+		"tickets": [{ "username": "john_doe" }],
 		"name": "Beacon 2025",
 		"slug": "beacon-2025",
-		"description": "A LAN party for gamers, by gamers.",
+		"tagline": "A LAN party for gamers, by gamers.",
+		"description": "Join us for an exciting showcase of digital creativity where artists, programmers, and musicians come together to push the boundaries of real-time computer art. From stunning visual demos to creative coding experiments, Kreacon celebrates the intersection of technology and artistic expression. Whether you're a seasoned demo scene veteran or a curious newcomer, we welcome all creative minds to participate, learn, and share their work with our community.",
 		"submissionsOpenAt": "2025-02-14T00:00:00Z",
 		"submissionsCloseAt": "2025-02-15T23:59:59Z",
 		"votingOpenAt": "2025-02-16T00:00:00Z",
 		"votingCloseAt": "2025-02-16T15:00:00Z",
 		"rules": [
+			{
+				"text": "Submissions should be delivered in a format as close as possible to 1920x1080 resolution. Other formats will be rescaled as needed."
+			},
 			{
 				"text": "Submissions must not use copyrighted material without explicit rights or licenses."
 			},
@@ -147,10 +155,10 @@
 				"text": "The Submission mustn't have been shown/played at any similar event/demoparty/creative workshop before this event."
 			},
 			{
-				"text": "the submission shouldn't have been publicly spread and known before the party."
+				"text": "The submission shouldn't have been publicly spread and known before the party."
 			},
 			{
-				"text": "Keep it family friendly, and not offensive. "
+				"text": "Keep it family friendly, and not offensive."
 			},
 			{
 				"text": "We reserve the right to reject any submission if we feel they don't comply with all of the rules."
@@ -161,12 +169,46 @@
 			{
 				"text": "Maximum play time is 10 minutes."
 			},
-			{ "text": "Beacon may use the submission in marketing etc." },
+			{
+				"text": "Beacon may use the submission in marketing etc."
+			},
 			{
 				"text": "Maximum file size is 1GB. We recommend using https://handbrake.fr/ to compress your submission."
+			},
+			{
+				"text": "Not all submissions make it to the stage. There will be a preselection process."
 			}
 		],
 		"categories": [
+			{
+				"name": "Combined Demo",
+				"prizes": [],
+				"rules": [
+					{ "text": "All General Rules apply." },
+					{ "text": "Maximum runtime: 7 minutes." },
+					{
+						"text": "Uncompressed file size: 64MB max, including extras like readmes. Use any compression algorithm for packed parts."
+					},
+					{ "text": "No raw animations—that's for Wild." },
+					{
+						"text": "Third-party assets? Make sure you've got the licenses and give proper credit."
+					}
+				]
+			},
+			{
+				"name": "Prerendered Music",
+				"prizes": [],
+				"rules": [
+					{ "text": "All General Rules apply." },
+					{
+						"text": "Tag your files! Include artist and entry names in the metadata (e.g., ID3 tags)."
+					},
+					{ "text": "Max playtime: 4 minutes." },
+					{
+						"text": "Proof of production is mandatory. This can include project files, screenshots, or other materials that demonstrate the creation process."
+					}
+				]
+			},
 			{
 				"name": "Tracked Music",
 				"prizes": [],
@@ -182,14 +224,69 @@
 				]
 			},
 			{
+				"name": "Freestyle Graphics",
+				"prizes": [],
+				"rules": [
+					{ "text": "All General Rules apply." },
+					{
+						"text": "Submit at least two in-progress files or photos to show your creative journey."
+					}
+				]
+			},
+			{
+				"name": "Oldschool Graphics",
+				"prizes": [],
+				"rules": [
+					{ "text": "All General Rules apply." },
+					{ "text": "Provide at least two in-progress files or images." },
+					{ "text": "No animations allowed." },
+					{ "text": "Max resolution: 320x200, 8-bit indexed color depth (255 colors)." }
+				]
+			},
+			{
+				"name": "Freestyle Photo",
+				"prizes": [],
+				"rules": [
+					{ "text": "All General Rules apply." },
+					{ "text": "Please do light edits like color correction and sharpening." },
+					{ "text": "Heavy photo manipulation is not allowed." },
+					{ "text": "HDR is allowed." },
+					{ "text": "Drastic composition changes are not allowed." }
+				]
+			},
+			{
 				"name": "Stop Motion",
 				"prizes": [],
 				"rules": [
-					{ "text": "The 'General Rules' apply to all competition categories." },
+					{ "text": "All General Rules apply." },
 					{ "text": "The submission must be a stop motion video." }
 				]
+			},
+			{
+				"name": "Wild",
+				"prizes": [],
+				"rules": [{ "text": "All General Rules apply." }]
+			},
+			{
+				"name": "GenAI Photo",
+				"prizes": [],
+				"rules": [
+					{ "text": "All General Rules apply." },
+					{
+						"text": "Entries will be judged like regular photography, focusing on composition, lighting, and overall quality."
+					}
+				]
+			},
+			{
+				"name": "GenAI Graphics",
+				"prizes": [],
+				"rules": [{ "text": "All General Rules apply." }]
+			},
+			{
+				"name": "GenAI Music",
+				"prizes": [],
+				"rules": [{ "text": "All General Rules apply." }, { "text": "Max playtime: 4 minutes." }]
 			}
-		],
-		"tickets": [{ "username": "john_doe" }]
+		]
 	}
 ]

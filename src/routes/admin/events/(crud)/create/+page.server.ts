@@ -15,6 +15,7 @@ export const load = (async ({ locals }) => {
 	adminCheck(locals);
 	const initialValues = {
 		name: '',
+		tagline: '',
 		description: '',
 		submissionsOpenAt: new Date(),
 		submissionsCloseAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),

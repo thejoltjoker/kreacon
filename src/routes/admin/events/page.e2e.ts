@@ -60,6 +60,8 @@ test('Admin should be able to create and edit events', async ({ page }) => {
 	await page.locator('input[name="name"]').click();
 	await page.locator('input[name="name"]').fill('My test event');
 	await page.locator('input[name="name"]').press('Tab');
+	await page.locator('input[name="tagline"]').fill('Best test ever');
+	await page.locator('input[name="tagline"]').press('Tab');
 	await page.locator('input[name="description"]').fill('This is a test description');
 	await page.locator('input[name="description"]').press('Tab');
 	await page.getByRole('spinbutton', { name: 'month, Submissions Open At' }).press('Tab');
@@ -75,20 +77,20 @@ test('Admin should be able to create and edit events', async ({ page }) => {
 	await page.getByRole('button', { name: 'Add Rule' }).click();
 	await page.locator('form').getByRole('listitem').getByRole('textbox').fill('My first rule');
 	await page.locator('form').getByRole('listitem').getByRole('textbox').press('Enter');
-	await page.getByRole('textbox').nth(3).fill('Second rule');
-	await page.getByRole('textbox').nth(3).press('Enter');
+	await page.getByRole('textbox').nth(4).fill('Second rule');
+	await page.getByRole('textbox').nth(4).press('Enter');
 	await page.getByRole('button', { name: 'Add Category' }).click();
 	await page.getByRole('button', { name: 'Select a category' }).click();
-	await page.getByRole('option', { name: 'Dinosaur Photography' }).click();
+	await page.getByRole('option', { name: 'Archeological Photography' }).click();
 	await page.getByRole('button', { name: 'Add Rule' }).nth(1).click();
 	await page
 		.locator('form div')
-		.filter({ hasText: 'Category: Dinosaur Photography' })
+		.filter({ hasText: 'Category: Archeological Photography' })
 		.locator('input[type="text"]')
 		.fill('First category rule');
 	await page
 		.locator('form div')
-		.filter({ hasText: 'Category: Dinosaur Photography' })
+		.filter({ hasText: 'Category: Archeological Photography' })
 		.locator('input[type="text"]')
 		.press('Enter');
 	await page.getByRole('button', { name: 'Create Event' }).click();
