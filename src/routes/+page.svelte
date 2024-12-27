@@ -9,8 +9,6 @@
 	import cowsFriendsImage from '../assets/images/cows-friends-001.png';
 	import bugOrganImage from '../assets/images/bug-organ-001.png';
 	import skeletonPileImage from '../assets/images/skeleton-pile-001.png';
-	import { fly } from 'svelte/transition';
-	import { onMount } from 'svelte';
 	import AnimateOnScroll from '$lib/components/AnimateOnScroll.svelte';
 
 	let { data }: { data: PageData } = $props();

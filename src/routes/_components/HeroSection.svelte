@@ -4,7 +4,7 @@
 	import { _ } from 'svelte-i18n';
 	import EventHighlight from './EventHighlight.svelte';
 	import { getEventStatus } from '$lib/helpers/eventStatus';
-	import { fade, fly } from 'svelte/transition';
+	import { fade } from 'svelte/transition';
 	import monsterImage from '../../assets/images/monster.png';
 	import { t } from '$lib/i18n';
 	let event = $derived.by(() => {
