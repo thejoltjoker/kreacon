@@ -1,17 +1,22 @@
 <script lang="ts">
 	import { cn } from '$lib/utils';
 	import type { Snippet } from 'svelte';
+	import type { HTMLImgAttributes } from 'svelte/elements';
 
 	let {
 		content,
 		alignment,
 		imageUrl,
-		imageAlt
+		imageAlt,
+		imageProps,
+		flipImageX = false
 	}: {
 		content: Snippet;
 		alignment: 'left' | 'center' | 'right';
 		imageUrl: string;
 		imageAlt: string;
+		imageProps?: Omit<HTMLImgAttributes, 'src' | 'alt'>;
+		flipImageX?: boolean;
 	} = $props();
 </script>
 
@@ -23,7 +28,16 @@
 			alignment === 'right' && 'order-2'
 		)}
 	>
-		<img src={imageUrl} alt={imageAlt} class="h-full w-full object-cover object-center" />
+		<img
+			src={imageUrl}
+			alt={imageAlt}
+			{...imageProps}
+			class={cn(
+				'h-full w-full object-contain object-center',
+				flipImageX && 'scale-x-[-1]',
+				imageProps?.class
+			)}
+		/>
 	</div>
 	<div
 		class={cn(

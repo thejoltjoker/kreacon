@@ -3,6 +3,7 @@ import { z } from 'zod';
 export const createEventSchema = z
 	.object({
 		description: z.string().min(1, { message: 'Description is required' }),
+		tagline: z.string().min(1, { message: 'Tagline is required' }),
 		name: z.string().min(1, { message: 'Name is required' }),
 		submissionsOpenAt: z.coerce.date(),
 		submissionsCloseAt: z.coerce.date(),

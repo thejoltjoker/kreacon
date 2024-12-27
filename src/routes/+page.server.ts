@@ -11,8 +11,11 @@ export const load = (async ({ locals }) => {
 
 	const now = new Date();
 	const events = await db.query.events.findMany({
-		where(fields, { eq, lte, gte, and, or, not }) {
+		where(fields, { gte, or }) {
 			return or(gte(fields.submissionsCloseAt, now), gte(fields.votingCloseAt, now));
+		},
+		with: {
+			eventCategories: { columns: { categoryId: true } }
 		},
 		orderBy(fields, { asc }) {
 			return [asc(fields.submissionsOpenAt)];

@@ -1,20 +1,24 @@
 <script>
 	import { page } from '$app/stores';
 	import Button from '$lib/components/Button.svelte';
-	import { ArrowRightIcon } from 'lucide-svelte';
 	import { _ } from 'svelte-i18n';
 	import EventHighlight from './EventHighlight.svelte';
+	import { getEventStatus } from '$lib/helpers/eventStatus';
 
 	let event = $derived.by(() => {
 		return $page.data.events[0];
 	});
 </script>
 
-<section class="flex justify-center py-[25vh]">
+<section class="flex justify-center pb-[6vh] pt-[18vh]">
 	<div class="container">
 		<div class="flex flex-col gap-6xl text-center">
 			{#if event != null}
-				<EventHighlight name={event.name} href={`/events/${event.slug}`} status={event.status} />
+				<EventHighlight
+					name={event.name}
+					href={`/events/${event.slug}`}
+					status={getEventStatus(event)}
+				/>
 			{/if}
 			<h1 class="mx-auto max-w-3xl text-balance text-4xl lg:text-7xl">
 				<!-- TODO Use $t() -->

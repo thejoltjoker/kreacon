@@ -3,7 +3,7 @@
 	import DumbInput from '$lib/components/Form/DumbInput.svelte';
 	import DumbSelect from '$lib/components/Form/DumbSelect.svelte';
 	import { PencilIcon, PlusIcon, UnlockIcon } from 'lucide-svelte';
-	import type { PageData } from '../create2/$types';
+	import type { PageData } from '../create/$types';
 	import { page } from '$app/stores';
 	import { tick } from 'svelte';
 	interface Category {
@@ -19,9 +19,9 @@
 	let { categories } = $page.data as PageData;
 
 	let categoriesItems = $derived(
-		categories.map((category) => ({
-			value: category.id.toString(),
-			label: category.name
+		categories.map((cat: PageData['categories'][number]) => ({
+			value: cat.id.toString(),
+			label: cat.name
 		}))
 	);
 
@@ -29,7 +29,9 @@
 
 	let selectedCategory = $state(category.categoryId.toString() ?? '');
 
-	let title = $derived(categories.find((cat) => cat.id === category.categoryId)?.name);
+	let title = $derived(
+		categories.find((cat: PageData['categories'][number]) => cat.id === category.categoryId)?.name
+	);
 
 	const handleAddRule = async (value: string) => {
 		setCategory({ ...category, rules: [...category.rules, { text: value, isLocked: false }] });

@@ -2,6 +2,7 @@
 	{
 		"name": "Mesozoic Masterpieces",
 		"slug": "mesozoic-masterpieces",
+		"tagline": "Bring the Jurassic world to life through creative multimedia at our Mesozoic showcase.",
 		"description": "Step back into the age of dinosaurs with our Mesozoic-themed creative showcase. From thundering T-rexes to soaring Pterodactyls, bring the Jurassic world to life through photography, sound, and animation.",
 		"submissionsOpenAt": "2023-12-01T00:00:00Z",
 		"submissionsCloseAt": "2023-12-15T23:59:59Z",
@@ -53,6 +54,7 @@
 	{
 		"name": "Dino Days",
 		"slug": "dino-days",
+		"tagline": "Capture the wonder and majesty of dinosaurs through creative multimedia.",
 		"description": "Join us for an extraordinary celebration of prehistoric life. This festival invites artists to capture the wonder and majesty of dinosaurs through creative photography, sound design, and animation.",
 		"submissionsOpenAt": "2023-12-01T00:00:00Z",
 		"submissionsCloseAt": "2030-12-15T23:59:59Z",
@@ -104,6 +106,7 @@
 	{
 		"name": "Fossil Finds",
 		"slug": "fossil-finds",
+		"tagline": "Share your best fossil photography and help bring these ancient remnants to life.",
 		"description": "A special exhibition focusing on recent paleontological discoveries. Share your best fossil photography and help bring these ancient remnants to life.",
 		"submissionsOpenAt": "2023-06-01T00:00:00Z",
 		"submissionsCloseAt": "2033-06-01T23:59:59Z",
@@ -135,7 +138,8 @@
 		"tickets": [{ "username": "john_doe" }],
 		"name": "Beacon 2025",
 		"slug": "beacon-2025",
-		"description": "A LAN party for gamers, by gamers.",
+		"tagline": "A LAN party for gamers, by gamers.",
+		"description": "Join us for an exciting showcase of digital creativity where artists, programmers, and musicians come together to push the boundaries of real-time computer art. From stunning visual demos to creative coding experiments, Kreacon celebrates the intersection of technology and artistic expression. Whether you're a seasoned demo scene veteran or a curious newcomer, we welcome all creative minds to participate, learn, and share their work with our community.",
 		"submissionsOpenAt": "2025-02-14T00:00:00Z",
 		"submissionsCloseAt": "2025-02-15T23:59:59Z",
 		"votingOpenAt": "2025-02-16T00:00:00Z",
