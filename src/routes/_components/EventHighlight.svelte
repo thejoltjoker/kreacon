@@ -16,7 +16,7 @@
 
 <a
 	{href}
-	class="group mx-auto inline-flex items-center gap-3 rounded-full border px-2xs py-2xs text-sm font-bold transition-colors hover:bg-white hover:text-black"
+	class="group inline-flex w-fit items-center gap-3 rounded-full border px-2xs py-2xs text-sm font-bold transition-colors hover:bg-white hover:text-black"
 >
 	<div
 		class="focus:ring-ring inline-flex items-center rounded-full border border-transparent bg-white px-xs py-3xs text-xs font-bold uppercase text-black transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2"

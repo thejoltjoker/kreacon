@@ -26,7 +26,7 @@
 				>
 				{$t('categories')}
 			</a>
-			<div class=" inline-flex items-center justify-between gap-xs text-sm font-bold">
+			<div class="inline-flex flex-wrap items-center justify-between gap-xs text-sm font-bold">
 				<p>
 					{formatDateRange(
 						new Date(event.submissionsOpenAt),
@@ -51,16 +51,16 @@
 		</div>
 	</div>
 {/snippet}
-<section class="flex max-w-screen-xl flex-col gap-sm">
-	<h2 class="mb-3xl text-center text-4xl font-bold">{$t('Current and upcoming events')}</h2>
+<section class="flex w-full max-w-screen-xl flex-col gap-xl px-sm">
+	<h2 class="text-center text-4xl font-bold">{$t('Current and upcoming events')}</h2>
 
-	<div class="mx-auto grid max-w-screen-xl grid-cols-1 gap-xl md:grid-cols-3">
+	<div class="mx-auto grid grid-cols-1 gap-sm md:grid-cols-3 md:gap-xl">
 		{#each events.slice(0, 3) as eventData}
 			{@render event(eventData)}
 		{/each}
 	</div>
 
-	<div class="mt-3xl text-center">
+	<div class="text-center">
 		<Button href="/events">{$t('View all events')}</Button>
 	</div>
 </section>

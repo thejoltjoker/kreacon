@@ -20,18 +20,25 @@
 	} = $props();
 </script>
 
-<section class={cn('flex items-center gap-xl', alignment === 'center' && 'flex-col')}>
+<section
+	class={cn(
+		'flex flex-col items-center justify-center gap-xl px-sm md:flex-row',
+		alignment === 'center' && 'flex-col'
+	)}
+>
 	<div
 		class={cn(
-			'h-[400px] flex-1 overflow-hidden rounded-lg',
+			'order-1 h-[400px] w-[400px] shrink-0 md:basis-1/2',
 			alignment === 'left' && 'order-1',
-			alignment === 'right' && 'order-2'
+			alignment === 'right' && 'md:order-2'
 		)}
 	>
 		<img
 			src={imageUrl}
 			alt={imageAlt}
 			{...imageProps}
+			width="400"
+			height="400"
 			class={cn(
 				'h-full w-full object-contain object-center',
 				flipImageX && 'scale-x-[-1]',

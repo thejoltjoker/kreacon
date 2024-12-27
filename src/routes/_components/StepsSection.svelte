@@ -6,17 +6,16 @@
 </script>
 
 {#snippet item(title: string, text: string, imageUrl: string)}
-	<div class="flex flex-col items-center text-center">
-		<!-- <Icon class="mb-xl h-16 w-16" /> -->
+	<div class="flex w-full flex-col items-center text-center">
 		<img class="h-[260px] w-[260px]" src={imageUrl} alt="Monster" />
 		<h3 class="mb-3 text-xl font-semibold">{title}</h3>
 		<p class="text-shade-300">{text}</p>
 	</div>
 {/snippet}
 
-<section class="w-full max-w-screen-xl">
-	<h2 class="mb-16 text-center text-4xl font-bold">How It Works</h2>
-	<div class="mx-auto grid grid-cols-1 gap-xl md:grid-cols-3">
+<section class="flex w-full max-w-screen-xl flex-col items-center">
+	<h2 class="text-center text-4xl font-bold">How It Works</h2>
+	<div class="grid w-full grid-cols-1 gap-xl md:grid-cols-3">
 		{@render item(
 			`1. ${$t('Create')}`,
 			$t('Unleash your creativity using your favorite tools.'),

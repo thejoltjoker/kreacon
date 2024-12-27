@@ -24,9 +24,9 @@
 	<div class="flex grow flex-col items-center justify-center"></div>
 </div>
 
-<main class="flex flex-col items-center gap-[20vh]">
+<main class="flex flex-col items-center gap-8xl overflow-hidden md:gap-[20vh]">
 	<HeroSection />
-	<section class="flex max-w-screen-xl flex-col gap-xl py-xl">
+	<section class="flex w-full max-w-screen-xl flex-col gap-xl py-xl">
 		<AnimateOnScroll id="animated-content-block-1">
 			<ContentBlock alignment="right" imageUrl={skeletonPileImage} imageAlt="Monster" flipImageX>
 				{#snippet content()}
@@ -75,13 +75,13 @@
 			</ContentBlock>
 		</AnimateOnScroll>
 	</section>
-	<AnimateOnScroll id="animated-steps">
+	<AnimateOnScroll id="animated-steps" class="flex w-full justify-center">
 		<StepsSection />
 	</AnimateOnScroll>
-	<AnimateOnScroll id="animated-events">
+	<AnimateOnScroll id="animated-events" class="flex w-full justify-center">
 		<EventsSection events={data.events} />
 	</AnimateOnScroll>
-	<AnimateOnScroll id="animated-signup" class="w-full">
+	<AnimateOnScroll id="animated-signup" class="flex w-full justify-center">
 		<SignUpSection />
 	</AnimateOnScroll>
 </main>

@@ -13,7 +13,7 @@
 	let {
 		children,
 		id,
-		threshold = 0.4,
+		threshold = 0.25,
 		animation = 'fade',
 		...props
 	}: AnimateOnScrollProps = $props();
