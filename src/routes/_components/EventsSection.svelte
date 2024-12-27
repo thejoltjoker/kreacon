@@ -55,7 +55,7 @@
 	<h2 class="mb-3xl text-center text-4xl font-bold">{$t('Current and upcoming events')}</h2>
 
 	<div class="mx-auto grid max-w-screen-xl grid-cols-1 gap-xl md:grid-cols-3">
-		{#each events as eventData}
+		{#each events.slice(0, 3) as eventData}
 			{@render event(eventData)}
 		{/each}
 	</div>
