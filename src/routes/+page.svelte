@@ -7,7 +7,7 @@
 	import ContentBlock from './_components/ContentBlock.svelte';
 	import Button from '$lib/components/Button.svelte';
 	import cowsFriendsImage from '../assets/images/cows-friends-001.png';
-	import bugOrganImage from '../assets/images/bug-organ-001.png';
+	import bugOrganImage from '../assets/images/bug-organ-002.png';
 	import skeletonPileImage from '../assets/images/skeleton-pile-001.png';
 	import AnimateOnScroll from '$lib/components/AnimateOnScroll.svelte';
 
@@ -54,12 +54,7 @@
 			</ContentBlock>
 		</AnimateOnScroll>
 		<AnimateOnScroll id="animated-content-block-3">
-			<ContentBlock
-				alignment="right"
-				imageUrl={bugOrganImage}
-				imageAlt="Monster"
-				imageProps={{ class: 'scale-[80%]' }}
-			>
+			<ContentBlock alignment="right" imageUrl={bugOrganImage} imageAlt="Monster" flipImageX>
 				{#snippet content()}
 					<h2 class="text-5xl">Show Your Love</h2>
 					<p class="text-lg">
