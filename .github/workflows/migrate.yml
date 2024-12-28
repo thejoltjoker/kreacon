@@ -12,6 +12,9 @@ jobs:
       name: 'Production'
     steps:
       - uses: actions/checkout@v4
+      - uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
