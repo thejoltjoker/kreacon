@@ -1,11 +1,11 @@
 {
-  "description": "a platform for creative expression and competition",
-  "hero": {
-    "title": "Show off your creative skills",
-    "description": "Join our creative competition and showcase your talent. Let your imagination run wild and stand a chance to win exciting prizes."
-  },
-  "delete": "Delete",
-  "email": "Email",
-  "enter_now": "Enter now",
-  "enter_your_email": "Enter your email"
+	"description": "a platform for creative expression and competition",
+	"hero": {
+		"title": "Show off your creative skills",
+		"description": "Join our creative competition and showcase your talent. Let your imagination run wild and stand a chance to win exciting prizes."
+	},
+	"delete": "Delete",
+	"email": "Email",
+	"enter_now": "Enter now",
+	"enter_your_email": "Enter your email"
 }
