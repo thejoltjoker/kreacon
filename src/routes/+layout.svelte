@@ -33,11 +33,7 @@
 	<div class="flex min-h-screen flex-col">
 		<Navbar title={$page.data.title} />
 		<PageTransition key={data.pathname}>
-			<!-- {#key data.pathname}
-			<div in:fade={{ delay: 300, duration: 300 }} out:fade={{ duration: 300 }}> -->
 			{@render children()}
-			<!-- </div>
-		{/key} -->
 		</PageTransition>
 		<Footer />
 	</div>
