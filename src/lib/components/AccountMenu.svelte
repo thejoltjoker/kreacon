@@ -11,6 +11,7 @@
 	import DropdownMenuItem from './DropdownMenuItem.svelte';
 	import DropdownMenu from './DropdownMenu.svelte';
 	import DropdownMenuSeparator from './DropdownMenuSeparator.svelte';
+	import { t } from '$lib/i18n';
 
 	const user = $derived($page.data.user);
 </script>
@@ -30,24 +31,24 @@
 	{/snippet}
 
 	<DropdownMenuItem href="/profile" icon={UserCircleIcon} class="min-w-48">
-		<span>Profile</span>
+		<span>{$t('Profile')}</span>
 	</DropdownMenuItem>
 	<DropdownMenuItem href={`/users/${user?.username}`} icon={LayoutGridIcon} class="min-w-48">
-		<span>Submissions</span>
+		<span>{$t('Entries')}</span>
 	</DropdownMenuItem>
 	<DropdownMenuItem href="/profile#tickets" icon={TicketIcon} class="min-w-48">
-		<span>Tickets</span>
+		<span>{$t('Tickets')}</span>
 	</DropdownMenuItem>
 
 	<DropdownMenuSeparator />
 	{#if user.role === 'admin'}
 		<DropdownMenuItem href="/admin" icon={ShieldIcon} class="min-w-48">
-			<span>Admin</span>
+			<span>{$t('Admin')}</span>
 		</DropdownMenuItem>
 		<DropdownMenuSeparator />
 	{/if}
 
 	<DropdownMenuItem href="/logout" icon={LogOutIcon} class="min-w-48">
-		<span>Sign out</span>
+		<span>{$t('Sign out')}</span>
 	</DropdownMenuItem>
 </DropdownMenu>

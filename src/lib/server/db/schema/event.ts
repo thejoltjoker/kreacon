@@ -3,7 +3,7 @@ import { pgTable, serial, timestamp, varchar, index } from 'drizzle-orm/pg-core'
 import eventCategories from './eventCategory';
 import rules from './rule';
 import { timestamps } from './shared';
-import { submissions } from './submission';
+import { entries } from './entry';
 import { tickets } from './ticket';
 import { createInsertSchema } from 'drizzle-zod';
 
@@ -31,7 +31,7 @@ export const events = pgTable(
 
 export const eventsRelations = relations(events, ({ many }) => ({
 	eventCategories: many(eventCategories),
-	submissions: many(submissions),
+	entries: many(entries),
 	tickets: many(tickets),
 	rules: many(rules)
 }));

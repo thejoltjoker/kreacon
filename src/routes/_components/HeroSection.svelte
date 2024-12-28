@@ -44,7 +44,7 @@
 					{$t('Let your imagination run wild and stand a chance to win exciting prizes.')}
 				</p>
 				<div class="flex items-center justify-center gap-4 sm:flex-row">
-					<Button href="/submissions">{$_('enter_now', { default: 'Enter now' })}</Button>
+					<Button href="/entries">{$_('enter_now', { default: 'Enter now' })}</Button>
 					<Button variant="ghost">{$_('learn_more', { default: 'Learn more' })}</Button>
 				</div>
 			</div>

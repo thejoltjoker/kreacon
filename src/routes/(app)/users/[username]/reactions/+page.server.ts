@@ -17,7 +17,7 @@ export const load = (async ({ params, url }) => {
 	const result = await db.query.reactions.findMany({
 		where: eq(reactions.userId, user.id),
 		with: {
-			submission: {
+			entry: {
 				columns: {
 					id: true
 				},

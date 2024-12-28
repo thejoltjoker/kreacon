@@ -12,7 +12,7 @@
 			...user,
 			thumbnailUrl: user.picture ?? '',
 			tickets: user.tickets.length,
-			submissions: user.submissions.length
+			entries: user.entries.length
 		}))
 	);
 
@@ -34,7 +34,7 @@
 		{ name: 'email', minScreen: 'sm', sortable: false },
 		{ name: 'role', minScreen: 'xl', sortable: true },
 		{ name: 'tickets', minScreen: 'lg', sortable: false },
-		{ name: 'submissions', minScreen: 'md', sortable: false },
+		{ name: 'entries', minScreen: 'md', sortable: false },
 		{ name: 'status', minScreen: 'xl', sortable: false },
 		{ name: 'createdAt', minScreen: 'xl', sortable: true }
 	]}

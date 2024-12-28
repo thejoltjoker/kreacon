@@ -1,4 +1,4 @@
-export { roleEnum, mediaTypeEnum, submissionStatusEnum, licenseEnum } from './shared';
+export { roleEnum, mediaTypeEnum, entryStatusEnum, licenseEnum } from './shared';
 export { default as users, usersRelations, userStatusEnum } from './user';
 export { default as accounts, accountsRelations } from './account';
 export { default as categories, categoriesRelations } from './category';
@@ -8,7 +8,7 @@ export { default as events, eventsRelations } from './event';
 export { default as media } from './media';
 export { default as reactions, reactionsRelations } from './reaction';
 export { default as sessions, sessionsRelations } from './session';
-export { default as submissions, submissionsRelations } from './submission';
+export { default as entries, entriesRelations } from './entry';
 export { default as tickets, ticketsRelations } from './ticket';
 export { default as votes, votesRelations } from './vote';
 export { default as prizes, prizesRelations } from './prize';

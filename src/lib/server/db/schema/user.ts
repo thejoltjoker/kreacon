@@ -5,7 +5,7 @@ import { registerUserSchema } from '../../../schemas/user';
 import accounts from './account';
 import reactions from './reaction';
 import { roleEnum, timestamps } from './shared';
-import submissions from './submission';
+import entries from './entry';
 import tickets from './ticket';
 import votes from './vote';
 import { z } from 'zod';
@@ -26,7 +26,7 @@ export const users = pgTable('user', {
 
 export const usersRelations = relations(users, ({ many }) => ({
 	accounts: many(accounts),
-	submissions: many(submissions),
+	entries: many(entries),
 	votes: many(votes),
 	reactions: many(reactions),
 	tickets: many(tickets)

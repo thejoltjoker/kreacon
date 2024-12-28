@@ -25,8 +25,8 @@
 		</p>
 
 		<div class="user-stats mt-sm flex gap-6 text-muted-foreground-alt">
-			<p><span class="text-white">{user?.ticketCount}</span> {$t('events')}</p>
-			<p><span class="text-white">{user?.submissionCount}</span> {$t('submissions')}</p>
+			<p><span class="text-white">{user?.ticketCount}</span> {$t('Events')}</p>
+			<p><span class="text-white">{user?.entryCount}</span> {$t('Entries')}</p>
 		</div>
 	</div>
 </div>

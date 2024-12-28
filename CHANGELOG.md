@@ -81,6 +81,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   [#69](https://github.com/thejoltjoker/kreacon/pull/69)
 - Update user create submission page with multi step form
   [#84](https://github.com/thejoltjoker/kreacon/pull/84)
+- Change name of submissions to entries
+  [#88](https://github.com/thejoltjoker/kreacon/pull/88)
 
 ### Deprecated
 

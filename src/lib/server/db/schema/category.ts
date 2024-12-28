@@ -6,7 +6,7 @@ import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
 import { z } from 'zod';
 import eventCategories from './eventCategory';
 import { mediaTypeEnum, timestamps } from './shared';
-import { submissions } from './submission';
+import { entries } from './entry';
 
 export const categories = pgTable('category', {
 	id: serial().primaryKey(),
@@ -19,7 +19,7 @@ export const categories = pgTable('category', {
 
 export const categoriesRelations = relations(categories, ({ many }) => ({
 	eventCategories: many(eventCategories),
-	submissions: many(submissions)
+	entries: many(entries)
 }));
 
 export const insertCategorySchema = createInsertSchema(categories).extend({

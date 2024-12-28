@@ -1,7 +1,7 @@
 import { relations, type InferInsertModel, type InferSelectModel } from 'drizzle-orm';
 import { pgTable, primaryKey, uuid, varchar } from 'drizzle-orm/pg-core';
 import { timestamps } from './shared';
-import { submissions } from './submission';
+import { entries } from './entry';
 import users from './user';
 import { createInsertSchema } from 'drizzle-zod';
 import { z } from 'zod';
@@ -11,11 +11,11 @@ export const reactions = pgTable(
 	{
 		value: varchar('value', { length: 16 }).notNull(),
 		userId: uuid('user_id').notNull(),
-		submissionId: varchar('submission_id', { length: 255 }).notNull(),
+		entryId: varchar('entry_id', { length: 255 }).notNull(),
 		...timestamps
 	},
 	(table) => ({
-		pk: primaryKey({ columns: [table.userId, table.submissionId] })
+		pk: primaryKey({ columns: [table.userId, table.entryId] })
 	})
 );
 
@@ -24,9 +24,9 @@ export const reactionsRelations = relations(reactions, ({ one }) => ({
 		fields: [reactions.userId],
 		references: [users.id]
 	}),
-	submission: one(submissions, {
-		fields: [reactions.submissionId],
-		references: [submissions.id]
+	entry: one(entries, {
+		fields: [reactions.entryId],
+		references: [entries.id]
 	})
 }));
 

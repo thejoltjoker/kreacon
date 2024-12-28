@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { invalidateAll } from '$app/navigation';
 	import { CopyIcon, TrashIcon } from 'lucide-svelte';
-	import EventCombobox from '../../(app)/submissions/_components/EventCombobox.svelte';
+	import EventCombobox from '../../(app)/entries/_components/EventCombobox.svelte';
 	import EntityFilterBar from '../_components/EntityFilterBar.svelte';
 	import EntityList from '../_components/EntityList.svelte';
 	import type { PageData } from './$types';
