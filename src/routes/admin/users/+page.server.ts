@@ -30,7 +30,7 @@ export const load = (async ({ url }) => {
 			},
 			with: {
 				tickets: { columns: { id: true } },
-				submissions: { columns: { id: true } }
+				entries: { columns: { id: true } }
 			},
 			limit: perPage,
 			offset: (page - 1) * perPage

@@ -2,7 +2,7 @@ import db from '$lib/server/db';
 import users from '$lib/server/db/schema/user';
 import { desc, eq, and } from 'drizzle-orm';
 import type { LayoutServerLoad } from './$types';
-import submissions from '$lib/server/db/schema/submission';
+import entries from '$lib/server/db/schema/entry';
 import { StatusCodes } from 'http-status-codes';
 import { error } from '@sveltejs/kit';
 
@@ -17,7 +17,7 @@ export const load = (async ({ params, locals }) => {
 				createdAt: true
 			},
 			with: {
-				submissions: {
+				entries: {
 					columns: {
 						id: true
 					}
@@ -34,12 +34,12 @@ export const load = (async ({ params, locals }) => {
 			throw error(StatusCodes.NOT_FOUND, 'User not found');
 		}
 
-		const submissionsResult = await tx.query.submissions.findMany({
+		const entriesResult = await tx.query.entries.findMany({
 			where: and(
-				eq(submissions.userId, user.id),
-				locals.user?.id !== user.id ? eq(submissions.status, 'published') : undefined
+				eq(entries.userId, user.id),
+				locals.user?.id !== user.id ? eq(entries.status, 'published') : undefined
 			),
-			orderBy: desc(submissions.createdAt),
+			orderBy: desc(entries.createdAt),
 			with: {
 				media: true
 			}
@@ -49,11 +49,11 @@ export const load = (async ({ params, locals }) => {
 			profileUser: {
 				username: user.username,
 				picture: user.picture,
-				submissionCount: user.submissions.length,
+				entryCount: user.entries.length,
 				ticketCount: user.tickets.length,
 				createdAt: user.createdAt
 			},
-			submissions: submissionsResult,
+			entries: entriesResult,
 			title: { text: 'User', href: `/users/${user.username}` }
 		};
 	});

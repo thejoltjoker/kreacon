@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { t } from '$lib/i18n';
 	import type { PageData } from './$types';
 	import { locale } from 'svelte-i18n';
 
@@ -12,7 +13,7 @@
 	<p class="text-lg">{data.event.description}</p>
 	<div class="flex gap-xl">
 		<div class="flex flex-1 flex-col gap-sm">
-			<h2>Submissions</h2>
+			<h2>{$t('Entries')}</h2>
 			<div>
 				<!-- TODO Design -->
 				<p class="text-muted-foreground-alt">Opens at</p>
@@ -57,7 +58,7 @@
 	</div>
 
 	<section class="flex flex-col gap-xl">
-		<h2>Categories</h2>
+		<h2>{$t('Categories')}</h2>
 		{#each categories as category}
 			<div class="card flex flex-col gap-sm">
 				<a href="/submissions?event={data.event.id}&category={category.id}">
@@ -65,11 +66,11 @@
 				</a>
 				<div class="flex flex-col gap-xl">
 					<div class="flex flex-1 flex-col gap-sm">
-						<h4>About {category.name}</h4>
+						<h4>{$t('About')} {category.name}</h4>
 						<p>{category.description}</p>
 					</div>
 					<div class="flex flex-1 flex-col gap-sm">
-						<h4>Rules</h4>
+						<h4>{$t('Rules')}</h4>
 						<ol class="flex flex-col gap-sm text-lg font-bold">
 							{#each category.rules as rule, index}
 								<li class="flex gap-sm">

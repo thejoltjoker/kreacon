@@ -33,11 +33,11 @@
 	<nav class="mt-sm md:mt-xl">
 		<HorizontalMenu>
 			<HorizontalMenuItem
-				href="/users/{data.profileUser.username}/submissions?sortBy={$page.url.searchParams.get(
+				href="/users/{data.profileUser.username}/entries?sortBy={$page.url.searchParams.get(
 					'sortBy'
 				) ?? defaultSortBy}"
 			>
-				{$t('Submissions')}
+				{$t('Entries')}
 			</HorizontalMenuItem>
 			<HorizontalMenuItem
 				href="/users/{data.profileUser.username}/reactions?sortBy={$page.url.searchParams.get(

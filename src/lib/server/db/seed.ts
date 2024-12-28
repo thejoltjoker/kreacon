@@ -22,7 +22,7 @@ for (const table of [
 	schema.categories,
 	schema.eventCategories,
 	schema.tickets,
-	schema.submissions,
+	schema.entries,
 	schema.media,
 	schema.reactions,
 	schema.rules,
@@ -40,8 +40,8 @@ await seeds.categories(db);
 logger.info('🎟️ Seeding events...');
 await seeds.events(db);
 
-logger.info('🎫 Seeding submissions...');
-await seeds.submissions(db);
+logger.info('🎫 Seeding entries...');
+await seeds.entries(db);
 
 logger.info('🎉 Seeding completed');
 await db.$client.end();

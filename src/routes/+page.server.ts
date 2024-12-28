@@ -2,11 +2,10 @@ import { redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import { StatusCodes } from 'http-status-codes';
 import db from '$lib/server/db';
-import { createLogger } from '$lib/helpers/logger';
-const logger = createLogger('landing-page-server');
+
 export const load = (async ({ locals }) => {
 	if (locals.user) {
-		throw redirect(StatusCodes.TEMPORARY_REDIRECT, '/submissions');
+		throw redirect(StatusCodes.TEMPORARY_REDIRECT, '/entries');
 	}
 
 	const now = new Date();
@@ -22,6 +21,5 @@ export const load = (async ({ locals }) => {
 		}
 	});
 
-	logger.info('events', events);
 	return { events, title: { text: 'Kreacon' } };
 }) satisfies PageServerLoad;

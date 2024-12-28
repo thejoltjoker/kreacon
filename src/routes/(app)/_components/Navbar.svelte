@@ -18,13 +18,13 @@
 			? [
 					{ label: 'Categories', href: '/admin/categories' },
 					{ label: 'Events', href: '/admin/events' },
-					{ label: 'Submissions', href: '/admin/submissions' },
+					{ label: 'Entries', href: '/admin/entries' },
 					{ label: 'Users', href: '/admin/users' },
 					{ label: 'Tickets', href: '/admin/tickets' }
 				]
 			: [
 					{ label: 'Home', href: '/' },
-					{ label: 'Submissions', href: '/submissions' },
+					{ label: 'Entries', href: '/entries' },
 					{ label: 'Events', href: '/events' }
 				]
 	);
@@ -85,12 +85,12 @@
 		{:else if user}
 			<li>
 				<div class="hidden md:block">
-					<Button variant="default" href="/submissions/create">
+					<Button variant="default" href="/entries/create">
 						{$t('Submit')}
 					</Button>
 				</div>
 				<div class="md:hidden">
-					<Button size="icon" variant="default" href="/submissions/create">
+					<Button size="icon" variant="default" href="/entries/create">
 						<PlusIcon />
 					</Button>
 				</div>

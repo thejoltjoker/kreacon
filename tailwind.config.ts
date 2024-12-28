@@ -167,6 +167,8 @@ export default {
 			gridTemplateColumns: {
 				'admin-submissions-list-item': '10rem minmax(900px, 1fr) repeat(16, minmax(0, 1fr))',
 				submissions: 'repeat(auto-fill, minmax(400px, 1fr))',
+				'admin-entries-list-item': '10rem minmax(900px, 1fr) repeat(16, minmax(0, 1fr))',
+				entries: 'repeat(auto-fill, minmax(400px, 1fr))',
 				reactions: 'repeat(auto-fill, minmax(250px, 1fr))',
 				'reactions-sm': 'repeat(auto-fill, minmax(150px, 1fr))'
 			},
