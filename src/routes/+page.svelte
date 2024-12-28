@@ -10,7 +10,6 @@
 	import bugOrganImage from '../assets/images/bug-organ-002.png';
 	import skeletonPileImage from '../assets/images/skeleton-pile-001.png';
 	import AnimateOnScroll from '$lib/components/AnimateOnScroll.svelte';
-	import PageTransition from '$lib/components/PageTransition.svelte';
 
 	let { data }: { data: PageData } = $props();
 </script>

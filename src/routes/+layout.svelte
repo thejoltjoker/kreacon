@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { beforeNavigate, onNavigate } from '$app/navigation';
 	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
 	import '$lib/i18n';
@@ -10,7 +9,6 @@
 	import Navbar from './(app)/_components/Navbar.svelte';
 	import PageTransition from '$lib/components/PageTransition.svelte';
 	import type { LayoutData } from './$types';
-	import { fade } from 'svelte/transition';
 	import type { Snippet } from 'svelte';
 
 	let { children, data }: { children: Snippet; data: LayoutData } = $props();
