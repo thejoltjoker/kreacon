@@ -18,6 +18,19 @@ jobs:
           node-version: '20'
       - name: Install dependencies
         run: npm ci
+      - name: Add GitHub Actions IP to PostgreSQL firewall
+        id: add-firewall-rule
+        continue-on-error: true
+        run: |
+          GITHUB_IP=$(curl -s https://api.ipify.org)
+          echo "GitHub IP: $GITHUB_IP"
+          az postgres flexible-server firewall-rule create \
+            --rule-name github-actions-runner \
+            --resource-group ${{vars.AZURE_POSTGRESQL_RESOURCE_GROUP}} \
+            --name ${{vars.AZURE_POSTGRESQL_SERVER_NAME}} \
+            --start-ip-address $GITHUB_IP \
+            --end-ip-address $GITHUB_IP
+          echo "rule_created=true" >> $GITHUB_OUTPUT
       - name: Run migrations
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
@@ -33,3 +46,12 @@ jobs:
           PUBLIC_BASE_URL: ${{ vars.PUBLIC_BASE_URL }}
           DB_MIGRATING: true
         run: npm run db:migrate
+      - name: Remove GitHub Actions IP from PostgreSQL firewall
+        if: always() && steps.add-firewall-rule.outputs.rule_created == 'true'
+        continue-on-error: true
+        run: |
+          az postgres flexible-server firewall-rule delete \
+            --rule-name github-actions-runner \
+            --resource-group "${{ vars.AZURE_POSTGRESQL_RESOURCE_GROUP }}" \
+            --name "${{ vars.AZURE_POSTGRESQL_SERVER_NAME }}" \
+            --yes
