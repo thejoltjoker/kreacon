@@ -73,7 +73,7 @@
 		</div>
 	</div>
 	<div class="flex w-full gap-sm md:w-fit md:flex-col">
-		<Button class="w-full" href="/entries/{event.slug}">{$t('Entries')}</Button>
+		<Button class="w-full" href="/entries?event={event.id}">{$t('Entries')}</Button>
 		<Button class="w-full" variant="outline" href="/events/{event.slug}">{$t('Rules')}</Button>
 	</div>
 </div>
