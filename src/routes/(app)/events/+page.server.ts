@@ -1,5 +1,4 @@
 import db from '$lib/server/db';
-import { eventCategories } from '$lib/server/db/schema';
 import type { PageServerLoad } from './$types';
 
 export const load = (async () => {

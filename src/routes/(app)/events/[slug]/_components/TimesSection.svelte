@@ -1,35 +1,9 @@
 <script lang="ts">
-	import { formatRelativeTime } from '$lib/helpers/formatRelativeTime';
-	import { onDestroy } from 'svelte';
 	import { type PageData } from '../$types';
 	import { locale } from 'svelte-i18n';
 	import { t } from '$lib/i18n';
 
 	let { event }: { event: PageData['event'] } = $props();
-	const now = new Date();
-	let showCountdown = $state(event.submissionsOpenAt > now && event.submissionsCloseAt > now);
-
-	function formatCountdown(targetDate: Date): string {
-		const total = targetDate.getTime() - Date.now();
-
-		const days = Math.floor(total / (1000 * 60 * 60 * 24));
-		const hours = Math.floor((total % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-		const minutes = Math.floor((total % (1000 * 60 * 60)) / (1000 * 60));
-		const seconds = Math.floor((total % (1000 * 60)) / 1000);
-
-		return `${days.toString().padStart(2, '0')}:${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-	}
-
-	let countdown = $state(formatCountdown(event.submissionsCloseAt));
-
-	// Update countdown every second
-	let interval = setInterval(() => {
-		countdown = formatCountdown(event.submissionsCloseAt);
-	}, 1000);
-
-	onDestroy(() => {
-		clearInterval(interval);
-	});
 </script>
 
 <div class="flex w-full flex-col gap-xl">

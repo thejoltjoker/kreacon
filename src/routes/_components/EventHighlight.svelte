@@ -1,16 +1,14 @@
 <script lang="ts">
+	import type { EventStatus } from '$lib/helpers/eventStatus';
 	import { ArrowRightIcon } from 'lucide-svelte';
 
-	let {
-		name,
-		href,
-		status
-	}: { name: string; href: string; status: 'scheduled' | 'submitting' | 'voting' } = $props();
+	let { name, href, status }: { name: string; href: string; status: EventStatus } = $props();
 
 	const statusText = {
 		scheduled: 'Coming up',
 		submitting: 'Open for submissions',
-		voting: 'Open for voting'
+		voting: 'Open for voting',
+		closed: 'Closed'
 	};
 </script>
 

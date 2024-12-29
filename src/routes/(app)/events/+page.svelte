@@ -1,12 +1,7 @@
 <script lang="ts">
-	import Button from '$lib/components/Button.svelte';
-	import Divider from '$lib/components/Divider.svelte';
-	import Link from '$lib/components/Link.svelte';
 	import { getEventStatus } from '$lib/helpers/eventStatus';
-	import { formatDateRange } from '$lib/helpers/formatDateRange';
 	import { t } from '$lib/i18n';
 	import type { PageData } from './$types';
-	import { locale } from 'svelte-i18n';
 	import EventListItem from './_components/EventListItem.svelte';
 	import capitalize from 'lodash/capitalize';
 

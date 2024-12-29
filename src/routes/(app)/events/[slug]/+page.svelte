@@ -1,7 +1,5 @@
 <script lang="ts">
-	import { t } from '$lib/i18n';
 	import type { PageData } from './$types';
-	import { locale } from 'svelte-i18n';
 	import Header from './_components/Header.svelte';
 	import AboutSection from './_components/AboutSection.svelte';
 	import RulesSection from './_components/RulesSection.svelte';

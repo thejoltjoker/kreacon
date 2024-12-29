@@ -1,8 +1,8 @@
 <script lang="ts">
-	import type { Category } from '../data';
+	import type { PageData } from '../$types';
 	import CategoriesAccordion from './CategoriesAccordion.svelte';
 
-	let { categories }: { categories: Category[] } = $props();
+	let { categories }: { categories: PageData['categories'] } = $props();
 </script>
 
 <section class="w-full">

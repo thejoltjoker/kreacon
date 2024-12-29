@@ -1,4 +1,8 @@
 {
+	"entry_not_found": "Entry not found",
+	"closes_at": "Closes at",
+	"closed": "Closed",
+	"participants": "Participants",
 	"entries": "Entries",
 	"sign_out": "Sign out",
 	"you_already_reacted_to_this_entry": "You already reacted to this entry.",
