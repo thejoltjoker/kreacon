@@ -37,9 +37,10 @@ export const actions = {
 
 		const existingUser = await db.query.users.findFirst({ where: eq(users.email, email) });
 
-		const jokeHash =
+		// This is just a comparison to make sure the response takes the same time
+		const mockHash =
 			'$argon2id$v=19$m=19456,t=2,p=1$MTIzNDU2Nzg$pMvRJ5Lffy+nWRibuGU4snAmnDyEIA6lwCTficYVW1w';
-		const validPassword = await verifyPassword(existingUser?.password ?? jokeHash, password);
+		const validPassword = await verifyPassword(existingUser?.password ?? mockHash, password);
 
 		if (!validPassword || !existingUser) {
 			logger.warn('Failed login attempt', { email });
