@@ -6,14 +6,14 @@ import { error, json } from '@sveltejs/kit';
 import { StatusCodes } from 'http-status-codes';
 import type { RequestHandler } from './$types';
 import { getUrlSchema } from './schema';
+import { isAuthenticated } from '../../../(app)/utils';
 
 const logger = createLogger('api/uploads/get-url');
 
-export const POST: RequestHandler = async ({ request }) => {
-	// TODO Uncomment this
-	// if (!isAuthenticated(locals)) {
-	// 	return error(StatusCodes.UNAUTHORIZED, { message: 'Unauthorized' });
-	// }
+export const POST: RequestHandler = async ({ request, locals }) => {
+	if (!isAuthenticated(locals)) {
+		return error(StatusCodes.UNAUTHORIZED, { message: 'Unauthorized' });
+	}
 	const data = await request.json();
 
 	const parsed = getUrlSchema.safeParse(data);
@@ -25,6 +25,7 @@ export const POST: RequestHandler = async ({ request }) => {
 	}
 
 	const sasUrl = await generateBlobSasUrl(data.container, data.name);
+	const baseUrl = sasUrl.split('?')[0];
 
 	try {
 		const [file] = await db
@@ -33,7 +34,7 @@ export const POST: RequestHandler = async ({ request }) => {
 				id: data.uuid,
 				name: data.name,
 				type: data.type,
-				url: sasUrl,
+				url: baseUrl,
 				size: 0,
 				checksum: data.checksum
 			})

@@ -19,14 +19,35 @@ export const load = (async ({ params, locals }) => {
 
 		return await tx.query.entries.findFirst({
 			where: eq(entries.id, id),
+			columns: {
+				id: true,
+				title: true,
+				views: true,
+				createdAt: true
+			},
 			with: {
-				media: true,
-				category: true,
-				event: {
+				media: {
+					columns: {
+						url: true,
+						type: true,
+						name: true
+					}
+				},
+				category: {
 					columns: {
 						id: true,
+						name: true
+					}
+				},
+				event: {
+					columns: {
 						name: true,
-						slug: true
+						id: true
+					}
+				},
+				thumbnail: {
+					columns: {
+						url: true
 					}
 				},
 				user: {
@@ -36,6 +57,11 @@ export const load = (async ({ params, locals }) => {
 					}
 				},
 				reactions: {
+					columns: {
+						userId: true,
+						value: true,
+						createdAt: true
+					},
 					with: {
 						user: {
 							columns: {
@@ -56,7 +82,9 @@ export const load = (async ({ params, locals }) => {
 
 	const isVoted = Boolean(result?.votes && result?.votes.length > 0);
 
-	const title = { text: 'Entries', href: `/entries` };
+	const title = result?.event
+		? { text: result.event.name, href: `/entries?event=${result.event.id}` }
+		: { text: 'Entries', href: '/entries' };
 	return { entry: result, user: locals.user, isVoted, title };
 }) satisfies PageServerLoad;
 

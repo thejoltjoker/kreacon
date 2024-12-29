@@ -20,7 +20,8 @@ export const load = (async ({ locals, url }) => {
 				user: { columns: { id: true, username: true, picture: true } },
 				media: true,
 				reactions: true,
-				category: true
+				category: true,
+				thumbnail: { columns: { url: true } }
 			},
 			where: (table, { or, eq }) =>
 				and(

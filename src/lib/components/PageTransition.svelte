@@ -5,12 +5,17 @@
 	let {
 		children,
 		key,
+		class: className,
 		duration = 100
-	}: { children: Snippet; key: string; duration?: number } = $props();
+	}: { children: Snippet; key: string; class?: string; duration?: number } = $props();
 </script>
 
 {#key key}
-	<div in:fade={{ duration: duration, delay: duration }} out:fade={{ duration: duration }}>
+	<div
+		class={className}
+		in:fade={{ duration: duration, delay: duration }}
+		out:fade={{ duration: duration }}
+	>
 		{@render children()}
 	</div>
 {/key}

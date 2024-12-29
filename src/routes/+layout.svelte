@@ -32,7 +32,7 @@
 {#if ready}
 	<div class="flex min-h-screen flex-col">
 		<Navbar title={$page.data.title} />
-		<PageTransition key={data.pathname}>
+		<PageTransition key={data.pathname} class="h-full grow">
 			{@render children()}
 		</PageTransition>
 		<Footer />
