@@ -99,7 +99,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- Bug fixes
+- Remove debug from submit entry page
+  [#92](https://github.com/thejoltjoker/kreacon/pull/92)
 
 ### Security
 

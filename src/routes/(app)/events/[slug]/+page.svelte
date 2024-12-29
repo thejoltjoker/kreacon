@@ -61,7 +61,7 @@
 		<h2>{$t('Categories')}</h2>
 		{#each categories as category}
 			<div class="card flex flex-col gap-sm">
-				<a href="/submissions?event={data.event.id}&category={category.id}">
+				<a href="/entries?event={data.event.id}&category={category.id}">
 					<h3>{category.name}</h3>
 				</a>
 				<div class="flex flex-col gap-xl">

@@ -11,6 +11,7 @@
 	let { data }: PageProps = $props();
 
 	let { tickets, accounts } = data;
+	// TODO Allow user image upload
 </script>
 
 <svelte:head>
