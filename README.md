@@ -1,4 +1,4 @@
-# Demo
+# Kreacon
 
 ## Getting Started
 
@@ -146,3 +146,9 @@ AZURE_POSTGRESQL_RESOURCE_GROUP=<resource-group>
 OAUTH_DISCORD_REDIRECT_URI=https://your-production-domain.com/auth/discord/callback
 OAUTH_GITHUB_REDIRECT_URI=https://your-production-domain.com/auth/github/callback
 ```
+
+## TODO
+
+### Admin
+
+- [ ] Disallow change of submission and voting dates if already in progress
