@@ -12,12 +12,14 @@ export const load = (async ({ params }) => {
 			columns: {
 				id: true,
 				name: true,
+				tagline: true,
 				description: true,
 				votingOpenAt: true,
 				votingCloseAt: true,
 				submissionsOpenAt: true,
 				submissionsCloseAt: true
-			}
+			},
+			with: { rules: { columns: { text: true } }, tickets: { columns: { id: true } } }
 		});
 
 		if (!event) {
@@ -32,7 +34,7 @@ export const load = (async ({ params }) => {
 			}
 		});
 
-		return { categories, event };
+		return { categories, event: { ...event, participants: event.tickets.length } };
 	});
 
 	const title = { text: 'Events', href: '/events' };

@@ -1,58 +1,37 @@
 <script lang="ts">
+	import { getEventStatus } from '$lib/helpers/eventStatus';
+	import { t } from '$lib/i18n';
 	import type { PageData } from './$types';
+	import EventListItem from './_components/EventListItem.svelte';
+	import capitalize from 'lodash/capitalize';
 
 	let { data }: { data: PageData } = $props();
+
+	let events = $derived.by(() =>
+		data.events.map((event) => ({
+			...event,
+			status: getEventStatus(event)
+		}))
+	);
+
+	let groupedEvents = $derived({
+		current: events.filter((e) => e.status === 'submitting' || e.status === 'voting'),
+		upcoming: events.filter((e) => e.status === 'scheduled'),
+		past: events.filter((e) => e.status === 'closed')
+	});
 </script>
 
-<main class="flex w-full max-w-screen-lg flex-col gap-8xl pt-xl">
-	{#each data.events as event}
-		<div>
-			<div class="flex items-center justify-between gap-sm">
-				<a href="/events/{event.slug}">
-					<h2 class="text-4xl">{event.name}</h2>
-				</a>
-				{#if new Date() >= event.submissionsOpenAt && new Date() <= event.submissionsCloseAt}
-					<div class="pill submissions">Submissions Open</div>
-				{:else if new Date() >= event.votingOpenAt && new Date() <= event.votingCloseAt}
-					<div class="pill voting">Voting Open</div>
-				{:else}
-					<p class="pill text-sm text-muted-foreground-alt">Closed</p>
-				{/if}
-			</div>
-
-			<p class="mb-sm text-muted-foreground-alt">{event.description}</p>
-
-			<div class="flex justify-stretch gap-xl">
-				<div class="flex flex-1 flex-col">
-					<span class="text-sm text-muted-foreground">Submissions Open</span>
-					<span class="font-bold">{new Date(event.submissionsOpenAt).toLocaleString()}</span>
+<main class="flex w-full max-w-screen-lg flex-col gap-xl px-sm pt-xl">
+	{#each Object.entries(groupedEvents) as [group, events]}
+		{#if events.length > 0}
+			<section class="flex flex-col gap-sm">
+				<h2>{$t(`${capitalize(group)} events`)}</h2>
+				<div class="flex flex-col gap-xl">
+					{#each events as event}
+						<EventListItem {event} />
+					{/each}
 				</div>
-				<div class="flex flex-1 flex-col">
-					<span class="text-sm text-muted-foreground">Submissions Close</span>
-					<span class="font-bold">{new Date(event.submissionsCloseAt).toLocaleString()}</span>
-				</div>
-				<div class="flex flex-1 flex-col">
-					<span class="text-sm text-muted-foreground">Voting Open</span>
-					<span class="font-bold">{new Date(event.votingOpenAt).toLocaleString()}</span>
-				</div>
-				<div class="flex flex-1 flex-col">
-					<span class="text-sm text-muted-foreground">Voting Close</span>
-					<span class="font-bold">{new Date(event.votingCloseAt).toLocaleString()}</span>
-				</div>
-			</div>
-		</div>
+			</section>
+		{/if}
 	{/each}
 </main>
-
-<style lang="postcss">
-	.pill {
-		@apply rounded-full bg-muted-background px-sm py-xs text-sm font-bold;
-
-		&.submissions {
-			@apply bg-secondary text-white;
-		}
-		&.voting {
-			@apply bg-tertiary text-black;
-		}
-	}
-</style>

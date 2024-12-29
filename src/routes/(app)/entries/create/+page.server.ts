@@ -137,7 +137,6 @@ export const actions = {
 					ticketId: ticket.id,
 					status: 'pending',
 					mediaId: form.data.mediaId,
-					// TODO Add thumbnail
 					thumbnailId: form.data.thumbnailId,
 					proofId: form.data.proofId,
 					license: form.data.license

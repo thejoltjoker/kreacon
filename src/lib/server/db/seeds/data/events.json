@@ -140,10 +140,10 @@
 		"slug": "beacon-2025",
 		"tagline": "A LAN party for gamers, by gamers.",
 		"description": "Join us for an exciting showcase of digital creativity where artists, programmers, and musicians come together to push the boundaries of real-time computer art. From stunning visual demos to creative coding experiments, Kreacon celebrates the intersection of technology and artistic expression. Whether you're a seasoned demo scene veteran or a curious newcomer, we welcome all creative minds to participate, learn, and share their work with our community.",
-		"submissionsOpenAt": "2025-02-14T00:00:00Z",
-		"submissionsCloseAt": "2025-02-15T23:59:59Z",
-		"votingOpenAt": "2025-02-16T00:00:00Z",
-		"votingCloseAt": "2025-02-16T15:00:00Z",
+		"submissionsOpenAt": "2025-02-13T23:00:00Z",
+		"submissionsCloseAt": "2025-02-15T22:59:59Z",
+		"votingOpenAt": "2025-02-15T23:00:00Z",
+		"votingCloseAt": "2025-02-16T14:00:00Z",
 		"rules": [
 			{
 				"text": "Submissions should be delivered in a format as close as possible to 1920x1080 resolution. Other formats will be rescaled as needed."
