@@ -9,6 +9,14 @@ import {
 
 export const getAllMimeTypes = () => Object.values(MimeTypeMap).flat();
 export const getMimeTypesForMedia = (mediaType: MediaType) => [...MimeTypeMap[mediaType]];
+export const getMediaTypeForMime = (mimeType: string) => {
+	for (const mediaType of MediaTypes) {
+		if ([...MimeTypeMap[mediaType]].includes(mimeType as MimeType)) {
+			return mediaType;
+		}
+	}
+	return null;
+};
 export const getExtensionsForMedia = (mediaType: MediaType) => [...ExtensionMap[mediaType]];
 
 export const isValidMimeType = (mimeType: string) => {

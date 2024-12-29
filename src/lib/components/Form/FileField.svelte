@@ -33,6 +33,7 @@
 	import { getUrlSchema, type GetUrlSchema } from '../../../routes/api/uploads/get-url/schema';
 	import Button from '../Button.svelte';
 	import { getEnctype } from './enctype.svelte';
+	import { fileTypeFromBlob } from 'file-type';
 
 	// TODO Default file type
 
@@ -191,12 +192,17 @@
 	};
 
 	const getUploadUrl = async (file: File) => {
+		const result = await fileTypeFromBlob(file);
+		if (result == null) {
+			throw new Error('Failed to identify file type');
+		}
+		const { ext, mime } = result;
 		const uuid = crypto.randomUUID();
 		const data: GetUrlSchema = {
 			uuid,
 			container: 'uploads',
-			name: `${uuid}_${snakeCase(file.name)}`,
-			type: file.type
+			name: `${uuid}_${snakeCase(file.name)}.${ext}`,
+			type: mime
 		};
 
 		const parsed = getUrlSchema.parse(data);

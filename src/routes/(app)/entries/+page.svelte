@@ -32,19 +32,11 @@
 		<div class="wrapper group grid overflow-hidden rounded-md">
 			<div class="aspect-square h-full w-full overflow-hidden rounded-md">
 				<a href={`/entries/${entry.id}`}>
-					{#if entry?.media?.type === 'image'}
-						<img
-							src={`${entry?.media?.url}`}
-							alt={entry?.media?.name}
-							class="h-full w-full object-cover object-center"
-						/>
-					{:else if entry?.media?.type === 'audio'}
-						<img
-							src={`/images/music-thumbnail.webp`}
-							alt="Audio"
-							class="h-full w-full object-cover object-center"
-						/>
-					{/if}
+					<img
+						src={`${entry?.thumbnail?.url}`}
+						alt={entry?.title}
+						class="h-full w-full object-cover object-center"
+					/>
 				</a>
 			</div>
 			<div

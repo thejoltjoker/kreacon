@@ -23,6 +23,7 @@
 <!-- TODO Disable if no category picked -->
 <div class="w-full">
 	<FileField
+		debug
 		{mediaType}
 		field="mediaId"
 		label="Media"

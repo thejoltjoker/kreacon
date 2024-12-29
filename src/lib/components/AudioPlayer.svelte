@@ -2,13 +2,13 @@
 	import 'media-chrome';
 
 	interface Props {
-		url: string;
+		src: string;
 	}
-	let { url }: Props = $props();
+	let { src }: Props = $props();
 </script>
 
 <media-controller audio class="w-full rounded-form border border-shade-600 bg-shade-900 p-md">
-	<audio slot="media" src={url}></audio>
+	<audio slot="media" {src}></audio>
 	<media-control-bar class="flex h-full w-full flex-1 grow items-center">
 		<media-play-button
 			class="aspect-square size-form rounded-full border border-white bg-shade-800"

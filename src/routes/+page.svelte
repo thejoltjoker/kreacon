@@ -18,10 +18,6 @@
 	<title>Kreacon</title>
 </svelte:head>
 
-<div class="flex min-h-full grow flex-col items-center">
-	<div class="flex grow flex-col items-center justify-center"></div>
-</div>
-
 <main class="flex flex-col items-center gap-8xl overflow-hidden md:gap-[20vh]">
 	<HeroSection />
 	<section class="flex w-full max-w-screen-xl flex-col gap-xl py-xl">
