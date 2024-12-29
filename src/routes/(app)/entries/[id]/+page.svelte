@@ -8,7 +8,6 @@
 	import type { PageData } from './$types';
 	import ReactionButton from './_components/ReactionButton.svelte';
 	import ReactionsSection from './_components/ReactionsSection.svelte';
-	import EntryMedia from './_components/EntryMedia.svelte';
 	import VoteButton from './_components/VoteButton.svelte';
 	import { t } from '$lib/i18n';
 	import { getMediaTypeForMime } from '$lib/helpers/mediaTypes';

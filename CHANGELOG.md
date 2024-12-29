@@ -85,6 +85,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   [#84](https://github.com/thejoltjoker/kreacon/pull/84)
 - Change name of submissions to entries
   [#88](https://github.com/thejoltjoker/kreacon/pull/88)
+- Fix bugs on single entry page
+  [#91](https://github.com/thejoltjoker/kreacon/pull/91)
 
 ### Deprecated
 
