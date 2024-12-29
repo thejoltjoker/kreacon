@@ -1,0 +1,148 @@
+<script lang="ts">
+	import { locale } from 'svelte-i18n';
+</script>
+
+{#if $locale === 'sv'}
+
+# Integritetspolicy
+
+## Introduktion
+
+På Kreacon, som drivs av Beacon, värdesätter vi din integritet och är engagerade i att skydda din personliga information. Denna integritetspolicy förklarar hur vi samlar in, använder och skyddar dina uppgifter när du använder vår plattform och beskriver dina rättigheter rörande din data.
+
+Genom att använda Kreacon godkänner du de villkor som beskrivs i denna integritetspolicy. Vänligen läs den noggrant.
+
+## 1. Insamling av Data
+
+### Personlig Information
+
+Vi samlar in följande personlig information när du registrerar dig eller använder vår plattform:
+
+- **E-postadress**
+- **Användarnamn**
+- **Lösenord**
+- **Profilbild** (valfritt)
+- **Användargenererat innehåll** (t.ex. digital konst)
+- **IP-adress** och enhetsinformation för säkerhetsändamål.
+
+### Åldersverifiering och Föräldrasamtycke
+
+Om du är under 16 år måste du få **föräldrasamtycke** innan du använder vår plattform. Vi kommer inte att samla in personlig information från användare under 16 år utan verifierat föräldrasamtycke.
+
+- **Åldersverifiering**: Vid registrering kommer vi att be om din ålder.
+- **Föräldrasamtycke**: Om du är under 16 år kommer vi att be om din förälders eller vårdnadshavares e-postadress för att få samtycke. Du kan inte slutföra registreringen förrän föräldrasamtycket har verifierats.
+
+## 2. Användning av Data
+
+Vi använder de uppgifter vi samlar in för följande ändamål:
+
+- För att ge dig möjlighet att delta i plattformens funktioner (t.ex. skicka in konstverk, tävla i evenemang).
+- För att ge kundsupport och svara på dina frågor.
+- För att förbättra plattformens funktionalitet och användarupplevelse.
+- För att säkerställa plattformens säkerhet och förhindra bedrägeri.
+- För att följa rättsliga förpliktelser.
+
+## 3. Bevarande av Data
+
+Vi behåller din personliga data så länge ditt konto är aktivt eller så länge det behövs för att tillhandahålla tjänster. Om du vill ta bort ditt konto kan du göra det när som helst genom att kontakta oss. Din data kommer att raderas inom rimlig tid efter att kontot har tagits bort.
+
+## 4. Delning och Utlämning av Data
+
+Vi säljer aldrig din personliga information till tredje part. Däremot kan vi dela din data med:
+
+- **Tjänsteleverantörer** som hjälper oss att underhålla plattformen, såsom molnlagringstjänster eller betalningsbehandlare.
+- **Rättsliga myndigheter** om det krävs enligt lag för att följa en stämning, rättslig process eller liknande begäran.
+
+## 5. Säkerhet
+
+Vi vidtar rimliga åtgärder för att skydda din personliga data. Dock, eftersom ingen dataöverföring via internet är 100 % säker, kan vi inte garantera att din data är helt säker.
+
+## 6. Dina Rättigheter
+
+Som användare har du följande rättigheter rörande din personliga data:
+
+- **Tillgång**: Du kan begära en kopia av den personliga data vi har om dig.
+- **Korrigering**: Du kan begära att vi korrigerar felaktig eller ofullständig data.
+- **Radering**: Du kan begära att vi raderar din personliga data, under vissa förutsättningar.
+- **Invändning**: Du kan invända mot vissa typer av behandling, inklusive direktmarknadsföring.
+- **Återkalla samtycke**: Du kan när som helst återkalla det samtycke du gett för behandling av din data.
+
+För att utöva någon av dessa rättigheter, vänligen kontakta oss på kreacon@beaconlan.se.
+
+## 7. Internationella Dataöverföringar
+
+Kreacon är värd i Europeiska Unionen och vi följer tillämpliga dataskyddsregler när vi överför data.
+
+## 8. Ändringar i Integritetspolicyn
+
+Vi kan uppdatera denna integritetspolicy från tid till annan. Eventuella ändringar kommer att publiceras på denna sida med ett uppdaterat revisionsdatum. Vänligen kontrollera denna integritetspolicy regelbundet.
+
+## 9. Kontakta Oss
+
+Om du har några frågor eller funderingar om denna integritetspolicy, vänligen kontakta oss på kreacon@beaconlan.se.
+
+{:else}
+
+# Privacy Policy
+
+## Introduction
+At Kreacon, operated by Beacon, we value your privacy and are committed to protecting your personal data. This Privacy Policy explains how we collect, use, and protect your data when you use our platform, and outlines your rights regarding your data.
+
+By using Kreacon, you agree to the terms outlined in this Privacy Policy. Please read it carefully.
+
+## 1. Data Collection
+
+### Personal Information
+We collect the following personal information when you register or use our platform:
+- **Email address**
+- **Username**
+- **Password**
+- **Profile image** (optional)
+- **User-generated content** (e.g., digital artwork submissions)
+- **IP address** and device information for security purposes.
+
+### Age Verification and Parental Consent
+If you are under the age of 16, you must obtain **parental consent** before using our platform. We will not collect personal data from users under 16 unless we have verifiable parental consent.
+
+- **Age Verification**: During registration, we will ask for your age.
+- **Parental Consent**: If you are under 16, we will ask for your parent or guardian's email address to obtain consent. You will not be able to complete registration until parental consent is verified.
+
+## 2. Data Usage
+We use the data we collect for the following purposes:
+- To enable you to participate in the platform's features (e.g., submit artwork, compete in events).
+- To provide customer support and respond to your inquiries.
+- To improve the platform’s functionality and user experience.
+- To ensure the security of our platform and prevent fraudulent activity.
+- To comply with legal obligations.
+
+## 3. Data Retention
+We retain your personal data as long as your account is active or as needed to provide services. If you wish to delete your account, you can do so at any time by contacting us. Your data will be deleted within a reasonable time after account deletion.
+
+## 4. Data Sharing and Disclosure
+We will never sell your personal information to third parties. However, we may share your data with:
+- **Service providers** who help us maintain the platform, such as cloud storage providers or payment processors.
+- **Legal authorities** if required by law to comply with a subpoena, legal process, or similar request.
+
+## 5. Security
+We take reasonable measures to protect your personal data. However, no data transmission over the internet is 100% secure, and we cannot guarantee the absolute security of your data.
+
+## 6. Your Rights
+As a user, you have the following rights regarding your personal data:
+- **Access**: You can request a copy of the personal data we hold about you.
+- **Correction**: You can request that we correct any incorrect or incomplete data.
+- **Deletion**: You can request that we delete your personal data, subject to certain conditions.
+- **Objection**: You can object to certain types of processing, including direct marketing.
+- **Withdraw Consent**: You can withdraw any consent you have given for data processing at any time.
+
+To exercise any of these rights, please contact us at [Contact Information].
+
+## 7. International Data Transfers
+Kreacon is hosted in the European Union, and we comply with applicable data protection regulations when transferring data.
+
+## 8. Changes to the Privacy Policy
+We may update this Privacy Policy from time to time. Any changes will be posted on this page with an updated revision date. Please review this Privacy Policy periodically.
+
+## 9. Contact Us
+If you have any questions or concerns about this Privacy Policy, please contact us at [Email Address] or [Postal Address].
+
+{/if}
