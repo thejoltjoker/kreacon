@@ -2,8 +2,8 @@ name: Database Migrations
 on:
   push:
     branches: [main]
-    # paths:
-    #   - 'src/lib/server/db/**'
+    paths:
+      - 'src/lib/server/db/**'
 
 jobs:
   migrate:
