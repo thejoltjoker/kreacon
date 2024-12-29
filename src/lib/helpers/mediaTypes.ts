@@ -33,6 +33,9 @@ export const isValidMediaType = (mediaType: string): boolean =>
 export const isAllowedMimeType = (mimeType: string): boolean =>
 	Array.from(getAllMimeTypes()).includes(mimeType as MimeType);
 
+export const isAllowedMimeTypeForMedia = (mimeType: string, mediaType: MediaType): boolean =>
+	Array.from(getMimeTypesForMedia(mediaType)).includes(mimeType as MimeType);
+
 export const getAllowedMimeTypes = (mediaType: MediaType): string[] =>
 	Array.from(getMimeTypesForMedia(mediaType));
 

@@ -10,6 +10,8 @@ import {
 	type ContainerCreateOptions
 } from '@azure/storage-blob';
 import { fileTypeFromBuffer } from 'file-type';
+import sharp from 'sharp';
+import type { InsertFile } from '../db/schema/file';
 
 const logger = createLogger('azure-storage');
 
@@ -71,7 +73,7 @@ export const azureUploadBlob = async (
 	filename: string,
 	data: Buffer | ArrayBuffer,
 	contentType: string,
-	containerName?: string,
+	containerName?: AzureStorageContainer,
 	options?: BlockBlobUploadOptions
 ) => {
 	const blobServiceClient = getBlobServiceClient();
@@ -101,12 +103,15 @@ export const azureUploadBlob = async (
 	}
 };
 
-export const uploadFile = async (file: File, container?: string) => {
+export const uploadFile = async (file: File, container?: AzureStorageContainer) => {
 	const buffer = Buffer.from(await file.arrayBuffer());
 	return await uploadBuffer(buffer, container);
 };
 
-export const uploadBuffer = async (buffer: Buffer | ArrayBuffer, container?: string) => {
+export const uploadBuffer = async (
+	buffer: Buffer | ArrayBuffer,
+	container?: AzureStorageContainer
+) => {
 	// Convert Buffer to Uint8Array if needed
 	const bufferAsUint8Array = buffer instanceof Buffer ? new Uint8Array(buffer) : buffer;
 	const fileType = await fileTypeFromBuffer(bufferAsUint8Array);
@@ -136,4 +141,49 @@ export const upload = {
 	avatar: async (file: File) => {
 		return await uploadFile(file);
 	}
+};
+
+export const compressImage = async (
+	blobName: string,
+	containerName: AzureStorageContainer,
+	deleteOriginal: boolean = false,
+	resizeTo: number = 2048,
+	quality: number = 80
+) => {
+	const blobServiceClient = getBlobServiceClient();
+	const containerClient = await getOrCreateContainer(blobServiceClient, containerName);
+
+	const originalBlob = containerClient.getBlobClient(blobName);
+	const filenameParts = blobName.split('_');
+	const restOfFilename = filenameParts.slice(1).join('_');
+	const filenameWithoutExt = restOfFilename.substring(0, restOfFilename.lastIndexOf('.'));
+	const newBlobId = crypto.randomUUID();
+	const newBlobName = `${newBlobId}_${filenameWithoutExt}.webp`;
+
+	const downloadedBuffer = await originalBlob.downloadToBuffer();
+	const compressedBuffer = await sharp(downloadedBuffer)
+		.resize(resizeTo, resizeTo, { withoutEnlargement: true })
+		.webp({ quality })
+		.toBuffer();
+
+	const newBlob = containerClient.getBlockBlobClient(newBlobName);
+	await newBlob.uploadData(compressedBuffer, {
+		blobHTTPHeaders: {
+			blobContentType: 'image/webp'
+		}
+	});
+
+	if (deleteOriginal) {
+		await originalBlob.delete();
+	}
+
+	const result: InsertFile = {
+		id: newBlobId,
+		url: newBlob.url,
+		name: newBlob.name,
+		type: 'image/webp',
+		size: compressedBuffer.byteLength
+	};
+
+	return result;
 };

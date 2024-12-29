@@ -31,6 +31,7 @@ export const entries = pgTable(
 		// Files
 		mediaId: uuid('media_id').notNull(),
 		thumbnailId: uuid('thumbnail_id').notNull(),
+		previewId: uuid('preview_id'),
 		proofId: uuid('proof_id'),
 		...timestamps
 	},
@@ -67,6 +68,10 @@ export const entriesRelations = relations(entries, ({ one, many }) => ({
 	}),
 	thumbnail: one(files, {
 		fields: [entries.thumbnailId],
+		references: [files.id]
+	}),
+	preview: one(files, {
+		fields: [entries.previewId],
 		references: [files.id]
 	}),
 	proof: one(files, {

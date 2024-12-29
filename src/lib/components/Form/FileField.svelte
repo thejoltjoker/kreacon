@@ -202,7 +202,8 @@
 			uuid,
 			container: 'uploads',
 			name: `${uuid}_${snakeCase(file.name)}.${ext}`,
-			type: mime
+			type: mime,
+			size: file.size
 		};
 
 		const parsed = getUrlSchema.parse(data);

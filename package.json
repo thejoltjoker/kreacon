@@ -59,6 +59,7 @@
 		"object.groupby": "^1.0.3",
 		"pg": "^8.13.1",
 		"postgres": "^3.4.5",
+		"sharp": "^0.33.5",
 		"svelte": "^5.11.2",
 		"svelte-i18n": "^4.0.1",
 		"sveltekit-superforms": "^2.21.1",

@@ -9,13 +9,13 @@
 		"createdAt": "2024-02-15T00:00:00.000Z",
 		"license": "cc-by",
 		"media": {
-			"type": "image",
+			"type": "image/png",
 			"url": "/images/StrongCuriousChihuahua.png",
 			"alt": "T-Rex skeleton bathed in morning museum light",
 			"filename": "StrongCuriousChihuahua.png"
 		},
 		"thumbnail": {
-			"type": "image",
+			"type": "image/png",
 			"url": "/images/StrongCuriousChihuahua.png",
 			"alt": "T-Rex skeleton bathed in morning museum light",
 			"filename": "StrongCuriousChihuahua.png"
@@ -37,13 +37,13 @@
 		"createdAt": "2024-01-23T00:00:00.000Z",
 		"license": "cc-by",
 		"media": {
-			"type": "image",
+			"type": "image/png",
 			"url": "/images/StrongCuriousPorcupine.png",
 			"alt": "Velociraptor call recreation waveform",
 			"filename": "StrongCuriousPorcupine.png"
 		},
 		"thumbnail": {
-			"type": "image",
+			"type": "image/png",
 			"url": "/images/StrongCuriousPorcupine.png",
 			"alt": "Velociraptor call recreation waveform",
 			"filename": "StrongCuriousPorcupine.png"
@@ -65,13 +65,13 @@
 		"createdAt": "2024-01-05T00:00:00.000Z",
 		"license": "cc-by",
 		"media": {
-			"type": "image",
+			"type": "image/png",
 			"url": "/images/StrongCuriousMandrill.png",
 			"alt": "3D animation of a Pterodactyl soaring",
 			"filename": "StrongCuriousMandrill.png"
 		},
 		"thumbnail": {
-			"type": "image",
+			"type": "image/png",
 			"url": "/images/StrongCuriousMandrill.png",
 			"alt": "3D animation of a Pterodactyl soaring",
 			"filename": "StrongCuriousMandrill.png"
@@ -93,13 +93,13 @@
 		"createdAt": "2024-03-15T00:00:00.000Z",
 		"license": "cc-by",
 		"media": {
-			"type": "image",
+			"type": "image/png",
 			"url": "/images/StrongCuriousWolverine.png",
 			"alt": "Stegosaurus skeleton silhouetted against sunset",
 			"filename": "StrongCuriousWolverine.png"
 		},
 		"thumbnail": {
-			"type": "image",
+			"type": "image/png",
 			"url": "/images/StrongCuriousWolverine.png",
 			"alt": "Stegosaurus skeleton silhouetted against sunset",
 			"filename": "StrongCuriousWolverine.png"
@@ -121,13 +121,13 @@
 		"createdAt": "2023-12-01T00:00:00.000Z",
 		"license": "cc-by",
 		"media": {
-			"type": "image",
+			"type": "image/png",
 			"url": "/images/StrongCuriousGiraffe.png",
 			"alt": "Museum display of Brachiosaurus family group",
 			"filename": "StrongCuriousGiraffe.png"
 		},
 		"thumbnail": {
-			"type": "image",
+			"type": "image/png",
 			"url": "/images/StrongCuriousGiraffe.png",
 			"alt": "Museum display of Brachiosaurus family group",
 			"filename": "StrongCuriousGiraffe.png"
