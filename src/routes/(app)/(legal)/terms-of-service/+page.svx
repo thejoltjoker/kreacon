@@ -1,0 +1,126 @@
+<script lang="ts">
+	import { locale } from 'svelte-i18n';
+</script>
+
+{#if $locale === 'sv'}
+
+# Användarvillkor
+
+## Introduktion
+
+Dessa användarvillkor ("Villkor") reglerar din användning av Kreacon, som drivs av Beacon, en plattform där du kan skicka in och dela digital konst, delta i evenemang och interagera med andra användare. Genom att få åtkomst till eller använda Kreacon godkänner du att följa dessa villkor.
+
+Vänligen läs dessa villkor noggrant innan du använder våra tjänster.
+
+## 1. Behörighet
+
+Du måste vara minst 13 år gammal för att använda Kreacon. Om du är under 16 år (eller under 13 år om det krävs enligt lokal lag) måste du ha föräldrasamtycke för att använda plattformen. Genom att använda plattformen bekräftar du att:
+
+- Om du är under den tillämpliga åldersgränsen har du fått explicit samtycke från din förälder eller vårdnadshavare att använda plattformen.
+- Om vi fastställer att du är underårig och inte har lämnat föräldrasamtycke, kommer ditt konto att stängas av eller tas bort.
+
+## 2. Användarkonton
+
+För att använda vissa funktioner på plattformen måste du skapa ett konto. När du skapar ett konto godkänner du att tillhandahålla korrekt och fullständig information, inklusive din e-postadress, användarnamn och lösenord.
+
+Du ansvarar för att hålla ditt konto hemligt och för alla aktiviteter som sker under ditt konto.
+
+## 3. Inlämning av Innehåll och Creative Commons-licens
+
+Genom att skicka in digital konst till Kreacon godkänner du att:
+
+- Du behåller upphovsrätten till ditt konstverk.
+- Du ger Kreacon (drivs av Beacon) en **icke-exklusiv, royaltyfri, världsomspännande licens** att använda, visa och dela ditt konstverk som en del av plattformens funktioner.
+- Alla konstverk som skickas in måste släppas under en **Creative Commons-licens**, vilket innebär att andra kan använda, dela och remixera ditt arbete enligt de villkor som anges i denna licens.
+
+Du är ensam ansvarig för det innehåll du skickar in och godkänner att du inte kommer att ladda upp:
+
+- **Pornografiskt eller stötande material**.
+- **Hatiskt tal**, **trakasserier** eller något innehåll som bryter mot våra gemenskapsriktlinjer.
+
+## 4. Evenemang och Regler
+
+Kreacon kan organisera evenemang som tillåter användare att skicka in konstverk. Varje evenemang kommer att ha sina egna specifika regler, utöver dessa allmänna användarvillkor. Genom att delta i ett evenemang godkänner du att följa de specifika reglerna för evenemanget och de allmänna plattformsreglerna.
+
+## 5. Användarbeteende
+
+Du godkänner att använda Kreacon på ett respektfullt och lagligt sätt. Du får inte:
+
+- Bryta mot några lagar eller förordningar.
+- Ladda upp skadligt innehåll, inklusive virus eller skadlig kod.
+- Delta i trakasserier eller mobbning av andra användare.
+
+## 6. Uppsägning och Avstängning
+
+Vi förbehåller oss rätten att stänga av eller säga upp ditt konto om du bryter mot dessa villkor. Om ditt konto stängs av får du inte åtkomst till vissa funktioner eller innehåll på plattformen.
+
+## 7. Ansvarsbegränsning
+
+Kreacon kommer inte att hållas ansvarig för några skador eller förlust av data som uppstår på grund av din användning av plattformen, inklusive men inte begränsat till direkta, indirekta, tillfälliga eller följdskador.
+
+## 8. Ändringar av Plattformen och Villkoren
+
+Vi kan uppdatera eller ändra plattformen och dessa villkor från tid till annan. Ändringar kommer att meddelas genom uppdateringar på plattformen. Fortsatt användning av plattformen efter ändringar innebär att du accepterar de uppdaterade villkoren.
+
+## 9. Tillämplig Lag
+
+Dessa villkor styrs och tolkas i enlighet med lagarna i Europeiska Unionen.
+
+## 10. Kontaktinformation
+
+Om du har några frågor om dessa villkor, vänligen kontakta oss på kreacon@beaconlan.se.
+
+{:else}
+
+# Terms of Service
+
+## Introduction
+These Terms of Service ("Terms") govern your use of Kreacon, operated by Beacon, a platform where you can submit and share digital artwork, participate in events, and interact with other users. By accessing or using Kreacon, you agree to comply with these Terms.
+
+Please read these Terms carefully before using our services.
+
+## 1. Eligibility
+You must be at least 13 years old to use Kreacon. If you are under 16 years old (or under 13 if required by local law), you must have parental consent to use the platform. By using the platform, you confirm that:
+- If you are under the applicable age limit, you have obtained explicit consent from your parent or guardian to use the platform.
+- If we determine you are underage and have not provided parental consent, your account will be suspended or deleted.
+
+## 2. User Accounts
+To use certain features of the platform, you must create an account. When creating an account, you agree to provide accurate and complete information, including your email address, username, and password.
+
+You are responsible for maintaining the confidentiality of your account information and for all activities under your account.
+
+## 3. Content Submission and Creative Commons License
+By submitting digital artwork to Kreacon, you agree that:
+- You retain the copyright to your artwork.
+- You grant Kreacon (operated by Beacon) a **non-exclusive, royalty-free, worldwide license** to use, display, and share your artwork as part of the platform’s features.
+- All artwork submissions are required to be released under a **Creative Commons license**, which means others can use, share, and remix your work under the terms of that license.
+
+You are solely responsible for the content you submit and agree not to upload:
+- **Pornographic or offensive material**.
+- **Hate speech**, **harassment**, or any content that violates our community guidelines.
+
+## 4. Events and Rules
+Kreacon may organize events that allow users to submit artwork. Each event will have its own set of specific rules, in addition to these general Terms of Service. By entering an event, you agree to abide by the event-specific rules and general platform rules.
+
+## 5. User Conduct
+You agree to use Kreacon in a respectful and lawful manner. You must not:
+- Violate any laws or regulations.
+- Upload harmful content, including viruses or malware.
+- Engage in harassment or bullying of other users.
+
+## 6. Termination and Suspension
+We reserve the right to suspend or terminate your account if you violate these Terms. If your account is suspended, you may not access certain features or content on the platform.
+
+## 7. Limitation of Liability
+Kreacon will not be held liable for any damages or loss of data arising from your use of the platform, including but not limited to direct, indirect, incidental, or consequential damages.
+
+## 8. Modifications to the Platform and Terms
+We may update or modify the platform and these Terms from time to time. Changes will be communicated through updates on the platform. Continued use of the platform after modifications constitutes acceptance of the updated Terms.
+
+## 9. Governing Law
+These Terms are governed by and construed in accordance with the laws of the European Union.
+
+## 10. Contact Information
+If you have any questions about these Terms, please contact us at kreacon@beaconlan.se.
+
+{/if}

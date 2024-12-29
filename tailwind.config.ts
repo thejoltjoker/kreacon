@@ -266,7 +266,11 @@ export default {
 		'max-w-screen-lg',
 		'max-w-screen-md',
 		'border-white',
-		'border'
+		'border',
+		'list-inside',
+		'list-disc',
+		'[&_ul]:list-disc',
+		'[&_ul]:list-inside'
 	],
 	darkMode: 'selector',
 	plugins: [forms, animate]

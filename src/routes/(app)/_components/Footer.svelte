@@ -24,9 +24,8 @@
 		{/each}
 	</ul>
 	<ul class="flex flex-1 justify-end gap-sm">
-		<li><a href="/events/rules">{$t('Rules')}</a></li>
-		<li><a href="/events/privacy">{$t('Privacy')}</a></li>
-		<li><a href="/events/terms">{$t('Terms')}</a></li>
+		<li><a href="/privacy-policy">{$t('Privacy')}</a></li>
+		<li><a href="/terms-of-service">{$t('Terms')}</a></li>
 	</ul>
 </footer>
 

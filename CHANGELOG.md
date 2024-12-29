@@ -66,6 +66,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   [#86](https://github.com/thejoltjoker/kreacon/pull/86)
 - Add page transitions
   [#89](https://github.com/thejoltjoker/kreacon/pull/89)
+- Add privacy policy and terms of service
+  [#93](https://github.com/thejoltjoker/kreacon/pull/93)
 
 ### Changed
 
