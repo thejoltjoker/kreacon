@@ -82,7 +82,7 @@ export const load = (async ({ params, locals }) => {
 
 	const isVoted = Boolean(result?.votes && result?.votes.length > 0);
 
-	const title = { text: result?.event.name, href: `/entries?event=${result?.event.id}` };
+	const title = result?.event ? { text: result.event.name, href: `/entries?event=${result.event.id}` } : { text: 'Entries', href: '/entries' };
 	return { entry: result, user: locals.user, isVoted, title };
 }) satisfies PageServerLoad;
 
