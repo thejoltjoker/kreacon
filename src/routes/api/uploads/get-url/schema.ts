@@ -13,7 +13,8 @@ export const getUrlSchema = z.object({
 	}),
 	type: z.string().refine((val) => mime.getExtension(val) != null, {
 		message: 'Invalid MIME type'
-	})
+	}),
+	size: z.number().default(0)
 });
 
 export type GetUrlSchema = z.infer<typeof getUrlSchema>;

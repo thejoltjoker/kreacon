@@ -119,6 +119,7 @@ export const seed = async (db: db) => {
 						...entry.media,
 						type: entry.media.type as MediaType,
 						name: entry.media.url,
+						// TODO Set file size
 						size: 0
 					})
 					.returning();
@@ -134,6 +135,7 @@ export const seed = async (db: db) => {
 						ticketId: ticketId,
 						mediaId: insertedMedia.id,
 						thumbnailId: insertedThumbnail ?? insertedMedia.id,
+						previewId: insertedThumbnail ?? insertedMedia.id,
 						createdAt: entry.createdAt ? new Date(entry.createdAt) : new Date(),
 						license: entry.license as LicenseCode
 					})

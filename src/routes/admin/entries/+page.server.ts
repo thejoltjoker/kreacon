@@ -16,7 +16,7 @@ export const load = (async ({ url }) => {
 			with: {
 				user: { columns: { username: true } },
 				category: { columns: { name: true } },
-				thumbnail: { columns: { url: true } },
+				preview: { columns: { url: true } },
 				event: { columns: { id: true, name: true } }
 			},
 			where(fields) {
@@ -73,7 +73,7 @@ export const load = (async ({ url }) => {
 			category: entry.category.name,
 			event: entry.event.name,
 			status: entry.status,
-			thumbnailUrl: entry.thumbnail.url,
+			thumbnailUrl: entry.preview.url,
 			createdAt: entry.createdAt
 		})),
 		events: Array.from(

@@ -27,7 +27,7 @@ export const load = (async ({ params, url }) => {
 			with: {
 				media: true,
 				category: true,
-				thumbnail: true,
+				preview: true,
 				user: {
 					columns: {
 						username: true,

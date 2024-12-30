@@ -17,6 +17,7 @@ async function resetTable(db: db, table: Table) {
 
 logger.info('Resetting tables...');
 for (const table of [
+	schema.files,
 	schema.users,
 	schema.events,
 	schema.categories,

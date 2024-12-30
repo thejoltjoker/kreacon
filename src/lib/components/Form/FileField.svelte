@@ -45,6 +45,7 @@
 		maxFileSize?: number;
 		behavior?: 'standard' | 'managed' | 'auto';
 		debug?: boolean;
+		customUploadUrl?: string;
 		/**
 		 * Optional SuperForm instance. If not provided, will attempt to get from GenericForm context
 		 * Must be provided if used outside of GenericForm
@@ -77,6 +78,7 @@
 		behavior = 'auto',
 		maxFileSize = Number(env.PUBLIC_MAX_UPLOAD_SIZE) || 10 * 1024 * 1024,
 		debug = false,
+		customUploadUrl,
 		...props
 	}: FileFieldProps = $props();
 
@@ -103,6 +105,8 @@
 	let enctype = getEnctype();
 	let xhr: XMLHttpRequest | undefined = $state();
 	let blobUrl: string | undefined = $state();
+	let uploadUrl: string | undefined = $state(customUploadUrl);
+	let fileId: string | undefined = $state(crypto.randomUUID());
 
 	let superFieldProxy;
 	if (
@@ -191,18 +195,27 @@
 		progress = 0;
 	};
 
+	const getBlobName = async (file: File) => {
+		const result = await fileTypeFromBlob(file);
+		if (result == null) {
+			throw new Error('Failed to identify file type');
+		}
+		const { ext } = result;
+		return `${fileId}_${snakeCase(file.name)}.${ext}`;
+	};
+
 	const getUploadUrl = async (file: File) => {
 		const result = await fileTypeFromBlob(file);
 		if (result == null) {
 			throw new Error('Failed to identify file type');
 		}
-		const { ext, mime } = result;
-		const uuid = crypto.randomUUID();
+		const { mime } = result;
 		const data: GetUrlSchema = {
-			uuid,
+			uuid: fileId,
 			container: 'uploads',
-			name: `${uuid}_${snakeCase(file.name)}.${ext}`,
-			type: mime
+			name: await getBlobName(file),
+			type: mime,
+			size: file.size
 		};
 
 		const parsed = getUrlSchema.parse(data);
@@ -217,13 +230,16 @@
 		return responseData;
 	};
 
-	const uploadFile = async (url: string, file: File): Promise<void> =>
-		new Promise((resolve, reject) => {
-			xhr = new XMLHttpRequest();
+	const uploadFile = async (url: string, file: File): Promise<void> => {
+		const blobName = await getBlobName(file);
 
+		return new Promise((resolve, reject) => {
+			xhr = new XMLHttpRequest();
 			xhr.open('PUT', url, true);
 			xhr.setRequestHeader('Content-Type', file.type);
+			xhr.setRequestHeader('x-file-id', fileId);
 			xhr.setRequestHeader('x-ms-blob-type', 'BlockBlob');
+			xhr.setRequestHeader('x-ms-blob-name', blobName);
 			xhr.setRequestHeader('x-ms-version', '2020-04-08');
 
 			xhr.upload.onprogress = (event) => {
@@ -244,12 +260,9 @@
 				reject(new Error('Upload failed'));
 			};
 
-			// xhr.onabort = () => {
-			// 	reject(new Error('Upload aborted'));
-			// };
-
 			xhr.send(file);
 		});
+	};
 
 	const handleFileChange = async (
 		event: Event & {
@@ -260,14 +273,18 @@
 		if (!files) return;
 		currentState = 'uploading';
 		// TODO Generate checksum
-		const sas = await getUploadUrl(files[0]);
-		blobUrl = sas.url;
+
+		if (uploadUrl == null) {
+			const sas = await getUploadUrl(files[0]);
+			blobUrl = sas.url;
+			uploadUrl = sas.url;
+		}
 
 		try {
-			await uploadFile(sas.url, files[0]);
-			onUploadComplete?.(sas.fileId);
+			await uploadFile(uploadUrl, files[0]);
+			onUploadComplete?.(fileId);
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			$value = sas.fileId as any; //TODO Fix proper types
+			$value = fileId as any; //TODO Fix proper types
 			currentState = 'complete';
 		} catch (error) {
 			console.error(error);

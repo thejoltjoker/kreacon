@@ -1,0 +1,1 @@
+ALTER TABLE "entry" ADD COLUMN "preview_id" uuid;

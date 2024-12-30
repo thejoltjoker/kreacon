@@ -138,6 +138,7 @@ export const actions = {
 					status: 'pending',
 					mediaId: form.data.mediaId,
 					thumbnailId: form.data.thumbnailId,
+					previewId: form.data.previewId,
 					proofId: form.data.proofId,
 					license: form.data.license
 				})

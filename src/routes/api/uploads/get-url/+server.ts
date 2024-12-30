@@ -35,7 +35,7 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 				name: data.name,
 				type: data.type,
 				url: baseUrl,
-				size: 0,
+				size: data.size,
 				checksum: data.checksum
 			})
 			.returning();

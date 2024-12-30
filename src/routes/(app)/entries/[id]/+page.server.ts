@@ -45,7 +45,7 @@ export const load = (async ({ params, locals }) => {
 						id: true
 					}
 				},
-				thumbnail: {
+				preview: {
 					columns: {
 						url: true
 					}

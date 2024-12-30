@@ -68,6 +68,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   [#89](https://github.com/thejoltjoker/kreacon/pull/89)
 - Add privacy policy and terms of service
   [#93](https://github.com/thejoltjoker/kreacon/pull/93)
+- Add endpoint for compressing thumbnails on new entry submission
+  [#97](https://github.com/thejoltjoker/kreacon/pull/97)
 
 ### Changed
 
