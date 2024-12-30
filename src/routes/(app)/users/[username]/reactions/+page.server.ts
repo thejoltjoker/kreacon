@@ -22,7 +22,7 @@ export const load = (async ({ params, url }) => {
 					id: true
 				},
 				with: {
-					thumbnail: true
+					preview: true
 				}
 			}
 		},

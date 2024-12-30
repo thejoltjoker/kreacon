@@ -6,7 +6,8 @@ export const createEntrySchema = z.object({
 	eventId: z.coerce.number().min(1, { message: 'Missing event ID' }),
 	title: z.string().min(1, { message: 'Title is required' }),
 	mediaId: z.string().uuid(),
-	thumbnailId: z.string().uuid(),
+	thumbnailId: z.string().uuid().optional(),
+	previewId: z.string().uuid(),
 	proofId: z.string().uuid().optional(),
 	license: licenseEnum
 });

@@ -209,7 +209,7 @@
 		if (result == null) {
 			throw new Error('Failed to identify file type');
 		}
-		const { ext, mime } = result;
+		const { mime } = result;
 		const data: GetUrlSchema = {
 			uuid: fileId,
 			container: 'uploads',
@@ -230,10 +230,11 @@
 		return responseData;
 	};
 
-	const uploadFile = async (url: string, file: File): Promise<void> =>
-		new Promise(async (resolve, reject) => {
+	const uploadFile = async (url: string, file: File): Promise<void> => {
+		const blobName = await getBlobName(file);
+
+		return new Promise((resolve, reject) => {
 			xhr = new XMLHttpRequest();
-			const blobName = await getBlobName(file);
 			xhr.open('PUT', url, true);
 			xhr.setRequestHeader('Content-Type', file.type);
 			xhr.setRequestHeader('x-file-id', fileId);
@@ -259,12 +260,9 @@
 				reject(new Error('Upload failed'));
 			};
 
-			// xhr.onabort = () => {
-			// 	reject(new Error('Upload aborted'));
-			// };
-
 			xhr.send(file);
 		});
+	};
 
 	const handleFileChange = async (
 		event: Event & {

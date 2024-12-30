@@ -93,17 +93,6 @@
 
 		<!-- Media -->
 		<div class="flex flex-col items-center">
-			<!-- {#if entry?.media.type === 'video'}
-			<video src={entry?.media.url} controls>
-				<track kind="captions" src="" />
-			</video>
-		{:else if entry?.media?.type === 'audio'}
-			<AudioPlayer media={entry?.media} />
-		{:else}
-			<EntryMedia media={entry?.media} />
-		{/if} -->
-
-			<!-- <pre>{JSON.stringify(entry, null, 2)}</pre> -->
 			{#if entry?.media}
 				{@const mediaType = getMediaTypeForMime(entry.media.type)}
 				{#if mediaType === 'image'}
@@ -113,7 +102,7 @@
 						class="h-full w-full object-cover object-center"
 					/>
 				{:else if mediaType === 'video'}
-					<VideoPlayer src={entry.media.url} poster={entry.thumbnail?.url} />
+					<VideoPlayer src={entry.media.url} poster={entry.preview?.url} />
 				{:else if mediaType === 'audio'}
 					<AudioPlayer src={entry.media.url} />
 				{/if}

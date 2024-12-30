@@ -30,8 +30,8 @@ export const entries = pgTable(
 		license: licenseEnum('license').notNull(),
 		// Files
 		mediaId: uuid('media_id').notNull(),
-		thumbnailId: uuid('thumbnail_id').notNull(),
-		previewId: uuid('preview_id'),
+		thumbnailId: uuid('thumbnail_id'), // Stale for now
+		previewId: uuid('preview_id').notNull(),
 		proofId: uuid('proof_id'),
 		...timestamps
 	},

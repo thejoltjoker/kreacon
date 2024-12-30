@@ -146,7 +146,7 @@ export const upload = {
 	}
 };
 
-export const compressImage = async (
+export const compressImageBlob = async (
 	blobName: string,
 	containerName: AzureStorageContainer,
 	deleteOriginal: boolean = false,

@@ -1,6 +1,6 @@
 import { createEntrySchema } from '$lib/schemas/entry';
 import db from '$lib/server/db';
-import { files, tickets, users } from '$lib/server/db/schema';
+import { tickets, users } from '$lib/server/db/schema';
 import entries from '$lib/server/db/schema/entry';
 import { error, redirect } from '@sveltejs/kit';
 import { and, eq } from 'drizzle-orm';
@@ -8,7 +8,6 @@ import { StatusCodes } from 'http-status-codes';
 import { fail, message, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import type { Actions, PageServerLoad } from './$types';
-import { compressImage } from '$lib/server/azure/storage';
 
 export const load = (async ({ locals }) => {
 	if (!locals.user || !locals.session) {
@@ -128,18 +127,6 @@ export const actions = {
 
 		// TODO Get checksum from blob storage
 
-		// TODO Refactor the whole thumbnail logic
-		// const tempThumbnail = await db.query.files.findFirst({
-		// 	where: eq(files.id, form.data.thumbnailId)
-		// });
-
-		// if (tempThumbnail == null) {
-		// 	return error(StatusCodes.BAD_REQUEST, { message: 'Thumbnail not found' });
-		// }
-
-		// const compressedThumbnail = await compressImage(tempThumbnail.name, 'uploads', true);
-		// const [newThumbnailRef] = await db.insert(files).values(compressedThumbnail).returning();
-
 		let id: string | null = null;
 		try {
 			const [result] = await db
@@ -151,6 +138,7 @@ export const actions = {
 					status: 'pending',
 					mediaId: form.data.mediaId,
 					thumbnailId: form.data.thumbnailId,
+					previewId: form.data.previewId,
 					proofId: form.data.proofId,
 					license: form.data.license
 				})

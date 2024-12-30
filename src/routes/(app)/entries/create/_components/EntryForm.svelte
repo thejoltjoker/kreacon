@@ -47,7 +47,7 @@
 <Tabs.Root bind:value={currentTab} controlledValue disabled>
 	<GenericForm
 		data={$page.data.form}
-		class="my-3xl gap-3xl px-sm md:px-xl"
+		class="my-3xl gap-xl px-sm md:px-xl"
 		options={{ validators: zod(createEntrySchema) }}
 	>
 		<Tabs.List class="flex w-full justify-evenly">
@@ -56,7 +56,7 @@
 			{/each}
 		</Tabs.List>
 
-		<Divider class="my-xl" />
+		<Divider />
 
 		<Tabs.Content value="1">
 			<EntrySection bind:isValid={step1Valid} />

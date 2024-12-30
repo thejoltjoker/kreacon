@@ -7,7 +7,7 @@
 	import StatusIcon from '../entries/_components/StatusIcon.svelte';
 
 	interface Props {
-		entry: Entry & { category: Category; thumbnail: SelectFile; user: PublicUser };
+		entry: Entry & { category: Category; preview: SelectFile; user: PublicUser };
 	}
 
 	let { entry }: Props = $props();
@@ -17,7 +17,7 @@
 	<div class="aspect-square h-full w-full overflow-hidden rounded-md">
 		<a href={`/entries/${entry.id}`}>
 			<img
-				src={`${entry.thumbnail.url}`}
+				src={`${entry.preview.url}`}
 				alt={entry.title}
 				class="h-full w-full object-cover object-center"
 			/>

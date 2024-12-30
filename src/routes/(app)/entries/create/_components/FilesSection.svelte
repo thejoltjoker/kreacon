@@ -5,6 +5,10 @@
 	import { createEntrySchema, type CreateEntrySchema } from '$lib/schemas/entry';
 	import { getContext } from 'svelte';
 	import type { SuperForm } from 'sveltekit-superforms';
+	import { page } from '$app/stores';
+	import type { PageData } from '../$types';
+	import { t } from '$lib/i18n';
+	import SubmittingTo from './SubmittingTo.svelte';
 	// TODO Add proof field
 	let { form } = getContext<SuperForm<CreateEntrySchema>>('superform');
 	let { isValid = $bindable() }: { isValid: boolean } = $props();
@@ -19,14 +23,16 @@
 </script>
 
 <section>
+	<SubmittingTo />
+	<Divider class="my-xl" />
 	<MediaRow />
 	<div class="w-full">
 		<FileField
-			customUploadUrl="/api/uploads/thumbnail"
+			customUploadUrl="/api/uploads/preview"
 			mediaType="image"
-			maxFileSize={1024 * 1024 * 2}
-			field="thumbnailId"
-			label="Thumbnail"
+			maxFileSize={1024 * 1024 * 10}
+			field="previewId"
+			label="Preview"
 			labelProps={{ class: 'text-2xl font-bold' }}
 		/>
 	</div>
@@ -46,7 +52,7 @@
 			sure it’s properly compressed. We suggest using a software like Handbrake to compress your
 			video to fit within the requirements.
 		</p>
-		<h4>Thumbnail</h4>
+		<h4>Preview</h4>
 		<p class="text-shade-300">
 			This is the image that will be portrayed on the website for viewers to enjoy and vote on. Make
 			it pop, but don’t clickbait...

@@ -6,7 +6,7 @@
 	import EntryGridItem from './EntryGridItem.svelte';
 
 	interface Props {
-		entries: (Entry & { category: Category; thumbnail: SelectFile; user: PublicUser })[];
+		entries: (Entry & { category: Category; preview: SelectFile; user: PublicUser })[];
 	}
 
 	let { entries }: Props = $props();

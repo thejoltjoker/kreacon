@@ -1,6 +1,6 @@
 import { error } from '@sveltejs/kit';
 import { StatusCodes } from 'http-status-codes';
-import type { RequestHandler } from '../thumbnail/$types';
+import type { RequestHandler } from './$types';
 import sharp from 'sharp';
 import { azureUploadBlob } from '$lib/server/azure/storage';
 import { files } from '$lib/server/db/schema';
@@ -10,9 +10,9 @@ import { z } from 'zod';
 import { getAllowedMimeTypes, isAllowedMimeTypeForMedia } from '$lib/helpers/mediaTypes';
 import { isAuthenticated } from '../../../(app)/utils';
 
-const logger = createLogger('api/uploads/thumbnail');
+const logger = createLogger('api/uploads/preview');
 
-const thumbnailConfig = {
+const previewConfig = {
 	maxWidth: 1920,
 	maxHeight: 1920,
 	quality: 80,
@@ -24,7 +24,7 @@ const schema = z
 		file: z.instanceof(File).refine((file) => isAllowedMimeTypeForMedia(file.type, 'image'), {
 			message: `File must be of type ${getAllowedMimeTypes('image').join(', ')}`
 		}),
-		maxSize: z.number().default(thumbnailConfig.maxFileSize)
+		maxSize: z.number().default(previewConfig.maxFileSize)
 	})
 	.refine((data) => data.file.size <= data.maxSize, {
 		message: 'File size exceeds maximum allowed'
@@ -32,7 +32,7 @@ const schema = z
 
 export const PUT: RequestHandler = async ({ request, locals, url }) => {
 	if (!isAuthenticated(locals)) {
-		logger.warn('Unauthorized attempt to upload thumbnail');
+		logger.warn('Unauthorized attempt to upload preview');
 		return error(StatusCodes.UNAUTHORIZED, { message: 'Unauthorized' });
 	}
 
@@ -44,7 +44,7 @@ export const PUT: RequestHandler = async ({ request, locals, url }) => {
 	const blobName = `${nameWithoutExtension}.webp`;
 
 	try {
-		logger.info('Starting thumbnail processing', {
+		logger.info('Starting preview processing', {
 			contentType: request.headers.get('content-type'),
 			blobName,
 			fileId
@@ -69,13 +69,13 @@ export const PUT: RequestHandler = async ({ request, locals, url }) => {
 		}
 
 		const processedBuffer = await sharp(buffer)
-			.resize(thumbnailConfig.maxWidth, thumbnailConfig.maxHeight, {
+			.resize(previewConfig.maxWidth, previewConfig.maxHeight, {
 				withoutEnlargement: true
 			})
-			.webp({ quality: thumbnailConfig.quality })
+			.webp({ quality: previewConfig.quality })
 			.toBuffer();
 
-		const url = await azureUploadBlob(blobName, processedBuffer, 'image/webp', 'thumbnails');
+		const url = await azureUploadBlob(blobName, processedBuffer, 'image/webp', 'previews');
 
 		await db
 			.insert(files)
@@ -96,7 +96,7 @@ export const PUT: RequestHandler = async ({ request, locals, url }) => {
 			}
 		});
 	} catch (err) {
-		logger.error('Failed to process thumbnail:', { error: err, fileId });
-		return error(StatusCodes.INTERNAL_SERVER_ERROR, { message: 'Failed to process thumbnail' });
+		logger.error('Failed to process preview:', { error: err, fileId });
+		return error(StatusCodes.INTERNAL_SERVER_ERROR, { message: 'Failed to process preview' });
 	}
 };

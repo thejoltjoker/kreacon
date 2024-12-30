@@ -3,7 +3,8 @@ export const azureStorageContainer = [
 	'video-entries',
 	'image-entries',
 	'audio-entries',
-	'avatar',
-	'thumbnails'
+	'avatars',
+	'thumbnails',
+	'previews'
 ] as const;
 export type AzureStorageContainer = (typeof azureStorageContainer)[number];
