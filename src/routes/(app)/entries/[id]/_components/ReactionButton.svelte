@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import Button from '$lib/components/Button.svelte';
-	import { emojis } from '$lib/emojis';
+
 	import { page } from '$app/stores';
 	import { Popover } from 'bits-ui';
 	import { SmilePlusIcon } from 'lucide-svelte';
@@ -37,6 +37,7 @@
 			<Button href="/login?redirect=/entries/{entryId}" aria-label="Log in">{$t('Log in')}</Button>
 		{:else if !isAllowedToReact}
 			<p>{$t('You already reacted to this entry.')}</p>
+			groupedEmojis
 		{:else}
 			<!-- TODO Allow user to change reaction -->
 			<form method="POST" action="?/react" use:enhance={handleSubmit}>

@@ -7,7 +7,9 @@ import { and, eq, sql } from 'drizzle-orm';
 import type { PageServerLoad } from './$types';
 import votes, { insertVoteSchema } from '$lib/server/db/schema/vote';
 import { StatusCodes } from 'http-status-codes';
-
+import { isAuthenticated } from '../../utils';
+import { createLogger } from '$lib/helpers/logger';
+const logger = createLogger('/entries/[id]');
 export const load = (async ({ params, locals }) => {
 	const { id } = params;
 
@@ -131,12 +133,13 @@ export const actions = {
 		}
 	},
 	react: async ({ params, locals, request }) => {
-		if (!locals.user || !locals.session) {
+		if (!isAuthenticated(locals) || !locals.user) {
 			return fail(StatusCodes.UNAUTHORIZED, { error: 'Not signed in' });
 		}
 
 		try {
 			const formData = await request.formData();
+			logger.info('formData', formData);
 			const entryId = params.id;
 			const userId = locals.user.id;
 			const value = formData.get('reaction')?.toString();
@@ -146,7 +149,10 @@ export const actions = {
 				value
 			});
 
-			await db.insert(reactions).values(data);
+			await db
+				.insert(reactions)
+				.values(data)
+				.onConflictDoUpdate({ target: [reactions.userId, reactions.entryId], set: { value } });
 
 			return { success: true };
 		} catch (error) {

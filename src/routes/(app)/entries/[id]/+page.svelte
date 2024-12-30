@@ -2,10 +2,6 @@
 	import { page } from '$app/stores';
 	import Avatar from '$lib/components/Avatar.svelte';
 	import Button from '$lib/components/Button.svelte';
-	import { emojis } from '$lib/emojis';
-	import { Popover } from 'bits-ui';
-	import { DownloadIcon, SmilePlusIcon } from 'lucide-svelte';
-	import type { PageData } from './$types';
 	import ReactionButton from './_components/ReactionButton.svelte';
 	import ReactionsSection from './_components/ReactionsSection.svelte';
 	import VoteButton from './_components/VoteButton.svelte';
@@ -14,50 +10,54 @@
 	import VideoPlayer from '$lib/components/VideoPlayer.svelte';
 	import AudioPlayer from '$lib/components/AudioPlayer.svelte';
 	import { formatRelativeTime } from '$lib/helpers/formatRelativeTime';
+	import { DownloadIcon } from 'lucide-svelte';
+	import { type PageData } from './$types';
 
 	const user = $derived($page.data.user);
 
 	let { data }: { data: PageData } = $props();
-	const { entry: entry } = data;
+	let entry = $derived(data.entry);
 
-	const entryId = $page.params.id;
+	const entryId = $derived($page.params.id);
 
 	let isVoted = $state(data.isVoted ?? false);
 
-	let isAllowedToReact: boolean = $state(
-		entry?.reactions.find((reaction) => reaction.userId === user?.id) == null
-	);
+	// let isAllowedToReact: boolean = $state(
+	// 	entry?.reactions.find((reaction) => reaction.userId === user?.id) == null
+	// );
 </script>
 
 {#if entry != null}
 	<main class="flex w-full max-w-screen-lg flex-col gap-sm px-sm pt-sm md:gap-xl md:px-xl md:pt-xl">
 		<!-- Header -->
 		<div class="flex flex-wrap items-center justify-between gap-xs">
-			<h1 class="text-2xl font-bold">{entry?.title}</h1>
-			<a href={`/entries?category=${entry?.category.id}`}>
+			<h1 class="text-2xl font-bold">{entry.title}</h1>
+			<a href={`/entries?category=${entry.category.id}`}>
 				<h2 class="text-xl text-secondary transition-colors hover:text-tertiary">
-					{entry?.category.name}
+					{entry.category.name}
 				</h2>
 			</a>
 		</div>
 
 		<!-- Author info -->
 		<div class="flex w-full items-center justify-between">
-			<a href={`/users/${entry?.user?.username}`} class="flex items-center gap-4">
+			<a href={`/users/${entry.user?.username}`} class="flex items-center gap-4">
 				<Avatar
-					src={entry?.user?.avatar?.url ?? ''}
-					username={entry?.user?.username ?? 'Unknown'}
+					src={entry.user?.avatar?.url ?? ''}
+					username={entry.user?.username ?? 'Unknown'}
 					class="h-12 w-12"
 				/>
 				<div class="flex flex-col">
-					<h3 class="text-lg font-bold">{entry?.user?.username}</h3>
+					<h3 class="text-lg font-bold">{entry.user?.username}</h3>
 					<span class="text-sm text-shade-300">
-						{formatRelativeTime(entry?.createdAt)}
+						{formatRelativeTime(entry.createdAt)}
 					</span>
 				</div>
 			</a>
 			<div class="flex items-center gap-3">
-				<Popover.Root>
+				<!-- TODO Match style of reactions to that of user page -->
+				<!-- TODO Allow user to change reaction -->
+				<!-- <Popover.Root>
 					<Popover.Trigger>
 						<Button variant="outline" size="icon" title="React">
 							<SmilePlusIcon />
@@ -73,8 +73,6 @@
 						{:else if !isAllowedToReact}
 							<p>You already reacted to this entry.</p>
 						{:else}
-							<!-- TODO Match style of reactions to that of user page -->
-							<!-- TODO Allow user to change reaction -->
 							<form method="POST" action="?/react">
 								<div class="flex flex-wrap gap-xs">
 									{#each emojis as emoji}
@@ -86,19 +84,19 @@
 							</form>
 						{/if}
 					</Popover.Content>
-				</Popover.Root>
+				</Popover.Root> -->
 				<VoteButton isSignedIn={user != null} id={entryId} bind:isVoted />
 			</div>
 		</div>
 
 		<!-- Media -->
 		<div class="flex flex-col items-center">
-			{#if entry?.media}
+			{#if entry.media}
 				{@const mediaType = getMediaTypeForMime(entry.media.type)}
 				{#if mediaType === 'image'}
 					<img
-						src={`${entry?.media?.url}`}
-						alt={entry?.title}
+						src={`${entry.media?.url}`}
+						alt={entry.title}
 						class="h-full w-full object-cover object-center"
 					/>
 				{:else if mediaType === 'video'}
@@ -114,16 +112,16 @@
 		<!-- Meta -->
 		<div class="flex items-center justify-between gap-lg text-gray-500">
 			<div class="flex flex-1 items-center gap-lg text-lg">
-				<p><span class="text-white">{entry?.views}</span> {$t('views')}</p>
-				<p><span class="text-white">{entry?.reactions.length}</span> {$t('reactions')}</p>
+				<p><span class="text-white">{entry.views}</span> {$t('views')}</p>
+				<p><span class="text-white">{entry.reactions.length}</span> {$t('reactions')}</p>
 			</div>
 			<!-- Actions -->
 			<div class="flex flex-1 justify-end gap-sm">
 				<Button
 					variant="outline"
 					size="icon"
-					href={entry?.media.url}
-					download={entry?.media.name ?? undefined}
+					href={entry.media.url}
+					download={entry.media.name ?? undefined}
 				>
 					<DownloadIcon />
 				</Button>
@@ -131,13 +129,13 @@
 			<Button variant="outline" size="icon">
 				<ShareIcon />
 			</Button> -->
-				<ReactionButton {entryId} bind:isAllowedToReact />
+				<!-- <ReactionButton {entryId} bind:isAllowedToReact /> -->
 				<VoteButton isSignedIn={user != null} id={entryId} bind:isVoted />
 			</div>
 		</div>
 
 		<!-- Reactions -->
-		<ReactionsSection reactions={entry?.reactions} />
+		<ReactionsSection {entryId} reactions={entry?.reactions} />
 
 		<!-- Author profile -->
 		<!-- TODO -->

@@ -2,7 +2,7 @@ import { relations, type InferInsertModel, type InferSelectModel } from 'drizzle
 import { pgTable, primaryKey, uuid, varchar } from 'drizzle-orm/pg-core';
 import { timestamps } from './shared';
 import { entries } from './entry';
-import users from './user';
+import users, { type PublicUser, type User, type UserWithoutPassword } from './user';
 import { createInsertSchema } from 'drizzle-zod';
 import { z } from 'zod';
 
@@ -34,7 +34,8 @@ export const insertReactionSchema = createInsertSchema(reactions, {
 	value: z.string().emoji()
 }).extend({ createdAt: z.date().optional(), updatedAt: z.date().optional() });
 
-export type Reaction = InferSelectModel<typeof reactions>;
+export type SelectReaction = InferSelectModel<typeof reactions>;
+export type SelectReactionWithPublicUser = SelectReaction & { user: PublicUser };
 export type InsertReaction = InferInsertModel<typeof reactions>;
 
 export default reactions;
