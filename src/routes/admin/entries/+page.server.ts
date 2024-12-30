@@ -73,7 +73,7 @@ export const load = (async ({ url }) => {
 			category: entry.category.name,
 			event: entry.event.name,
 			status: entry.status,
-			previewUrl: entry.preview.url,
+			thumbnailUrl: entry.preview.url,
 			createdAt: entry.createdAt
 		})),
 		events: Array.from(

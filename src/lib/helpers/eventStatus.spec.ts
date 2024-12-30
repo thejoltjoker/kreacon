@@ -49,12 +49,12 @@ describe('getEventStatus', () => {
 		expect(status).toBe('scheduled');
 	});
 
-	it('returns "scheduled" when current time is after voting period', () => {
+	it('returns "closed" when current time is after voting period', () => {
 		const now = new Date('2024-01-04T12:00:00Z');
 		vi.setSystemTime(now);
 
 		const status = getEventStatus(baseEvent);
-		expect(status).toBe('scheduled');
+		expect(status).toBe('closed');
 	});
 });
 
