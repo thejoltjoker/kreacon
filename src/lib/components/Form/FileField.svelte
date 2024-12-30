@@ -140,7 +140,7 @@
 		isDragging = false;
 		currentState = 'ready';
 		const input = event.dataTransfer;
-		console.log('input', input);
+
 		if (mode === 'standard') {
 			if (input?.files && input.files.length > 0) {
 				$value = input.files;
@@ -152,7 +152,7 @@
 				// TODO Generate checksum
 				const sas = await getUploadUrl(files[0]);
 				blobUrl = sas.url;
-				console.log('sas', sas);
+
 				try {
 					await uploadFile(sas.url, files[0]);
 					onUploadComplete?.(sas.fileId);
@@ -193,6 +193,7 @@
 		$value = mode === 'standard' ? (undefined as unknown as FileList) : ('' as any);
 		currentState = 'idle';
 		progress = 0;
+		fileId = crypto.randomUUID();
 	};
 
 	const getBlobName = async (file: File) => {

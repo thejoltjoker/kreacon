@@ -8,11 +8,17 @@ import { StatusCodes } from 'http-status-codes';
 import { fail, message, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import type { Actions, PageServerLoad } from './$types';
+import { createLogger } from '$lib/helpers/logger';
+
+const logger = createLogger('entries/create');
 
 export const load = (async ({ locals }) => {
 	if (!locals.user || !locals.session) {
+		logger.warn('Unauthorized access attempt to entry creation page');
 		redirect(StatusCodes.TEMPORARY_REDIRECT, '/login?redirect=/entries/create');
 	}
+
+	logger.info('Loading entry creation page', { userId: locals.user.id });
 
 	const form = await superValidate(zod(createEntrySchema));
 	const now = new Date();
@@ -30,6 +36,11 @@ export const load = (async ({ locals }) => {
 			entries: true
 		}
 	});
+
+	if (!userData) {
+		logger.error('User data not found for authenticated user', { userId: locals.user.id });
+		redirect(StatusCodes.TEMPORARY_REDIRECT, '/login?redirect=/entries/create');
+	}
 
 	const userTickets =
 		userData?.tickets.filter(
@@ -75,15 +86,27 @@ export const load = (async ({ locals }) => {
 export const actions = {
 	default: async ({ request, locals }) => {
 		if (!locals.user || !locals.session) {
+			logger.warn('Unauthorized submission attempt', {
+				ip: request.headers.get('x-forwarded-for') || 'unknown'
+			});
 			redirect(StatusCodes.MOVED_TEMPORARILY, '/login?redirect=/entries/create');
 		}
+
+		logger.info('Processing entry submission', { userId: locals.user.id });
 		const { user } = locals;
 		const form = await superValidate(request, zod(createEntrySchema));
+
+		if (!form.valid) {
+			logger.warn('Invalid form submission', {
+				userId: locals.user.id,
+				errors: form.errors
+			});
+			return fail(StatusCodes.BAD_REQUEST, { form });
+		}
 
 		console.log('Massaging form data');
 		console.log('form', form);
 		console.log('media', form.data.mediaId);
-		if (!form.valid) return fail(StatusCodes.BAD_REQUEST, { form });
 
 		const userData = await db.query.users.findFirst({
 			where: eq(users.id, user.id),
@@ -108,6 +131,10 @@ export const actions = {
 
 		const [ticket] = userData?.tickets ?? [];
 		if (ticket == null) {
+			logger.warn('Submission attempt without valid ticket', {
+				userId: locals.user.id,
+				eventId: form.data.eventId
+			});
 			return error(StatusCodes.FORBIDDEN, {
 				message: 'User does not have a ticket for this event'
 			});
@@ -115,6 +142,11 @@ export const actions = {
 
 		const alreadySubmitted = userData?.entries != null && userData?.entries.length > 0;
 		if (alreadySubmitted) {
+			logger.warn('Duplicate submission attempt', {
+				userId: locals.user.id,
+				eventId: form.data.eventId,
+				categoryId: form.data.categoryId
+			});
 			return error(StatusCodes.FORBIDDEN, { message: 'User already submitted to this category' });
 		}
 
@@ -144,7 +176,18 @@ export const actions = {
 				})
 				.returning();
 			id = result?.id;
-		} catch {
+			logger.info('Entry created successfully', {
+				userId: locals.user.id,
+				entryId: id,
+				eventId: form.data.eventId,
+				categoryId: form.data.categoryId
+			});
+		} catch (err) {
+			logger.error('Failed to create entry', {
+				userId: locals.user.id,
+				error: err,
+				formData: form.data
+			});
 			return error(StatusCodes.INTERNAL_SERVER_ERROR, { message: 'Failed to create entry' });
 		}
 		if (id != null) {
