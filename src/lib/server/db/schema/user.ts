@@ -10,6 +10,7 @@ import tickets from './ticket';
 import votes from './vote';
 import { z } from 'zod';
 import { userStatus } from '../../../types/userStatus';
+import files from './file';
 
 export const userStatusEnum = pgEnum('status', userStatus);
 export const users = pgTable('user', {
@@ -19,24 +20,27 @@ export const users = pgTable('user', {
 	emailVerifiedAt: timestamp('email_verified_at', { mode: 'date' }),
 	password: varchar({ length: 255 }).notNull(),
 	role: roleEnum('role').notNull().default('user'),
-	picture: varchar({ length: 255 }), // TODO Change to file id
+	avatarId: uuid('avatar_id'),
 	status: userStatusEnum('status').notNull().default('active'),
 	...timestamps
 });
 
-export const usersRelations = relations(users, ({ many }) => ({
+export const usersRelations = relations(users, ({ many, one }) => ({
 	accounts: many(accounts),
 	entries: many(entries),
 	votes: many(votes),
 	reactions: many(reactions),
-	tickets: many(tickets)
+	tickets: many(tickets),
+	avatar: one(files, {
+		fields: [users.avatarId],
+		references: [files.id]
+	})
 }));
 
 export const insertUserSchema = createInsertSchema(users).merge(registerUserSchema).pick({
 	username: true,
 	email: true,
-	password: true,
-	picture: true
+	password: true
 });
 
 export const updateUserSchema = insertUserSchema
@@ -46,7 +50,9 @@ export const updateUserSchema = insertUserSchema
 export const selectUserSchema = createSelectSchema(users);
 
 export type User = InferSelectModel<typeof users>;
-export type PublicUser = Pick<User, 'username' | 'picture'>;
+export type PublicUser = Pick<User, 'username'> & {
+	avatar: { url: string | undefined | null } | null | undefined;
+};
 export type UserWithoutPassword = Omit<User, 'password'>;
 export type InsertUser = InferInsertModel<typeof users>;
 

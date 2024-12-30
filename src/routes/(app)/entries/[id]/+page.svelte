@@ -45,7 +45,7 @@
 		<div class="flex w-full items-center justify-between">
 			<a href={`/users/${entry?.user?.username}`} class="flex items-center gap-4">
 				<Avatar
-					src={entry?.user?.picture ?? ''}
+					src={entry?.user?.avatar?.url ?? ''}
 					username={entry?.user?.username ?? 'Unknown'}
 					class="h-12 w-12"
 				/>

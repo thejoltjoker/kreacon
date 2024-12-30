@@ -1,11 +1,11 @@
 import db from '$lib/server/db';
 import { users } from '$lib/server/db/schema/user';
-
 import { eq, count } from 'drizzle-orm';
 import type { PageServerLoad } from './$types';
 import { error } from '@sveltejs/kit';
 import { entries } from '$lib/server/db/schema';
 import { sql } from 'drizzle-orm';
+import { StatusCodes } from 'http-status-codes';
 
 export const load = (async ({ params, url }) => {
 	const username = params.username;
@@ -14,11 +14,12 @@ export const load = (async ({ params, url }) => {
 	const perPage = 8;
 
 	const user = await db.query.users.findFirst({
-		where: eq(users.username, username)
+		where: eq(users.username, username),
+		with: { avatar: { columns: { url: true } } }
 	});
 
 	if (!user) {
-		throw error(404, 'User not found');
+		throw error(StatusCodes.NOT_FOUND, 'User not found');
 	}
 
 	const result = await db.transaction(async (tx) => {
@@ -29,9 +30,9 @@ export const load = (async ({ params, url }) => {
 				category: true,
 				preview: true,
 				user: {
+					with: { avatar: { columns: { url: true } } },
 					columns: {
-						username: true,
-						picture: true
+						username: true
 					}
 				}
 			},

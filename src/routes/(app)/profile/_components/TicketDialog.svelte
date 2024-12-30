@@ -19,7 +19,7 @@
 		message: ticketMessage
 	} = superForm(form, {
 		resetForm: true,
-		invalidateAll: 'force'
+		invalidateAll: true
 	});
 </script>
 

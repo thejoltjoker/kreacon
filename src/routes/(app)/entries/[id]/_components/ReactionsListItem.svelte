@@ -33,11 +33,11 @@
 	<a href="/users/{reaction.user.username}" class="flex items-center justify-between gap-sm">
 		<div class="flex gap-sm">
 			<div>
-				<Avatar src={reaction.user?.picture ?? ''} username={reaction.user?.username} />
+				<Avatar src={reaction.user?.avatar?.url ?? ''} username={reaction.user?.username} />
 			</div>
 			<div class="flex w-full flex-col">
 				<p class="text-sm font-bold">{reaction.user?.username}</p>
-				<p class="text-sm text-muted-foreground">{getRelativeTime(reaction.createdAt)}</p>
+				<p class="text-sm text-shade-300">{getRelativeTime(reaction.createdAt)}</p>
 			</div>
 		</div>
 		<div class="w-button text-center">

@@ -37,7 +37,7 @@
 			<h1>{$t(title?.text ?? 'Kreacon')}</h1>
 			<p
 				class:hidden={!isAdminRoute}
-				class="text-xs uppercase tracking-widest text-muted-foreground transition-colors group-hover:text-primary"
+				class="text-xs uppercase tracking-widest text-shade-300 transition-colors group-hover:text-primary"
 			>
 				{$t('Kreacon Admin')}
 			</p>

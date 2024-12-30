@@ -9,14 +9,14 @@
 
 <section id="entry-details">
 	<h1>{entry?.title}</h1>
-	<p class="text-muted-foreground">
+	<p class="text-shade-300">
 		{$t('Submitted to')}
 		<a href="/categories/{entry?.category?.id}" class="font-bold text-amber-500"
 			>{entry?.category?.name}</a
 		>
 	</p>
 	<div class="author">
-		<Avatar src={entry?.user?.picture ?? ''} username={entry?.user?.username ?? 'Unknown'} />
+		<Avatar src={entry?.user?.avatar?.url ?? ''} username={entry?.user?.username ?? 'Unknown'} />
 		<p class="w-full font-bold">{entry?.user?.username}</p>
 		<a href={`/users/${entry?.user?.username}`}>
 			<Button>{$t('Profile')}</Button>

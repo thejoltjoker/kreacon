@@ -65,7 +65,7 @@
 			</Combobox.Trigger>
 			<button
 				class:hidden={!isActive}
-				class="absolute right-form top-1/2 hidden -translate-y-1/2 text-muted-foreground"
+				class="absolute right-form top-1/2 hidden -translate-y-1/2 text-shade-300"
 				onclick={handleClear}
 				aria-label="Clear event filter"
 			>
@@ -92,7 +92,7 @@
 						</Combobox.Item>
 					{/each}
 				{:else}
-					<span class="p-xs text-muted-foreground">No results found</span>
+					<span class="p-xs text-shade-300">No results found</span>
 				{/if}
 			</Combobox.Content>
 		</Combobox.Portal>

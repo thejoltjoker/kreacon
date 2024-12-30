@@ -14,7 +14,7 @@
 </script>
 
 {#snippet confirmLabel()}
-	<p class="text-base font-bold text-muted-foreground-alt">
+	<p class="text-shade-300-alt text-base font-bold">
 		Write "<span class="select-none text-white">heck yeah</span>" below to confirm.
 	</p>
 {/snippet}

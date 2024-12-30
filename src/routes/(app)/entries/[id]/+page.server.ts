@@ -52,8 +52,10 @@ export const load = (async ({ params, locals }) => {
 				},
 				user: {
 					columns: {
-						username: true,
-						picture: true
+						username: true
+					},
+					with: {
+						avatar: { columns: { url: true } }
 					}
 				},
 				reactions: {
@@ -64,9 +66,9 @@ export const load = (async ({ params, locals }) => {
 					},
 					with: {
 						user: {
+							with: { avatar: { columns: { url: true } } },
 							columns: {
-								username: true,
-								picture: true
+								username: true
 							}
 						}
 					}

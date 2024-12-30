@@ -44,7 +44,7 @@
 	});
 </script>
 
-<Avatar.Root {...restProps} bind:ref class={cn(variants({ size, className }))}>
+<Avatar.Root {...restProps} bind:ref class={cn(variants({ size }), className)}>
 	<Avatar.Image {src} {alt} bind:ref={imageRef} />
 	<Avatar.Fallback bind:ref={fallbackRef}>
 		<UserRoundIcon class="h-5 w-5 opacity-50" aria-label="Default user avatar" role="img" />

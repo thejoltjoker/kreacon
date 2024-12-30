@@ -28,7 +28,7 @@
 	}
 
 	a {
-		@apply block rounded-form px-md py-sm text-muted-foreground hover:bg-muted-background hover:text-white;
+		@apply block rounded-form px-md py-sm text-shade-300 hover:bg-muted-background hover:text-white;
 	}
 
 	ul {

@@ -8,10 +8,10 @@
 {#if user}
 	<section>
 		<!-- TODO Set default picture in db -->
-		<Avatar src={user.picture ?? ''} username={user.username} />
+		<Avatar src={user.avatar?.url ?? ''} username={user.username} />
 		<div class="flex flex-col">
 			<p class="text-xl font-bold">{user.username}</p>
-			<p class="text-sm text-muted-foreground">
+			<p class="text-sm text-shade-300">
 				Member since {user.createdAt.toLocaleDateString()}
 			</p>
 		</div>

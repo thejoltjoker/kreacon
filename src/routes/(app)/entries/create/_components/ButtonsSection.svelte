@@ -24,7 +24,6 @@
 	const previousTab = () => {
 		currentTab = String(Number(currentTab) - 1 < 1 ? 1 : Number(currentTab) - 1);
 	};
-	$inspect('allowSubmit', allowSubmit);
 </script>
 
 <div class="mt-xl inline-flex gap-sm">

@@ -32,10 +32,7 @@
 	bind:elementRef={inputRef}
 	icon={SearchIcon}
 	iconProps={{
-		class: cn(
-			isEmpty ? 'text-muted-foreground' : 'text-white',
-			isLoading && 'animate-pulse text-primary'
-		)
+		class: cn(isEmpty ? 'text-shade-300' : 'text-white', isLoading && 'animate-pulse text-primary')
 	}}
 	{placeholder}
 	bind:value

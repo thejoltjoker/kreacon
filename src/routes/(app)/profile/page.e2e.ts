@@ -46,4 +46,5 @@ test('User should be able to update their information', async ({ page }) => {
 	await expect(generalSection.getByText('Profile updated successfully!')).toBeVisible();
 
 	// TODO Update email
+	// TODO Add ticket
 });
