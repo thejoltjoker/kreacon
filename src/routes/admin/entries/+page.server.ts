@@ -3,8 +3,10 @@ import type { PageServerLoad } from './$types';
 import { count } from 'drizzle-orm/sql/functions';
 import entries from '$lib/server/db/schema/entry';
 import { eq } from 'drizzle-orm';
+import { adminCheck } from '../utils';
 
-export const load = (async ({ url }) => {
+export const load = (async ({ locals, url }) => {
+	adminCheck(locals);
 	// Add pagination and sorting params
 	const page = Number(url.searchParams.get('page') ?? '1');
 	const sortBy = url.searchParams.get('sortBy') ?? 'newest';

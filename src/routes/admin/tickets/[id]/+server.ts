@@ -6,10 +6,12 @@ import { insertTicketSchema } from '$lib/server/db/schema/ticket';
 import { json } from '@sveltejs/kit';
 import { StatusCodes } from 'http-status-codes';
 import { createLogger } from '$lib/helpers/logger';
+import { adminCheck } from '../../utils';
 
 const logger = createLogger('admin/tickets/[id]');
 
-export const DELETE: RequestHandler = async ({ params }) => {
+export const DELETE: RequestHandler = async ({ params, locals }) => {
+	adminCheck(locals);
 	try {
 		insertTicketSchema.pick({ id: true }).parse({ id: params.id });
 	} catch (error) {

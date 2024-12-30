@@ -9,11 +9,12 @@ import { fail, message, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import type { Actions, PageServerLoad } from './$types';
 import { createLogger } from '$lib/helpers/logger';
+import { isAuthenticated } from '../../utils';
 
 const logger = createLogger('entries/create');
 
 export const load = (async ({ locals }) => {
-	if (!locals.user || !locals.session) {
+	if (isAuthenticated(locals) || locals.user == null) {
 		logger.warn('Unauthorized access attempt to entry creation page');
 		redirect(StatusCodes.TEMPORARY_REDIRECT, '/login?redirect=/entries/create');
 	}

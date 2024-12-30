@@ -8,7 +8,8 @@ import { adminCheck } from '../utils';
 import { z } from 'zod';
 import { StatusCodes } from 'http-status-codes';
 
-export const load = (async ({ url }) => {
+export const load = (async ({ locals, url }) => {
+	adminCheck(locals);
 	const sortBy = url.searchParams.get('sortBy') ?? 'newest';
 	const searchQuery = url.searchParams.get('q');
 	let result;

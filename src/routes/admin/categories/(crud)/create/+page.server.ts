@@ -10,8 +10,10 @@ import { superValidate } from 'sveltekit-superforms/server';
 import type { PageServerLoad } from './$types';
 import { createCategorySchema } from '$lib/schemas/categorySchema';
 import { categories } from '$lib/server/db/schema';
+import { adminCheck } from '../../../utils';
 
-export const load = (async () => {
+export const load = (async ({ locals }) => {
+	adminCheck(locals);
 	const form = await superValidate(zod(createCategorySchema));
 	return { form };
 }) satisfies PageServerLoad;

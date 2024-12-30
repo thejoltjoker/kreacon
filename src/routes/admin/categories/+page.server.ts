@@ -2,8 +2,10 @@ import { db } from '$lib/server/db';
 import type { PageServerLoad } from './$types';
 import { count } from 'drizzle-orm/sql/functions';
 import categories from '$lib/server/db/schema/category';
+import { adminCheck } from '../utils';
 
-export const load = (async ({ url }) => {
+export const load = (async ({ locals, url }) => {
+	adminCheck(locals);
 	const page = Number(url.searchParams.get('page') ?? '1');
 	const sortBy = url.searchParams.get('sortBy') ?? 'newest';
 	const perPage = 30;

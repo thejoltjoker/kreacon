@@ -1,11 +1,11 @@
 import db from '$lib/server/db';
 import { users } from '$lib/server/db/schema/user';
-
 import { eq, count } from 'drizzle-orm';
 import type { PageServerLoad } from './$types';
 import { error } from '@sveltejs/kit';
 import { entries } from '$lib/server/db/schema';
 import { sql } from 'drizzle-orm';
+import { StatusCodes } from 'http-status-codes';
 
 export const load = (async ({ params, url }) => {
 	const username = params.username;
@@ -18,7 +18,7 @@ export const load = (async ({ params, url }) => {
 	});
 
 	if (!user) {
-		throw error(404, 'User not found');
+		throw error(StatusCodes.NOT_FOUND, 'User not found');
 	}
 
 	const result = await db.transaction(async (tx) => {
