@@ -22,6 +22,7 @@
 	<MediaRow />
 	<div class="w-full">
 		<FileField
+			customUploadUrl="/api/uploads/thumbnail"
 			mediaType="image"
 			maxFileSize={1024 * 1024 * 2}
 			field="thumbnailId"

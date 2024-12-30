@@ -129,16 +129,16 @@ export const actions = {
 		// TODO Get checksum from blob storage
 
 		// TODO Refactor the whole thumbnail logic
-		const tempThumbnail = await db.query.files.findFirst({
-			where: eq(files.id, form.data.thumbnailId)
-		});
+		// const tempThumbnail = await db.query.files.findFirst({
+		// 	where: eq(files.id, form.data.thumbnailId)
+		// });
 
-		if (tempThumbnail == null) {
-			return error(StatusCodes.BAD_REQUEST, { message: 'Thumbnail not found' });
-		}
+		// if (tempThumbnail == null) {
+		// 	return error(StatusCodes.BAD_REQUEST, { message: 'Thumbnail not found' });
+		// }
 
-		const compressedThumbnail = await compressImage(tempThumbnail.name, 'uploads', true);
-		const [newThumbnailRef] = await db.insert(files).values(compressedThumbnail).returning();
+		// const compressedThumbnail = await compressImage(tempThumbnail.name, 'uploads', true);
+		// const [newThumbnailRef] = await db.insert(files).values(compressedThumbnail).returning();
 
 		let id: string | null = null;
 		try {
@@ -150,7 +150,7 @@ export const actions = {
 					ticketId: ticket.id,
 					status: 'pending',
 					mediaId: form.data.mediaId,
-					thumbnailId: newThumbnailRef.id,
+					thumbnailId: form.data.thumbnailId,
 					proofId: form.data.proofId,
 					license: form.data.license
 				})

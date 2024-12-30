@@ -2,18 +2,13 @@ import { error, json } from '@sveltejs/kit';
 import { StatusCodes } from 'http-status-codes';
 import type { RequestHandler } from './$types';
 import sharp from 'sharp';
-import { uploadBuffer } from '$lib/server/azure/storage';
+import { azureUploadBlob, uploadBuffer } from '$lib/server/azure/storage';
 import { files } from '$lib/server/db/schema';
 import db from '$lib/server/db';
 import { createLogger } from '$lib/helpers/logger';
-import { isAuthenticated } from '../../../(app)/utils';
 import { z } from 'zod';
-import { MimeTypeMap } from '$lib/types/mediaTypes';
-import {
-	getAllowedMimeTypes,
-	getMimeTypesForMedia,
-	isAllowedMimeTypeForMedia
-} from '$lib/helpers/mediaTypes';
+import { getAllowedMimeTypes, isAllowedMimeTypeForMedia } from '$lib/helpers/mediaTypes';
+import { isAuthenticated } from '../../../(app)/utils';
 
 const logger = createLogger('api/uploads/thumbnail');
 
@@ -28,22 +23,36 @@ const schema = z.object({
 	)
 });
 
-export const POST: RequestHandler = async ({ request, locals }) => {
-	// TODO Enable this
-	// if (!isAuthenticated(locals)) {
-	// 	return error(StatusCodes.UNAUTHORIZED, { message: 'Unauthorized' });
-	// }
+export const PUT: RequestHandler = async ({ request, locals, url }) => {
+	if (!isAuthenticated(locals)) {
+		logger.warn('Unauthorized attempt to upload thumbnail');
+		return error(StatusCodes.UNAUTHORIZED, { message: 'Unauthorized' });
+	}
+
+	const fileId = request.headers.get('x-file-id') ?? crypto.randomUUID();
+	const originalName =
+		url.searchParams.get('blobName') ?? request.headers.get('x-ms-blob-name') ?? 'unknown';
+	const nameWithoutExtension =
+		originalName.substring(0, originalName.lastIndexOf('.')) ?? originalName;
+	const blobName = `${nameWithoutExtension}.webp`;
 
 	try {
-		const buffer = await request.arrayBuffer();
-		const type = request.headers.get('x-file-type');
-		const name = request.headers.get('x-file-name');
+		logger.info('Starting thumbnail processing', {
+			contentType: request.headers.get('content-type'),
+			blobName
+		});
 
-		if (!type || !name) {
-			return error(StatusCodes.BAD_REQUEST, { message: 'Missing file metadata headers' });
+		const buffer = await request.arrayBuffer();
+		const type = request.headers.get('content-type');
+		const name = blobName;
+
+		if (!type) {
+			logger.warn('Missing content-type header');
+			return error(StatusCodes.BAD_REQUEST, { message: 'Missing content-type header' });
 		}
 
 		const file = new File([buffer], name, { type });
+		logger.debug('Created file object', { name, type, size: buffer.byteLength });
 
 		const result = schema.safeParse({ file });
 		if (!result.success) {
@@ -52,23 +61,38 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 			return error(StatusCodes.BAD_REQUEST, { message: issues });
 		}
 
-		const processedBuffer = await sharp(buffer).resize(2048).jpeg({ quality: 80 }).toBuffer();
+		logger.debug('Starting image processing with Sharp');
+		const processedBuffer = await sharp(buffer)
+			.resize(1920, 1920, { withoutEnlargement: true })
+			.webp({ quality: 80 })
+			.toBuffer();
+		logger.debug('Image processing complete', {
+			originalSize: buffer.byteLength,
+			processedSize: processedBuffer.length
+		});
 
-		const url = await uploadBuffer(processedBuffer, 'thumbnails');
+		logger.debug('Uploading to Azure storage');
+		const url = await azureUploadBlob(blobName, processedBuffer, 'image/webp', 'thumbnails');
+		logger.info('Upload successful', { url });
 
 		const [fileRecord] = await db
 			.insert(files)
 			.values({
+				id: fileId,
 				name: file.name,
 				type: file.type,
 				url: url,
 				size: processedBuffer.length
 			})
 			.returning();
+		logger.info('Database record created', { fileId: fileRecord.id });
 
-		return json({
-			success: true,
-			file: fileRecord
+		return new Response(null, {
+			status: 201,
+			headers: {
+				'Content-Length': '0',
+				'x-ms-request-id': crypto.randomUUID()
+			}
 		});
 	} catch (err) {
 		logger.error('Failed to process thumbnail:', err);

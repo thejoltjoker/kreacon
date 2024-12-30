@@ -110,6 +110,7 @@ export const uploadFile = async (file: File, container?: AzureStorageContainer) 
 
 export const uploadBuffer = async (
 	buffer: Buffer | ArrayBuffer,
+	blobName?: string,
 	container?: AzureStorageContainer
 ) => {
 	// Convert Buffer to Uint8Array if needed
@@ -119,8 +120,10 @@ export const uploadBuffer = async (
 		throw new Error('Failed to determine file type');
 	}
 	const { ext, mime } = fileType;
-	const checksum = xxhash(buffer);
-	const blobName = `${checksum}.${ext}`;
+	if (blobName == null) {
+		const checksum = xxhash(buffer);
+		blobName = `${checksum}.${ext}`;
+	}
 	return await azureUploadBlob(blobName, buffer, mime, container);
 };
 

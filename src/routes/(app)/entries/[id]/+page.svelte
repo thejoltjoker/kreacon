@@ -104,19 +104,21 @@
 		{/if} -->
 
 			<!-- <pre>{JSON.stringify(entry, null, 2)}</pre> -->
-			{#if entry?.media && entry?.thumbnail}
+			{#if entry?.media}
 				{@const mediaType = getMediaTypeForMime(entry.media.type)}
-				{#if mediaType === 'video'}
-					<VideoPlayer src={entry.media.url} poster={entry.thumbnail.url} />
-				{:else if mediaType === 'audio'}
-					<AudioPlayer src={entry.media.url} />
-				{:else if mediaType === 'image'}
+				{#if mediaType === 'image'}
 					<img
 						src={`${entry?.media?.url}`}
 						alt={entry?.title}
 						class="h-full w-full object-cover object-center"
 					/>
+				{:else if mediaType === 'video'}
+					<VideoPlayer src={entry.media.url} poster={entry.thumbnail?.url} />
+				{:else if mediaType === 'audio'}
+					<AudioPlayer src={entry.media.url} />
 				{/if}
+			{:else}
+				<p>No media found</p>
 			{/if}
 		</div>
 
