@@ -29,6 +29,7 @@ export const load = (async ({ url }) => {
 				}
 			},
 			with: {
+				avatar: { columns: { url: true } },
 				tickets: { columns: { id: true } },
 				entries: { columns: { id: true } }
 			},

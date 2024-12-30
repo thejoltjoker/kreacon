@@ -28,6 +28,9 @@ export async function validateSessionToken(token: string) {
 	const result = await db.query.sessions.findFirst({
 		with: {
 			user: {
+				with: {
+					avatar: { columns: { url: true } }
+				},
 				columns: {
 					password: false
 				}

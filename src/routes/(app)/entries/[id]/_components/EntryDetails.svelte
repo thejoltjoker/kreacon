@@ -16,7 +16,7 @@
 		>
 	</p>
 	<div class="author">
-		<Avatar src={entry?.user?.picture ?? ''} username={entry?.user?.username ?? 'Unknown'} />
+		<Avatar src={entry?.user?.avatar?.url ?? ''} username={entry?.user?.username ?? 'Unknown'} />
 		<p class="w-full font-bold">{entry?.user?.username}</p>
 		<a href={`/users/${entry?.user?.username}`}>
 			<Button>{$t('Profile')}</Button>

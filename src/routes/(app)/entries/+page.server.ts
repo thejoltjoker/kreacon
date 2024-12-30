@@ -17,7 +17,10 @@ export const load = (async ({ locals, url }) => {
 	const queryResult = await db.transaction(async (tx) => {
 		const result = await tx.query.entries.findMany({
 			with: {
-				user: { columns: { id: true, username: true, picture: true } },
+				user: {
+					with: { avatar: { columns: { url: true } } },
+					columns: { id: true, username: true }
+				},
 				media: true,
 				reactions: true,
 				category: true,

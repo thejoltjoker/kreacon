@@ -25,6 +25,7 @@ export const load = (async ({ locals }) => {
 	const userData = await db.query.users.findFirst({
 		where: eq(users.id, locals.user.id),
 		with: {
+			avatar: { columns: { url: true } },
 			accounts: { columns: { provider: true, providerAccountId: true } },
 			tickets: {
 				columns: { id: true },
@@ -45,7 +46,11 @@ export const load = (async ({ locals }) => {
 	}
 
 	const userForm = await superValidate(
-		{ username: userData.username, email: userData.email },
+		{
+			username: userData.username,
+			email: userData.email,
+			avatarId: userData.avatarId
+		},
 		zod(updateUserSchema)
 	);
 

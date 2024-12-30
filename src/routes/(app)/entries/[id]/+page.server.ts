@@ -54,6 +54,9 @@ export const load = (async ({ params, locals }) => {
 					columns: {
 						username: true,
 						picture: true
+					},
+					with: {
+						avatar: { columns: { url: true } }
 					}
 				},
 				reactions: {

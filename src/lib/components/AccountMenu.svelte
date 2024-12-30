@@ -25,7 +25,7 @@
 	{#snippet trigger()}
 		<Avatar
 			class="cursor-pointer border-white"
-			src={user?.picture ?? ''}
+			src={user?.avatar?.url ?? ''}
 			username={user?.username}
 		/>
 	{/snippet}

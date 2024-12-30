@@ -17,6 +17,7 @@ export const load = (async ({ params, locals }) => {
 				createdAt: true
 			},
 			with: {
+				avatar: { columns: { url: true } },
 				entries: {
 					columns: {
 						id: true
@@ -48,7 +49,7 @@ export const load = (async ({ params, locals }) => {
 		return {
 			profileUser: {
 				username: user.username,
-				picture: user.picture,
+				avatar: user.avatar,
 				entryCount: user.entries.length,
 				ticketCount: user.tickets.length,
 				createdAt: user.createdAt

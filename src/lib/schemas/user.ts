@@ -22,7 +22,7 @@ export type RegisterUserSchema = z.infer<typeof registerUserSchema>;
 export const updateUserSchema = registerUserSchema
 	.merge(
 		z.object({
-			picture: z.string().optional()
+			avatarId: z.string().uuid().nullable().optional()
 		})
 	)
 	.partial();

@@ -7,6 +7,9 @@
 	import Button from '$lib/components/Button.svelte';
 	import FormMessage from '$lib/components/Form/FormMessage.svelte';
 	import EditProfileButton from './EditProfileButton.svelte';
+	import Avatar from '$lib/components/Avatar.svelte';
+	import FileField from '$lib/components/Form/FileField.svelte';
+	import { env } from '$env/dynamic/public';
 
 	let isEditing: boolean = $state(false);
 </script>
@@ -15,7 +18,7 @@
 
 <section class="flex w-full flex-col gap-sm">
 	<Form
-		invalidateAll={false}
+		invalidateAll={true}
 		action="/profile?/updateUser"
 		data={$page.data.userForm}
 		options={{
@@ -32,7 +35,22 @@
 			<h2>General</h2>
 			<EditProfileButton bind:isEditing />
 		</div>
-
+		<div class="flex flex-col gap-sm">
+			{#if isEditing}
+				<FileField
+					behavior="managed"
+					field="avatarId"
+					label="Avatar"
+					mediaType="image"
+					customUploadUrl={`${env.PUBLIC_BASE_URL ?? ''}/api/uploads/avatar`}
+				/>
+			{:else}
+				<p class="font-bold">Avatar</p>
+				<div class="flex items-center gap-sm">
+					<Avatar size="md" src={$page.data.user.avatar?.url} alt={$page.data.user.username} />
+				</div>
+			{/if}
+		</div>
 		<TextField
 			type="text"
 			field="username"

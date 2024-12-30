@@ -10,7 +10,7 @@
 </script>
 
 <div id="user-details" class="flex items-center gap-6">
-	<Avatar src={user?.picture ?? ''} username={user?.username ?? $t('Unknown')} size="lg" />
+	<Avatar src={user?.avatar?.url ?? ''} username={user?.username ?? $t('Unknown')} size="lg" />
 	<div>
 		<h2 class="text-3xl font-bold">{user?.username}</h2>
 		<p class="member-since text-muted-foreground">

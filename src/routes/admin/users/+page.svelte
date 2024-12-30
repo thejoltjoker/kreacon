@@ -10,7 +10,7 @@
 	let users = $derived(
 		data.users.map((user) => ({
 			...user,
-			thumbnailUrl: user.picture ?? '',
+			thumbnailUrl: user.avatar.url ?? '',
 			tickets: user.tickets.length,
 			entries: user.entries.length
 		}))

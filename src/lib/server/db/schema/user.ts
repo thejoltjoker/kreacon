@@ -10,6 +10,7 @@ import tickets from './ticket';
 import votes from './vote';
 import { z } from 'zod';
 import { userStatus } from '../../../types/userStatus';
+import files from './file';
 
 export const userStatusEnum = pgEnum('status', userStatus);
 export const users = pgTable('user', {
@@ -19,17 +20,22 @@ export const users = pgTable('user', {
 	emailVerifiedAt: timestamp('email_verified_at', { mode: 'date' }),
 	password: varchar({ length: 255 }).notNull(),
 	role: roleEnum('role').notNull().default('user'),
-	picture: varchar({ length: 255 }), // TODO Change to file id
+	picture: varchar({ length: 255 }), // TODO Remove
+	avatarId: uuid('avatar_id'),
 	status: userStatusEnum('status').notNull().default('active'),
 	...timestamps
 });
 
-export const usersRelations = relations(users, ({ many }) => ({
+export const usersRelations = relations(users, ({ many, one }) => ({
 	accounts: many(accounts),
 	entries: many(entries),
 	votes: many(votes),
 	reactions: many(reactions),
-	tickets: many(tickets)
+	tickets: many(tickets),
+	avatar: one(files, {
+		fields: [users.avatarId],
+		references: [files.id]
+	})
 }));
 
 export const insertUserSchema = createInsertSchema(users).merge(registerUserSchema).pick({
