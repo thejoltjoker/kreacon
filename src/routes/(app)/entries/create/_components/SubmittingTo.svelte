@@ -5,7 +5,6 @@
 	import type { SuperForm } from 'sveltekit-superforms/client';
 	import type { PageData } from '../$types';
 	import { t } from '$lib/i18n';
-	import Divider from '$lib/components/Divider.svelte';
 	let { form } = getContext<SuperForm<CreateEntrySchema>>('superform');
 	let events: PageData['events'] = $state($page.data.events);
 	let event = $derived(events?.find((e) => e.eventId?.toString() === $form.eventId.toString()));

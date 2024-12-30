@@ -5,9 +5,6 @@
 	import { createEntrySchema, type CreateEntrySchema } from '$lib/schemas/entry';
 	import { getContext } from 'svelte';
 	import type { SuperForm } from 'sveltekit-superforms';
-	import { page } from '$app/stores';
-	import type { PageData } from '../$types';
-	import { t } from '$lib/i18n';
 	import SubmittingTo from './SubmittingTo.svelte';
 	// TODO Add proof field
 	let { form } = getContext<SuperForm<CreateEntrySchema>>('superform');
