@@ -9,7 +9,7 @@
 
 <section id="entry-details">
 	<h1>{entry?.title}</h1>
-	<p class="text-muted-foreground">
+	<p class="text-shade-300">
 		{$t('Submitted to')}
 		<a href="/categories/{entry?.category?.id}" class="font-bold text-amber-500"
 			>{entry?.category?.name}</a

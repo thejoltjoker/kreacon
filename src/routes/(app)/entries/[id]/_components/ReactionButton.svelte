@@ -34,7 +34,7 @@
 	>
 		{#if user == null}
 			<p>{$t('You must be logged in to share your reaction.')}</p>
-			<Button href="/login?redirect=/entries/{entryId}">{$t('Log in')}</Button>
+			<Button href="/login?redirect=/entries/{entryId}" aria-label="Log in">{$t('Log in')}</Button>
 		{:else if !isAllowedToReact}
 			<p>{$t('You already reacted to this entry.')}</p>
 		{:else}
@@ -42,7 +42,14 @@
 			<form method="POST" action="?/react" use:enhance={handleSubmit}>
 				<div class="flex flex-wrap gap-xs">
 					{#each emojis as emoji}
-						<Button type="submit" name="reaction" value={emoji} variant="ghost" size="icon">
+						<Button
+							type="submit"
+							name="reaction"
+							value={emoji}
+							variant="ghost"
+							size="icon"
+							aria-label="React with {emoji}"
+						>
 							{emoji}
 						</Button>
 					{/each}

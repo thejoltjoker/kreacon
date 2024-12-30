@@ -42,7 +42,7 @@
 			class="rounded-md bg-black/75 p-sm backdrop-blur transition-all duration-300 group-hover:backdrop-blur md:translate-y-sm md:bg-none md:opacity-0 md:backdrop-blur-none md:group-hover:translate-y-0 md:group-hover:bg-black/75 md:group-hover:opacity-100"
 		>
 			<h2 class="text-lg font-bold">{entry.title}</h2>
-			<p class="text-muted-foreground">{entry.category.name}</p>
+			<p class="text-shade-300">{entry.category.name}</p>
 		</div>
 	</div>
 </div>

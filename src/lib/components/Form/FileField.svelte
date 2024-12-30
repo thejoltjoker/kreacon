@@ -106,7 +106,7 @@
 	let xhr: XMLHttpRequest | undefined = $state();
 	let blobUrl: string | undefined = $state();
 	let uploadUrl: string | undefined = $state(customUploadUrl);
-	let fileId: string | undefined = $state(crypto.randomUUID());
+	let fileId: string = $state(crypto.randomUUID());
 
 	let superFieldProxy;
 	if (

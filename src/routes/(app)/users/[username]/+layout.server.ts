@@ -12,7 +12,6 @@ export const load = (async ({ params, locals }) => {
 			where: eq(users.username, params.username),
 			columns: {
 				username: true,
-				picture: true,
 				id: true,
 				createdAt: true
 			},

@@ -79,7 +79,7 @@
 		<Button
 			icon={PlusIcon}
 			variant="neutral"
-			class="rounded-none border-b border-transparent text-muted-foreground-alt hover:border-white hover:text-white"
+			class="text-shade-300-alt rounded-none border-b border-transparent hover:border-white hover:text-white"
 			onclick={() => handleAddRule('')}
 		>
 			Add Rule

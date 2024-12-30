@@ -14,7 +14,8 @@ export const load = (async ({ params, url }) => {
 	const perPage = 8;
 
 	const user = await db.query.users.findFirst({
-		where: eq(users.username, username)
+		where: eq(users.username, username),
+		with: { avatar: { columns: { url: true } } }
 	});
 
 	if (!user) {
@@ -31,8 +32,7 @@ export const load = (async ({ params, url }) => {
 				user: {
 					with: { avatar: { columns: { url: true } } },
 					columns: {
-						username: true,
-						picture: true
+						username: true
 					}
 				}
 			},

@@ -13,7 +13,7 @@
 	<Avatar src={user?.avatar?.url ?? ''} username={user?.username ?? $t('Unknown')} size="lg" />
 	<div>
 		<h2 class="text-3xl font-bold">{user?.username}</h2>
-		<p class="member-since text-muted-foreground">
+		<p class="member-since text-shade-300">
 			{$t('Member since')}{' '}
 			{user?.createdAt
 				.toLocaleDateString('en-US', {
@@ -24,7 +24,7 @@
 				.toLowerCase()}
 		</p>
 
-		<div class="user-stats mt-sm flex gap-6 text-muted-foreground-alt">
+		<div class="user-stats text-shade-300-alt mt-sm flex gap-6">
 			<p><span class="text-white">{user?.ticketCount}</span> {$t('Events')}</p>
 			<p><span class="text-white">{user?.entryCount}</span> {$t('Entries')}</p>
 		</div>

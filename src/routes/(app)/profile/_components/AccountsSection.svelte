@@ -19,7 +19,7 @@
 				>
 					<p class="order-1 text-lg font-bold">{account.provider}</p>
 					<p
-						class="order-3 w-full whitespace-pre font-mono text-sm text-muted-foreground-alt sm:order-2 sm:w-auto"
+						class="text-shade-300-alt order-3 w-full whitespace-pre font-mono text-sm sm:order-2 sm:w-auto"
 					>
 						#{account.providerAccountId}
 					</p>
