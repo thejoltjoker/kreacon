@@ -29,6 +29,7 @@ export const load = (async ({ params, url }) => {
 				category: true,
 				preview: true,
 				user: {
+					with: { avatar: { columns: { url: true } } },
 					columns: {
 						username: true,
 						picture: true
