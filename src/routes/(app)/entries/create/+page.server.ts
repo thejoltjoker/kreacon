@@ -14,7 +14,7 @@ import { isAuthenticated } from '../../utils';
 const logger = createLogger('entries/create');
 
 export const load = (async ({ locals }) => {
-	if (isAuthenticated(locals) || locals.user == null) {
+	if (!isAuthenticated(locals) || locals.user == null) {
 		logger.warn('Unauthorized access attempt to entry creation page');
 		redirect(StatusCodes.TEMPORARY_REDIRECT, '/login?redirect=/entries/create');
 	}

@@ -2,7 +2,7 @@ import { relations, type InferInsertModel, type InferSelectModel } from 'drizzle
 import { pgTable, primaryKey, uuid, varchar } from 'drizzle-orm/pg-core';
 import { timestamps } from './shared';
 import { entries } from './entry';
-import users, { type PublicUser, type User, type UserWithoutPassword } from './user';
+import users, { type PublicUser } from './user';
 import { createInsertSchema } from 'drizzle-zod';
 import { z } from 'zod';
 

@@ -17,7 +17,7 @@
 	keywords={emoji.keywords}
 	onclick={handleClick}
 >
-	<div class="group-data-[selected]:animate-wiggle transition-transform">
+	<div class="transition-transform group-data-[selected]:animate-wiggle">
 		<div class="transition-transform group-data-[selected]:scale-125">
 			<div class="translate-y-[2px] font-emoji text-2xl leading-none">
 				{emoji.emoji}

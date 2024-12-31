@@ -19,7 +19,6 @@
 	} = $props();
 	// let dialogOpen = $state(false);
 	let value = $state('');
-	let formRef = $state<HTMLFormElement | null>(null);
 
 	const handleKeydown = (e: KeyboardEvent) => {
 		if (e.key === 'Enter') {
@@ -77,7 +76,7 @@
 									<p class="font-bold text-white">{group.title}</p>
 								</Command.GroupHeading>
 								<Command.GroupItems>
-									<div class="grid-cols-emoji grid gap-2xs">
+									<div class="grid grid-cols-emoji gap-2xs">
 										{#each group.emojis as emoji}
 											<EmojiPickerItem onclick={handleClick} {emoji} />
 										{/each}

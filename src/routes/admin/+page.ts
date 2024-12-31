@@ -3,5 +3,5 @@ import type { PageLoad } from './$types';
 import { StatusCodes } from 'http-status-codes';
 
 export const load = (async () => {
-	return redirect(StatusCodes.TEMPORARY_REDIRECT, '/admin/events');
+	return redirect(StatusCodes.TEMPORARY_REDIRECT, '/admin/entries');
 }) satisfies PageLoad;

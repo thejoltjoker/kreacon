@@ -2,7 +2,6 @@
 	import { page } from '$app/stores';
 	import Avatar from '$lib/components/Avatar.svelte';
 	import Button from '$lib/components/Button.svelte';
-	import ReactionButton from './_components/ReactionButton.svelte';
 	import ReactionsSection from './_components/ReactionsSection.svelte';
 	import VoteButton from './_components/VoteButton.svelte';
 	import { t } from '$lib/i18n';
@@ -16,11 +15,9 @@
 	const user = $derived($page.data.user);
 
 	let { data }: { data: PageData } = $props();
-	let entry = $derived(data.entry);
-
-	const entryId = $derived($page.params.id);
-
 	let isVoted = $state(data.isVoted ?? false);
+	let entry = $derived(data.entry);
+	let entryId = $derived($page.params.id);
 
 	// let isAllowedToReact: boolean = $state(
 	// 	entry?.reactions.find((reaction) => reaction.userId === user?.id) == null
@@ -97,12 +94,12 @@
 					<img
 						src={`${entry.media?.url}`}
 						alt={entry.title}
-						class="h-full w-full object-cover object-center"
+						class="h-full w-full overflow-hidden rounded-form object-cover object-center"
 					/>
 				{:else if mediaType === 'video'}
 					<VideoPlayer src={entry.media.url} poster={entry.preview?.url} />
 				{:else if mediaType === 'audio'}
-					<AudioPlayer src={entry.media.url} />
+					<AudioPlayer src={entry.media.url} poster={entry.preview?.url} />
 				{/if}
 			{:else}
 				<p>No media found</p>
@@ -135,19 +132,7 @@
 		</div>
 
 		<!-- Reactions -->
-		<ReactionsSection {entryId} reactions={entry?.reactions} />
-
-		<!-- Author profile -->
-		<!-- TODO -->
-		<!-- <div class=" text-center">
-		<img
-			src={data.user?.picture}
-			alt={data.user?.username}
-			class="mx-auto h-16 w-16 rounded-full"
-		/>
-		<h2 class=" font-bold">{data.user?.username}</h2>
-		<button class="rounded-md bg-gray-900 px-4 py-2 text-white">Get in touch</button>
-	</div> -->
+		<ReactionsSection reactions={entry?.reactions} />
 
 		<!-- More work/related grid -->
 		<!-- TODO -->

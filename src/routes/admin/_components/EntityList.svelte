@@ -97,6 +97,7 @@
 	<ul class="entity-list flex w-full flex-col">
 		{#each items as item}
 			<!-- TODO Make component -->
+			<!-- TODO Render custom fields -->
 			<li
 				class="flex flex-wrap gap-sm border-b border-b-divider px-xl py-sm first-of-type:pt-sm last-of-type:border-b-0 hover:bg-shade-900"
 			>

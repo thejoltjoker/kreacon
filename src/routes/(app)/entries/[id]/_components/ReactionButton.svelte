@@ -6,6 +6,7 @@
 	import { Popover } from 'bits-ui';
 	import { SmilePlusIcon } from 'lucide-svelte';
 	import { t } from '$lib/i18n';
+	import type { Emoji } from '$lib/emojis.svelte';
 
 	const user = $derived($page.data.user);
 
@@ -20,6 +21,7 @@
 	const handleSubmit = async () => {
 		isAllowedToReact = !isAllowedToReact;
 	};
+	const emojis: Emoji[] = [];
 </script>
 
 <Popover.Root>
@@ -39,19 +41,18 @@
 			<p>{$t('You already reacted to this entry.')}</p>
 			groupedEmojis
 		{:else}
-			<!-- TODO Allow user to change reaction -->
 			<form method="POST" action="?/react" use:enhance={handleSubmit}>
 				<div class="flex flex-wrap gap-xs">
 					{#each emojis as emoji}
 						<Button
 							type="submit"
 							name="reaction"
-							value={emoji}
+							value={emoji.emoji}
 							variant="ghost"
 							size="icon"
-							aria-label="React with {emoji}"
+							aria-label="React with {emoji.emoji}"
 						>
-							{emoji}
+							{emoji.emoji}
 						</Button>
 					{/each}
 				</div>

@@ -3,6 +3,7 @@
 	import Avatar from '$lib/components/Avatar.svelte';
 
 	import { t } from '$lib/i18n';
+	import { cn } from '$lib/utils';
 	import Pagination from '../_components/Pagination.svelte';
 	import type { PageData } from './$types';
 	import FilterBar from './_components/FilterBar.svelte';
@@ -30,20 +31,35 @@
 </div>
 <div class="grid w-full grid-cols-entries gap-sm px-sm md:gap-xl md:px-xl">
 	{#each entries as entry}
-		<div class="wrapper group grid overflow-hidden rounded-md">
-			<div class="aspect-square h-full w-full overflow-hidden rounded-md">
+		<div
+			class={cn(
+				'wrapper group grid overflow-hidden rounded-md',
+				entry.status === 'rejected' && 'border-2 border-destructive bg-pomodoro-700',
+				entry.status === 'pending' && 'border-2 border-tertiary',
+				entry.status === 'draft' && 'border-2 border-shade-300'
+			)}
+		>
+			<div
+				class={cn(
+					'aspect-square h-full w-full overflow-hidden rounded-md',
+					entry.status === 'pending' && 'animate-pulse'
+				)}
+			>
 				<a href={`/entries/${entry.id}`}>
 					<img
-						src={`${entry?.thumbnail?.url}`}
+						src={`${entry?.preview?.url}`}
 						alt={entry?.title}
-						class="h-full w-full object-cover object-center"
+						class={cn(
+							'h-full w-full object-cover object-center',
+							entry.status === 'rejected' && 'opacity-80 grayscale'
+						)}
 					/>
 				</a>
 			</div>
 			<div
 				class="items-left pointer-events-none relative flex h-full w-full flex-col justify-between p-sm"
 			>
-				{#if ['draft', 'pending'].includes(entry.status)}
+				{#if ['draft', 'pending', 'rejected'].includes(entry.status)}
 					<div class="absolute right-sm top-sm">
 						<StatusIcon status={entry.status} />
 					</div>

@@ -8,16 +8,14 @@
 	import { type ReactionListItem } from '../../../_components/ReactionsListItem.svelte';
 
 	let {
-		reactions,
-		entryId
+		reactions
 	}: {
 		reactions?: NonNullable<PageData['entry']>['reactions'];
-		entryId: string;
 	} = $props();
 
 	let reactionListItems: ReactionListItem[] = $derived(
 		reactions?.map((reaction) => ({
-			url: `/users/${reaction.user.username}`,
+			url: `/users/${reaction.user.username}/reactions`,
 			image: { src: reaction.user.avatar?.url ?? '', alt: `${reaction.user.username} avatar` },
 			value: reaction.value
 		})) ?? []
@@ -61,6 +59,5 @@
 
 <div class="flex flex-col gap-sm">
 	<h4>{$t('Reactions')}</h4>
-
 	<ReactionsList reactions={reactionListItems} onAddReaction={handleAddReaction} />
 </div>

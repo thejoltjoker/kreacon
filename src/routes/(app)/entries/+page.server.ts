@@ -24,7 +24,7 @@ export const load = (async ({ locals, url }) => {
 				media: true,
 				reactions: true,
 				category: true,
-				thumbnail: { columns: { url: true } }
+				preview: { columns: { url: true } }
 			},
 			where: (table, { or, eq }) =>
 				and(

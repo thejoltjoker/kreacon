@@ -12,12 +12,14 @@ import { createLogger } from '$lib/helpers/logger';
 const logger = createLogger('/entries/[id]');
 export const load = (async ({ params, locals }) => {
 	const { id } = params;
+	logger.info(`Loading entry with ID: ${id}`);
 
 	const result = await db.transaction(async (tx) => {
 		await tx
 			.update(entries)
 			.set({ views: sql`${entries.views} + 1` })
 			.where(eq(entries.id, id));
+		logger.info(`Incremented view count for entry ID: ${id}`);
 
 		return await tx.query.entries.findFirst({
 			where: eq(entries.id, id),
@@ -73,7 +75,8 @@ export const load = (async ({ params, locals }) => {
 								username: true
 							}
 						}
-					}
+					},
+					orderBy: (table, { desc }) => [desc(table.updatedAt)]
 				},
 				votes: locals.user
 					? {
@@ -84,7 +87,12 @@ export const load = (async ({ params, locals }) => {
 		});
 	});
 
+	if (!result) {
+		logger.warn(`Entry with ID: ${id} not found`);
+	}
+
 	const isVoted = Boolean(result?.votes && result?.votes.length > 0);
+	logger.info(`User ${locals.user?.id} has ${isVoted ? '' : 'not '}voted on entry ID: ${id}`);
 
 	const title = result?.event
 		? { text: result.event.name, href: `/entries?event=${result.event.id}` }
@@ -95,12 +103,14 @@ export const load = (async ({ params, locals }) => {
 export const actions = {
 	vote: async ({ params, locals }) => {
 		if (!locals.user || !locals.session) {
+			logger.warn(`Unauthorized vote attempt on entry ID: ${params.id}`);
 			return fail(StatusCodes.UNAUTHORIZED, { error: 'Not signed in' });
 		}
 
 		try {
 			const entryId = params.id;
 			const userId = locals.user.id;
+			logger.info(`User ${userId} attempting to vote on entry ID: ${entryId}`);
 
 			const data = insertVoteSchema.parse({
 				entryId,
@@ -109,40 +119,54 @@ export const actions = {
 
 			await db.insert(votes).values(data).onConflictDoNothing();
 
+			logger.info(`User ${userId} successfully voted on entry ID: ${entryId}`);
 			return { success: true };
 		} catch (error) {
-			console.error('Failed to insert vote:', error);
+			logger.error(
+				`Failed to insert vote for user ${locals.user.id} on entry ID: ${params.id}`,
+				error
+			);
 			return { success: false, error: 'Failed to save vote' };
 		}
 	},
 	unvote: async ({ params, locals }) => {
 		if (!locals.user || !locals.session) {
+			logger.warn(`Unauthorized unvote attempt on entry ID: ${params.id}`);
 			return fail(StatusCodes.UNAUTHORIZED, { error: 'Not signed in' });
 		}
 
 		try {
 			const entryId = params.id;
 			const userId = locals.user.id;
+			logger.info(`User ${userId} attempting to unvote on entry ID: ${entryId}`);
 
 			await db.delete(votes).where(and(eq(votes.entryId, entryId), eq(votes.userId, userId)));
 
+			logger.info(`User ${userId} successfully unvoted on entry ID: ${entryId}`);
 			return { success: true };
 		} catch (error) {
-			console.error('Failed to delete vote:', error);
+			logger.error(
+				`Failed to delete vote for user ${locals.user.id} on entry ID: ${params.id}`,
+				error
+			);
 			return { success: false, error: 'Failed to delete vote' };
 		}
 	},
 	react: async ({ params, locals, request }) => {
 		if (!isAuthenticated(locals) || !locals.user) {
+			logger.warn(`Unauthorized reaction attempt on entry ID: ${params.id}`);
 			return fail(StatusCodes.UNAUTHORIZED, { error: 'Not signed in' });
 		}
 
 		try {
 			const formData = await request.formData();
-			logger.info('formData', formData);
 			const entryId = params.id;
 			const userId = locals.user.id;
 			const value = formData.get('reaction')?.toString();
+			logger.info(
+				`User ${userId} attempting to react on entry ID: ${entryId} with value: ${value}`
+			);
+
 			const data = insertReactionSchema.parse({
 				entryId,
 				userId,
@@ -154,9 +178,15 @@ export const actions = {
 				.values(data)
 				.onConflictDoUpdate({ target: [reactions.userId, reactions.entryId], set: { value } });
 
+			logger.info(
+				`User ${userId} successfully reacted on entry ID: ${entryId} with value: ${value}`
+			);
 			return { success: true };
 		} catch (error) {
-			console.error('Failed to insert reaction:', error);
+			logger.error(
+				`Failed to insert reaction for user ${locals.user.id} on entry ID: ${params.id}`,
+				error
+			);
 			return { success: false, error: 'Failed to save reaction' };
 		}
 	}
