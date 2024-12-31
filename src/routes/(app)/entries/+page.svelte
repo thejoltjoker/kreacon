@@ -33,7 +33,7 @@
 	{#each entries as entry}
 		<div
 			class={cn(
-				'wrapper group grid overflow-hidden rounded-md',
+				'wrapper group grid w-full overflow-hidden rounded-md',
 				entry.status === 'rejected' && 'border-2 border-destructive bg-pomodoro-700',
 				entry.status === 'pending' && 'border-2 border-tertiary',
 				entry.status === 'draft' && 'border-2 border-shade-300'
