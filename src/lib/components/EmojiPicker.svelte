@@ -64,7 +64,7 @@
 					placeholder="Express yourself..."
 				/>
 				<Command.List class="max-h-[280px] overflow-y-auto overflow-x-hidden">
-					<Command.Viewport class="flex flex-col gap-sm">
+					<Command.Viewport class="flex flex-col gap-sm pb-sm">
 						<Command.Empty class="w-full p-sm text-sm text-shade-300">
 							No results found.
 						</Command.Empty>
@@ -86,7 +86,7 @@
 						{/each}
 					</Command.Viewport>
 				</Command.List>
-				<Divider class="my-sm" />
+				<Divider class="mb-sm" />
 				<div class="inline-flex items-center gap-xs">
 					<InfoIcon class="size-4 text-shade-300" />
 					<p class="inline-flex items-center text-sm text-shade-300">

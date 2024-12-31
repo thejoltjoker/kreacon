@@ -27,7 +27,8 @@ export const load = (async ({ params, locals }) => {
 				id: true,
 				title: true,
 				views: true,
-				createdAt: true
+				createdAt: true,
+				status: true
 			},
 			with: {
 				media: {

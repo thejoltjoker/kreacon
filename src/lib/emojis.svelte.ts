@@ -1,4 +1,4 @@
-import { PawPrintIcon, PizzaIcon, SmileIcon } from 'lucide-svelte';
+import { LightbulbIcon, PawPrintIcon, PizzaIcon, SmileIcon } from 'lucide-svelte';
 
 export interface Emoji {
 	keywords: string[];
@@ -87,6 +87,16 @@ export const groupedEmojis = [
 			{
 				keywords: ['banana', 'fruit', ':banana:'],
 				emoji: '🍌'
+			}
+		]
+	},
+	{
+		title: 'Objects',
+		icon: LightbulbIcon,
+		emojis: [
+			{
+				keywords: ['lightbulb', 'idea', ':lightbulb:'],
+				emoji: '💡'
 			}
 		]
 	},

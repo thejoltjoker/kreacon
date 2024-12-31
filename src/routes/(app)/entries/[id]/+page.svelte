@@ -9,8 +9,9 @@
 	import VideoPlayer from '$lib/components/VideoPlayer.svelte';
 	import AudioPlayer from '$lib/components/AudioPlayer.svelte';
 	import { formatRelativeTime } from '$lib/helpers/formatRelativeTime';
-	import { DownloadIcon } from 'lucide-svelte';
+	import { DownloadIcon, TrashIcon } from 'lucide-svelte';
 	import { type PageData } from './$types';
+	import Badge from '$lib/components/Badge.svelte';
 
 	const user = $derived($page.data.user);
 
@@ -18,7 +19,7 @@
 	let isVoted = $state(data.isVoted ?? false);
 	let entry = $derived(data.entry);
 	let entryId = $derived($page.params.id);
-
+	let isOwner = $derived(user?.username === entry?.user?.username);
 	// let isAllowedToReact: boolean = $state(
 	// 	entry?.reactions.find((reaction) => reaction.userId === user?.id) == null
 	// );
@@ -28,7 +29,23 @@
 	<main class="flex w-full max-w-screen-lg flex-col gap-sm px-sm pt-sm md:gap-xl md:px-xl md:pt-xl">
 		<!-- Header -->
 		<div class="flex flex-wrap items-center justify-between gap-xs">
-			<h1 class="text-2xl font-bold">{entry.title}</h1>
+			<div class="inline-flex items-center gap-xs">
+				<h1 class="text-2xl font-bold">
+					{entry.title}
+				</h1>
+				{#if isOwner}
+					<Badge size="md" outlined variant="default">{entry.status}</Badge>
+					<Badge size="md" outlined variant="primary">{entry.status}</Badge>
+					<Badge size="md" outlined variant="secondary">{entry.status}</Badge>
+					<Badge size="md" outlined variant="tertiary">{entry.status}</Badge>
+					<Badge size="md" outlined variant="destructive">{entry.status}</Badge>
+					<Badge size="md" outlined variant="success">{entry.status}</Badge>
+					<!-- {#if entry.status === 'rejected'}
+					{:else if entry.status === 'published'}
+						<Badge color="primary" variant="outlined">{entry.status}</Badge>
+					{/if} -->
+				{/if}
+			</div>
 			<a href={`/entries?category=${entry.category.id}`}>
 				<h2 class="text-xl text-secondary transition-colors hover:text-tertiary">
 					{entry.category.name}
@@ -82,7 +99,12 @@
 						{/if}
 					</Popover.Content>
 				</Popover.Root> -->
-				<VoteButton isSignedIn={user != null} id={entryId} bind:isVoted />
+
+				{#if user?.username === entry.user?.username}
+					<Button size="icon" variant="destructive"><TrashIcon /></Button>
+				{:else}
+					<VoteButton isSignedIn={user != null} id={entryId} bind:isVoted />
+				{/if}
 			</div>
 		</div>
 
@@ -127,7 +149,11 @@
 				<ShareIcon />
 			</Button> -->
 				<!-- <ReactionButton {entryId} bind:isAllowedToReact /> -->
-				<VoteButton isSignedIn={user != null} id={entryId} bind:isVoted />
+				{#if user?.username === entry.user?.username}
+					<Button size="icon" variant="destructive"><TrashIcon /></Button>
+				{:else}
+					<VoteButton isSignedIn={user != null} id={entryId} bind:isVoted />
+				{/if}
 			</div>
 		</div>
 
