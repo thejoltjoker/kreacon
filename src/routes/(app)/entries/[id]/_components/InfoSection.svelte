@@ -12,7 +12,7 @@
 	let {
 		entry,
 		user,
-		isVoted
+		isVoted = $bindable()
 	}: {
 		entry: NonNullable<PageData['entry']>;
 		user: PageData['user'];

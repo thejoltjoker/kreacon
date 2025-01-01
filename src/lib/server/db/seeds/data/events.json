@@ -54,8 +54,8 @@
 	{
 		"name": "Debug Derby",
 		"slug": "debug-derby",
-		"tagline": "Hunt down bugs and improve code quality in our Debug Derby.",
-		"description": "Join us for an exciting event focused on bug hunting and code quality improvement. This event invites developers to showcase their debugging skills and contribute to cleaner, more efficient code.",
+		"tagline": "Where breaking things is part of the fun!",
+		"description": "Join our quirky beta testing event where finding bugs is celebrated and edge cases are embraced. Submit your most creative ways of stress-testing applications, or just help us find interesting ways to make things go wrong!",
 		"submissionsOpenAt": "2023-12-01T00:00:00Z",
 		"submissionsCloseAt": "2030-12-15T23:59:59Z",
 		"votingOpenAt": "2023-12-16T00:00:00Z",

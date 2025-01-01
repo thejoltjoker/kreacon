@@ -82,5 +82,23 @@
 		"slug": "genai-music",
 		"mediaType": "audio",
 		"description": "Music created primarily with artificial intelligence. Your track should showcase the capabilities of AI in generating or enhancing musical compositions."
+	},
+	{
+		"name": "Videos",
+		"slug": "videos",
+		"mediaType": "video",
+		"description": "A collection of various video content, showcasing creativity and storytelling through motion pictures."
+	},
+	{
+		"name": "Images",
+		"slug": "images",
+		"mediaType": "image",
+		"description": "A collection of various image content, showcasing creativity and storytelling through still visuals."
+	},
+	{
+		"name": "Music",
+		"slug": "music",
+		"mediaType": "audio",
+		"description": "A collection of various music content, showcasing creativity and storytelling through sound."
 	}
 ]
