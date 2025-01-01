@@ -34,7 +34,8 @@ CREATE TABLE "entry" (
 	"views" integer DEFAULT 0 NOT NULL,
 	"license" "license" NOT NULL,
 	"media_id" uuid NOT NULL,
-	"thumbnail_id" uuid NOT NULL,
+	"thumbnail_id" uuid,
+	"preview_id" uuid NOT NULL,
 	"proof_id" uuid,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL
@@ -136,7 +137,7 @@ CREATE TABLE "user" (
 	"email_verified_at" timestamp,
 	"password" varchar(255) NOT NULL,
 	"role" "role" DEFAULT 'user' NOT NULL,
-	"picture" varchar(255),
+	"avatar_id" uuid,
 	"status" "status" DEFAULT 'active' NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL,

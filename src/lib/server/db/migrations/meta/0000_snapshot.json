@@ -1,5 +1,5 @@
 {
-	"id": "45559806-c0e3-44fe-8db9-3e883d510ec3",
+	"id": "e6cfb4d6-57c0-470f-aa20-b197f618f1f9",
 	"prevId": "00000000-0000-0000-0000-000000000000",
 	"version": "7",
 	"dialect": "postgresql",
@@ -198,6 +198,12 @@
 				},
 				"thumbnail_id": {
 					"name": "thumbnail_id",
+					"type": "uuid",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"preview_id": {
+					"name": "preview_id",
 					"type": "uuid",
 					"primaryKey": false,
 					"notNull": true
@@ -851,9 +857,9 @@
 					"notNull": true,
 					"default": "'user'"
 				},
-				"picture": {
-					"name": "picture",
-					"type": "varchar(255)",
+				"avatar_id": {
+					"name": "avatar_id",
+					"type": "uuid",
 					"primaryKey": false,
 					"notNull": false
 				},
