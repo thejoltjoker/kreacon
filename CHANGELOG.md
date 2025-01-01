@@ -111,6 +111,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Remove debug from submit entry page
   [#92](https://github.com/thejoltjoker/kreacon/pull/92)
+- Generate new migrations to get rid of sign up bugs
+  [#101](https://github.com/thejoltjoker/kreacon/pull/101)
 
 ### Security
 
