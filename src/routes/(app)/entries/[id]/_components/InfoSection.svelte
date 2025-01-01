@@ -1,7 +1,7 @@
 <script lang="ts">
 	import LicenseTooltip from '$lib/components/LicenseTooltip.svelte';
 
-	import { DownloadIcon, TrashIcon } from 'lucide-svelte';
+	import { DownloadIcon } from 'lucide-svelte';
 
 	import type { PageData } from '../$types';
 	import VoteButton from './VoteButton.svelte';

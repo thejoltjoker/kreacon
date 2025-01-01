@@ -122,7 +122,7 @@ test('Single entry page logged in', async ({ page }) => {
 	await addReactionButton.click();
 	const emojiPickerLocator = page.locator('.emoji-picker');
 	await expect(emojiPickerLocator).toBeVisible();
-await page.getByRole('option', { name: '😊' }).click();
+	await page.getByRole('option', { name: '😊' }).click();
 	await expect(page.locator('#entry-reactions')).toMatchAriaSnapshot(`
     - heading "Reactions" [level=4]
     - list:
