@@ -18,7 +18,7 @@
 	<title>Kreacon</title>
 </svelte:head>
 
-<main class="flex flex-col items-center gap-8xl overflow-hidden md:gap-[20vh]">
+<main class="mx-auto flex flex-col items-center gap-8xl overflow-hidden md:gap-[20vh]">
 	<HeroSection />
 	<section class="flex w-full max-w-screen-xl flex-col gap-xl py-xl">
 		<AnimateOnScroll id="animated-content-block-1">
