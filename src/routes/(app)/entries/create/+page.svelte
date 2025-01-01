@@ -2,7 +2,7 @@
 	import EntryForm from './_components/EntryForm.svelte';
 </script>
 
-<!-- TODO Show what category and event you're submitting to in each step -->
+<!-- TODO Show add ticket form if user has no tickets -->
 <section class="w-full max-w-screen-md">
 	<EntryForm />
 </section>

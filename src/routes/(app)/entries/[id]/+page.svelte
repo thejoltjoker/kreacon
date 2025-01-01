@@ -12,6 +12,8 @@
 	import { DownloadIcon, TrashIcon } from 'lucide-svelte';
 	import { type PageData } from './$types';
 	import Badge from '$lib/components/Badge.svelte';
+	import LicenseTooltip from '$lib/components/LicenseTooltip.svelte';
+	import AlertDialog from '$lib/components/AlertDialog.svelte';
 
 	const user = $derived($page.data.user);
 
@@ -20,11 +22,20 @@
 	let entry = $derived(data.entry);
 	let entryId = $derived($page.params.id);
 	let isOwner = $derived(user?.username === entry?.user?.username);
+	let deleteFormRef = $state<HTMLFormElement | null>(null);
 	// let isAllowedToReact: boolean = $state(
 	// 	entry?.reactions.find((reaction) => reaction.userId === user?.id) == null
 	// );
+
+	const handleDelete = () => {
+		if (user?.username != entry?.user?.username) {
+			throw new Error('Unauthorized to delete this entry');
+		}
+		deleteFormRef?.submit();
+	};
 </script>
 
+<!-- TODO Show license -->
 {#if entry != null}
 	<main class="flex w-full max-w-screen-lg flex-col gap-sm px-sm pt-sm md:gap-xl md:px-xl md:pt-xl">
 		<!-- Header -->
@@ -34,16 +45,13 @@
 					{entry.title}
 				</h1>
 				{#if isOwner}
-					<Badge size="md" outlined variant="default">{entry.status}</Badge>
-					<Badge size="md" outlined variant="primary">{entry.status}</Badge>
-					<Badge size="md" outlined variant="secondary">{entry.status}</Badge>
-					<Badge size="md" outlined variant="tertiary">{entry.status}</Badge>
-					<Badge size="md" outlined variant="destructive">{entry.status}</Badge>
-					<Badge size="md" outlined variant="success">{entry.status}</Badge>
-					<!-- {#if entry.status === 'rejected'}
+					{#if entry.status === 'rejected'}
+						<Badge size="lg" variant="destructive">{entry.status.toUpperCase()}</Badge>
 					{:else if entry.status === 'published'}
-						<Badge color="primary" variant="outlined">{entry.status}</Badge>
-					{/if} -->
+						<Badge size="lg" variant="primary">{entry.status.toUpperCase()}</Badge>
+					{:else if entry.status === 'pending'}
+						<Badge size="lg" variant="tertiary">{entry.status.toUpperCase()}</Badge>
+					{/if}
 				{/if}
 			</div>
 			<a href={`/entries?category=${entry.category.id}`}>
@@ -101,7 +109,27 @@
 				</Popover.Root> -->
 
 				{#if user?.username === entry.user?.username}
-					<Button size="icon" variant="destructive"><TrashIcon /></Button>
+					<form method="POST" action="?/delete" bind:this={deleteFormRef}>
+						<AlertDialog variant="destructive" onConfirm={handleDelete}>
+							{#snippet title()}
+								<h2>Delete entry</h2>
+							{/snippet}
+							{#snippet description()}
+								<p>
+									Are you sure you want to delete this entry?
+									<br />
+									<span class="text-destructive">This action cannot be undone!</span>
+								</p>
+								<p class="pt-sm text-sm text-shade-300">
+									Deleting this entry will allow you to submit a new one to the same category and
+									event.
+								</p>
+							{/snippet}
+							{#snippet trigger()}
+								<Button type="submit" size="icon" variant="destructive"><TrashIcon /></Button>
+							{/snippet}
+						</AlertDialog>
+					</form>
 				{:else}
 					<VoteButton isSignedIn={user != null} id={entryId} bind:isVoted />
 				{/if}
@@ -130,10 +158,15 @@
 
 		<!-- Meta -->
 		<div class="flex items-center justify-between gap-lg text-gray-500">
-			<div class="flex flex-1 items-center gap-lg text-lg">
+			<div class="flex flex-1 flex-wrap items-center gap-lg text-lg">
 				<p><span class="text-white">{entry.views}</span> {$t('views')}</p>
 				<p><span class="text-white">{entry.reactions.length}</span> {$t('reactions')}</p>
+				<p class="inline-flex items-center gap-xs">
+					<span class="text-white">{entry.license.toUpperCase()}</span>
+					<LicenseTooltip license={entry.license} />
+				</p>
 			</div>
+
 			<!-- Actions -->
 			<div class="flex flex-1 justify-end gap-sm">
 				<Button

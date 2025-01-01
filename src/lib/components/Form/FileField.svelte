@@ -385,7 +385,11 @@
 				{:else if currentState === 'uploading'}
 					<p class="font-bold text-white">{files?.[0]?.name ?? 'Unknown'}</p>
 					<p class="text-sm text-shade-300" aria-live="polite">
-						Uploading... {progress}%
+						{#if progress === 100}
+							Processing...
+						{:else}
+							Uploading... {progress}%
+						{/if}
 					</p>
 				{:else if currentState === 'complete'}
 					<p class="font-bold text-white">{files?.[0]?.name ?? 'Unknown'}</p>

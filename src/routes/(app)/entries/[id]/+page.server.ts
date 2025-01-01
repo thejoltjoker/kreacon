@@ -2,7 +2,7 @@ import { db } from '$lib/server/db';
 import { entries } from '$lib/server/db/schema';
 
 import reactions, { insertReactionSchema } from '$lib/server/db/schema/reaction';
-import { fail } from '@sveltejs/kit';
+import { fail, redirect } from '@sveltejs/kit';
 import { and, eq, sql } from 'drizzle-orm';
 import type { PageServerLoad } from './$types';
 import votes, { insertVoteSchema } from '$lib/server/db/schema/vote';
@@ -28,7 +28,8 @@ export const load = (async ({ params, locals }) => {
 				title: true,
 				views: true,
 				createdAt: true,
-				status: true
+				status: true,
+				license: true
 			},
 			with: {
 				media: {
@@ -93,7 +94,6 @@ export const load = (async ({ params, locals }) => {
 	}
 
 	const isVoted = Boolean(result?.votes && result?.votes.length > 0);
-	logger.info(`User ${locals.user?.id} has ${isVoted ? '' : 'not '}voted on entry ID: ${id}`);
 
 	const title = result?.event
 		? { text: result.event.name, href: `/entries?event=${result.event.id}` }
@@ -190,5 +190,42 @@ export const actions = {
 			);
 			return { success: false, error: 'Failed to save reaction' };
 		}
+	},
+	delete: async ({ params, locals }) => {
+		if (!isAuthenticated(locals) || !locals.user) {
+			logger.warn(`Unauthorized delete attempt on entry ID: ${params.id}`);
+			return fail(StatusCodes.UNAUTHORIZED, { error: 'Not signed in' });
+		}
+		logger.info(`User ${locals.user.id} attempting to delete entry ID: ${params.id}`);
+
+		const entryId = params.id;
+		const userId = locals.user.id;
+
+		try {
+			const entry = await db.query.entries.findFirst({
+				where: eq(entries.id, entryId),
+				with: {
+					user: true
+				}
+			});
+
+			if (entry == null) {
+				logger.warn(`Entry with ID: ${entryId} not found`);
+				return fail(StatusCodes.NOT_FOUND, { error: 'Entry not found' });
+			}
+
+			if (entry?.userId !== userId) {
+				logger.warn(`Unauthorized delete attempt on entry ID: ${params.id}`);
+				return fail(StatusCodes.UNAUTHORIZED, { error: 'Not signed in' });
+			}
+
+			await db.delete(entries).where(eq(entries.id, entryId));
+
+			logger.info(`User ${userId} successfully deleted entry ID: ${entryId}`);
+		} catch (error) {
+			logger.error(`Failed to delete entry ID: ${params.id}`, error);
+			return { success: false, error: 'Failed to delete entry' };
+		}
+		return redirect(StatusCodes.SEE_OTHER, '/entries');
 	}
 };

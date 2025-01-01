@@ -1,13 +1,14 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import Avatar from '$lib/components/Avatar.svelte';
+	import Badge from '$lib/components/Badge.svelte';
 
 	import { t } from '$lib/i18n';
 	import { cn } from '$lib/utils';
+	import { ImageIcon, MusicIcon, VideoIcon } from 'lucide-svelte';
 	import Pagination from '../_components/Pagination.svelte';
 	import type { PageData } from './$types';
 	import FilterBar from './_components/FilterBar.svelte';
-	import StatusIcon from './_components/StatusIcon.svelte';
 
 	let { data }: { data: PageData } = $props();
 
@@ -41,27 +42,50 @@
 		>
 			<div
 				class={cn(
-					'aspect-square h-full w-full overflow-hidden rounded-md',
+					'aspect-square h-full w-full overflow-hidden rounded-md bg-shade-800 text-center text-shade-300',
 					entry.status === 'pending' && 'animate-pulse'
 				)}
 			>
-				<a href={`/entries/${entry.id}`}>
+				<a href={`/entries/${entry.id}`} class="relative flex h-full w-full">
+					<span class="absolute z-0 flex h-full w-full items-center justify-center text-shade-500">
+						{#if entry.category.mediaType === 'image'}
+							<ImageIcon
+								class="size-2xl transition-all group-hover:scale-125 group-hover:text-white"
+							/>
+						{:else if entry.category.mediaType === 'video'}
+							<VideoIcon
+								class="size-2xl  transition-all group-hover:scale-125 group-hover:text-white"
+							/>
+						{:else if entry.category.mediaType === 'audio'}
+							<MusicIcon
+								class="size-2xl  transition-all group-hover:scale-125 group-hover:text-white"
+							/>
+						{/if}
+					</span>
 					<img
 						src={`${entry?.preview?.url}`}
 						alt={entry?.title}
 						class={cn(
-							'h-full w-full object-cover object-center',
+							'z-10 h-full w-full object-cover object-center text-shade-300',
 							entry.status === 'rejected' && 'opacity-80 grayscale'
 						)}
 					/>
 				</a>
 			</div>
 			<div
-				class="items-left pointer-events-none relative flex h-full w-full flex-col justify-between p-sm"
+				class="items-left pointer-events-none relative z-20 flex h-full w-full flex-col justify-between p-sm"
 			>
 				{#if ['draft', 'pending', 'rejected'].includes(entry.status)}
 					<div class="absolute right-sm top-sm">
-						<StatusIcon status={entry.status} />
+						<Badge
+							variant={entry.status === 'draft'
+								? 'neutral'
+								: entry.status === 'pending'
+									? 'tertiary'
+									: 'destructive'}
+						>
+							{entry.status.toUpperCase()}
+						</Badge>
 					</div>
 				{/if}
 				<a

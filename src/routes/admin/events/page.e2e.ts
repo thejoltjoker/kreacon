@@ -32,10 +32,10 @@ test('Login and view events', async ({ page }) => {
 	await expect(eventsList.locator('li').last()).toContainText('Beacon 2025');
 
 	// Search filter should work
-	await page.getByPlaceholder('Search').fill('dino');
-	await expect(eventsList.locator('li').first()).toContainText('Dino Days');
+	await page.getByPlaceholder('Search').fill('debug');
+	await expect(eventsList.locator('li').first()).toContainText('Debug Derby');
 	await expect(eventsList.locator('li').last()).not.toContainText('Mesozoic Masterpieces');
-	await expect(page).toHaveURL(/.*[?&]q=dino.*/);
+	await expect(page).toHaveURL(/.*[?&]q=debug.*/);
 });
 
 test('Admin should be able to create and edit events', async ({ page }) => {

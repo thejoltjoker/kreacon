@@ -5,7 +5,7 @@
 		"user": { "email": "john.doe@example.com" },
 		"title": "T-Rex in Morning Light",
 		"category": { "name": "Archeological Photography" },
-		"event": { "name": "Dino Days" },
+		"event": { "name": "Debug Derby" },
 		"createdAt": "2024-02-15T00:00:00.000Z",
 		"license": "cc-by",
 		"media": {
@@ -61,7 +61,7 @@
 		"user": { "email": "alice.smith@example.com" },
 		"title": "Pterodactyl Flight",
 		"category": { "name": "Zoological Animations" },
-		"event": { "name": "Dino Days" },
+		"event": { "name": "Debug Derby" },
 		"createdAt": "2024-01-05T00:00:00.000Z",
 		"license": "cc-by",
 		"media": {
@@ -89,7 +89,7 @@
 		"user": { "email": "alice.smith@example.com" },
 		"title": "Stegosaurus at Sunset",
 		"category": { "name": "Archeological Photography" },
-		"event": { "name": "Dino Days" },
+		"event": { "name": "Debug Derby" },
 		"createdAt": "2024-03-15T00:00:00.000Z",
 		"license": "cc-by",
 		"media": {

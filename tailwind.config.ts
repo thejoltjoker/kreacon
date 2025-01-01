@@ -245,13 +245,18 @@ export default {
 				wiggle: {
 					'0%,100%': { transform: 'rotate(-3deg)' },
 					'50%': { transform: 'rotate(3deg)' }
+				},
+				fadeIn: {
+					from: { opacity: '0' },
+					to: { opacity: '1' }
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'caret-blink': 'caret-blink 1.25s ease-out infinite',
-				wiggle: 'wiggle 0.2s ease-out infinite'
+				wiggle: 'wiggle 0.2s ease-out infinite',
+				fadeIn: 'fadeIn 0.2s ease-out'
 			}
 		}
 	},

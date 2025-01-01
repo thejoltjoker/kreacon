@@ -15,6 +15,7 @@ export const load = (async ({ locals, url }) => {
 	const pageSize = 30;
 
 	const queryResult = await db.transaction(async (tx) => {
+		// TODO Selectively choose only necessary categoreis
 		const result = await tx.query.entries.findMany({
 			with: {
 				user: {

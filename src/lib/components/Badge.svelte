@@ -6,20 +6,21 @@
 		base: 'font-bold transition-colors h-fit w-fit whitespace-nowrap rounded-full border flex items-center justify-center',
 		variants: {
 			variant: {
-				default: 'bg-white text-black border-white',
-				primary: 'bg-primary text-white border-primary',
-				secondary: 'bg-secondary text-white border-secondary',
-				tertiary: 'bg-tertiary text-sun-950 border-tertiary',
-				destructive: 'bg-destructive text-pomodoro-950 border-destructive',
-				success: 'bg-success text-mint-950 border-success'
+				default: 'bg-white text-black border-black',
+				primary: 'bg-primary text-white border-squid-950',
+				secondary: 'bg-secondary text-white border-bubblegum-950',
+				tertiary: 'bg-tertiary text-sun-950 border-sun-950',
+				destructive: 'bg-destructive text-pomodoro-950 border-pomodoro-950',
+				success: 'bg-success text-mint-950 border-mint-950',
+				neutral: 'bg-shade-700 text-white border-border-shade-800'
 			},
 			outlined: {
 				true: 'border bg-transparent border-white text-white'
 			},
 			size: {
 				sm: 'px-xs text-xs font-normal',
-				md: 'px-sm text-sm',
-				lg: 'px-sm text-base',
+				md: 'px-xs text-sm',
+				lg: 'px-sm text-sm py-3xs',
 				form: 'h-form px-lg'
 			}
 		},
@@ -33,7 +34,8 @@
 			{ outlined: true, variant: 'secondary', class: 'border-secondary text-white' },
 			{ outlined: true, variant: 'tertiary', class: 'border-tertiary text-white' },
 			{ outlined: true, variant: 'destructive', class: 'border-destructive text-white' },
-			{ outlined: true, variant: 'success', class: 'border-success text-white' }
+			{ outlined: true, variant: 'success', class: 'border-success text-white' },
+			{ outlined: true, variant: 'neutral', class: 'border-border-shade-700 text-white' }
 		]
 	});
 
