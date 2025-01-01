@@ -11,7 +11,7 @@
 
 <style lang="postcss">
 	.wrapper {
-		@apply flex h-[calc(100vh-6rem)] w-full flex-col items-center justify-center;
+		@apply flex w-full grow flex-col items-center justify-center py-sm;
 	}
 
 	.container {

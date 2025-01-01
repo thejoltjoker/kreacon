@@ -24,7 +24,6 @@
 	// TODO Handling edge cases (first/last page)
 	// TODO Recovery from failed requests
 	// TODO Combining pagination with filtering/sorting
-	// TODO Show "No entries yet" if there are no entries
 </script>
 
 <div class="w-full px-sm md:px-xl">

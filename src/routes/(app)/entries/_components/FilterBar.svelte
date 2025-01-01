@@ -99,7 +99,7 @@
 				class="w-fit text-nowrap rounded-full px-md hover:bg-muted-background"
 				class:pill={$page.url.searchParams.get('category') == null}
 			>
-				<button onclick={() => handleCategoryChange(null)}> All </button>
+				<button onclick={() => handleCategoryChange(null)}>{$t('All')}</button>
 			</li>
 			{#each categories as category}
 				<li>
