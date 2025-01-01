@@ -1,10 +1,8 @@
 <script lang="ts">
 	import { t } from '$lib/i18n';
-	import { cn } from '$lib/utils';
-	import startCase from 'lodash/startCase';
 	import EntityListActions, { type EntityListActionItem } from './EntityListActions.svelte';
-	import type { Field, Item } from './types';
 	import EntityListField from './EntityListField.svelte';
+	import type { Field, Item } from './types';
 
 	let {
 		item,
@@ -34,7 +32,12 @@
 		</div>
 	{/if}
 	{#each fieldsToRender as field}
-		<EntityListField {field} {item} />
+		{#if field.customField}
+			{@const CustomField = field.customField}
+			<CustomField {field} {item} />
+		{:else}
+			<EntityListField {field} {item} />
+		{/if}
 	{/each}
 	<EntityListActions {actions} {item} />
 </li>

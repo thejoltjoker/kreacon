@@ -1,11 +1,20 @@
-<script lang="ts">
+<!-- TODO Better typing -->
+<script lang="ts" module>
+	type T = unknown;
+</script>
+
+<script lang="ts" generics="T extends unknown">
 	import { t } from '$lib/i18n';
 	import { cn } from '$lib/utils';
 	import startCase from 'lodash/startCase';
 	import type { Field, Item } from './types';
-
-	let { field, item }: { field: Field; item: Item } = $props();
-	let value = $derived(item[field.name ?? '']);
+	import type { Snippet } from 'svelte';
+	let {
+		field,
+		item,
+		valueSnippet
+	}: { field: Field; item: Item; valueSnippet?: Snippet<[value: T]> } = $props();
+	let value: T = $derived(item[field.name ?? ''] as T);
 </script>
 
 <div
@@ -19,19 +28,23 @@
 		field?.name === 'id' && 'min-w-fit'
 	)}
 >
-	<p class={cn('w-full truncate text-nowrap font-bold', field?.name === 'id' && 'font-mono')}>
-		{#if value instanceof Date}
-			{value.toLocaleString('en-GB', {
-				hour: '2-digit',
-				minute: '2-digit',
-				day: '2-digit',
-				month: 'short',
-				year: 'numeric'
-			})}
-		{:else}
-			{value}
-		{/if}
-	</p>
+	{#if valueSnippet != null}
+		{@render valueSnippet(value)}
+	{:else}
+		<p class={cn('w-full truncate text-nowrap font-bold', field?.name === 'id' && 'font-mono')}>
+			{#if value instanceof Date}
+				{value.toLocaleString('en-GB', {
+					hour: '2-digit',
+					minute: '2-digit',
+					day: '2-digit',
+					month: 'short',
+					year: 'numeric'
+				})}
+			{:else}
+				{value}
+			{/if}
+		</p>
+	{/if}
 	<p
 		class={cn(
 			'font-mo truncate text-sm tracking-wide text-shade-400',

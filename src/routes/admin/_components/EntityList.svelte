@@ -6,15 +6,9 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-	import { t } from '$lib/i18n';
-	import { cn } from '$lib/utils';
-	import startCase from 'lodash/startCase';
-	import { ArrowUpDownIcon, ImageIcon, Settings2Icon } from 'lucide-svelte';
 	import Pagination from '../../(app)/_components/Pagination.svelte';
-	import EntityListActions, { type EntityListActionItem } from './EntityListActions.svelte';
-	import type { Snippet } from 'svelte';
+	import { type EntityListActionItem } from './EntityListActions.svelte';
 	import type { Field, Item } from './types';
-	import EntityListField from './EntityListHeaderField.svelte';
 	import EntityListHeader from './EntityListHeader.svelte';
 	import EntityListRow from './EntityListRow.svelte';
 

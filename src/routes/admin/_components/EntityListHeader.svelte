@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { ImageIcon, Settings2Icon } from 'lucide-svelte';
-	import type { Field, Item } from './types';
+	import type { Field } from './types';
 	import { t } from '$lib/i18n';
 	import EntityListHeaderField from './EntityListHeaderField.svelte';
 

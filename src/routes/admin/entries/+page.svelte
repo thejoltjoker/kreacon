@@ -6,6 +6,7 @@
 	import EventCombobox from '../../(app)/entries/_components/EventCombobox.svelte';
 	import type { EntryStatus } from '$lib/types/entryStatus';
 	import { invalidateAll } from '$app/navigation';
+	import EntryStatusField from '../_components/customFields/EntryStatusField.svelte';
 
 	let { data }: { data: PageData } = $props();
 
@@ -42,7 +43,7 @@
 		{ name: 'username', minScreen: 'lg', sortable: true },
 		{ name: 'category', minScreen: 'md', sortable: true },
 		{ name: 'event', minScreen: 'lg', sortable: true },
-		{ name: 'status', minScreen: 'sm', sortable: true },
+		{ name: 'status', minScreen: 'all', sortable: true, customField: EntryStatusField },
 		{ name: 'createdAt', minScreen: 'xl', sortable: true }
 	]}
 	actions={[
