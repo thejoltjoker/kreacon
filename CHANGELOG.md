@@ -95,6 +95,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   [#91](https://github.com/thejoltjoker/kreacon/pull/91)
 - Update layout of events pages for better usability
   [#95](https://github.com/thejoltjoker/kreacon/pull/95)
+- General fixes on single entry page, update design details
+  [#100](https://github.com/thejoltjoker/kreacon/pull/100)
 
 ### Deprecated
 
