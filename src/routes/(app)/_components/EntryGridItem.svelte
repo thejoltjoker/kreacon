@@ -13,7 +13,7 @@
 	let { entry }: Props = $props();
 </script>
 
-<div class="wrapper group grid overflow-hidden rounded-md">
+<div class="wrapper group grid max-w-full overflow-hidden rounded-md">
 	<div class="aspect-square h-full w-full overflow-hidden rounded-md">
 		<a href={`/entries/${entry.id}`}>
 			<img

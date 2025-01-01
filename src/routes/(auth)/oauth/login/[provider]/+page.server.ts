@@ -1,12 +1,12 @@
-import { redirect } from '@sveltejs/kit';
-import type { RequestHandler } from './$types';
-import { createLogger } from '$lib/helpers/logger';
+import { dev } from '$app/environment';
 import { getOAuthClient } from '$lib/server/auth/oauth/getOAuthClient';
 import { isOAuthProvider, type OAuthProvider } from '$lib/server/auth/oauth/OAuthClient';
-import { dev } from '$app/environment';
+import { createLogger } from '$lib/helpers/logger';
+import { redirect } from '@sveltejs/kit';
 import { StatusCodes } from 'http-status-codes';
+import type { PageServerLoad } from './$types';
 const logger = createLogger('auth/login');
-export const GET: RequestHandler = async ({ params, cookies }) => {
+export const load = (async ({ params, cookies }) => {
 	const { provider } = params;
 
 	if (!provider) {
@@ -28,4 +28,4 @@ export const GET: RequestHandler = async ({ params, cookies }) => {
 	});
 
 	return client.authorize();
-};
+}) satisfies PageServerLoad;

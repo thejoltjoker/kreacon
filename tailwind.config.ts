@@ -90,8 +90,8 @@ export default {
 	theme: {
 		extend: {
 			fontFamily: {
-				sans: ['Figtree', 'sans-serif'],
-				emoji: ['Noto Color Emoji', 'sans-serif']
+				sans: ['Figtree Variable', 'Figtree', 'Noto Color Emoji', 'sans-serif'],
+				emoji: ['Noto Color Emoji', 'Segoe UI Emoji', 'Apple Color Emoji', 'sans-serif']
 			},
 			fontSize: {
 				sm: '0.875rem',
@@ -168,9 +168,10 @@ export default {
 				'admin-submissions-list-item': '10rem minmax(900px, 1fr) repeat(16, minmax(0, 1fr))',
 				submissions: 'repeat(auto-fill, minmax(400px, 1fr))',
 				'admin-entries-list-item': '10rem minmax(900px, 1fr) repeat(16, minmax(0, 1fr))',
-				entries: 'repeat(auto-fill, minmax(400px, 1fr))',
+				entries: 'repeat(auto-fill, minmax(320px, 1fr))',
 				reactions: 'repeat(auto-fill, minmax(250px, 1fr))',
-				'reactions-sm': 'repeat(auto-fill, minmax(150px, 1fr))'
+				'reactions-sm': 'repeat(auto-fill, minmax(150px, 1fr))',
+				emoji: 'repeat(auto-fill, minmax(48px, 1fr))'
 			},
 			borderRadius: {
 				'3xs': '2px',
@@ -240,12 +241,22 @@ export default {
 				'caret-blink': {
 					'0%,70%,100%': { opacity: '1' },
 					'20%,50%': { opacity: '0' }
+				},
+				wiggle: {
+					'0%,100%': { transform: 'rotate(-3deg)' },
+					'50%': { transform: 'rotate(3deg)' }
+				},
+				fadeIn: {
+					from: { opacity: '0' },
+					to: { opacity: '1' }
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
-				'caret-blink': 'caret-blink 1.25s ease-out infinite'
+				'caret-blink': 'caret-blink 1.25s ease-out infinite',
+				wiggle: 'wiggle 0.2s ease-out infinite',
+				fadeIn: 'fadeIn 0.2s ease-out'
 			}
 		}
 	},

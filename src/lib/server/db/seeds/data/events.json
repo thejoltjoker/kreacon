@@ -52,10 +52,10 @@
 		"tickets": [{ "username": "john_doe" }, { "username": "alice_smith" }]
 	},
 	{
-		"name": "Dino Days",
-		"slug": "dino-days",
-		"tagline": "Capture the wonder and majesty of dinosaurs through creative multimedia.",
-		"description": "Join us for an extraordinary celebration of prehistoric life. This festival invites artists to capture the wonder and majesty of dinosaurs through creative photography, sound design, and animation.",
+		"name": "Debug Derby",
+		"slug": "debug-derby",
+		"tagline": "Hunt down bugs and improve code quality in our Debug Derby.",
+		"description": "Join us for an exciting event focused on bug hunting and code quality improvement. This event invites developers to showcase their debugging skills and contribute to cleaner, more efficient code.",
 		"submissionsOpenAt": "2023-12-01T00:00:00Z",
 		"submissionsCloseAt": "2030-12-15T23:59:59Z",
 		"votingOpenAt": "2023-12-16T00:00:00Z",

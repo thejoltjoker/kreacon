@@ -135,6 +135,31 @@
 		isDragging = false;
 	};
 
+	async function processFiles() {
+		if (!files || files.length === 0) return;
+
+		currentState = 'uploading';
+		// TODO Generate checksum
+
+		if (uploadUrl == null) {
+			const sas = await getUploadUrl(files[0]);
+			fileId = sas.fileId;
+			blobUrl = sas.url;
+			uploadUrl = sas.url;
+		}
+
+		try {
+			await uploadFile(uploadUrl, files[0]);
+			onUploadComplete?.(fileId);
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			$value = fileId as any; //TODO Fix proper types
+			currentState = 'complete';
+		} catch (error) {
+			console.error(error);
+			currentState = 'error';
+		}
+	}
+
 	const onFileDrop = async (event: DragEvent) => {
 		event.preventDefault();
 		isDragging = false;
@@ -144,26 +169,10 @@
 		if (mode === 'standard') {
 			if (input?.files && input.files.length > 0) {
 				$value = input.files;
+				files = input.files;
 			}
 		} else {
-			if (input?.files && input.files.length > 0) {
-				files = input.files;
-				currentState = 'uploading';
-				// TODO Generate checksum
-				const sas = await getUploadUrl(files[0]);
-				blobUrl = sas.url;
-
-				try {
-					await uploadFile(sas.url, files[0]);
-					onUploadComplete?.(sas.fileId);
-					// eslint-disable-next-line @typescript-eslint/no-explicit-any
-					$value = sas.fileId as any; //TODO Fix proper types
-					currentState = 'complete';
-				} catch (error) {
-					console.error(error);
-					currentState = 'error';
-				}
-			}
+			await processFiles();
 		}
 	};
 
@@ -183,6 +192,7 @@
 		xhr?.abort();
 		if (mode === 'managed' && blobUrl != null) {
 			deleteBlob(blobUrl);
+			blobUrl = undefined;
 		}
 		reset();
 	};
@@ -193,6 +203,7 @@
 		$value = mode === 'standard' ? (undefined as unknown as FileList) : ('' as any);
 		currentState = 'idle';
 		progress = 0;
+		uploadUrl = customUploadUrl;
 		fileId = crypto.randomUUID();
 	};
 
@@ -271,26 +282,7 @@
 		}
 	) => {
 		files = event.currentTarget.files;
-		if (!files) return;
-		currentState = 'uploading';
-		// TODO Generate checksum
-
-		if (uploadUrl == null) {
-			const sas = await getUploadUrl(files[0]);
-			blobUrl = sas.url;
-			uploadUrl = sas.url;
-		}
-
-		try {
-			await uploadFile(uploadUrl, files[0]);
-			onUploadComplete?.(fileId);
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			$value = fileId as any; //TODO Fix proper types
-			currentState = 'complete';
-		} catch (error) {
-			console.error(error);
-			currentState = 'error';
-		}
+		await processFiles();
 	};
 
 	$effect(() => {
@@ -300,12 +292,17 @@
 	$effect(() => {
 		if (mode === 'standard' && files != null) $value = files;
 	});
+
+	$inspect(blobUrl);
+	$inspect(fileId);
 </script>
 
 {#snippet debugView()}
 	<div class="rounded-form bg-shade-800 p-sm font-mono">
 		<p class="text-shade-400"># state</p>
 		<p><span class="text-tertiary">blobUrl:</span> {blobUrl ?? typeof blobUrl}</p>
+		<p><span class="text-tertiary">uploadUrl:</span> {uploadUrl ?? typeof uploadUrl}</p>
+		<p><span class="text-tertiary">fileId:</span> {fileId ?? typeof fileId}</p>
 		<p><span class="text-tertiary">currentState:</span> {currentState ?? typeof currentState}</p>
 		<p><span class="text-tertiary">isDragging:</span> {isDragging ?? typeof isDragging}</p>
 		<p>
@@ -388,7 +385,11 @@
 				{:else if currentState === 'uploading'}
 					<p class="font-bold text-white">{files?.[0]?.name ?? 'Unknown'}</p>
 					<p class="text-sm text-shade-300" aria-live="polite">
-						Uploading... {progress}%
+						{#if progress === 100}
+							Processing...
+						{:else}
+							Uploading... {progress}%
+						{/if}
 					</p>
 				{:else if currentState === 'complete'}
 					<p class="font-bold text-white">{files?.[0]?.name ?? 'Unknown'}</p>

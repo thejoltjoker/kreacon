@@ -2,20 +2,24 @@ import { db } from '$lib/server/db';
 import { entries } from '$lib/server/db/schema';
 
 import reactions, { insertReactionSchema } from '$lib/server/db/schema/reaction';
-import { fail } from '@sveltejs/kit';
+import { fail, redirect } from '@sveltejs/kit';
 import { and, eq, sql } from 'drizzle-orm';
 import type { PageServerLoad } from './$types';
 import votes, { insertVoteSchema } from '$lib/server/db/schema/vote';
 import { StatusCodes } from 'http-status-codes';
-
+import { isAuthenticated } from '../../utils';
+import { createLogger } from '$lib/helpers/logger';
+const logger = createLogger('/entries/[id]');
 export const load = (async ({ params, locals }) => {
 	const { id } = params;
+	logger.info(`Loading entry with ID: ${id}`);
 
 	const result = await db.transaction(async (tx) => {
 		await tx
 			.update(entries)
 			.set({ views: sql`${entries.views} + 1` })
 			.where(eq(entries.id, id));
+		logger.info(`Incremented view count for entry ID: ${id}`);
 
 		return await tx.query.entries.findFirst({
 			where: eq(entries.id, id),
@@ -23,7 +27,9 @@ export const load = (async ({ params, locals }) => {
 				id: true,
 				title: true,
 				views: true,
-				createdAt: true
+				createdAt: true,
+				status: true,
+				license: true
 			},
 			with: {
 				media: {
@@ -71,7 +77,8 @@ export const load = (async ({ params, locals }) => {
 								username: true
 							}
 						}
-					}
+					},
+					orderBy: (table, { desc }) => [desc(table.updatedAt)]
 				},
 				votes: locals.user
 					? {
@@ -81,6 +88,10 @@ export const load = (async ({ params, locals }) => {
 			}
 		});
 	});
+
+	if (!result) {
+		logger.warn(`Entry with ID: ${id} not found`);
+	}
 
 	const isVoted = Boolean(result?.votes && result?.votes.length > 0);
 
@@ -93,12 +104,14 @@ export const load = (async ({ params, locals }) => {
 export const actions = {
 	vote: async ({ params, locals }) => {
 		if (!locals.user || !locals.session) {
+			logger.warn(`Unauthorized vote attempt on entry ID: ${params.id}`);
 			return fail(StatusCodes.UNAUTHORIZED, { error: 'Not signed in' });
 		}
 
 		try {
 			const entryId = params.id;
 			const userId = locals.user.id;
+			logger.info(`User ${userId} attempting to vote on entry ID: ${entryId}`);
 
 			const data = insertVoteSchema.parse({
 				entryId,
@@ -107,31 +120,42 @@ export const actions = {
 
 			await db.insert(votes).values(data).onConflictDoNothing();
 
+			logger.info(`User ${userId} successfully voted on entry ID: ${entryId}`);
 			return { success: true };
 		} catch (error) {
-			console.error('Failed to insert vote:', error);
+			logger.error(
+				`Failed to insert vote for user ${locals.user.id} on entry ID: ${params.id}`,
+				error
+			);
 			return { success: false, error: 'Failed to save vote' };
 		}
 	},
 	unvote: async ({ params, locals }) => {
 		if (!locals.user || !locals.session) {
+			logger.warn(`Unauthorized unvote attempt on entry ID: ${params.id}`);
 			return fail(StatusCodes.UNAUTHORIZED, { error: 'Not signed in' });
 		}
 
 		try {
 			const entryId = params.id;
 			const userId = locals.user.id;
+			logger.info(`User ${userId} attempting to unvote on entry ID: ${entryId}`);
 
 			await db.delete(votes).where(and(eq(votes.entryId, entryId), eq(votes.userId, userId)));
 
+			logger.info(`User ${userId} successfully unvoted on entry ID: ${entryId}`);
 			return { success: true };
 		} catch (error) {
-			console.error('Failed to delete vote:', error);
+			logger.error(
+				`Failed to delete vote for user ${locals.user.id} on entry ID: ${params.id}`,
+				error
+			);
 			return { success: false, error: 'Failed to delete vote' };
 		}
 	},
 	react: async ({ params, locals, request }) => {
-		if (!locals.user || !locals.session) {
+		if (!isAuthenticated(locals) || !locals.user) {
+			logger.warn(`Unauthorized reaction attempt on entry ID: ${params.id}`);
 			return fail(StatusCodes.UNAUTHORIZED, { error: 'Not signed in' });
 		}
 
@@ -140,18 +164,68 @@ export const actions = {
 			const entryId = params.id;
 			const userId = locals.user.id;
 			const value = formData.get('reaction')?.toString();
+			logger.info(
+				`User ${userId} attempting to react on entry ID: ${entryId} with value: ${value}`
+			);
+
 			const data = insertReactionSchema.parse({
 				entryId,
 				userId,
 				value
 			});
 
-			await db.insert(reactions).values(data);
+			await db
+				.insert(reactions)
+				.values(data)
+				.onConflictDoUpdate({ target: [reactions.userId, reactions.entryId], set: { value } });
 
+			logger.info(
+				`User ${userId} successfully reacted on entry ID: ${entryId} with value: ${value}`
+			);
 			return { success: true };
 		} catch (error) {
-			console.error('Failed to insert reaction:', error);
+			logger.error(
+				`Failed to insert reaction for user ${locals.user.id} on entry ID: ${params.id}`,
+				error
+			);
 			return { success: false, error: 'Failed to save reaction' };
 		}
+	},
+	delete: async ({ params, locals }) => {
+		if (!isAuthenticated(locals) || !locals.user) {
+			logger.warn(`Unauthorized delete attempt on entry ID: ${params.id}`);
+			return fail(StatusCodes.UNAUTHORIZED, { error: 'Not signed in' });
+		}
+		logger.info(`User ${locals.user.id} attempting to delete entry ID: ${params.id}`);
+
+		const entryId = params.id;
+		const userId = locals.user.id;
+
+		try {
+			const entry = await db.query.entries.findFirst({
+				where: eq(entries.id, entryId),
+				with: {
+					user: true
+				}
+			});
+
+			if (entry == null) {
+				logger.warn(`Entry with ID: ${entryId} not found`);
+				return fail(StatusCodes.NOT_FOUND, { error: 'Entry not found' });
+			}
+
+			if (entry?.userId !== userId) {
+				logger.warn(`Unauthorized delete attempt on entry ID: ${params.id}`);
+				return fail(StatusCodes.UNAUTHORIZED, { error: 'Not signed in' });
+			}
+
+			await db.delete(entries).where(eq(entries.id, entryId));
+
+			logger.info(`User ${userId} successfully deleted entry ID: ${entryId}`);
+		} catch (error) {
+			logger.error(`Failed to delete entry ID: ${params.id}`, error);
+			return { success: false, error: 'Failed to delete entry' };
+		}
+		return redirect(StatusCodes.SEE_OTHER, '/entries');
 	}
 };

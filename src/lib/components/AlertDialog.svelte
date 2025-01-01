@@ -11,7 +11,7 @@
 		description: Snippet;
 		contentProps?: WithoutChild<AlertDialog.ContentProps>;
 		onConfirm: () => void;
-		onCancel: () => void;
+		onCancel?: () => void;
 		variant?: 'default' | 'destructive';
 		confirmText?: string;
 	};

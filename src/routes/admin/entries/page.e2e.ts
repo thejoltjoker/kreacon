@@ -20,7 +20,6 @@ test('Admin should be able to manage entries', async ({ page }) => {
 	await page.getByRole('link', { name: 'Admin' }).click();
 
 	// Sorting and filtering
-	await page.locator('a[href="/admin/entries"]').click();
 	await page.waitForURL('/admin/entries');
 	const entityListLocator = page.locator('.entity-list');
 	// Show newest first

@@ -149,6 +149,12 @@ OAUTH_GITHUB_REDIRECT_URI=https://your-production-domain.com/auth/github/callbac
 
 ## TODO
 
+### Entries
+
+#### Create entry
+
+- [ ] Show add ticket form if user has no tickets
+
 ### Admin
 
 - [ ] Disallow change of submission and voting dates if already in progress

@@ -3,13 +3,19 @@
 
 	interface Props {
 		src: string;
+		poster: string;
 	}
-	let { src }: Props = $props();
+	let { src, poster }: Props = $props();
+	$inspect(src);
 </script>
 
-<media-controller audio class="w-full rounded-form border border-shade-600 bg-shade-900 p-md">
+<media-controller audio class="w-full rounded-form border border-shade-600 bg-shade-900">
+	<media-poster-image src={poster} class="h-full w-full overflow-hidden rounded-t-form"
+	></media-poster-image>
 	<audio slot="media" {src}></audio>
-	<media-control-bar class="flex h-full w-full flex-1 grow items-center">
+	<media-control-bar
+		class="flex h-full w-full flex-1 grow items-center border-t border-shade-600 p-sm"
+	>
 		<media-play-button
 			class="aspect-square size-form rounded-full border border-white bg-shade-800"
 		>
@@ -20,7 +26,8 @@
 			notoggle
 			showduration
 			class="bg-none p-0 text-right font-mono text-sm font-normal"
-		></media-time-display>
+		>
+		</media-time-display>
 	</media-control-bar>
 </media-controller>
 
@@ -46,6 +53,7 @@
 		--media-range-thumb-opacity: 1;
 		--media-range-track-background: theme('colors.shade.950');
 		--media-range-track-border-radius: 9999px;
+		--media-object-fit: cover;
 	}
 	/* media-tooltip {
 		--media-font-weight: theme('fontWeight.bold');

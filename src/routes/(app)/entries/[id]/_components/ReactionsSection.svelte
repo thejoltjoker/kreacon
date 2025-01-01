@@ -1,24 +1,62 @@
 <script lang="ts">
+	import { deserialize, enhance } from '$app/forms';
+	import { invalidateAll } from '$app/navigation';
 	import { t } from '$lib/i18n';
+	import type { SubmitFunction } from '@sveltejs/kit';
 	import type { PageData } from '../$types';
-	import ReactionsListItem from './ReactionsListItem.svelte';
+	import ReactionsList from '../../../_components/ReactionsList.svelte';
+	import type { ReactionListItem } from '../../../_components/ReactionsListItem.svelte';
 
 	let {
 		reactions
 	}: {
 		reactions?: NonNullable<PageData['entry']>['reactions'];
 	} = $props();
+
+	let reactionListItems: ReactionListItem[] = $derived(
+		reactions?.map((reaction) => ({
+			url: `/users/${reaction.user.username}/reactions`,
+			image: { src: reaction.user.avatar?.url ?? '', alt: `${reaction.user.username} avatar` },
+			value: reaction.value
+		})) ?? []
+	);
+	let formRef = $state<HTMLFormElement | null>(null);
+	let reactionValue = $state('');
+	const handleAddReaction = async (emoji: string) => {
+		reactionValue = emoji;
+
+		// Trigger the form submission programmatically
+		if (formRef) {
+			formRef.requestSubmit();
+		}
+	};
+	const handleSubmit: SubmitFunction = async ({ formData, action }) => {
+		formData.set('reaction', reactionValue);
+		const response = await fetch(action, {
+			method: 'POST',
+			body: formData,
+			headers: {
+				'x-sveltekit-action': 'true'
+			}
+		});
+
+		const result = deserialize(await response.text());
+		console.log('result', result);
+		if (result.type === 'success') {
+			await invalidateAll();
+		}
+	};
 </script>
 
-<div class="flex flex-col gap-sm">
+<section id="entry-reactions" class="flex flex-col gap-sm">
 	<h4>{$t('Reactions')}</h4>
-	<ul class="grid grid-cols-1 gap-lg md:grid-cols-2">
-		{#if reactions}
-			{#each reactions as reaction}
-				<ReactionsListItem {reaction} />
-			{/each}
-		{:else}
-			<li>{$t('No reactions yet')}</li>
-		{/if}
-	</ul>
-</div>
+	<ReactionsList reactions={reactionListItems} onAddReaction={handleAddReaction} />
+</section>
+<form
+	method="POST"
+	bind:this={formRef}
+	hidden
+	class="hidden"
+	action="?/react"
+	use:enhance={handleSubmit}
+></form>
