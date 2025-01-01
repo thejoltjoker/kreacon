@@ -158,7 +158,7 @@ test('Own single entry page logged in', async ({ page }) => {
 	await expect(page.url()).toContain('/entries/StrongCuriousChihuahua');
 
 	// Show badge
-	await expect(headerLocator.getByText('PUBLISHED')).toBeVisible();
+	await expect(headerLocator.locator('.badge')).toBeVisible();
 	await expect(headerLocator.locator('.entry-delete-button')).toBeVisible();
 	await expect(headerLocator.getByRole('button', { name: 'Vote' })).not.toBeVisible();
 	const infoSectionLocator = page.locator('#entry-info');

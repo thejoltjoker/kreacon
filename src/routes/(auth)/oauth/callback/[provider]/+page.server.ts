@@ -1,19 +1,18 @@
+import { createLogger } from '$lib/helpers/logger';
 import { randomString } from '$lib/helpers/randomString';
+import { createSession, generateSessionToken, setSessionTokenCookie } from '$lib/server/auth';
 import { getOAuthClient } from '$lib/server/auth/oauth/getOAuthClient';
 import { isOAuthProvider, type OAuthProvider } from '$lib/server/auth/oauth/OAuthClient';
 import { db } from '$lib/server/db';
 import { accounts, users } from '$lib/server/db/schema';
-import { createLogger } from '$lib/helpers/logger';
+import { hashPassword } from '$lib/server/utils';
 import { error, redirect } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
-import type { RequestHandler } from './$types';
-import { createSession, generateSessionToken, setSessionTokenCookie } from '$lib/server/auth';
-import { hashPassword } from '$lib/server/utils';
 import { StatusCodes } from 'http-status-codes';
+import type { PageServerLoad } from './$types';
 
-const logger = createLogger('auth/callback');
-
-export const GET: RequestHandler = async (event) => {
+const logger = createLogger('oauth/callback');
+export const load = (async (event) => {
 	const { url, params, cookies } = event;
 	const provider = params.provider;
 	const code = url.searchParams.get('code');
@@ -77,4 +76,4 @@ export const GET: RequestHandler = async (event) => {
 	cookies.delete('oauth_state', { path: '/oauth/callback' });
 
 	throw redirect(StatusCodes.TEMPORARY_REDIRECT, '/profile');
-};
+}) satisfies PageServerLoad;

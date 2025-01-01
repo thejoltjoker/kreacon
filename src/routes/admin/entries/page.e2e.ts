@@ -39,17 +39,17 @@ test('Admin should be able to manage entries', async ({ page }) => {
 	await listItemActionsLocator.click();
 	await page.getByRole('menuitem', { name: 'Reject' }).click();
 	const statusLocator = listItemLocator.locator('div:nth-child(6) > .w-full').first();
-	await expect(statusLocator).toContainText('rejected');
+	await expect(statusLocator).toContainText('Rejected');
 
 	// Set published
 	await listItemActionsLocator.click();
 	await page.getByRole('menuitem', { name: 'Publish' }).click();
-	await expect(statusLocator).toContainText('published');
+	await expect(statusLocator).toContainText('Published');
 
 	// Set rejected
 	await listItemActionsLocator.click();
 	await page.getByRole('menuitem', { name: 'Reject' }).click();
-	await expect(statusLocator).toContainText('rejected');
+	await expect(statusLocator).toContainText('Rejected');
 
 	// TODO Delete
 });

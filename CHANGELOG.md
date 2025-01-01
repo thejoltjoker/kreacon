@@ -72,6 +72,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   [#97](https://github.com/thejoltjoker/kreacon/pull/97)
 - Let user change their avatar
   [#98](https://github.com/thejoltjoker/kreacon/pull/98)
+- Custom fields in admin panel
+  [#103](https://github.com/thejoltjoker/kreacon/pull/103)
 
 ### Changed
 

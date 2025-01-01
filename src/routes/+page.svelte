@@ -10,6 +10,7 @@
 	import bugOrganImage from '../assets/images/bug-organ-002.png';
 	import skeletonPileImage from '../assets/images/skeleton-pile-001.png';
 	import AnimateOnScroll from '$lib/components/AnimateOnScroll.svelte';
+	import { t } from '$lib/i18n';
 
 	let { data }: { data: PageData } = $props();
 </script>
@@ -24,13 +25,14 @@
 		<AnimateOnScroll id="animated-content-block-1">
 			<ContentBlock alignment="right" imageUrl={skeletonPileImage} imageAlt="Monster" flipImageX>
 				{#snippet content()}
-					<h2 class="text-5xl">Rise to the Challenge</h2>
+					<h2 class="text-5xl">{$t('Rise to the Challenge')}</h2>
 					<p class="text-lg">
-						Show what you're made of in our regular competitions. Push technical and creative
-						limits, earn respect, and make your mark in the community.
+						{$t(
+							"Show what you're made of in our regular competitions. Push technical and creative limits, earn respect, and make your mark in the community."
+						)}
 					</p>
 					<div>
-						<Button variant="outline">Enter Competitions</Button>
+						<Button variant="outline" href="/submit">{$t('Enter Competitions')}</Button>
 					</div>
 				{/snippet}
 			</ContentBlock>
@@ -38,13 +40,14 @@
 		<AnimateOnScroll id="animated-content-block-2">
 			<ContentBlock alignment="left" imageUrl={cowsFriendsImage} imageAlt="Monster">
 				{#snippet content()}
-					<h2 class="text-5xl">Join the Community</h2>
+					<h2 class="text-5xl">{$t('Join the Community')}</h2>
 					<p class="text-lg">
-						Connect with passionate creators, form crews, collaborate on ambitious projects, and
-						become part of something bigger than yourself.
+						{$t(
+							'Connect with passionate creators, form crews, collaborate on ambitious projects, and become part of something bigger than yourself.'
+						)}
 					</p>
 					<div>
-						<Button variant="outline">Meet Creators</Button>
+						<Button variant="outline" href="/entries">{$t('Meet Creators')}</Button>
 					</div>
 				{/snippet}
 			</ContentBlock>
@@ -52,13 +55,14 @@
 		<AnimateOnScroll id="animated-content-block-3">
 			<ContentBlock alignment="right" imageUrl={bugOrganImage} imageAlt="Monster" flipImageX>
 				{#snippet content()}
-					<h2 class="text-5xl">Show Your Love</h2>
+					<h2 class="text-5xl">{$t('Show Your Love')}</h2>
 					<p class="text-lg">
-						Support the creations that move you and help the best work shine. Your appreciation
-						helps shape our vibrant community.
+						{$t(
+							'Support the creations that move you and help the best work shine. Your appreciation helps shape our vibrant community.'
+						)}
 					</p>
 					<div>
-						<Button variant="outline">Discover & Rate</Button>
+						<Button variant="outline" href="/entries">{$t('Discover & Rate')}</Button>
 					</div>
 				{/snippet}
 			</ContentBlock>

@@ -18,7 +18,7 @@
 	<main class="flex w-full max-w-screen-lg flex-col gap-sm px-sm pt-sm md:gap-xl md:px-xl md:pt-xl">
 		<HeaderSection {entry} {user} bind:isVoted />
 		<MediaSection {entry} />
-		<InfoSection {entry} {user} {isVoted} />
+		<InfoSection {entry} {user} bind:isVoted />
 		<ReactionsSection reactions={entry.reactions} />
 		<!-- TODO More work/related grid -->
 	</main>

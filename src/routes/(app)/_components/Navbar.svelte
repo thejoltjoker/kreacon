@@ -16,16 +16,16 @@
 	let menuItems = $derived(
 		isAdminRoute && user != null
 			? [
-					{ label: 'Categories', href: '/admin/categories' },
-					{ label: 'Events', href: '/admin/events' },
-					{ label: 'Entries', href: '/admin/entries' },
-					{ label: 'Users', href: '/admin/users' },
-					{ label: 'Tickets', href: '/admin/tickets' }
+					{ label: $t('Categories'), href: '/admin/categories' },
+					{ label: $t('Events'), href: '/admin/events' },
+					{ label: $t('Entries'), href: '/admin/entries' },
+					{ label: $t('Users'), href: '/admin/users' },
+					{ label: $t('Tickets'), href: '/admin/tickets' }
 				]
 			: [
-					{ label: 'Home', href: '/' },
-					{ label: 'Entries', href: '/entries' },
-					{ label: 'Events', href: '/events' }
+					{ label: $t('Home'), href: '/' },
+					{ label: $t('Entries'), href: '/entries' },
+					{ label: $t('Events'), href: '/events' }
 				]
 	);
 </script>
