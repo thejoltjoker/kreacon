@@ -19,6 +19,7 @@
 		upcoming: events.filter((e) => e.status === 'scheduled'),
 		past: events.filter((e) => e.status === 'closed')
 	});
+	let noEvents = $derived(Object.values(groupedEvents).every((events) => events.length === 0));
 </script>
 
 <main class="flex w-full max-w-screen-lg flex-col gap-xl px-sm pt-xl">
@@ -34,4 +35,11 @@
 			</section>
 		{/if}
 	{/each}
+
+	{#if noEvents}
+		<section class="flex flex-col gap-sm text-center">
+			<h2>{$t('No events yet')}</h2>
+			<p>{$t('Check back later for new events!')}</p>
+		</section>
+	{/if}
 </main>
