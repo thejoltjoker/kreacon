@@ -16,12 +16,12 @@
 <li>
 	<a
 		href={reaction.url}
-		class="group grid aspect-square items-center justify-center gap-sm overflow-hidden rounded-form"
+		class="group grid aspect-square items-center justify-center gap-sm overflow-hidden rounded-form bg-shade-800"
 	>
 		<img
 			src={reaction.image.src}
 			alt={reaction.image.alt}
-			class="col-[1] row-[1] h-full w-full object-cover"
+			class="col-[1] row-[1] h-full w-full object-cover text-transparent hover:text-transparent"
 		/>
 		<div
 			class="relative col-[1] row-[1] flex h-full w-full items-center justify-center bg-black/50 text-[48px] backdrop-blur-sm transition-all group-hover:bg-transparent group-hover:text-3xl group-hover:backdrop-blur-none"

@@ -21,6 +21,7 @@
 				{#snippet trigger(props: TriggerProps)}
 					<button
 						{...props}
+						id="entry-add-reaction-button"
 						class="group group grid aspect-square h-full w-full items-center justify-center gap-sm overflow-hidden rounded-form border-2 border-dashed border-shade-700 transition-colors hover:border-primary hover:bg-squid-950/50"
 					>
 						<div

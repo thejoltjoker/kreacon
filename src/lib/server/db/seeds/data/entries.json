@@ -7,7 +7,7 @@
 		"category": { "name": "Archeological Photography" },
 		"event": { "name": "Debug Derby" },
 		"createdAt": "2024-02-15T00:00:00.000Z",
-		"license": "cc-by",
+		"license": "cc0",
 		"media": {
 			"type": "image/png",
 			"url": "/images/StrongCuriousChihuahua.png",
@@ -35,7 +35,7 @@
 		"category": { "name": "Prehistoric Sounds" },
 		"event": { "name": "Mesozoic Masterpieces" },
 		"createdAt": "2024-01-23T00:00:00.000Z",
-		"license": "cc-by",
+		"license": "cc-by-nc-sa",
 		"media": {
 			"type": "image/png",
 			"url": "/images/StrongCuriousPorcupine.png",
@@ -63,7 +63,7 @@
 		"category": { "name": "Zoological Animations" },
 		"event": { "name": "Debug Derby" },
 		"createdAt": "2024-01-05T00:00:00.000Z",
-		"license": "cc-by",
+		"license": "cc-by-sa",
 		"media": {
 			"type": "image/png",
 			"url": "/images/StrongCuriousMandrill.png",
@@ -91,7 +91,7 @@
 		"category": { "name": "Archeological Photography" },
 		"event": { "name": "Debug Derby" },
 		"createdAt": "2024-03-15T00:00:00.000Z",
-		"license": "cc-by",
+		"license": "cc-by-nc",
 		"media": {
 			"type": "image/png",
 			"url": "/images/StrongCuriousWolverine.png",
@@ -119,7 +119,7 @@
 		"category": { "name": "Archeological Photography" },
 		"event": { "name": "Mesozoic Masterpieces" },
 		"createdAt": "2023-12-01T00:00:00.000Z",
-		"license": "cc-by",
+		"license": "cc-by-nd",
 		"media": {
 			"type": "image/png",
 			"url": "/images/StrongCuriousGiraffe.png",

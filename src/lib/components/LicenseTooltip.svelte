@@ -11,7 +11,7 @@
 
 <Tooltip.Provider>
 	<Tooltip.Root delayDuration={100}>
-		<Tooltip.Trigger class="group p-2xs">
+		<Tooltip.Trigger class="license-info-button group p-2xs" aria-label="License information">
 			<InfoIcon class="size-4 transition-colors duration-300 group-hover:text-white" />
 		</Tooltip.Trigger>
 		<Tooltip.Content forceMount sideOffset={8}>

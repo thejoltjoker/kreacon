@@ -16,11 +16,11 @@
 
 {#if isVoted}
 	<form method="POST" action="?/unvote" use:enhance={handleSubmit}>
-		<Button type="submit" name="unvote" variant="muted">{$t('Voted')}</Button>
+		<Button type="submit" name="unvote" variant="muted" class="vote-button">{$t('Voted')}</Button>
 	</form>
 {:else if isSignedIn}
 	<form method="POST" action="?/vote" use:enhance={handleSubmit}>
-		<Button type="submit" name="vote">{$t('Vote')}</Button>
+		<Button type="submit" name="vote" class="vote-button">{$t('Vote')}</Button>
 	</form>
 {:else}
 	<Tooltip.Provider>

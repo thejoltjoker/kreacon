@@ -90,8 +90,8 @@ export default {
 	theme: {
 		extend: {
 			fontFamily: {
-				sans: ['Figtree', 'sans-serif'],
-				emoji: ['Noto Color Emoji', 'sans-serif']
+				sans: ['Figtree Variable', 'Figtree', 'Noto Color Emoji', 'sans-serif'],
+				emoji: ['Noto Color Emoji', 'Segoe UI Emoji', 'Apple Color Emoji', 'sans-serif']
 			},
 			fontSize: {
 				sm: '0.875rem',

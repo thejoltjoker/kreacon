@@ -3,7 +3,7 @@
 	import type { HTMLAttributes } from 'svelte/elements';
 	import { type VariantProps, tv } from 'tailwind-variants';
 	export const badgeVariants = tv({
-		base: 'font-bold transition-colors h-fit w-fit whitespace-nowrap rounded-full border flex items-center justify-center',
+		base: 'font-bold transition-colors h-fit w-fit whitespace-nowrap rounded-full border flex items-center justify-center badge',
 		variants: {
 			variant: {
 				default: 'bg-white text-black border-black',

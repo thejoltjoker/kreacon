@@ -54,8 +54,11 @@ test('Admin should be able to create and edit events', async ({ page }) => {
 	await page.locator('input[name="password"]').press('Enter');
 	await page.getByRole('button', { name: 'Log in' }).click();
 
-	await page.getByRole('button', { name: 'john_doe' }).click();
+	await page.getByRole('button', { name: 'john_doe avatar' }).click();
 	await page.getByRole('link', { name: 'Admin' }).click();
+	await page.waitForURL('/admin/entries');
+	await page.getByRole('link', { name: 'Events' }).click();
+	await page.waitForURL('/admin/events');
 	await page.getByRole('link', { name: 'Add events' }).click();
 	await page.locator('input[name="name"]').click();
 	await page.locator('input[name="name"]').fill('My test event');

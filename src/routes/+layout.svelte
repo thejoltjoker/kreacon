@@ -2,7 +2,6 @@
 	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
 	import '$lib/i18n';
-	import '@fontsource/noto-color-emoji';
 	import { locale, waitLocale } from 'svelte-i18n';
 	import '../app.css';
 	import Footer from './(app)/_components/Footer.svelte';
@@ -32,7 +31,7 @@
 {#if ready}
 	<div class="flex min-h-screen flex-col">
 		<Navbar title={$page.data.title} />
-		<PageTransition key={data.pathname} class="h-full grow">
+		<PageTransition key={data.pathname} class="flex h-full grow">
 			{@render children()}
 		</PageTransition>
 		<Footer />

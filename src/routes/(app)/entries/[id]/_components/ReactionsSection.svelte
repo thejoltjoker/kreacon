@@ -5,7 +5,7 @@
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import type { PageData } from '../$types';
 	import ReactionsList from '../../../_components/ReactionsList.svelte';
-	import { type ReactionListItem } from '../../../_components/ReactionsListItem.svelte';
+	import type { ReactionListItem } from '../../../_components/ReactionsListItem.svelte';
 
 	let {
 		reactions
@@ -48,6 +48,10 @@
 	};
 </script>
 
+<section id="entry-reactions" class="flex flex-col gap-sm">
+	<h4>{$t('Reactions')}</h4>
+	<ReactionsList reactions={reactionListItems} onAddReaction={handleAddReaction} />
+</section>
 <form
 	method="POST"
 	bind:this={formRef}
@@ -56,8 +60,3 @@
 	action="?/react"
 	use:enhance={handleSubmit}
 ></form>
-
-<div class="flex flex-col gap-sm">
-	<h4>{$t('Reactions')}</h4>
-	<ReactionsList reactions={reactionListItems} onAddReaction={handleAddReaction} />
-</div>
