@@ -123,6 +123,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   [#104](https://github.com/thejoltjoker/kreacon/pull/104)
 - General bug fixes and `413 Payload too large` when deployed
   [#106](https://github.com/thejoltjoker/kreacon/pull/106)
+- Remove redirect from landing page
+  [#111](https://github.com/thejoltjoker/kreacon/pull/111)
 
 ### Security
 

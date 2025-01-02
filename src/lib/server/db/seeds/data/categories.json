@@ -82,41 +82,5 @@
 		"slug": "genai-music",
 		"mediaType": "audio",
 		"description": "Music created primarily with artificial intelligence. Your track should showcase the capabilities of AI in generating or enhancing musical compositions."
-	},
-	{
-		"name": "Videos",
-		"slug": "videos",
-		"mediaType": "video",
-		"description": "A collection of various video content, showcasing creativity and storytelling through motion pictures."
-	},
-	{
-		"name": "Images",
-		"slug": "images",
-		"mediaType": "image",
-		"description": "A collection of various image content, showcasing creativity and storytelling through still visuals."
-	},
-	{
-		"name": "Music",
-		"slug": "music",
-		"mediaType": "audio",
-		"description": "A collection of various music content, showcasing creativity and storytelling through sound."
-	},
-	{
-		"name": "Abstract",
-		"slug": "abstract",
-		"mediaType": "image",
-		"description": "Artistic expressions that emphasize shapes, colors, and forms over realistic representation. Dive into the world of abstract art."
-	},
-	{
-		"name": "Animals & Wildlife",
-		"slug": "animals-wildlife",
-		"mediaType": "image",
-		"description": "Captivating images and videos showcasing the beauty and diversity of the animal kingdom in their natural habitats."
-	},
-	{
-		"name": "Automotive",
-		"slug": "automotive",
-		"mediaType": "image",
-		"description": "Images and videos capturing the essence of automotive design, performance, and innovation."
 	}
 ]
