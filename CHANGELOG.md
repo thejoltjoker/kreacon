@@ -117,6 +117,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   [#101](https://github.com/thejoltjoker/kreacon/pull/101)
 - Fix issues with `FileField` when using drag and drop
   [#104](https://github.com/thejoltjoker/kreacon/pull/104)
+- General bug fixes and `413 Payload too large` when deployed
+  [#106](https://github.com/thejoltjoker/kreacon/pull/106)
 
 ### Security
 
