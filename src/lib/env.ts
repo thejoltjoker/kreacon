@@ -21,8 +21,12 @@ const EnvSchema = z.object({
 	AZURE_STORAGE_ACCOUNT_NAME: z.string(),
 	AZURE_STORAGE_ACCOUNT_KEY: z.string(),
 	// Optional
+	BODY_SIZE_LIMIT: z.coerce
+		.number()
+		.optional()
+		.default(10 * 1024 * 1024),
 	PUBLIC_BASE_URL: z.string().default(''),
-	PUBLIC_MAX_UPLOAD_SIZE: z.coerce.number().default(1024 * 1024 * 1024),
+	PUBLIC_MAX_UPLOAD_SIZE: z.coerce.number().default(10 * 1024 * 1024),
 	DB_MIGRATING: stringBoolean,
 	DB_SEEDING: stringBoolean,
 	AZURE_APP_INSIGHTS_CONNECTION_STRING: z.string().optional(),
