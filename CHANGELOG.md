@@ -99,6 +99,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   [#95](https://github.com/thejoltjoker/kreacon/pull/95)
 - General fixes on single entry page, update design details
   [#100](https://github.com/thejoltjoker/kreacon/pull/100)
+- Use `StyledSelect` component for `SortBySelect` component
+  [#108](https://github.com/thejoltjoker/kreacon/pull/108)
 
 ### Deprecated
 
