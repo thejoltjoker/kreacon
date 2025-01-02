@@ -149,7 +149,7 @@ test('Own single entry page logged in', async ({ page }) => {
 	await page.goto('/entries/StrongCuriousChihuahua');
 	const headerLocator = page.locator('#entry-header');
 
-// Vote should redirect to login
+	// Vote should redirect to login
 	await headerLocator.getByRole('link', { name: 'Vote' }).click();
 	await page.getByLabel('Email').fill('john.doe@example.com');
 	await page.getByLabel('Password').fill('password');

@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
+	import StyledSelect from '$lib/components/Form/StyledSelect.svelte';
 	import { t } from '$lib/i18n';
-	import { Select } from 'bits-ui';
-	import { ArrowDownUpIcon, DotIcon } from 'lucide-svelte';
+	import { ArrowDownUpIcon } from 'lucide-svelte';
 
 	type Props = {
 		items: { value: string; label: string; disabled?: boolean }[];
@@ -24,30 +24,16 @@
 	};
 </script>
 
-<Select.Root type="single" {value} onValueChange={handleSortByChange} allowDeselect={false}>
-	<Select.Trigger
-		class="select-trigger sort-by-select flex gap-sm text-nowrap border-white font-bold"
-	>
-		<p>{$t('Sorted by')}{': '}<span>{selectedLabel ?? placeholder}</span></p>
-
-		<ArrowDownUpIcon class="size-5" />
-	</Select.Trigger>
-	<Select.Portal>
-		<Select.Content class="select-content z-30">
-			<Select.Viewport>
-				{#each items as { value, label, disabled } (value)}
-					<Select.Item {value} {label} {disabled} class="select-item">
-						<span>
-							{label}
-						</span>
-						<span
-							class="hidden items-center justify-center text-primary group-data-[selected]:flex"
-						>
-							<DotIcon class="h-form w-form" />
-						</span>
-					</Select.Item>
-				{/each}
-			</Select.Viewport>
-		</Select.Content>
-	</Select.Portal>
-</Select.Root>
+<StyledSelect
+	onValueChange={handleSortByChange}
+	allowDeselect={false}
+	{items}
+	{placeholder}
+	type="single"
+	bind:value
+	id="sort-by"
+	name="sort-by"
+	triggerIcon={ArrowDownUpIcon}
+	customLabel={`${$t('Sorted by')}: ${selectedLabel ?? placeholder}`}
+	class="font-bold"
+/>
