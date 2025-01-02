@@ -33,7 +33,7 @@
 		<ArrowDownUpIcon class="size-5" />
 	</Select.Trigger>
 	<Select.Portal>
-		<Select.Content class="select-content">
+		<Select.Content class="select-content z-30">
 			<Select.Viewport>
 				{#each items as { value, label, disabled } (value)}
 					<Select.Item {value} {label} {disabled} class="select-item">

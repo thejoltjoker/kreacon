@@ -1,5 +1,12 @@
 # Kreacon
 
+## For Mattias
+
+Hi!
+
+It's probably easier to just use the deployed version of the app, a bit of a hassle to get everything set up with Azure.
+As for ticket you can use any `UUID` to get a ticket from the external api (`crypto.randomUUID()` works great for generating a ticket number).
+
 ## Getting Started
 
 ### Prerequisites
@@ -166,6 +173,8 @@ OAUTH_GITHUB_REDIRECT_URI=https://your-production-domain.com/auth/github/callbac
 
 ## TODO
 
+- [ ] Remove `For Mattias` from the README
+
 ### Profile
 
 - [ ] Fix bug where user gets logged out randomly
@@ -180,3 +189,6 @@ OAUTH_GITHUB_REDIRECT_URI=https://your-production-domain.com/auth/github/callbac
 ### Admin
 
 - [ ] Disallow change of submission and voting dates if already in progress
+- [ ] Add custom field: User status
+- [ ] Add custom field: User role
+- [ ] Show number of votes per entry

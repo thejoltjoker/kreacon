@@ -75,7 +75,7 @@
 		<Combobox.Portal>
 			<Combobox.Content
 				{customAnchor}
-				class="w-[var(--bits-combobox-anchor-width)] rounded-form border border-muted-background bg-muted-background p-xs"
+				class="z-30 w-[var(--bits-combobox-anchor-width)] rounded-form border border-muted-background bg-muted-background p-xs"
 				sideOffset={10}
 			>
 				{#if filteredItems.length > 0}

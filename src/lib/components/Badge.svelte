@@ -1,4 +1,3 @@
-<!-- TODO Change ring on focus -->
 <script lang="ts" module>
 	import type { HTMLAttributes } from 'svelte/elements';
 	import { type VariantProps, tv } from 'tailwind-variants';

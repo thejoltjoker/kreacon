@@ -74,8 +74,16 @@ export const azureUploadBlob = async (
 	data: Buffer | ArrayBuffer,
 	contentType: string,
 	containerName?: AzureStorageContainer,
-	options?: BlockBlobUploadOptions
+	options?: BlockBlobUploadOptions,
+	maxSizeInBytes?: number
 ) => {
+	if (maxSizeInBytes == null) {
+		maxSizeInBytes = env.BODY_SIZE_LIMIT ?? 10 * 1024 * 1024; // 10 MB
+	}
+	if (data.byteLength > maxSizeInBytes) {
+		throw new Error(`Blob size exceeds the maximum allowed size of ${maxSizeInBytes} bytes`);
+	}
+
 	const blobServiceClient = getBlobServiceClient();
 	const containerClient = await getOrCreateContainer(
 		blobServiceClient,

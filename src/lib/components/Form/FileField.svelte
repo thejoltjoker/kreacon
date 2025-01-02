@@ -1,3 +1,4 @@
+<!-- TODO Add transition to progress bar -->
 <script lang="ts" module>
 	type T = Record<string, unknown>;
 </script>
