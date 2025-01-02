@@ -4,10 +4,6 @@ import { StatusCodes } from 'http-status-codes';
 import db from '$lib/server/db';
 
 export const load = (async ({ locals }) => {
-	if (locals.user) {
-		throw redirect(StatusCodes.TEMPORARY_REDIRECT, '/entries');
-	}
-
 	const now = new Date();
 	const events = await db.query.events.findMany({
 		where(fields, { gte, or }) {
