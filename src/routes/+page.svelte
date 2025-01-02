@@ -32,7 +32,7 @@
 						)}
 					</p>
 					<div>
-						<Button variant="outline" href="/submit">{$t('Enter Competitions')}</Button>
+						<Button variant="outline" href="/entries/create">{$t('Enter Competitions')}</Button>
 					</div>
 				{/snippet}
 			</ContentBlock>
