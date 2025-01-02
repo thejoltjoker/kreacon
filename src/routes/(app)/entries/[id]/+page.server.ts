@@ -127,7 +127,7 @@ export const actions = {
 
 			if (
 				entry &&
-				isBetweenDates(new Date(), entry.event.votingOpenAt, entry.event.votingCloseAt)
+				!isBetweenDates(new Date(), entry.event.votingOpenAt, entry.event.votingCloseAt)
 			) {
 				logger.warn(`Voting closed for entry ID: ${entryId}`);
 				return fail(StatusCodes.BAD_REQUEST, { error: 'Voting closed' });
