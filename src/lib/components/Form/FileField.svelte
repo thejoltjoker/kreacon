@@ -96,8 +96,14 @@
 	let files: FileList | null | undefined = $state();
 	let isDragging = $state(false);
 	let progress = $state(0);
-	let mode = $derived(
-		behavior === 'auto' ? (typeof $form[field] === 'string' ? 'managed' : 'standard') : behavior
+	let mode = $state(
+		behavior === 'auto'
+			? typeof $form[field] === 'string'
+				? 'managed'
+				: 'standard'
+			: behavior === 'managed'
+				? 'managed'
+				: 'standard'
 	);
 	let accept: MimeType[] = $derived(getMimeTypesForMedia(mediaType));
 	let extensions = $derived(getExtensionsForMedia(mediaType));
@@ -110,7 +116,13 @@
 
 	let superFieldProxy;
 	if (
-		behavior === 'auto' ? (typeof $form[field] === 'string' ? 'managed' : 'standard') : behavior
+		behavior === 'auto'
+			? typeof $form[field] === 'string'
+				? true
+				: false
+			: behavior === 'managed'
+				? true
+				: false
 	) {
 		superFieldProxy = formFieldProxy(superform, field);
 	} else {
@@ -140,7 +152,6 @@
 
 		currentState = 'uploading';
 		// TODO Generate checksum
-
 		if (uploadUrl == null) {
 			const sas = await getUploadUrl(files[0]);
 			fileId = sas.fileId;
@@ -166,12 +177,11 @@
 		currentState = 'ready';
 		const input = event.dataTransfer;
 
-		if (mode === 'standard') {
-			if (input?.files && input.files.length > 0) {
-				$value = input.files;
-				files = input.files;
-			}
-		} else {
+		if (input?.files && input.files.length > 0) {
+			$value = input.files;
+			files = input.files;
+		}
+		if (mode != 'standard') {
 			await processFiles();
 		}
 	};
@@ -293,8 +303,8 @@
 		if (mode === 'standard' && files != null) $value = files;
 	});
 
-	$inspect(blobUrl);
-	$inspect(fileId);
+	$inspect(typeof $form[field]);
+	$inspect($form[field]);
 </script>
 
 {#snippet debugView()}

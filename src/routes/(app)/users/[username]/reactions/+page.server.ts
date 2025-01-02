@@ -11,6 +11,7 @@ export const load = (async ({ params, url }) => {
 	const user = await db.query.users.findFirst({
 		where: eq(users.username, username)
 	});
+	// TODO Should be 404
 	if (!user) {
 		throw redirect(StatusCodes.TEMPORARY_REDIRECT, '/');
 	}
