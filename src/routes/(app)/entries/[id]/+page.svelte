@@ -12,13 +12,14 @@
 	let { data }: { data: PageData } = $props();
 	let isVoted = $state(data.isVoted ?? false);
 	let entry = $derived(data.entry);
+	let isOpenForVoting = $derived(data.isOpenForVoting ?? false);
 </script>
 
 {#if entry != null}
 	<main class="flex w-full max-w-screen-lg flex-col gap-sm px-sm pt-sm md:gap-xl md:px-xl md:pt-xl">
-		<HeaderSection {entry} {user} bind:isVoted />
+		<HeaderSection {entry} {user} bind:isVoted {isOpenForVoting} />
 		<MediaSection {entry} />
-		<InfoSection {entry} {user} bind:isVoted />
+		<InfoSection {entry} {user} bind:isVoted {isOpenForVoting} />
 		<ReactionsSection reactions={entry.reactions} />
 		<!-- TODO More work/related grid -->
 	</main>

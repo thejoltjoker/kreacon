@@ -12,11 +12,13 @@
 	let {
 		entry,
 		user,
-		isVoted = $bindable()
+		isVoted = $bindable(),
+		isOpenForVoting = $bindable()
 	}: {
 		entry: NonNullable<PageData['entry']>;
 		user: PageData['user'];
 		isVoted: boolean;
+		isOpenForVoting: boolean;
 	} = $props();
 </script>
 
@@ -48,7 +50,7 @@
 		{#if user?.username === entry.user?.username}
 			<DeleteButton {entry} {user} />
 		{:else}
-			<VoteButton isSignedIn={user != null} id={entry.id} bind:isVoted />
+			<VoteButton isSignedIn={user != null} id={entry.id} bind:isVoted {isOpenForVoting} />
 		{/if}
 	</div>
 </section>

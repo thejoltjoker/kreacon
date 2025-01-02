@@ -1,14 +1,14 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
+	import PageTransition from '$lib/components/PageTransition.svelte';
 	import '$lib/i18n';
+	import type { Snippet } from 'svelte';
 	import { locale, waitLocale } from 'svelte-i18n';
 	import '../app.css';
+	import type { LayoutData } from './$types';
 	import Footer from './(app)/_components/Footer.svelte';
 	import Navbar from './(app)/_components/Navbar.svelte';
-	import PageTransition from '$lib/components/PageTransition.svelte';
-	import type { LayoutData } from './$types';
-	import type { Snippet } from 'svelte';
 
 	let { children, data }: { children: Snippet; data: LayoutData } = $props();
 	let ready = $state(false);

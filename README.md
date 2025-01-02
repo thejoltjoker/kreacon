@@ -149,6 +149,11 @@ OAUTH_GITHUB_REDIRECT_URI=https://your-production-domain.com/auth/github/callbac
 
 ## TODO
 
+### Profile
+
+- [ ] Fix bug where user gets logged out randomly
+- [ ] Update profile page after adding ticket
+
 ### Entries
 
 #### Create entry

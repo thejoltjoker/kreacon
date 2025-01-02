@@ -54,7 +54,7 @@
 <section class="flex w-full max-w-screen-xl flex-col gap-xl px-sm">
 	<h2 class="text-center text-4xl font-bold">{$t('Current and upcoming events')}</h2>
 
-	<div class="mx-auto grid grid-cols-1 gap-sm md:grid-cols-3 md:gap-xl">
+	<div class="grid grid-cols-1 gap-sm md:grid-cols-3 md:gap-xl">
 		{#each events.slice(0, 3) as eventData}
 			{@render event(eventData)}
 		{/each}

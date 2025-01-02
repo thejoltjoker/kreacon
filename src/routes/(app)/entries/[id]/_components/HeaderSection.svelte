@@ -9,11 +9,13 @@
 	let {
 		entry,
 		isVoted = $bindable(),
-		user
+		user,
+		isOpenForVoting = $bindable()
 	}: {
 		entry: NonNullable<PageData['entry']>;
 		isVoted: boolean;
 		user: NonNullable<PageData['user']>;
+		isOpenForVoting: boolean;
 	} = $props();
 	let isOwner = $derived(user?.username === entry?.user?.username);
 </script>
@@ -69,7 +71,7 @@
 			{#if user?.username === entry.user?.username}
 				<DeleteButton {user} {entry} />
 			{:else}
-				<VoteButton isSignedIn={user != null} id={entry.id} bind:isVoted />
+				<VoteButton isSignedIn={user != null} id={entry.id} bind:isVoted {isOpenForVoting} />
 			{/if}
 		</div>
 	</div>
