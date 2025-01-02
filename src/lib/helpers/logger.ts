@@ -20,52 +20,77 @@ const logLevels: Record<LogLevel, number> = {
 const currentLogLevel: LogLevel = (env.LOG_LEVEL as LogLevel) ?? 'info';
 
 class Logger {
-	private id: string;
+	private context: string;
 
-	constructor(id: string) {
-		this.id = id;
+	constructor(context: string) {
+		this.context = context;
 	}
 
-	private log(level: LogLevel, message: string, ...args: any[]) {
-		if (logLevels[level] >= logLevels[currentLogLevel]) {
-			const colors = {
-				debug: '\x1b[36m', // Cyan
-				info: '\x1b[32m', // Green
-				warn: '\x1b[33m', // Yellow
-				error: '\x1b[31m', // Red
-				cyan: '\x1b[36m',
-				gray: '\x1b[90m'
-			};
-			const resetColor = '\x1b[0m';
+	formatMessage(message: string, level: LogLevel) {
+		const colors = {
+			debug: '\x1b[36m', // Cyan
+			info: '\x1b[32m', // Green
+			warn: '\x1b[33m', // Yellow
+			error: '\x1b[31m', // Red
+			cyan: '\x1b[36m',
+			gray: '\x1b[90m'
+		};
+		const resetColor = '\x1b[0m';
 
-			console[level](
-				`${colors.gray}${new Date().toLocaleTimeString('en-US', { hour12: false })} ${colors.cyan}[${this.id}]${colors[level]} ${message}${resetColor}`,
-				...args
-			);
-			if (azureAppInsights != null) {
-				azureAppInsights.trackTrace({
-					message: `[${this.id}] ${message}`,
-					severityLevel: logLevels[level]
-				});
-			}
+		const formattedMessage = `${colors.gray}${new Date().toLocaleTimeString('en-US', { hour12: false })} ${colors.cyan}[${this.context}]${colors[level]} ${message}${resetColor}`;
+		return formattedMessage;
+	}
+
+	debug(message: string, data?: any) {
+		const formattedMessage = this.formatMessage(message, 'debug');
+		if (logLevels[currentLogLevel] >= logLevels['debug']) {
+			console.debug(formattedMessage, data);
+		}
+		if (azureAppInsights != null) {
+			azureAppInsights.trackTrace({
+				message: formattedMessage,
+				properties: data,
+				severityLevel: logLevels['debug']
+			});
+		}
+	}
+	info(message: string, data?: any) {
+		const formattedMessage = this.formatMessage(message, 'info');
+		if (logLevels[currentLogLevel] >= logLevels['info']) {
+			console.info(formattedMessage, data);
+		}
+		if (azureAppInsights != null) {
+			azureAppInsights.trackTrace({
+				message: formattedMessage,
+				properties: data,
+				severityLevel: logLevels['info']
+			});
 		}
 	}
 
-	debug(message: string, ...args: any[]) {
-		this.log('debug', message, ...args);
+	warn(message: string, data?: any) {
+		const formattedMessage = this.formatMessage(message, 'warn');
+		if (logLevels[currentLogLevel] >= logLevels['warn']) {
+			console.warn(formattedMessage, data);
+		}
+		if (azureAppInsights != null) {
+			azureAppInsights.trackTrace({
+				message: formattedMessage,
+				properties: data,
+				severityLevel: logLevels['warn']
+			});
+		}
 	}
 
-	info(message: string, ...args: any[]) {
-		this.log('info', message, ...args);
-	}
-
-	warn(message: string, ...args: any[]) {
-		this.log('warn', message, ...args);
-	}
-
-	error(message: string, ...args: any[]) {
-		this.log('error', message, ...args);
+	error(message: string, data?: any) {
+		const formattedMessage = this.formatMessage(message, 'error');
+		if (logLevels[currentLogLevel] >= logLevels['error']) {
+			console.error(formattedMessage, data);
+		}
+		if (azureAppInsights != null) {
+			azureAppInsights.trackException({ exception: new Error(message), properties: data });
+		}
 	}
 }
 
-export const createLogger = (id: string) => new Logger(id);
+export const createLogger = (context: string) => new Logger(context);

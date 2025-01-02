@@ -73,6 +73,22 @@ export const groupedEmojis = [
 			{
 				keywords: ['roll', 'eyes', 'annoyed', ':rolling_eyes:'],
 				emoji: '🙄'
+			},
+			{
+				keywords: ['alien', 'extraterrestrial', 'space', ':alien:'],
+				emoji: '👽'
+			},
+			{
+				keywords: ['alien', 'monster', 'space', 'game', ':alien_monster:'],
+				emoji: '👾'
+			},
+			{
+				keywords: ['ghost', 'spooky', 'halloween', ':ghost:'],
+				emoji: '👻'
+			},
+			{
+				keywords: ['clown', 'circus', 'foolish', ':clown_face:'],
+				emoji: '🤡'
 			}
 		]
 	},
@@ -95,8 +111,60 @@ export const groupedEmojis = [
 		icon: LightbulbIcon,
 		emojis: [
 			{
+				keywords: ['poo', 'poop', 'pile', ':pile_of_poo:'],
+				emoji: '💩'
+			},
+			{
 				keywords: ['lightbulb', 'idea', ':lightbulb:'],
 				emoji: '💡'
+			},
+			{
+				keywords: ['robot', 'face', 'electronics', ':robot:'],
+				emoji: '🤖'
+			},
+			{
+				keywords: ['gem', 'stone', 'jewel', ':gem_stone:'],
+				emoji: '💎'
+			},
+			{
+				keywords: ['floppy', 'disk', 'save', ':floppy_disk:'],
+				emoji: '💾'
+			},
+			{
+				keywords: ['clapper', 'board', 'film', ':clapper_board:'],
+				emoji: '🎬'
+			},
+			{
+				keywords: ['hourglass', 'time', 'not done', ':hourglass_not_done:'],
+				emoji: '⏳'
+			},
+			{
+				keywords: ['money', 'wings', 'flying', ':money_with_wings:'],
+				emoji: '💸'
+			},
+			{
+				keywords: ['dollar', 'banknote', 'money', ':dollar_banknote:'],
+				emoji: '💵'
+			},
+			{
+				keywords: ['money', 'bag', 'wealth', ':money_bag:'],
+				emoji: '💰'
+			},
+			{
+				keywords: ['luggage', 'travel', 'suitcase', ':luggage:'],
+				emoji: '🧳'
+			},
+			{
+				keywords: ['bomb', 'explosion', 'danger', ':bomb:'],
+				emoji: '💣'
+			},
+			{
+				keywords: ['toilet', 'bathroom', 'restroom', ':toilet:'],
+				emoji: '🚽'
+			},
+			{
+				keywords: ['mouse', 'trap', 'catch', ':mouse_trap:'],
+				emoji: '🪤'
 			}
 		]
 	},
@@ -104,6 +172,15 @@ export const groupedEmojis = [
 		title: 'Animals & Nature',
 		icon: PawPrintIcon,
 		emojis: [
+			{
+				keywords: ['cat', 'heart', 'eyes', ':smiling_cat_with_heart_eyes:'],
+				emoji: '😻'
+			},
+			{
+				keywords: ['weary', 'cat', 'face', ':weary_cat:'],
+				emoji: '🙀'
+			},
+
 			{
 				keywords: ['pig', 'animal', ':pig:'],
 				emoji: '🐖'
@@ -155,6 +232,18 @@ export const groupedEmojis = [
 			{
 				keywords: ['llama', 'animal', ':llama:'],
 				emoji: '🦙'
+			},
+			{
+				keywords: ['see', 'no', 'evil', 'monkey', ':see_no_evil_monkey:'],
+				emoji: '🙈'
+			},
+			{
+				keywords: ['speak', 'no', 'evil', 'monkey', ':speak_no_evil_monkey:'],
+				emoji: '🙊'
+			},
+			{
+				keywords: ['hear', 'no', 'evil', 'monkey', ':hear_no_evil_monkey:'],
+				emoji: '🙉'
 			}
 		]
 	}

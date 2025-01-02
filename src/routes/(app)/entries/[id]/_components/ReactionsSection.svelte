@@ -41,7 +41,7 @@
 		});
 
 		const result = deserialize(await response.text());
-		console.log('result', result);
+
 		if (result.type === 'success') {
 			await invalidateAll();
 		}

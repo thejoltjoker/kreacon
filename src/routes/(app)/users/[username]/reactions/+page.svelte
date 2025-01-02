@@ -12,7 +12,7 @@
 				class="group grid aspect-square items-center justify-center gap-sm overflow-hidden rounded-form"
 			>
 				<img
-					src={reaction.entry.preview.url}
+					src={reaction.entry?.preview?.url}
 					alt=""
 					class="col-[1] row-[1] h-full w-full object-cover"
 				/>

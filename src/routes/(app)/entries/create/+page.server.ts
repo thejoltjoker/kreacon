@@ -105,10 +105,6 @@ export const actions = {
 			return fail(StatusCodes.BAD_REQUEST, { form });
 		}
 
-		console.log('Massaging form data');
-		console.log('form', form);
-		console.log('media', form.data.mediaId);
-
 		const userData = await db.query.users.findFirst({
 			where: eq(users.id, user.id),
 			with: {

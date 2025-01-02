@@ -115,6 +115,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   [#92](https://github.com/thejoltjoker/kreacon/pull/92)
 - Generate new migrations to get rid of sign up bugs
   [#101](https://github.com/thejoltjoker/kreacon/pull/101)
+- Fix issues with `FileField` when using drag and drop
+  [#104](https://github.com/thejoltjoker/kreacon/pull/104)
 
 ### Security
 
