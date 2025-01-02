@@ -20,6 +20,7 @@
 		6: DemoSlide
 	};
 	let currentSlideNumber = $state(Number($page.url.searchParams.get('slide') ?? 0));
+	let transitionDuration = 300;
 	let CurrentSlide = $derived(slides[currentSlideNumber]);
 
 	const updateSearchParams = (slide: number) => {
@@ -57,8 +58,8 @@
 {#key currentSlideNumber}
 	<div
 		class="absolute left-0 top-0 z-[150] flex h-screen w-screen flex-col items-center justify-center"
-		in:fade={{ delay: 300, duration: 300 }}
-		out:fade={{ duration: 300 }}
+		in:fade={{ delay: transitionDuration, duration: transitionDuration }}
+		out:fade={{ duration: transitionDuration }}
 	>
 		<CurrentSlide />
 	</div>

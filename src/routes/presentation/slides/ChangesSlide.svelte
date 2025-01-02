@@ -1,5 +1,5 @@
 <script lang="ts">
-	import image from '../../../assets/images/monster-lost-001.png';
+	import image from '../../../assets/images/bug-belly-001.png';
 </script>
 
 <div class="-mt-[6rem]"></div>
