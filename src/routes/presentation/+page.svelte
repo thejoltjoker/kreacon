@@ -2,16 +2,14 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { fade } from 'svelte/transition';
-	import type { PageData } from './$types';
-	import IntroSlide from './slides/IntroSlide.svelte';
-	import WhySlide from './slides/WhySlide.svelte';
-	import ChallengesSlide from './slides/ChallengesSlide.svelte';
 	import BraggingSlide from './slides/BraggingSlide.svelte';
-	import TechStackSlide from './slides/TechStackSlide.svelte';
+	import ChallengesSlide from './slides/ChallengesSlide.svelte';
 	import ChangesSlide from './slides/ChangesSlide.svelte';
 	import DemoSlide from './slides/DemoSlide.svelte';
+	import IntroSlide from './slides/IntroSlide.svelte';
+	import TechStackSlide from './slides/TechStackSlide.svelte';
+	import WhySlide from './slides/WhySlide.svelte';
 
-	let { data }: { data: PageData } = $props();
 	const slides: Record<number, typeof IntroSlide> = {
 		0: IntroSlide,
 		1: WhySlide,
@@ -21,7 +19,7 @@
 		5: ChangesSlide,
 		6: DemoSlide
 	};
-	let currentSlideNumber = $state(Number($page.url.searchParams.get('slide')) ?? 0);
+	let currentSlideNumber = $state(Number($page.url.searchParams.get('slide') ?? 0));
 	let CurrentSlide = $derived(slides[currentSlideNumber]);
 
 	const updateSearchParams = (slide: number) => {
