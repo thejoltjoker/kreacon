@@ -1,5 +1,12 @@
 # Kreacon
 
+## For Mattias
+
+Hi!
+
+It's probably easier to just use the deployed version of the app, a bit of a hassle to get everything set up with Azure.
+As for ticket you can use any `UUID` to get a ticket from the external api (`crypto.randomUUID()` works great for generating a ticket number).
+
 ## Getting Started
 
 ### Prerequisites
@@ -7,45 +14,59 @@
 - Docker
 - Node.js (v20)
 - npm
+- nvm (optional, for switching Node versions)
 
 ### Development Setup
 
-1. Start the PostgreSQL database:
+1. Make sure you are using Node 20:
+
+   ```bash
+   nvm use 20 # optional, if you have nvm installed
+   node --version
+   ```
+
+2. Start the PostgreSQL database:
 
    ```bash
    docker compose up -d
    ```
 
-2. Install dependencies:
+3. Install dependencies:
 
    ```bash
    npm install
    ```
 
-3. Set up environment variables:
+4. Set up environment variables:
 
    - Copy `.env.example` to `.env`
+     - `cp .env.example .env`
    - Update the values as needed
 
-4. Initialize the database:
+5. Initialize the database:
 
    ```bash
-   npm run db:reset   # Runs migrations and seeds the database
+   npm run db:reset # Runs migrations and seeds the database
    ```
 
-5. Start the development server:
+6. Start the development server:
 
    ```bash
    npm run dev
    ```
 
-6. Open [http://localhost:5173](http://localhost:5173) in your browser
+7. Open [http://localhost:5173](http://localhost:5173) in your browser
 
 ### Additional Notes
 
 - Use `docker compose down` to stop the database container
 - The database will be accessible at `localhost:5432` with the credentials in `.env`
 - Run `npm run db:studio` to view/edit database content
+- You need to create OAuth apps for Discord and Github if you want to use them
+  - [Create Discord OAuth app](https://discord.com/developers/applications)
+  - [Create Github OAuth app](https://github.com/settings/applications/new)
+- You need to create an Azure Storage account and set the `AZURE_STORAGE_ACCOUNT_KEY` in `.env`
+  - [Create Azure Storage Account](https://portal.azure.com/#create/Microsoft.StorageAccount-ARM)
 
 ## Building
 
@@ -109,6 +130,8 @@ OAUTH_GITHUB_CLIENT_SECRET=<github-client-secret>
 OAUTH_GITHUB_REDIRECT_URI=<github-redirect-uri>
 TICKET_API_URL=<ticket-api-url>
 BODY_SIZE_LIMIT=10485760
+AZURE_STORAGE_ACCOUNT_NAME=<azure-storage-account-name>
+AZURE_STORAGE_ACCOUNT_KEY=<azure-storage-account-key>
 ```
 
 ### .env.test.local
@@ -150,6 +173,8 @@ OAUTH_GITHUB_REDIRECT_URI=https://your-production-domain.com/auth/github/callbac
 
 ## TODO
 
+- [ ] Remove `For Mattias` from the README
+
 ### Profile
 
 - [ ] Fix bug where user gets logged out randomly
@@ -164,3 +189,6 @@ OAUTH_GITHUB_REDIRECT_URI=https://your-production-domain.com/auth/github/callbac
 ### Admin
 
 - [ ] Disallow change of submission and voting dates if already in progress
+- [ ] Add custom field: User status
+- [ ] Add custom field: User role
+- [ ] Show number of votes per entry
