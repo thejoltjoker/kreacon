@@ -101,6 +101,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   [#100](https://github.com/thejoltjoker/kreacon/pull/100)
 - Use `StyledSelect` component for `SortBySelect` component
   [#108](https://github.com/thejoltjoker/kreacon/pull/108)
+- Presentation route
+  [#110](https://github.com/thejoltjoker/kreacon/pull/110)
 
 ### Deprecated
 
