@@ -26,7 +26,7 @@ class Logger {
 		this.context = context;
 	}
 
-	formatMessage(message: string, level: LogLevel) {
+	formatMessage(message: string, level: LogLevel, destination: 'console' | 'azure' = 'console') {
 		const colors = {
 			debug: '\x1b[36m', // Cyan
 			info: '\x1b[32m', // Green
@@ -37,8 +37,10 @@ class Logger {
 		};
 		const resetColor = '\x1b[0m';
 
-		const formattedMessage = `${colors.gray}${new Date().toLocaleTimeString('en-US', { hour12: false })} ${colors.cyan}[${this.context}]${colors[level]} ${message}${resetColor}`;
-		return formattedMessage;
+		if (destination === 'azure') {
+			return `[${this.context}] ${message}`;
+		}
+		return `${colors.gray}${new Date().toLocaleTimeString('en-US', { hour12: false })} ${colors.cyan}[${this.context}]${colors[level]} ${message}${resetColor}`;
 	}
 
 	debug(message: string, data?: any) {
