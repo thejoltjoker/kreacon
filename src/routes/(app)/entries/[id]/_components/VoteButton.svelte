@@ -6,8 +6,9 @@
 	let {
 		isSignedIn,
 		id,
-		isVoted = $bindable()
-	}: { isSignedIn: boolean; id: string; isVoted: boolean } = $props();
+		isVoted = $bindable(),
+		isOpenForVoting = $bindable()
+	}: { isSignedIn: boolean; id: string; isVoted: boolean; isOpenForVoting: boolean } = $props();
 
 	const handleSubmit = () => {
 		isVoted = !isVoted;
@@ -18,10 +19,12 @@
 	<form method="POST" action="?/unvote" use:enhance={handleSubmit}>
 		<Button type="submit" name="unvote" variant="muted" class="vote-button">{$t('Voted')}</Button>
 	</form>
-{:else if isSignedIn}
+{:else if isSignedIn && isOpenForVoting}
 	<form method="POST" action="?/vote" use:enhance={handleSubmit}>
 		<Button type="submit" name="vote" class="vote-button">{$t('Vote')}</Button>
 	</form>
+{:else if isSignedIn && !isOpenForVoting}
+	<Button variant="muted" name="vote" class="vote-button">{$t('Closed')}</Button>
 {:else}
 	<Tooltip.Provider>
 		<Tooltip.Root>

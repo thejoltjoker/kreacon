@@ -22,9 +22,10 @@
 
 		<p class="text-sm text-shade-300">
 			{$t('By signing up, you agree to our')}
-			<a href="/terms" class="underline hover:text-primary">{$t('Terms & Conditions')}</a>
+			<a href="/terms-of-service" class="underline hover:text-primary">{$t('Terms & Conditions')}</a
+			>
 			{$t('and').toLowerCase()}
-			<a href="/privacy" class="underline hover:text-primary">{$t('Privacy Policy')}</a>.
+			<a href="/privacy-policy" class="underline hover:text-primary">{$t('Privacy Policy')}</a>.
 		</p>
 	</div>
 </section>

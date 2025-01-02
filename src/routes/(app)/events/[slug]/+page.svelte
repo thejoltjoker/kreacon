@@ -11,7 +11,7 @@
 	const categories = data.categories;
 </script>
 
-<div class="mx-auto flex max-w-screen-lg flex-col items-center justify-center gap-xl px-sm py-xl">
+<div class="flex w-full max-w-screen-lg flex-col items-center justify-center gap-xl px-sm py-xl">
 	<Header event={data.event} />
 	<main class="flex w-full flex-col items-center justify-center gap-xl py-xl">
 		<AboutSection event={data.event} />

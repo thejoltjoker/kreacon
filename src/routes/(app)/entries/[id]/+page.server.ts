@@ -9,6 +9,7 @@ import votes, { insertVoteSchema } from '$lib/server/db/schema/vote';
 import { StatusCodes } from 'http-status-codes';
 import { isAuthenticated } from '../../utils';
 import { createLogger } from '$lib/helpers/logger';
+import { isBetweenDates } from '$lib/helpers/isBetweenDates';
 const logger = createLogger('/entries/[id]');
 export const load = (async ({ params, locals }) => {
 	const { id } = params;
@@ -48,7 +49,9 @@ export const load = (async ({ params, locals }) => {
 				event: {
 					columns: {
 						name: true,
-						id: true
+						id: true,
+						votingOpenAt: true,
+						votingCloseAt: true
 					}
 				},
 				preview: {
@@ -94,11 +97,13 @@ export const load = (async ({ params, locals }) => {
 	}
 
 	const isVoted = Boolean(result?.votes && result?.votes.length > 0);
+	const isOpenForVoting =
+		result && isBetweenDates(new Date(), result.event.votingOpenAt, result.event.votingCloseAt);
 
 	const title = result?.event
 		? { text: result.event.name, href: `/entries?event=${result.event.id}` }
 		: { text: 'Entries', href: '/entries' };
-	return { entry: result, user: locals.user, isVoted, title };
+	return { entry: result, user: locals.user, isVoted, title, isOpenForVoting };
 }) satisfies PageServerLoad;
 
 export const actions = {
@@ -112,6 +117,21 @@ export const actions = {
 			const entryId = params.id;
 			const userId = locals.user.id;
 			logger.info(`User ${userId} attempting to vote on entry ID: ${entryId}`);
+
+			const entry = await db.query.entries.findFirst({
+				where: eq(entries.id, entryId),
+				with: {
+					event: true
+				}
+			});
+
+			if (
+				entry &&
+				!isBetweenDates(new Date(), entry.event.votingOpenAt, entry.event.votingCloseAt)
+			) {
+				logger.warn(`Voting closed for entry ID: ${entryId}`);
+				return fail(StatusCodes.BAD_REQUEST, { error: 'Voting closed' });
+			}
 
 			const data = insertVoteSchema.parse({
 				entryId,

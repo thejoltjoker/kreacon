@@ -99,7 +99,7 @@ test('Single entry page logged in', async ({ page }) => {
 	await expect(page.locator('.badge')).not.toBeVisible();
 
 	// Don't show delete
-	await expect(page.locator('#entry-header-actions form')).toBeVisible();
+	await expect(page.locator('#entry-header-actions form')).not.toBeVisible();
 	await expect(page.locator('.entry-delete-button')).not.toBeVisible();
 
 	// Show add reaction
@@ -136,6 +136,7 @@ test('Single entry page logged in', async ({ page }) => {
     `);
 
 	// Vote should change to voted
+	await page.goto('/entries/StrongCuriousWolverine');
 	await expect(page.locator('#entry-header-actions')).toContainText('Vote');
 	await expect(page.locator('#entry-actions')).toContainText('Vote');
 	await page.locator('#entry-header-actions').getByRole('button', { name: 'Vote' }).click();

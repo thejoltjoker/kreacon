@@ -108,6 +108,7 @@ OAUTH_GITHUB_CLIENT_ID=<github-client-id>
 OAUTH_GITHUB_CLIENT_SECRET=<github-client-secret>
 OAUTH_GITHUB_REDIRECT_URI=<github-redirect-uri>
 TICKET_API_URL=<ticket-api-url>
+BODY_SIZE_LIMIT=10485760
 ```
 
 ### .env.test.local
@@ -148,6 +149,11 @@ OAUTH_GITHUB_REDIRECT_URI=https://your-production-domain.com/auth/github/callbac
 ```
 
 ## TODO
+
+### Profile
+
+- [ ] Fix bug where user gets logged out randomly
+- [ ] Update profile page after adding ticket
 
 ### Entries
 

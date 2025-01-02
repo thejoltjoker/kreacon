@@ -23,7 +23,7 @@
 	<SubmittingTo />
 	<Divider class="my-xl" />
 	<MediaRow />
-	<div class="w-full">
+	<div class="mt-sm w-full">
 		<FileField
 			customUploadUrl="/api/uploads/preview"
 			mediaType="image"
