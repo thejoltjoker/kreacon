@@ -1,9 +1,7 @@
-import { redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
-import { StatusCodes } from 'http-status-codes';
 import db from '$lib/server/db';
 
-export const load = (async ({ locals }) => {
+export const load = (async () => {
 	const now = new Date();
 	const events = await db.query.events.findMany({
 		where(fields, { gte, or }) {
