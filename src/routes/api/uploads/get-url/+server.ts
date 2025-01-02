@@ -42,7 +42,7 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 
 		return json({ url: sasUrl, fileId: file.id });
 	} catch (err) {
-		logger.error('Failed to insert file', err);
+		logger.error('Failed to insert file', { error: err });
 		return error(StatusCodes.INTERNAL_SERVER_ERROR, { message: 'Failed to insert file' });
 	}
 };

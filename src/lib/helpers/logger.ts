@@ -41,7 +41,7 @@ class Logger {
 		return formattedMessage;
 	}
 
-	debug(message: string, data?: Record<string, any>) {
+	debug(message: string, data?: any) {
 		const formattedMessage = this.formatMessage(message, 'debug');
 		if (logLevels[currentLogLevel] >= logLevels['debug']) {
 			console.debug(formattedMessage, data);
@@ -54,7 +54,7 @@ class Logger {
 			});
 		}
 	}
-	info(message: string, data?: Record<string, any>) {
+	info(message: string, data?: any) {
 		const formattedMessage = this.formatMessage(message, 'info');
 		if (logLevels[currentLogLevel] >= logLevels['info']) {
 			console.info(formattedMessage, data);
@@ -68,7 +68,7 @@ class Logger {
 		}
 	}
 
-	warn(message: string, data?: Record<string, any>) {
+	warn(message: string, data?: any) {
 		const formattedMessage = this.formatMessage(message, 'warn');
 		if (logLevels[currentLogLevel] >= logLevels['warn']) {
 			console.warn(formattedMessage, data);
@@ -82,7 +82,7 @@ class Logger {
 		}
 	}
 
-	error(message: string, data?: Record<string, any>) {
+	error(message: string, data?: any) {
 		const formattedMessage = this.formatMessage(message, 'error');
 		if (logLevels[currentLogLevel] >= logLevels['error']) {
 			console.error(formattedMessage, data);
