@@ -103,6 +103,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   [#108](https://github.com/thejoltjoker/kreacon/pull/108)
 - Presentation route
   [#110](https://github.com/thejoltjoker/kreacon/pull/110)
+- Upgrade to Tailwind CSS v4
+  [#118](https://github.com/thejoltjoker/kreacon/pull/118)
 
 ### Deprecated
 
