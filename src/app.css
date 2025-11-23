@@ -67,7 +67,7 @@ layer(base);
 
 @layer base {
 	* {
-		@apply scroll-smooth focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-shade-400 focus-visible:ring-0 focus-visible:ring-offset-0;
+		@apply scroll-smooth focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-shade-400 focus-visible:ring-0 focus-visible:ring-offset-0;
 	}
 
 	html {
