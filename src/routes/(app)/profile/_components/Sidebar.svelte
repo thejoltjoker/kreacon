@@ -23,12 +23,14 @@
 </aside>
 
 <style lang="postcss">
+	@reference "../../../../app.css";
+
 	aside {
 		@apply w-profile-sidebar;
 	}
 
 	a {
-		@apply block rounded-form px-md py-sm text-shade-300 hover:bg-muted-background hover:text-white;
+		@apply rounded-form px-md py-sm text-shade-300 hover:bg-muted-background block hover:text-white;
 	}
 
 	ul {

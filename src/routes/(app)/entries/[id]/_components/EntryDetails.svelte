@@ -25,10 +25,12 @@
 </section>
 
 <style lang="postcss">
+	@reference "../../../../app.css";
+
 	h1 {
 		@apply text-2xl font-bold;
 	}
 	.author {
-		@apply mt-sm flex items-center gap-xs;
+		@apply mt-sm gap-xs flex items-center;
 	}
 </style>

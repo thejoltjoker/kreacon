@@ -1,4 +1,5 @@
 <script lang="ts">
+	import './layout.css';
 	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
 	import PageTransition from '$lib/components/PageTransition.svelte';
@@ -16,7 +17,9 @@
 	$effect(() => {
 		if (browser) {
 			const storedLocale = localStorage.getItem('locale');
+
 			locale.set(storedLocale ?? window.navigator.language);
+
 			waitLocale().then(() => {
 				ready = true;
 			});

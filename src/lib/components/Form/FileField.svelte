@@ -347,17 +347,17 @@
 		ondragover={onDragOver}
 		ondragleave={onDragOut}
 		class={cn(
-			'grid rounded-form border border-shade-600 transition-colors hover:bg-shade-900',
+			'rounded-form border-shade-600 hover:bg-shade-900 grid border transition-colors',
 			isDragging && 'border-primary bg-primary/10',
 			currentState === 'uploading' && 'border-primary',
 			currentState === 'complete' && 'border-white',
 			currentState === 'error' && 'border-destructive'
 		)}
 	>
-		<div class="z-10 col-1 row-1 flex items-center gap-sm p-sm">
+		<div class="gap-sm p-sm z-10 col-1 row-1 flex items-center">
 			<div
 				class={cn(
-					'thumbnail hidden size-form min-h-form min-w-form items-center justify-center overflow-hidden rounded-sm bg-shade-700 text-shade-400 md:flex',
+					'thumbnail size-form min-h-form min-w-form bg-shade-700 text-shade-400 hidden items-center justify-center overflow-hidden rounded-sm md:flex',
 					currentState === 'ready' && 'text-white',
 					currentState === 'uploading' && 'bg-shade-950/50 text-primary',
 					currentState === 'complete' && 'text-success',
@@ -379,23 +379,23 @@
 			<div class="flex flex-col">
 				{#if isDragging}
 					<p class="font-bold text-white">Let go to start uploading</p>
-					<p class="text-sm text-shade-300">Drop anywhere</p>
+					<p class="text-shade-300 text-sm">Drop anywhere</p>
 				{:else if currentState === 'idle'}
 					<p class="hidden font-bold text-white sm:block">
 						Drag and drop here or browse for a file
 					</p>
 					<p class="font-bold text-white sm:hidden">Browse for a file</p>
-					<p class="text-sm text-shade-300">No file chosen</p>
+					<p class="text-shade-300 text-sm">No file chosen</p>
 				{:else if currentState === 'ready'}
 					<p class="font-bold text-white">{files?.[0]?.name ?? 'Unknown'}</p>
-					<p class="text-sm text-shade-300">
+					<p class="text-shade-300 text-sm">
 						{mode === 'standard'
 							? `${((files?.[0]?.size ?? 0) / 1024 / 1024).toFixed(2)} MB`
 							: $t('Ready to upload')}
 					</p>
 				{:else if currentState === 'uploading'}
 					<p class="font-bold text-white">{files?.[0]?.name ?? 'Unknown'}</p>
-					<p class="text-sm text-shade-300" aria-live="polite">
+					<p class="text-shade-300 text-sm" aria-live="polite">
 						{#if progress === 100}
 							Processing...
 						{:else}
@@ -404,10 +404,10 @@
 					</p>
 				{:else if currentState === 'complete'}
 					<p class="font-bold text-white">{files?.[0]?.name ?? 'Unknown'}</p>
-					<p class="text-sm text-shade-300">Upload complete</p>
+					<p class="text-shade-300 text-sm">Upload complete</p>
 				{:else if currentState === 'error'}
 					<p class="font-bold text-white">{files?.[0]?.name ?? 'Unknown'}</p>
-					<p class="text-sm text-shade-300">Upload failed</p>
+					<p class="text-shade-300 text-sm">Upload failed</p>
 				{/if}
 			</div>
 			<div class={cn('ml-auto', isDragging && 'hidden')}>
@@ -437,9 +437,9 @@
 			</div>
 		</div>
 		{#if currentState === 'uploading'}
-			<div class="relative col-1 row-1 h-full overflow-hidden rounded-form">
+			<div class="rounded-form relative col-1 row-1 h-full overflow-hidden">
 				<progress
-					class="progress absolute left-0 top-0 z-0 h-full w-full bg-transparent"
+					class="progress absolute top-0 left-0 z-0 h-full w-full bg-transparent"
 					max="100"
 					value={progress}
 					aria-label="Upload progress"
@@ -450,7 +450,7 @@
 	</div>
 {/snippet}
 
-<div class="flex h-full w-full flex-col gap-xs">
+<div class="gap-xs flex h-full w-full flex-col">
 	<Label.Root for={field} {...labelProps} class={cn('font-bold', labelProps?.class)}>
 		{label}
 	</Label.Root>
@@ -458,16 +458,16 @@
 	{@render dropZone()}
 
 	<div class="flex justify-between">
-		<p class="text-sm text-shade-300">
+		<p class="text-shade-300 text-sm">
 			{`${$t('Supported file types')}: ${extensions.join(', ')}`}
 		</p>
-		<p class="text-sm text-shade-300">Max. {maxFileSize / 1024 / 1024} MB</p>
+		<p class="text-shade-300 text-sm">Max. {maxFileSize / 1024 / 1024} MB</p>
 	</div>
 	{#if $errors}
-		<ul class="flex flex-col gap-xs text-sm">
+		<ul class="gap-xs flex flex-col text-sm">
 			{#each $errors as error}
-				<li class="inline-flex items-center gap-2xs">
-					<XCircleIcon class="size-4 text-destructive" />
+				<li class="gap-2xs inline-flex items-center">
+					<XCircleIcon class="text-destructive size-4" />
 					{error}
 				</li>
 			{/each}
@@ -515,6 +515,8 @@
 </div>
 
 <style lang="postcss">
+	@reference "../../../app.css";
+
 	progress {
 		-webkit-appearance: none;
 		appearance: none;

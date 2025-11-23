@@ -12,6 +12,8 @@
 </Button>
 
 <style lang="postcss">
+	@reference "../../app.css";
+
 	.icon {
 		@apply h-4 w-4;
 	}

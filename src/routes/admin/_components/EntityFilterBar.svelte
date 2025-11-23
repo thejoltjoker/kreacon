@@ -14,14 +14,14 @@
 {/snippet}
 <section class="w-full">
 	<div class="mx-auto w-full">
-		<div class="flex items-center gap-sm">
+		<div class="gap-sm flex items-center">
 			{#if buttons}
 				{@render buttons()}
 			{:else if buttons === undefined}
 				{@render defaultButtons()}
 			{/if}
 
-			<div class="ml-auto inline-flex items-center gap-sm">
+			<div class="gap-sm ml-auto inline-flex items-center">
 				<TextFilter />
 			</div>
 		</div>
@@ -29,7 +29,9 @@
 </section>
 
 <style lang="postcss">
+	@reference "../../../app.css";
+
 	section {
-		@apply flex items-center justify-between gap-sm border-b border-b-divider px-sm py-sm md:px-xl;
+		@apply gap-sm border-b-divider px-sm py-sm md:px-xl flex items-center justify-between border-b;
 	}
 </style>

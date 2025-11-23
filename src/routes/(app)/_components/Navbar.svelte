@@ -37,7 +37,7 @@
 			<h1>{$t(title?.text ?? 'Kreacon')}</h1>
 			<p
 				class:hidden={!isAdminRoute}
-				class="text-xs uppercase tracking-widest text-shade-300 transition-colors group-hover:text-primary"
+				class="text-shade-300 group-hover:text-primary text-xs tracking-widest uppercase transition-colors"
 			>
 				{$t('Kreacon Admin')}
 			</p>
@@ -65,7 +65,7 @@
 	</HorizontalMenu>
 
 	<!-- User menu -->
-	<ul class="flex flex-1 items-center justify-end gap-sm">
+	<ul class="gap-sm flex flex-1 items-center justify-end">
 		{#if user && isAdminRoute}
 			<li>
 				<div class="hidden md:block">
@@ -111,9 +111,9 @@
 
 <!-- Mobile menu -->
 {#if isMenuOpen}
-	<div class="absolute left-0 top-0 z-10 h-full w-full bg-bg" transition:fly={{ y: -100 }}>
+	<div class="bg-bg absolute top-0 left-0 z-10 h-full w-full" transition:fly={{ y: -100 }}>
 		<div class="flex h-full items-center justify-center">
-			<ul class="flex flex-col gap-lg text-2xl">
+			<ul class="gap-lg flex flex-col text-2xl">
 				{#each menuItems as item}
 					<li
 						in:fly={{
@@ -130,7 +130,9 @@
 {/if}
 
 <style lang="postcss">
+	@reference "../../../app.css";
+
 	nav {
-		@apply flex items-center justify-between gap-sm border-b border-b-divider px-sm py-sm md:px-xl;
+		@apply gap-sm border-b-divider px-sm py-sm md:px-xl flex items-center justify-between border-b;
 	}
 </style>

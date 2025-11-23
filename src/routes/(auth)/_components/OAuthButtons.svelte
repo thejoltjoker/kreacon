@@ -17,7 +17,9 @@
 </section>
 
 <style lang="postcss">
+	@reference "../../../app.css";
+
 	.oauth-buttons {
-		@apply flex flex-col gap-sm;
+		@apply gap-sm flex flex-col;
 	}
 </style>

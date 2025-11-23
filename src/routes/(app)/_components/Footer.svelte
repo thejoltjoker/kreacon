@@ -12,9 +12,9 @@
 	});
 </script>
 
-<footer class="flex w-full flex-wrap items-center justify-between px-xl py-xl text-shade-300">
+<footer class="px-xl py-xl text-shade-300 flex w-full flex-wrap items-center justify-between">
 	<p class="flex-1">Kreacon &copy; {new Date().getFullYear()}</p>
-	<ul class="flex flex-1 items-center justify-center gap-sm">
+	<ul class="gap-sm flex flex-1 items-center justify-center">
 		{#each Object.keys(locales) as lc}
 			<li>
 				<button onclick={() => changeLanguage(lc)} class:active={$locale?.startsWith(lc)}>
@@ -23,13 +23,15 @@
 			</li>
 		{/each}
 	</ul>
-	<ul class="flex flex-1 justify-end gap-sm">
+	<ul class="gap-sm flex flex-1 justify-end">
 		<li><a href="/privacy-policy">{$t('Privacy')}</a></li>
 		<li><a href="/terms-of-service">{$t('Terms')}</a></li>
 	</ul>
 </footer>
 
 <style lang="postcss">
+	@reference "../../../app.css";
+
 	a,
 	button {
 		@apply text-shade-300 hover:text-primary;
