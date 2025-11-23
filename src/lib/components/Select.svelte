@@ -27,7 +27,7 @@
 							{label}
 						</span>
 						<span
-							class="hidden items-center justify-center text-primary group-data-[selected]:flex"
+							class="hidden items-center justify-center text-primary group-data-selected:flex"
 						>
 							<DotIcon class="h-form w-form" />
 						</span>

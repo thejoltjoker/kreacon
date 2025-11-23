@@ -1,12 +1,73 @@
-@import url('https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&family=Noto+Color+Emoji&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&family=Noto+Color+Emoji&display=swap')
+layer(base);
 
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+@import 'tailwindcss';
+
+@config '../tailwind.config.ts';
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
+
+@utility error {
+  @apply text-destructive;
+}
+
+@utility input-valid {
+  @apply border-success! focus:ring-success!;
+}
+
+@utility input-invalid {
+  @apply border-error! focus:border-error! focus:ring-error!;
+}
+
+@utility card {
+  @apply rounded-lg bg-muted-background p-lg;
+}
+
+@utility combobox {
+  & .input {
+    @apply flex h-form w-full items-center justify-between rounded-form border border-muted-foreground bg-bg text-white data-active:border-white;
+  }
+}
+
+@utility combobox-trigger {
+  @apply absolute right-0 top-1/2 z-30 flex size-form -translate-y-1/2 items-center justify-center;
+}
+
+@utility combobox-item {
+  @apply flex h-form cursor-pointer items-center justify-between rounded-form pl-sm hover:bg-muted-foreground! data-disabled:cursor-default! data-disabled:bg-transparent! data-highlighted:bg-muted-foreground data-selected:font-bold data-disabled:text-muted-foreground data-selected:text-white;
+}
+
+@utility select-trigger {
+  @apply flex h-form w-full items-center justify-between rounded-form border border-muted-foreground px-md text-left text-white data-[state=open]:border-violet-500;
+}
+
+@utility select-content {
+  @apply mt-sm w-(--bits-select-anchor-width) rounded-form border border-muted-background bg-muted-background p-xs;
+}
+
+@utility select-item {
+  @apply flex h-form cursor-pointer items-center justify-between rounded-form pl-sm hover:bg-muted-foreground! data-disabled:cursor-default! data-disabled:bg-transparent! data-selected:font-bold data-disabled:text-muted-foreground;
+}
 
 @layer base {
 	* {
-		@apply scroll-smooth focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-shade-400 focus-visible:ring-0 focus-visible:ring-offset-0;
+		@apply scroll-smooth focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-shade-400 focus-visible:ring-0 focus-visible:ring-offset-0;
 	}
 
 	html {
@@ -69,59 +130,16 @@
 	/* input[type='text'], */
 	input[type='email'],
 	input[type='password'] {
-		@apply h-form w-full rounded-sm border border-muted-foreground bg-bg px-3 py-2 focus:border-violet-500 focus:outline-none focus:ring-violet-500;
+		@apply h-form w-full rounded-sm border border-muted-foreground bg-bg px-3 py-2 focus:border-violet-500 focus:outline-hidden focus:ring-violet-500;
 	}
 	.input {
-		@apply h-form w-full rounded-sm border border-muted-foreground bg-bg px-3 py-2 focus:border-violet-500 focus:outline-none focus:ring-violet-500;
+		@apply h-form w-full rounded-sm border border-muted-foreground bg-bg px-3 py-2 focus:border-violet-500 focus:outline-hidden focus:ring-violet-500;
 	}
 
 	media-tooltip {
-		--media-font-weight: theme('fontWeight.bold');
-		--media-font-size: theme('fontSize.sm');
-		--media-font-family: theme('fontFamily.sans');
+		--media-font-weight: var(--font-weight-bold);
+		--media-font-size: var(--text-sm);
+		--media-font-family: var(--font-sans);
 		--media-tooltip-background-color: red;
-	}
-}
-
-@layer components {
-	.error {
-		@apply text-destructive;
-	}
-
-	.input-valid {
-		@apply !border-success focus:!ring-success;
-	}
-
-	.input-invalid {
-		@apply !border-error focus:!border-error focus:!ring-error;
-	}
-
-	.card {
-		@apply rounded-lg bg-muted-background p-lg;
-	}
-
-	.combobox {
-		& .input {
-			@apply flex h-form w-full items-center justify-between rounded-form border border-muted-foreground bg-bg text-white data-[active]:border-white;
-		}
-	}
-
-	.combobox-trigger {
-		@apply absolute right-0 top-1/2 z-30 flex size-form -translate-y-1/2 items-center justify-center;
-	}
-
-	.combobox-item {
-		@apply flex h-form cursor-pointer items-center justify-between rounded-form pl-sm hover:!bg-muted-foreground data-[disabled]:!cursor-default data-[disabled]:!bg-transparent data-[highlighted]:bg-muted-foreground data-[selected]:font-bold data-[disabled]:text-muted-foreground data-[selected]:text-white;
-	}
-
-	.select-trigger {
-		@apply flex h-form w-full items-center justify-between rounded-form border border-muted-foreground px-md text-left text-white data-[state=open]:border-violet-500;
-	}
-
-	.select-content {
-		@apply mt-sm w-[var(--bits-select-anchor-width)] rounded-form border border-muted-background bg-muted-background p-xs;
-	}
-	.select-item {
-		@apply flex h-form cursor-pointer items-center justify-between rounded-form pl-sm hover:!bg-muted-foreground data-[disabled]:!cursor-default data-[disabled]:!bg-transparent data-[selected]:font-bold data-[disabled]:text-muted-foreground;
 	}
 }

@@ -25,7 +25,7 @@
 						class="group group grid aspect-square h-full w-full items-center justify-center gap-sm overflow-hidden rounded-form border-2 border-dashed border-shade-700 transition-colors hover:border-primary hover:bg-squid-950/50"
 					>
 						<div
-							class="relative col-[1] row-[1] flex h-full w-full items-center justify-center bg-transparent backdrop-blur-sm transition-all group-hover:bg-transparent group-hover:text-3xl group-hover:backdrop-blur-none"
+							class="relative col-1 row-1 flex h-full w-full items-center justify-center bg-transparent backdrop-blur-sm transition-all group-hover:bg-transparent group-hover:text-3xl group-hover:backdrop-blur-none"
 						>
 							<SmilePlusIcon
 								class="size-10 text-shade-300 transition-all group-hover:scale-110 group-hover:text-white"

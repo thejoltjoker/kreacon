@@ -4,7 +4,7 @@
 </script>
 
 <section class="w-full border-y border-shade-700 px-md py-8xl">
-	<div class="mx-auto max-w-screen-md text-center">
+	<div class="mx-auto max-w-(--breakpoint-md) text-center">
 		<h2 class="mb-xl text-4xl font-bold">{$t('Join the community today')}</h2>
 		<p class="mb-3xl text-lg text-shade-300">
 			{$t('Start sharing your creations with the world. Sign up now and get started in seconds.')}
@@ -14,7 +14,7 @@
 			<input
 				type="email"
 				placeholder={$t('Enter your email')}
-				class="max-w-screen-sm flex-grow rounded-form border border-shade-200 px-lg py-md"
+				class="max-w-(--breakpoint-sm) grow rounded-form border border-shade-200 px-lg py-md"
 				required
 			/>
 			<Button href="/register">{$t('Sign up')}</Button>

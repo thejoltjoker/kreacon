@@ -21,7 +21,7 @@
 
 <main class="mx-auto flex w-full flex-col items-center gap-8xl overflow-hidden md:gap-[20vh]">
 	<HeroSection />
-	<section class="flex w-full max-w-screen-xl flex-col gap-xl py-xl">
+	<section class="flex w-full max-w-(--breakpoint-xl) flex-col gap-xl py-xl">
 		<AnimateOnScroll id="animated-content-block-1">
 			<ContentBlock alignment="right" imageUrl={skeletonPileImage} imageAlt="Monster" flipImageX>
 				{#snippet content()}

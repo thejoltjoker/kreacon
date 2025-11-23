@@ -40,6 +40,6 @@
 
 <div class="horizon">
 	<div
-		class="fixed bottom-0 left-0 -z-10 h-[50vh] w-screen bg-gradient-to-t from-[hsl(246,30%,9%)]"
+		class="fixed bottom-0 left-0 -z-10 h-[50vh] w-screen bg-linear-to-t from-[hsl(246,30%,9%)]"
 	></div>
 </div>

@@ -57,7 +57,7 @@
 
 {#key currentSlideNumber}
 	<div
-		class="absolute left-0 top-0 z-[150] flex h-screen w-screen flex-col items-center justify-center"
+		class="absolute left-0 top-0 z-150 flex h-screen w-screen flex-col items-center justify-center"
 		in:fade={{ delay: transitionDuration, duration: transitionDuration }}
 		out:fade={{ duration: transitionDuration }}
 	>
@@ -65,10 +65,10 @@
 	</div>
 {/key}
 <div
-	class="absolute left-0 top-0 z-[100] flex h-screen w-screen flex-col items-center justify-center bg-bg"
+	class="absolute left-0 top-0 z-100 flex h-screen w-screen flex-col items-center justify-center bg-bg"
 ></div>
 <div class="horizon">
 	<div
-		class="fixed bottom-0 left-0 z-[110] h-[50vh] w-screen bg-gradient-to-t from-[hsl(246,30%,9%)]"
+		class="fixed bottom-0 left-0 z-110 h-[50vh] w-screen bg-linear-to-t from-[hsl(246,30%,9%)]"
 	></div>
 </div>

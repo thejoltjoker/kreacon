@@ -22,7 +22,7 @@
 	let noEvents = $derived(Object.values(groupedEvents).every((events) => events.length === 0));
 </script>
 
-<main class="flex h-full w-full max-w-screen-lg grow flex-col gap-xl px-sm pt-xl">
+<main class="flex h-full w-full max-w-(--breakpoint-lg) grow flex-col gap-xl px-sm pt-xl">
 	{#each Object.entries(groupedEvents) as [group, events]}
 		{#if events.length > 0}
 			<section class="flex flex-col gap-sm">

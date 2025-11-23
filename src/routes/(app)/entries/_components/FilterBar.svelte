@@ -75,7 +75,7 @@
 	<div class="relative shrink grow basis-[640px] overflow-hidden">
 		<div
 			class:hidden={!canScrollLeft}
-			class="justify-left absolute left-0 top-1/2 z-10 flex h-form w-[96px] -translate-y-1/2 items-center bg-gradient-to-r from-bg via-bg"
+			class="justify-left absolute left-0 top-1/2 z-10 flex h-form w-[96px] -translate-y-1/2 items-center bg-linear-to-r from-bg via-bg"
 		>
 			<Button size="icon" variant="outline" onclick={scrollLeft} class="bg-bg">
 				<ChevronLeftIcon />
@@ -83,7 +83,7 @@
 		</div>
 		<div
 			class:hidden={!canScrollRight}
-			class="absolute right-0 top-1/2 z-10 flex h-form w-[96px] -translate-y-1/2 items-center justify-end bg-gradient-to-l from-bg via-bg"
+			class="absolute right-0 top-1/2 z-10 flex h-form w-[96px] -translate-y-1/2 items-center justify-end bg-linear-to-l from-bg via-bg"
 		>
 			<Button size="icon" variant="outline" onclick={scrollRight} class="bg-bg">
 				<ChevronRightIcon />

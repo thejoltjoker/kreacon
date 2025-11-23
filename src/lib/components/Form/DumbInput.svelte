@@ -56,7 +56,7 @@
 			variant: {
 				default:
 					'focus:border-violet-500 bg-bg focus:ring-violet-500 focus:placeholder:text-muted-background-alt disabled:border-muted-foreground disabled:bg-muted-background/50 disabled:text-muted-foreground-alt',
-				ghost: '!border-transparent bg-transparent rounded-none !p-0 text-muted-foreground-alt'
+				ghost: 'border-transparent! bg-transparent rounded-none p-0! text-muted-foreground-alt'
 			}
 		},
 		defaultVariants: {

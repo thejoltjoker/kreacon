@@ -19,7 +19,7 @@
 				{#if open}
 					<div {...props} transition:fly={{ y: 10, duration: 100 }}>
 						<div
-							class="shadow-popover z-10 flex max-w-screen-sm items-center justify-center rounded-form border border-shade-700 bg-shade-900 p-sm text-sm outline-none"
+							class="shadow-popover z-10 flex max-w-(--breakpoint-sm) items-center justify-center rounded-form border border-shade-700 bg-shade-900 p-sm text-sm outline-none"
 						>
 							<div class="flex flex-col gap-sm">
 								<div class="inline-flex items-center justify-between">

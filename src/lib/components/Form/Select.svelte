@@ -31,18 +31,18 @@
 	</Select.Trigger>
 	<Select.Portal>
 		<Select.Content
-			class="mt-sm w-[var(--bits-select-anchor-width)] rounded-form border border-muted-background bg-muted-background p-xs"
+			class="mt-sm w-(--bits-select-anchor-width) rounded-form border border-muted-background bg-muted-background p-xs"
 		>
 			<Select.Viewport>
 				{#each items as item}
 					<Select.Item
 						{...item}
 						disabled={item.disabled}
-						class="group flex h-form cursor-pointer items-center justify-between rounded-form pl-sm hover:!bg-muted-foreground data-[disabled]:!cursor-default data-[disabled]:!bg-transparent data-[selected]:font-bold data-[disabled]:text-muted-foreground"
+						class="group flex h-form cursor-pointer items-center justify-between rounded-form pl-sm hover:bg-muted-foreground! data-disabled:cursor-default! data-disabled:bg-transparent! data-selected:font-bold data-disabled:text-muted-foreground"
 					>
 						<span>{item.label}</span>
 						<span
-							class="hidden items-center justify-center text-primary group-data-[selected]:flex"
+							class="hidden items-center justify-center text-primary group-data-selected:flex"
 						>
 							<DotIcon class="h-form w-form" />
 						</span>

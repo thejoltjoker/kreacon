@@ -354,7 +354,7 @@
 			currentState === 'error' && 'border-destructive'
 		)}
 	>
-		<div class="z-10 col-[1] row-[1] flex items-center gap-sm p-sm">
+		<div class="z-10 col-1 row-1 flex items-center gap-sm p-sm">
 			<div
 				class={cn(
 					'thumbnail hidden size-form min-h-form min-w-form items-center justify-center overflow-hidden rounded-sm bg-shade-700 text-shade-400 md:flex',
@@ -437,7 +437,7 @@
 			</div>
 		</div>
 		{#if currentState === 'uploading'}
-			<div class="relative col-[1] row-[1] h-full overflow-hidden rounded-form">
+			<div class="relative col-1 row-1 h-full overflow-hidden rounded-form">
 				<progress
 					class="progress absolute left-0 top-0 z-0 h-full w-full bg-transparent"
 					max="100"

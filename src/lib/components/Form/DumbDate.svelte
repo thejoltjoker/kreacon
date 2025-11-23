@@ -34,7 +34,7 @@
 		<DateField.Input
 			{name}
 			class={cn(
-				'group flex h-form w-fit select-none items-center rounded-form border border-muted-foreground bg-bg px-xs text-muted-foreground-alt transition-colors focus-within:border-primary focus-within:shadow-sm hover:border-white data-[invalid]:border-destructive',
+				'group flex h-form w-fit select-none items-center rounded-form border border-muted-foreground bg-bg px-xs text-muted-foreground-alt transition-colors focus-within:border-primary focus-within:shadow-sm hover:border-white data-invalid:border-destructive',
 				isChanged && 'border-white',
 				inputProps?.class
 			)}
@@ -50,7 +50,7 @@
 						{:else}
 							<DateField.Segment
 								{part}
-								class="rounded-xs px-2xs py-2xs focus:bg-muted-background focus:text-white focus-visible:!outline-none focus-visible:!outline-0"
+								class="rounded-xs px-2xs py-2xs focus:bg-muted-background focus:text-white focus-visible:outline-none! focus-visible:outline-0!"
 							>
 								{value}
 							</DateField.Segment>

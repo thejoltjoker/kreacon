@@ -36,7 +36,7 @@
 			sideOffset={12}
 			{...contentProps}
 			class={cn(
-				'z-40 flex max-h-[80vh] w-[var(--bits-dropdown-anchor-width)] min-w-[200px] flex-col rounded-form border border-shade-600 bg-shade-900 p-xs',
+				'z-40 flex max-h-[80vh] w-(--bits-dropdown-anchor-width) min-w-[200px] flex-col rounded-form border border-shade-600 bg-shade-900 p-xs',
 				contentProps?.class
 			)}
 		>
@@ -46,7 +46,7 @@
 						{...actionItem}
 						textValue={label}
 						class={cn(
-							'flex cursor-pointer items-center justify-start gap-sm rounded-sm px-md py-sm transition-colors hover:bg-shade-800 data-[highlighted]:bg-shade-800',
+							'flex cursor-pointer items-center justify-start gap-sm rounded-sm px-md py-sm transition-colors hover:bg-shade-800 data-highlighted:bg-shade-800',
 							actionItem.class
 						)}
 						onclick={() => onClick(item)}

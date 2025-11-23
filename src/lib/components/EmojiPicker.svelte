@@ -60,7 +60,7 @@
 				class="flex h-full w-full flex-col self-start overflow-hidden rounded-form border border-shade-700 bg-bg p-sm"
 			>
 				<Command.Input
-					class="disabled:bg-muted-backgrountitle mb-sm h-form rounded-form border-shade-600 bg-bg focus:border-violet-500 focus:ring-violet-500 focus:placeholder:text-shade-600 disabled:border-shade-400 disabled:text-shade-400 [&:read-only]:border-shade-400 [&:read-only]:bg-muted-background/50 [&:read-only]:text-shade-400 [&:user-invalid]:border-red-500 [&:user-invalid]:focus:border-red-500 [&:user-invalid]:focus:ring-red-500"
+					class="disabled:bg-muted-backgrountitle mb-sm h-form rounded-form border-shade-600 bg-bg focus:border-violet-500 focus:ring-violet-500 focus:placeholder:text-shade-600 disabled:border-shade-400 disabled:text-shade-400 read-only:border-shade-400 read-only:bg-muted-background/50 read-only:text-shade-400 user-invalid:border-red-500 user-invalid:focus:border-red-500 user-invalid:focus:ring-red-500"
 					placeholder="Express yourself..."
 				/>
 				<Command.List class="max-h-[280px] overflow-y-auto overflow-x-hidden">

@@ -54,7 +54,7 @@
 							{page}
 							class={cn(
 								buttonBaseClass,
-								'data-[selected]:bg-shade-800 data-[selected]:text-white data-[selected]:hover:bg-shade-700'
+								'data-selected:bg-shade-800 data-selected:text-white data-selected:hover:bg-shade-700'
 							)}
 						>
 							{page.value}

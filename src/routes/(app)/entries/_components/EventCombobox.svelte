@@ -51,7 +51,7 @@
 		onOpenChange={handleOpenChange}
 		onValueChange={handleValueChange}
 	>
-		<div class="input pl-md data-[active]:font-bold" data-active={isActive}>
+		<div class="input pl-md data-active:font-bold" data-active={isActive}>
 			<p class="font-bold">Event:</p>
 			<Combobox.Input
 				bind:ref={inputRef}
@@ -75,7 +75,7 @@
 		<Combobox.Portal>
 			<Combobox.Content
 				{customAnchor}
-				class="z-30 w-[var(--bits-combobox-anchor-width)] rounded-form border border-muted-background bg-muted-background p-xs"
+				class="z-30 w-(--bits-combobox-anchor-width) rounded-form border border-muted-background bg-muted-background p-xs"
 				sideOffset={10}
 			>
 				{#if filteredItems.length > 0}
@@ -84,7 +84,7 @@
 							{#snippet children()}
 								{item.label}
 								<span
-									class="hidden items-center justify-center text-primary group-data-[selected]:flex"
+									class="hidden items-center justify-center text-primary group-data-selected:flex"
 								>
 									<DotIcon class="h-form w-form" />
 								</span>

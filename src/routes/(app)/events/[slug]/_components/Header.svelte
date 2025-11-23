@@ -8,7 +8,7 @@
 	<h1 class="text-center text-4xl font-bold md:text-5xl">
 		{event.name}
 	</h1>
-	<p class="text-center text-xl text-shade-300 [text-wrap:balance]">
+	<p class="text-center text-xl text-shade-300 text-balance">
 		{event.tagline}
 	</p>
 </header>

@@ -39,7 +39,7 @@
 	const mergedInputProps = $derived(mergeProps(inputProps, { oninput: handleInput }));
 
 	const contentClassName = cn(
-		'w-[var(--bits-combobox-anchor-width)] rounded-form border border-muted-background bg-muted-background p-xs',
+		'w-(--bits-combobox-anchor-width) rounded-form border border-muted-background bg-muted-background p-xs',
 		contentProps?.class
 	);
 	let active = $derived(value != '' ? true : null);
@@ -59,7 +59,7 @@
 						{#snippet children()}
 							{item.label}
 							<span
-								class="hidden items-center justify-center text-primary group-data-[selected]:flex"
+								class="hidden items-center justify-center text-primary group-data-selected:flex"
 							>
 								<DotIcon class="h-form w-form" />
 							</span>

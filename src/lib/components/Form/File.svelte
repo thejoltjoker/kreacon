@@ -26,7 +26,7 @@
 	let dropZoneClassName = $derived(
 		cn(
 			'flex min-h-[30vh] aspect-square flex-col items-center justify-center border-2 border-dashed border-muted-foreground rounded-form transition',
-			isDragging && 'bg-squid-950/25 border-primary !text-white'
+			isDragging && 'bg-squid-950/25 border-primary text-white!'
 		)
 	);
 

@@ -27,7 +27,7 @@
 	<Dialog.Portal>
 		<Dialog.Overlay class="fixed inset-0 z-50 bg-black/80" />
 		<Dialog.Content
-			class="card fixed left-1/2 top-1/2 z-50 w-full max-w-[94%] -translate-x-1/2 -translate-y-1/2 overflow-hidden border border-muted-foreground bg-bg p-0 shadow-lg outline-none sm:max-w-screen-sm md:w-full"
+			class="card fixed left-1/2 top-1/2 z-50 w-full max-w-[94%] -translate-x-1/2 -translate-y-1/2 overflow-hidden border border-muted-foreground bg-bg p-0 shadow-lg outline-none sm:max-w-(--breakpoint-sm) md:w-full"
 		>
 			<form method="POST" action="?/addTicket" use:ticketEnhance>
 				<Dialog.Title

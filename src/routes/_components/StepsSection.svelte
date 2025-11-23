@@ -13,7 +13,7 @@
 	</div>
 {/snippet}
 
-<section class="flex w-full max-w-screen-xl flex-col items-center">
+<section class="flex w-full max-w-(--breakpoint-xl) flex-col items-center">
 	<h2 class="text-center text-4xl font-bold">How It Works</h2>
 	<div class="grid w-full grid-cols-1 gap-xl md:grid-cols-3">
 		{@render item(
