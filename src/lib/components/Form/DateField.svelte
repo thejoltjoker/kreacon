@@ -65,7 +65,7 @@
 	let placeholder = initialValue;
 </script>
 
-<div class="flex flex-col gap-xs">
+<div class="gap-xs flex flex-col">
 	<!-- <StyledInput
 		name={field}
 		type="text"
@@ -85,20 +85,20 @@
 		}}
 		hourCycle={24}
 	>
-		<div class={cn('relative flex w-fit flex-col gap-sm', isChanged && 'text-white', className)}>
+		<div class={cn('gap-sm relative flex w-fit flex-col', isChanged && 'text-white', className)}>
 			<DateField.Label {...labelProps} class="font-bold text-white">{label}</DateField.Label>
 			<DateField.Input
 				aria-invalid={$errors ? 'true' : undefined}
 				{...$constraints}
 				class={cn(
-					'group flex h-form w-fit select-none items-center rounded-form border border-muted-foreground bg-bg px-xs text-muted-foreground-alt transition-colors focus-within:border-primary focus-within:shadow-sm hover:border-white data-invalid:border-destructive',
+					'group h-form rounded-form border-muted-foreground bg-bg px-xs text-muted-foreground-alt focus-within:border-primary data-invalid:border-destructive flex w-fit items-center border transition-colors select-none focus-within:shadow-sm hover:border-white',
 					isChanged && 'border-white text-white',
 					inputProps?.class
 				)}
 				{...inputProps}
 			>
 				{#snippet children({ segments })}
-					{#each segments as { part, value }}
+					{#each segments as { part, value }, i (i)}
 						<div class="inline-block select-none">
 							{#if part === 'literal'}
 								<DateField.Segment {part} class="text-shade-400">
@@ -107,7 +107,7 @@
 							{:else}
 								<DateField.Segment
 									{part}
-									class="rounded-xs px-2xs py-2xs focus:bg-shade-600 focus:text-white focus-visible:outline-none! focus-visible:outline-0!"
+									class="px-2xs py-2xs focus:bg-shade-600 rounded-xs focus:text-white focus-visible:outline-0! focus-visible:outline-none!"
 								>
 									{value}
 								</DateField.Segment>
@@ -118,7 +118,7 @@
 						<Icon
 							{...iconProps}
 							class={cn(
-								'ml-sm mr-2xs size-5 text-muted-foreground transition-colors group-focus-within:text-white',
+								'ml-sm mr-2xs text-muted-foreground size-5 transition-colors group-focus-within:text-white',
 								isChanged && 'text-white',
 								iconProps?.class
 							)}
@@ -130,10 +130,10 @@
 	</DateField.Root>
 
 	{#if $errors}
-		<ul class="flex flex-col gap-xs text-sm">
-			{#each $errors as error}
-				<li class="inline-flex items-center gap-2xs">
-					<XCircleIcon class="size-4 text-destructive" />
+		<ul class="gap-xs flex flex-col text-sm">
+			{#each $errors as error, i (i)}
+				<li class="gap-2xs inline-flex items-center">
+					<XCircleIcon class="text-destructive size-4" />
 					{error}
 				</li>
 			{/each}

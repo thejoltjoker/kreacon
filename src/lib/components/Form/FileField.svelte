@@ -303,9 +303,6 @@
 	$effect(() => {
 		if (mode === 'standard' && files != null) $value = files;
 	});
-
-	$inspect(typeof $form[field]);
-	$inspect($form[field]);
 </script>
 
 {#snippet debugView()}
@@ -465,7 +462,7 @@
 	</div>
 	{#if $errors}
 		<ul class="gap-xs flex flex-col text-sm">
-			{#each $errors as error}
+			{#each $errors as error, i (i)}
 				<li class="gap-2xs inline-flex items-center">
 					<XCircleIcon class="text-destructive size-4" />
 					{error}

@@ -16,7 +16,9 @@
 </script>
 
 {#if entry != null}
-	<main class="flex w-full max-w-(--breakpoint-lg) flex-col gap-sm px-sm pt-sm md:gap-xl md:px-xl md:pt-xl">
+	<main
+		class="gap-sm px-sm pt-sm md:gap-xl md:px-xl md:pt-xl flex w-full max-w-(--breakpoint-lg) flex-col"
+	>
 		<HeaderSection {entry} {user} bind:isVoted {isOpenForVoting} />
 		<MediaSection {entry} />
 		<InfoSection {entry} {user} bind:isVoted {isOpenForVoting} />

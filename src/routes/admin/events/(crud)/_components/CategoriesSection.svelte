@@ -37,7 +37,7 @@
 		Add Category
 	</Button>
 </div>
-{#each $form.categories as _, index}
+{#each $form.categories as _, index (index)}
 	<CategoryInput
 		category={$form.categories[index]}
 		setCategory={(data) => ($form.categories[index] = data)}

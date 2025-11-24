@@ -16,7 +16,7 @@
 <li>
 	<a
 		href={reaction.url}
-		class="group grid aspect-square items-center justify-center gap-sm overflow-hidden rounded-form bg-shade-800"
+		class="group gap-sm rounded-form bg-shade-800 grid aspect-square items-center justify-center overflow-hidden"
 	>
 		<img
 			src={reaction.image.src}

@@ -20,9 +20,9 @@
 	let isOwner = $derived(user?.username === entry?.user?.username);
 </script>
 
-<section id="entry-header" class="flex flex-col gap-sm md:gap-xl">
-	<div class="flex flex-wrap items-center justify-between gap-xs">
-		<div id="entry-header-title" class="inline-flex items-center gap-xs">
+<section id="entry-header" class="gap-sm md:gap-xl flex flex-col">
+	<div class="gap-xs flex flex-wrap items-center justify-between">
+		<div id="entry-header-title" class="gap-xs inline-flex items-center">
 			<h1 class="text-2xl font-bold">
 				{entry.title}
 			</h1>
@@ -39,7 +39,7 @@
 		<a href={`/entries?category=${entry.category.id}`}>
 			<h2
 				id="entry-header-category"
-				class="text-xl text-secondary transition-colors hover:text-tertiary"
+				class="text-secondary hover:text-tertiary text-xl transition-colors"
 			>
 				{entry.category.name}
 			</h2>
@@ -56,7 +56,7 @@
 			/>
 			<div class="flex flex-col">
 				<h3 class="text-lg font-bold">{entry.user?.username}</h3>
-				<span class="text-sm text-shade-300">
+				<span class="text-shade-300 text-sm">
 					{formatRelativeTime(entry.createdAt)}
 				</span>
 			</div>

@@ -47,7 +47,7 @@
 		{value}
 		{label}
 		{disabled}
-		class="flex cursor-pointer items-center justify-between gap-sm rounded-sm px-md py-sm transition-colors hover:bg-shade-800 data-disabled:cursor-default! data-disabled:bg-transparent! data-highlighted:bg-shade-800 data-selected:bg-shade-700 data-selected:font-bold data-disabled:text-shade-300 data-selected:hover:bg-shade-800"
+		class="gap-sm px-md py-sm hover:bg-shade-800 data-highlighted:bg-shade-800 data-selected:bg-shade-700 data-disabled:text-shade-300 data-selected:hover:bg-shade-800 flex cursor-pointer items-center justify-between rounded-sm transition-colors data-disabled:cursor-default! data-disabled:bg-transparent! data-selected:font-bold"
 	>
 		{#snippet children({ selected })}
 			{label}
@@ -65,7 +65,7 @@
 <Select.Root bind:value={value as any} {...props}>
 	<Select.Trigger
 		class={cn(
-			'inline-flex h-form w-full items-center justify-between gap-xs text-nowrap rounded-form border border-shade-600 bg-shade-950 pl-md pr-sm text-shade-300 transition hover:border-shade-600/80 hover:bg-shade-900 data-[state=open]:border-violet-500',
+			'h-form gap-xs rounded-form border-shade-600 bg-shade-950 pl-md pr-sm text-shade-300 hover:border-shade-600/80 hover:bg-shade-900 inline-flex w-full items-center justify-between border text-nowrap transition data-[state=open]:border-violet-500',
 			value != null &&
 				value !== '' &&
 				String(value) !== '0' &&
@@ -82,12 +82,12 @@
 			sideOffset={12}
 			{...contentProps}
 			class={cn(
-				'z-40 flex max-h-[80vh] w-(--bits-select-anchor-width) flex-col rounded-form border border-shade-600 bg-shade-900 p-xs',
+				'rounded-form border-shade-600 bg-shade-900 p-xs z-40 flex max-h-[80vh] w-(--bits-select-anchor-width) flex-col border',
 				contentProps?.class
 			)}
 		>
 			<Select.ScrollUpButton
-				class="z-50 flex items-center justify-center rounded-full py-2xs hover:bg-shade-800 focus-visible:bg-shade-800"
+				class="py-2xs hover:bg-shade-800 focus-visible:bg-shade-800 z-50 flex items-center justify-center rounded-full"
 			>
 				<ChevronUpIcon class="size-4" />
 			</Select.ScrollUpButton>
@@ -97,13 +97,13 @@
 				{/each}
 
 				{#if items.length == 0}
-					<Select.Item value="" class="cursor-pointer rounded-form p-sm hover:bg-muted-background">
+					<Select.Item value="" class="rounded-form p-sm hover:bg-muted-background cursor-pointer">
 						No items found
 					</Select.Item>
 				{/if}
 			</Select.Viewport>
 			<Select.ScrollDownButton
-				class="z-50 flex items-center justify-center rounded-full py-2xs hover:bg-shade-800 focus-visible:bg-shade-800"
+				class="py-2xs hover:bg-shade-800 focus-visible:bg-shade-800 z-50 flex items-center justify-center rounded-full"
 			>
 				<ChevronDownIcon class="size-4" />
 			</Select.ScrollDownButton>

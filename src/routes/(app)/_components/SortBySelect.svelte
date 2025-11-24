@@ -1,9 +1,11 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
+	import { resolve } from '$app/paths';
 	import StyledSelect from '$lib/components/Form/StyledSelect.svelte';
 	import { t } from '$lib/i18n';
 	import { ArrowDownUpIcon } from 'lucide-svelte';
+	import { SvelteURLSearchParams } from 'svelte/reactivity';
 
 	type Props = {
 		items: { value: string; label: string; disabled?: boolean }[];
@@ -17,10 +19,10 @@
 	const selectedLabel = $derived(items.find((item) => item.value === value)?.label);
 
 	const handleSortByChange = (sortBy: string) => {
-		const params = new URLSearchParams($page.url.searchParams);
+		const params = new SvelteURLSearchParams($page.url.searchParams);
 		params.set('sortBy', sortBy);
 		value = sortBy;
-		goto(`?${params.toString()}`);
+		goto(resolve(`?${params.toString()}`), { replaceState: true });
 	};
 </script>
 

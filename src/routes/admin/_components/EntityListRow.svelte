@@ -18,11 +18,11 @@
 </script>
 
 <li
-	class="flex flex-wrap gap-sm border-b border-b-divider px-xl py-sm first-of-type:pt-sm last-of-type:border-b-0 hover:bg-shade-900"
+	class="gap-sm border-b-divider px-xl py-sm first-of-type:pt-sm hover:bg-shade-900 flex flex-wrap border-b last-of-type:border-b-0"
 >
 	{#if hasThumbnail}
 		<div
-			class="flex size-form min-w-form items-center justify-center overflow-hidden rounded-form outline outline-[1px] outline-offset-2 outline-shade-700"
+			class="size-form min-w-form rounded-form outline-shade-700 flex items-center justify-center overflow-hidden outline outline-[1px] outline-offset-2"
 		>
 			<img
 				src={item.thumbnailUrl}
@@ -31,7 +31,7 @@
 			/>
 		</div>
 	{/if}
-	{#each fieldsToRender as field}
+	{#each fieldsToRender as field (field.name)}
 		{#if field.customField}
 			{@const CustomField = field.customField}
 			<CustomField {field} {item} />

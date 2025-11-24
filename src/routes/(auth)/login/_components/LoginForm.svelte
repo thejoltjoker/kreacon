@@ -15,7 +15,7 @@
 	const redirect = $page.url.searchParams.get('redirect');
 </script>
 
-<form method="POST" action="/login?/login" use:enhance class="flex w-full flex-col gap-xl">
+<form method="POST" action="/login?/login" use:enhance class="gap-xl flex w-full flex-col">
 	<TextField {superform} type="email" field="email" label="Email" />
 	<TextField {superform} type="password" field="password" label="Password" />
 	<input type="text" name="redirect" value={redirect} hidden />

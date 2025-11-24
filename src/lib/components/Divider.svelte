@@ -32,7 +32,7 @@
 </script>
 
 {#if children}
-	<div class="flex h-form items-center gap-sm text-center text-sm">
+	<div class="h-form gap-sm flex items-center text-center text-sm">
 		<div class={cn('flex-1', classes, className)}></div>
 		{@render children()}
 		<div class={cn('flex-1', classes, className)}></div>

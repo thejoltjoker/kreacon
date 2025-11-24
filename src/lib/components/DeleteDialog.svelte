@@ -31,20 +31,20 @@
 </script>
 
 {#snippet confirmLabel()}
-	<p class="text-base font-bold text-muted-foreground-alt">
-		Write "<span class="select-none text-white">{confirmationText}</span>" below to confirm.
+	<p class="text-muted-foreground-alt text-base font-bold">
+		Write "<span class="text-white select-none">{confirmationText}</span>" below to confirm.
 	</p>
 {/snippet}
 
 <DumbDialog title="Delete {entity}" bind:open={isOpen}>
 	{#snippet description()}
-		<div class="flex flex-col gap-xl">
+		<div class="gap-xl flex flex-col">
 			<p>
 				{text}
 			</p>
-			<p class="font-bold tracking-wide text-destructive">{$t('This action cannot be undone!')}</p>
+			<p class="text-destructive font-bold tracking-wide">{$t('This action cannot be undone!')}</p>
 			<Divider variant="invisible" />
-			<div class="flex w-full items-end justify-between gap-sm">
+			<div class="gap-sm flex w-full items-end justify-between">
 				<DumbInput
 					type="text"
 					name="sanityCheck"

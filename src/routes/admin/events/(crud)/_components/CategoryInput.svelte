@@ -61,7 +61,7 @@
 	};
 </script>
 
-<div class="flex w-full flex-col gap-sm rounded-form border border-divider p-xl">
+<div class="gap-sm rounded-form border-divider p-xl flex w-full flex-col border">
 	<h4>Category: {title ?? 'Unknown'}</h4>
 	<DumbSelect
 		onValueChange={(value) => {
@@ -85,9 +85,9 @@
 			Add Rule
 		</Button>
 	</div>
-	<ul class="flex flex-col gap-sm" bind:this={rulesContainerRef}>
-		{#each category.rules as _, index}
-			<li class="flex items-center gap-sm">
+	<ul class="gap-sm flex flex-col" bind:this={rulesContainerRef}>
+		{#each category.rules as _, index (index)}
+			<li class="gap-sm flex items-center">
 				<DumbInput
 					value={category.rules[index].text}
 					type="text"

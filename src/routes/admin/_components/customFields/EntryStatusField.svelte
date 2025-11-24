@@ -9,16 +9,16 @@
 </script>
 
 {#snippet valueSnippet(value: EntryStatus)}
-	<p class="inline-flex w-full items-center gap-2xs font-bold">
+	<p class="gap-2xs inline-flex w-full items-center font-bold">
 		<span class="truncate">{capitalize(value)}</span>
 
 		<span
 			>{#if value === 'published'}
-				<CircleCheckIcon class="size-4 text-primary" />
+				<CircleCheckIcon class="text-primary size-4" />
 			{:else if value === 'pending'}
-				<CircleAlertIcon class="size-4 text-tertiary" />
+				<CircleAlertIcon class="text-tertiary size-4" />
 			{:else if value === 'rejected'}
-				<CircleXIcon class="size-4 text-secondary" />
+				<CircleXIcon class="text-secondary size-4" />
 			{/if}</span
 		>
 	</p>

@@ -48,7 +48,7 @@
 	};
 </script>
 
-<section id="entry-reactions" class="flex flex-col gap-sm">
+<section id="entry-reactions" class="gap-sm flex flex-col">
 	<h4>{$t('Reactions')}</h4>
 	<ReactionsList reactions={reactionListItems} onAddReaction={handleAddReaction} />
 </section>

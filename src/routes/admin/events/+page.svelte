@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { resolve } from '$app/paths';
 	import { PencilIcon } from 'lucide-svelte';
 	import EntityFilterBar from '../_components/EntityFilterBar.svelte';
 	import EntityList from '../_components/EntityList.svelte';
@@ -8,7 +9,7 @@
 	let { data }: { data: PageData } = $props();
 
 	const handleEdit = (id: string) => {
-		goto(`/admin/events/${id}/edit`);
+		goto(resolve(`/admin/events/${id}/edit`));
 	};
 </script>
 

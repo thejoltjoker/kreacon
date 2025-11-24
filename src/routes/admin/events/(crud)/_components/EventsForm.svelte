@@ -32,7 +32,7 @@
 	<TextField type="text" field="tagline" label="Tagline" />
 	<TextField type="text" field="description" label="Description" />
 
-	<div class="grid grid-cols-2 gap-sm">
+	<div class="gap-sm grid grid-cols-2">
 		<DateField field="submissionsOpenAt" label="Submissions Open At" />
 		<DateField field="submissionsCloseAt" label="Submissions Close At" />
 		<DateField field="votingOpenAt" label="Voting Open At" />

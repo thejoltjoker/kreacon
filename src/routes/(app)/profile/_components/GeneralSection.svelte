@@ -16,7 +16,7 @@
 
 <!-- TODO Unify wording sign up/sign in or register/log in -->
 
-<section class="flex w-full flex-col gap-sm">
+<section class="gap-sm flex w-full flex-col">
 	<Form
 		invalidateAll={true}
 		action="/profile?/updateUser"
@@ -35,7 +35,7 @@
 			<h2>General</h2>
 			<EditProfileButton bind:isEditing />
 		</div>
-		<div class="flex flex-col gap-sm">
+		<div class="gap-sm flex flex-col">
 			{#if isEditing}
 				<FileField
 					behavior="managed"
@@ -46,7 +46,7 @@
 				/>
 			{:else}
 				<p class="font-bold">Avatar</p>
-				<div class="flex items-center gap-sm">
+				<div class="gap-sm flex items-center">
 					<Avatar size="md" src={$page.data.user.avatar?.url} alt={$page.data.user.username} />
 				</div>
 			{/if}

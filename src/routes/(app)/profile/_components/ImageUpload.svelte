@@ -77,7 +77,7 @@
 	};
 </script>
 
-<form class="flex flex-col items-center gap-sm">
+<form class="gap-sm flex flex-col items-center">
 	<button
 		id="drop_zone"
 		class="group relative size-48 h-48 w-48 cursor-pointer overflow-hidden rounded-full border border-white"
@@ -87,7 +87,7 @@
 		on:click={chooseFile}
 	>
 		<UploadIcon
-			class="absolute left-1/2 top-1/2 z-10 size-6 -translate-x-1/2 -translate-y-1/2 text-white opacity-0 transition-opacity group-hover:opacity-100"
+			class="absolute top-1/2 left-1/2 z-10 size-6 -translate-x-1/2 -translate-y-1/2 text-white opacity-0 transition-opacity group-hover:opacity-100"
 		/>
 		<img
 			src={imageUrl}

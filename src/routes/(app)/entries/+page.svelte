@@ -26,29 +26,29 @@
 	// TODO Combining pagination with filtering/sorting
 </script>
 
-<div class="w-full px-sm md:px-xl">
+<div class="px-sm md:px-xl w-full">
 	<FilterBar {events} {categories} />
 </div>
 {#if entries.length > 0}
-	<div class="grid w-full grid-cols-entries gap-sm px-sm md:gap-xl md:px-xl">
-		{#each entries as entry}
+	<div class="grid-cols-entries gap-sm px-sm md:gap-xl md:px-xl grid w-full">
+		{#each entries as entry (entry.id)}
 			<div
 				class={cn(
 					'wrapper group grid w-full overflow-hidden rounded-md',
-					entry.status === 'rejected' && 'border-2 border-destructive bg-pomodoro-700',
-					entry.status === 'pending' && 'border-2 border-tertiary',
-					entry.status === 'draft' && 'border-2 border-shade-300'
+					entry.status === 'rejected' && 'border-destructive bg-pomodoro-700 border-2',
+					entry.status === 'pending' && 'border-tertiary border-2',
+					entry.status === 'draft' && 'border-shade-300 border-2'
 				)}
 			>
 				<div
 					class={cn(
-						'aspect-square h-full w-full overflow-hidden rounded-md bg-shade-800 text-center text-shade-300',
+						'bg-shade-800 text-shade-300 aspect-square h-full w-full overflow-hidden rounded-md text-center',
 						entry.status === 'pending' && 'animate-pulse'
 					)}
 				>
 					<a href={`/entries/${entry.id}`} class="relative flex h-full w-full">
 						<span
-							class="absolute z-0 flex h-full w-full items-center justify-center text-shade-500"
+							class="text-shade-500 absolute z-0 flex h-full w-full items-center justify-center"
 						>
 							{#if entry.category.mediaType === 'image'}
 								<ImageIcon
@@ -68,17 +68,17 @@
 							src={`${entry?.preview?.url}`}
 							alt={entry?.title}
 							class={cn(
-								'z-10 h-full w-full object-cover object-center text-shade-300',
+								'text-shade-300 z-10 h-full w-full object-cover object-center',
 								entry.status === 'rejected' && 'opacity-80 grayscale'
 							)}
 						/>
 					</a>
 				</div>
 				<div
-					class="items-left pointer-events-none relative z-20 flex h-full w-full flex-col justify-between p-sm"
+					class="items-left p-sm pointer-events-none relative z-20 flex h-full w-full flex-col justify-between"
 				>
 					{#if ['draft', 'pending', 'rejected'].includes(entry.status)}
-						<div class="absolute right-sm top-sm">
+						<div class="right-sm top-sm absolute">
 							<Badge
 								variant={entry.status === 'draft'
 									? 'neutral'
@@ -92,7 +92,7 @@
 					{/if}
 					<a
 						href={`/users/${entry.user?.username}`}
-						class="pointer-events-auto inline-flex h-form w-fit translate-y-0 items-center gap-sm rounded-full p-xs pr-md transition-all duration-300 group-hover:bg-black/75 group-hover:backdrop-blur md:-translate-y-sm md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100"
+						class="h-form gap-sm p-xs pr-md md:-translate-y-sm pointer-events-auto inline-flex w-fit translate-y-0 items-center rounded-full transition-all duration-300 group-hover:bg-black/75 group-hover:backdrop-blur md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100"
 					>
 						<Avatar
 							src={entry.user?.avatar?.url ?? ''}
@@ -102,7 +102,7 @@
 						<p>{entry.user?.username}</p>
 					</a>
 					<div
-						class="rounded-md bg-black/75 p-sm backdrop-blur transition-all duration-300 group-hover:backdrop-blur md:translate-y-sm md:bg-none md:opacity-0 md:backdrop-blur-none md:group-hover:translate-y-0 md:group-hover:bg-black/75 md:group-hover:opacity-100"
+						class="p-sm md:translate-y-sm rounded-md bg-black/75 backdrop-blur transition-all duration-300 group-hover:backdrop-blur md:bg-none md:opacity-0 md:backdrop-blur-none md:group-hover:translate-y-0 md:group-hover:bg-black/75 md:group-hover:opacity-100"
 					>
 						<h2 class="text-lg font-bold">{entry.title}</h2>
 						<p class="text-shade-300">{entry.category?.name}</p>
@@ -113,7 +113,7 @@
 	</div>
 {:else}
 	<div
-		class="flex h-full min-h-[20vh] grow flex-col items-center justify-center gap-sm text-center"
+		class="gap-sm flex h-full min-h-[20vh] grow flex-col items-center justify-center text-center"
 	>
 		<h2>{$t('No entries yet')}</h2>
 		<p>{$t('Check back later for new entries!')}</p>

@@ -22,18 +22,18 @@
 	} = $props();
 </script>
 
-<section id="entry-info" class="flex items-center justify-between gap-lg text-gray-500">
-	<div id="entry-meta" class="flex flex-1 flex-wrap items-center gap-lg text-lg">
+<section id="entry-info" class="gap-lg flex items-center justify-between text-gray-500">
+	<div id="entry-meta" class="gap-lg flex flex-1 flex-wrap items-center text-lg">
 		<p><span class="text-white">{entry.views}</span> {$t('Views')}</p>
 		<p><span class="text-white">{entry.reactions.length}</span> {$t('Reactions')}</p>
-		<p id="entry-meta-license" class="inline-flex items-center gap-xs">
+		<p id="entry-meta-license" class="gap-xs inline-flex items-center">
 			<span class="text-white">{entry.license.toUpperCase()}</span>
 			<LicenseTooltip license={entry.license} />
 		</p>
 	</div>
 
 	<!-- Actions -->
-	<div id="entry-actions" class="flex flex-1 justify-end gap-sm">
+	<div id="entry-actions" class="gap-sm flex flex-1 justify-end">
 		<Button
 			variant="outline"
 			size="icon"

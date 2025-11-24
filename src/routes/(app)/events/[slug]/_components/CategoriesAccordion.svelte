@@ -7,33 +7,33 @@
 </script>
 
 <Accordion.Root class="w-full" type="multiple">
-	{#each categories as category, index}
-		<Accordion.Item value={index.toString()} class="group border-b border-shade-700">
+	{#each categories as category, index (category.id)}
+		<Accordion.Item value={index.toString()} class="group border-shade-700 border-b">
 			<Accordion.Header>
 				<Accordion.Trigger
-					class="flex w-full flex-1 select-none items-center justify-between py-sm font-bold transition-all [&[data-state=open]>span>svg]:rotate-180"
+					class="py-sm flex w-full flex-1 items-center justify-between font-bold transition-all select-none [&[data-state=open]>span>svg]:rotate-180"
 				>
-					<span class="w-full text-left text-h3 font-bold">
+					<span class="text-h3 w-full text-left font-bold">
 						{category.name}
 					</span>
 					<span
-						class="inline-flex size-8 items-center justify-center rounded-[7px] bg-transparent transition-all hover:bg-shade-700"
+						class="hover:bg-shade-700 inline-flex size-8 items-center justify-center rounded-[7px] bg-transparent transition-all"
 					>
 						<ChevronDownIcon class="size-lg transition-all duration-200" />
 					</span>
 				</Accordion.Trigger>
 			</Accordion.Header>
 			<Accordion.Content
-				class="overflow-hidden tracking-[-0.01em] data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down"
+				class="data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down overflow-hidden tracking-[-0.01em]"
 			>
 				<div class="pb-lg">
 					<p class="pb-lg text-white">{category.description}</p>
-					<ul class="list-inside list-disc text-shade-300 marker:text-primary">
-						{#each category.rules as rule}
+					<ul class="text-shade-300 marker:text-primary list-inside list-disc">
+						{#each category.rules as rule (rule.id)}
 							<li>{rule.text}</li>
 						{/each}
 					</ul>
-					<p class="pt-sm text-sm text-shade-300">
+					<p class="pt-sm text-shade-300 text-sm">
 						Submission type: <span class="font-bold text-white">{category.mediaType}</span>
 					</p>
 				</div>

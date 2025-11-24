@@ -18,26 +18,26 @@
 	});
 </script>
 
-<section class="flex flex-col gap-xl">
-	<div class="flex flex-col gap-xs">
+<section class="gap-xl flex flex-col">
+	<div class="gap-xs flex flex-col">
 		<EventRow />
 		<div class="text-shade-300">
 			If you can't find the event, ensure the <Link href="/profile#tickets">ticket</Link> is added to
 			your profile.
 		</div>
 	</div>
-	<div class="flex flex-col gap-xs">
+	<div class="gap-xs flex flex-col">
 		<CategoryRow />
 		<p class="text-shade-300">
 			You can submit only one entry per category, so previous entries are disabled.
 		</p>
 	</div>
-	<div class="flex flex-col gap-sm">
+	<div class="gap-sm flex flex-col">
 		<h3>Rules</h3>
 		<h4>General Rules</h4>
-		<ul class="list-inside list-disc text-shade-300">
+		<ul class="text-shade-300 list-inside list-disc">
 			{#if $form.eventId}
-				{#each event?.rules ?? [] as rule}
+				{#each event?.rules ?? [] as rule, i (i)}
 					<li>{rule}</li>
 				{/each}
 			{:else}
@@ -45,11 +45,11 @@
 			{/if}
 		</ul>
 		<h4>Category Rules</h4>
-		<ul class="list-inside list-disc text-shade-300">
+		<ul class="text-shade-300 list-inside list-disc">
 			{#if $form.categoryId}
-				{#each event?.categories ?? [] as category}
+				{#each event?.categories ?? [] as category (category.id)}
 					{#if category.id.toString() === $form.categoryId.toString()}
-						{#each category.rules ?? [] as rule}
+						{#each category.rules ?? [] as rule, i (i)}
 							<li>{rule}</li>
 						{/each}
 					{/if}

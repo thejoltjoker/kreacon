@@ -4,6 +4,7 @@
 	import { BanIcon, TicketIcon } from 'lucide-svelte';
 	import EntityFilterBar from '../_components/EntityFilterBar.svelte';
 	import { goto, invalidateAll } from '$app/navigation';
+	import { resolve } from '$app/paths';
 	import type { UserStatus } from '$lib/types/userStatus';
 
 	let { data }: { data: PageData } = $props();
@@ -42,7 +43,7 @@
 		{
 			label: 'Show tickets',
 			icon: TicketIcon,
-			onClick: (value) => goto(`/admin/tickets?username=${value.username}`)
+			onClick: (value) => goto(resolve(`/admin/tickets?username=${value.username}`))
 		},
 		{
 			label: 'Ban user',

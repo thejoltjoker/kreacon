@@ -44,9 +44,9 @@
 	<Button icon={PlusIcon} variant="outline" onclick={handleAddRule}>Add Rule</Button>
 </div>
 {#if $form.rules.length > 0}
-	<ul class="flex flex-col gap-sm" bind:this={rulesContainerRef}>
-		{#each $form.rules as _, index}
-			<li class="flex items-center gap-sm">
+	<ul class="gap-sm flex flex-col" bind:this={rulesContainerRef}>
+		{#each $form.rules as _, index (index)}
+			<li class="gap-sm flex items-center">
 				<!-- TODO Replace with TextField -->
 				<DumbInput
 					type="text"

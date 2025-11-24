@@ -41,14 +41,14 @@
 		<AlertDialog.Overlay class="fixed inset-0 z-50 bg-black/80" />
 		<AlertDialog.Content
 			{...contentProps}
-			class="fixed left-1/2 top-1/2 z-50 w-full max-w-dialog -translate-x-1/2 -translate-y-1/2 rounded-md border border-divider bg-bg shadow-sm outline-none"
+			class="max-w-dialog border-divider bg-bg fixed top-1/2 left-1/2 z-50 w-full -translate-x-1/2 -translate-y-1/2 rounded-md border shadow-sm outline-none"
 		>
-			<section class="dialog-header relative w-full px-xl py-xl pr-sm">
+			<section class="dialog-header px-xl py-xl pr-sm relative w-full">
 				<AlertDialog.Title class="w-full text-left text-lg font-bold">
 					{@render title()}
 				</AlertDialog.Title>
 				<AlertDialog.Cancel
-					class="absolute right-xl top-1/2 -mr-2xs ml-auto flex -translate-y-1/2 rounded-full p-2xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-muted-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
+					class="right-xl -mr-2xs p-2xs focus-visible:ring-muted-foreground focus-visible:ring-offset-bg absolute top-1/2 ml-auto flex -translate-y-1/2 rounded-full focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
 				>
 					<XIcon class="size-5" />
 					<span class="sr-only">Close</span>
@@ -61,7 +61,7 @@
 			</AlertDialog.Description>
 
 			{@render children?.()}
-			<div class="flex justify-end gap-sm p-xl">
+			<div class="gap-sm p-xl flex justify-end">
 				<AlertDialog.Cancel>
 					{#snippet child({ props })}
 						<Button variant="muted" {...props} onclick={onCancel}>Cancel</Button>

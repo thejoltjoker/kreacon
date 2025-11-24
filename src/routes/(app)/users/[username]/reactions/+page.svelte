@@ -4,12 +4,12 @@
 	let { data }: { data: PageData } = $props();
 </script>
 
-<ul class="grid w-full grid-cols-reactions-sm gap-sm">
-	{#each data.reactions as reaction}
+<ul class="grid-cols-reactions-sm gap-sm grid w-full">
+	{#each data.reactions as reaction (reaction.id)}
 		<li>
 			<a
 				href={`/entries/${reaction.entryId}`}
-				class="group grid aspect-square items-center justify-center gap-sm overflow-hidden rounded-form"
+				class="group gap-sm rounded-form grid aspect-square items-center justify-center overflow-hidden"
 			>
 				<img
 					src={reaction.entry?.preview?.url}

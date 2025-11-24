@@ -22,7 +22,7 @@
 <Select.Root bind:value={value as any} {...props}>
 	<Select.Trigger
 		class={cn(
-			'inline-flex h-form items-center justify-between rounded-form border border-shade-600 bg-shade-950 pl-md pr-sm transition hover:border-shade-600/80 hover:bg-shade-900 data-[state=open]:border-violet-500',
+			'h-form rounded-form border-shade-600 bg-shade-950 pl-md pr-sm hover:border-shade-600/80 hover:bg-shade-900 inline-flex items-center justify-between border transition data-[state=open]:border-violet-500',
 			value != null && value !== '' && !Array.isArray(value) && 'border-white hover:border-white',
 			props.class
 		)}
@@ -35,12 +35,12 @@
 			sideOffset={12}
 			{...contentProps}
 			class={cn(
-				'z-40 flex max-h-[80vh] w-(--bits-select-anchor-width) flex-col rounded-form border border-shade-600 bg-shade-900 p-xs',
+				'rounded-form border-shade-600 bg-shade-900 p-xs z-40 flex max-h-[80vh] w-(--bits-select-anchor-width) flex-col border',
 				contentProps?.class
 			)}
 		>
 			<Select.ScrollUpButton
-				class="z-50 flex items-center justify-center rounded-full py-2xs hover:bg-shade-800 focus-visible:bg-shade-800"
+				class="py-2xs hover:bg-shade-800 focus-visible:bg-shade-800 z-50 flex items-center justify-center rounded-full"
 			>
 				<ChevronUpIcon class="size-4" />
 			</Select.ScrollUpButton>
@@ -51,7 +51,7 @@
 							{value}
 							{label}
 							{disabled}
-							class="flex cursor-pointer items-center justify-between gap-sm rounded-sm px-md py-sm transition-colors hover:bg-shade-800 data-highlighted:bg-shade-800 data-selected:bg-shade-700 data-selected:hover:bg-shade-800"
+							class="gap-sm px-md py-sm hover:bg-shade-800 data-highlighted:bg-shade-800 data-selected:bg-shade-700 data-selected:hover:bg-shade-800 flex cursor-pointer items-center justify-between rounded-sm transition-colors"
 						>
 							{#snippet children({ selected })}
 								{label}
@@ -64,7 +64,7 @@
 				{/if}
 			</Select.Viewport>
 			<Select.ScrollDownButton
-				class="z-50 flex items-center justify-center rounded-full py-2xs hover:bg-shade-800 focus-visible:bg-shade-800"
+				class="py-2xs hover:bg-shade-800 focus-visible:bg-shade-800 z-50 flex items-center justify-center rounded-full"
 			>
 				<ChevronDownIcon class="size-4" />
 			</Select.ScrollDownButton>

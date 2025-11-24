@@ -41,7 +41,7 @@
 		labelProps={{ class: 'text-2xl font-bold' }}
 	/> -->
 	<Divider class="my-xl" />
-	<div class="flex flex-col gap-sm">
+	<div class="gap-sm flex flex-col">
 		<h3>What are the different files for?</h3>
 		<h4>Media</h4>
 		<p class="text-shade-300">

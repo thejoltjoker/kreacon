@@ -9,7 +9,7 @@
 	let { data }: { data: PageData } = $props();
 </script>
 
-<div class="flex w-full flex-col gap-lg">
+<div class="gap-lg flex w-full flex-col">
 	<h1 class="text-center">Sign up</h1>
 	{#if data.providers.length > 0}
 		<OAuthButtons providers={data.providers} />

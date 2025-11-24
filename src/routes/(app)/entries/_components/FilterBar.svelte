@@ -2,6 +2,7 @@
 	// TODO Disallow sorting to be unselected
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
+	import { resolve } from '$app/paths';
 	import type { Category } from '$lib/server/db/schema/category';
 	import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-svelte';
 	import { type PageData } from '../$types';
@@ -10,6 +11,7 @@
 	import { onMount } from 'svelte';
 	import Button from '$lib/components/Button.svelte';
 	import { t } from '$lib/i18n';
+	import { SvelteURLSearchParams } from 'svelte/reactivity';
 
 	const sortByItems: {
 		value: string;
@@ -30,13 +32,13 @@
 	);
 
 	const handleCategoryChange = (categoryId: number | null) => {
-		const params = new URLSearchParams($page.url.searchParams);
+		const params = new SvelteURLSearchParams($page.url.searchParams);
 		if (categoryId) {
 			params.set('category', categoryId.toString());
 		} else {
 			params.delete('category');
 		}
-		goto(`?${params.toString()}`, { keepFocus: true });
+		goto(resolve(`?${params.toString()}`), { keepFocus: true, replaceState: true });
 	};
 
 	let categoriesListRef = $state<HTMLElement | null>(null);
@@ -101,7 +103,7 @@
 			>
 				<button onclick={() => handleCategoryChange(null)}>{$t('All')}</button>
 			</li>
-			{#each categories as category}
+			{#each categories as category (category.id)}
 				<li>
 					<button
 						onclick={() => handleCategoryChange(category.id)}

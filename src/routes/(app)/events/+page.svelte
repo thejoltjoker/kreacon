@@ -22,13 +22,13 @@
 	let noEvents = $derived(Object.values(groupedEvents).every((events) => events.length === 0));
 </script>
 
-<main class="flex h-full w-full max-w-(--breakpoint-lg) grow flex-col gap-xl px-sm pt-xl">
-	{#each Object.entries(groupedEvents) as [group, events]}
+<main class="gap-xl px-sm pt-xl flex h-full w-full max-w-(--breakpoint-lg) grow flex-col">
+	{#each Object.entries(groupedEvents) as [group, events] (group)}
 		{#if events.length > 0}
-			<section class="flex flex-col gap-sm">
+			<section class="gap-sm flex flex-col">
 				<h2>{$t(`${capitalize(group)} events`)}</h2>
-				<div class="flex flex-col gap-xl">
-					{#each events as event}
+				<div class="gap-xl flex flex-col">
+					{#each events as event (event.id)}
 						<EventListItem {event} />
 					{/each}
 				</div>
@@ -37,7 +37,7 @@
 	{/each}
 
 	{#if noEvents}
-		<section class="flex grow flex-col items-center justify-center gap-sm text-center">
+		<section class="gap-sm flex grow flex-col items-center justify-center text-center">
 			<h2>{$t('No events yet')}</h2>
 			<p>{$t('Check back later for new events!')}</p>
 		</section>

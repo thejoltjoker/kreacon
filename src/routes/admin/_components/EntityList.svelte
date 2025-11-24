@@ -6,11 +6,13 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
+	import { resolve } from '$app/paths';
 	import Pagination from '../../(app)/_components/Pagination.svelte';
 	import { type EntityListActionItem } from './EntityListActions.svelte';
 	import type { Field, Item } from './types';
 	import EntityListHeader from './EntityListHeader.svelte';
 	import EntityListRow from './EntityListRow.svelte';
+	import { SvelteURLSearchParams } from 'svelte/reactivity';
 
 	interface EntityListProps {
 		items: Item[];
@@ -33,21 +35,21 @@
 	let hasThumbnail = $derived(items.some((i) => i.thumbnailUrl));
 
 	const handleSortByChange = (sortBy: string) => {
-		const params = new URLSearchParams($page.url.searchParams);
+		const params = new SvelteURLSearchParams($page.url.searchParams);
 		if (params.get('sortBy') === `${sortBy}_asc`) {
 			params.set('sortBy', `${sortBy}_desc`);
 		} else {
 			params.set('sortBy', `${sortBy}_asc`);
 		}
-		goto(`?${params.toString()}`);
+		goto(resolve(`?${params.toString()}`), { replaceState: true });
 	};
 </script>
 
-<div class="w-full rounded-form">
+<div class="rounded-form w-full">
 	<EntityListHeader {hasThumbnail} {fieldsToRender} {handleSortByChange} />
 
 	<ul class="entity-list flex w-full flex-col">
-		{#each items as item}
+		{#each items as item (item.id)}
 			<!-- TODO Render custom fields -->
 			<EntityListRow {actions} {item} {fieldsToRender} {hasThumbnail} />
 		{/each}

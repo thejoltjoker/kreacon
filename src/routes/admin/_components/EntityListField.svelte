@@ -31,7 +31,7 @@
 	{#if valueSnippet != null}
 		{@render valueSnippet(value)}
 	{:else}
-		<p class={cn('w-full truncate text-nowrap font-bold', field?.name === 'id' && 'font-mono')}>
+		<p class={cn('w-full truncate font-bold text-nowrap', field?.name === 'id' && 'font-mono')}>
 			{#if value instanceof Date}
 				{value.toLocaleString('en-GB', {
 					hour: '2-digit',
@@ -47,7 +47,7 @@
 	{/if}
 	<p
 		class={cn(
-			'font-mo truncate text-sm tracking-wide text-shade-400',
+			'font-mo text-shade-400 truncate text-sm tracking-wide',
 			field?.name === 'id' && 'text-primary'
 		)}
 	>

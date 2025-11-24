@@ -15,7 +15,7 @@
 <footer class="px-xl py-xl text-shade-300 flex w-full flex-wrap items-center justify-between">
 	<p class="flex-1">Kreacon &copy; {new Date().getFullYear()}</p>
 	<ul class="gap-sm flex flex-1 items-center justify-center">
-		{#each Object.keys(locales) as lc}
+		{#each Object.keys(locales) as lc (lc)}
 			<li>
 				<button onclick={() => changeLanguage(lc)} class:active={$locale?.startsWith(lc)}>
 					{lc.toUpperCase()}

@@ -21,7 +21,7 @@
 	const { value, errors, constraints } = formFieldProxy(superform, field);
 </script>
 
-<Label.Root class="label flex flex-col gap-xs font-bold" for={field}>
+<Label.Root class="label gap-xs flex flex-col font-bold" for={field}>
 	{$t(label)}
 
 	<div class="control">

@@ -68,7 +68,7 @@
 <form
 	{method}
 	use:enhance
-	class={cn('flex w-full flex-col gap-sm', className)}
+	class={cn('gap-sm flex w-full flex-col', className)}
 	datatype={dataType}
 	enctype={$enctype}
 	{...props}

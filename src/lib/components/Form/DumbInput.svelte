@@ -76,7 +76,7 @@
 	);
 </script>
 
-<div class="relative flex w-full select-text flex-col gap-sm">
+<div class="gap-sm relative flex w-full flex-col select-text">
 	<Label.Root {...labelProps} for={name} class={cn(label == null && 'hidden', labelProps?.class)}>
 		{#if typeof label === 'string'}
 			<span class="font-bold">{label}</span>
@@ -85,7 +85,7 @@
 		{/if}
 	</Label.Root>
 	{#if hint}
-		<span class="-mt-2xs leading-none text-shade-400">{hint}</span>
+		<span class="-mt-2xs text-shade-400 leading-none">{hint}</span>
 	{/if}
 	<span class="relative">
 		{#if type === 'textarea'}
@@ -103,7 +103,7 @@
 				<Icon
 					{...iconProps}
 					class={cn(
-						'absolute right-md top-1/2 size-5 -translate-y-1/2 text-muted-foreground transition-all duration-300',
+						'right-md text-muted-foreground absolute top-1/2 size-5 -translate-y-1/2 transition-all duration-300',
 						iconProps?.class
 					)}
 				/>
@@ -115,7 +115,7 @@
 				<Icon
 					{...iconProps}
 					class={cn(
-						'absolute right-md top-1/2 size-5 -translate-y-1/2 text-muted-foreground transition-all duration-300',
+						'right-md text-muted-foreground absolute top-1/2 size-5 -translate-y-1/2 transition-all duration-300',
 						iconProps?.class
 					)}
 				/>
@@ -123,7 +123,7 @@
 		{/if}
 	</span>
 
-	{#each errors as error}
+	{#each errors as error, i (i)}
 		<p class="error">{error}</p>
 	{/each}
 </div>

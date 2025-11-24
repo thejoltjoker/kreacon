@@ -59,7 +59,7 @@
 		</Button>
 	</div>
 	<HorizontalMenu highlightActive={false} class="max-md:hidden">
-		{#each menuItems as item}
+		{#each menuItems as item (item.href)}
 			<HorizontalMenuItem href={item.href}>{$t(item.label)}</HorizontalMenuItem>
 		{/each}
 	</HorizontalMenu>
@@ -114,7 +114,7 @@
 	<div class="bg-bg absolute top-0 left-0 z-10 h-full w-full" transition:fly={{ y: -100 }}>
 		<div class="flex h-full items-center justify-center">
 			<ul class="gap-lg flex flex-col text-2xl">
-				{#each menuItems as item}
+				{#each menuItems as item (item.href)}
 					<li
 						in:fly={{
 							delay: 50,

@@ -15,7 +15,7 @@
 
 {#snippet confirmLabel()}
 	<p class="text-shade-300-alt text-base font-bold">
-		Write "<span class="select-none text-white">heck yeah</span>" below to confirm.
+		Write "<span class="text-white select-none">heck yeah</span>" below to confirm.
 	</p>
 {/snippet}
 
@@ -31,16 +31,16 @@
 	{/snippet}
 
 	{#snippet description()}
-		<form method="POST" action="/admin/events?/delete" class="flex flex-col gap-xl" use:enhance>
+		<form method="POST" action="/admin/events?/delete" class="gap-xl flex flex-col" use:enhance>
 			<input type="hidden" bind:value={eventId} name="eventId" />
 			<p>
 				{$t(
 					'Are you sure you want to delete this event and all related categories, tickets and votes?'
 				)}
 			</p>
-			<p class="font-bold tracking-wide text-destructive">{$t('This action cannot be undone!')}</p>
+			<p class="text-destructive font-bold tracking-wide">{$t('This action cannot be undone!')}</p>
 			<Divider variant="invisible" />
-			<div class="flex w-full items-end justify-between gap-sm">
+			<div class="gap-sm flex w-full items-end justify-between">
 				<DumbInput
 					type="text"
 					name="sanityCheck"

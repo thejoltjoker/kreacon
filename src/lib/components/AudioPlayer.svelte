@@ -6,7 +6,6 @@
 		poster: string;
 	}
 	let { src, poster }: Props = $props();
-	$inspect(src);
 </script>
 
 <media-controller audio class="rounded-form border-shade-600 bg-shade-900 w-full border">

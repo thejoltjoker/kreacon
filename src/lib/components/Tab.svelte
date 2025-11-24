@@ -5,7 +5,7 @@
 
 <Tabs.Trigger
 	{value}
-	class="rounded-full px-xl py-sm font-bold text-white transition-colors hover:bg-muted-background! hover:text-white! data-[state=active]:bg-muted-background data-[state=inactive]:text-muted-foreground"
+	class="px-xl py-sm hover:bg-muted-background! data-[state=active]:bg-muted-background data-[state=inactive]:text-muted-foreground rounded-full font-bold text-white transition-colors hover:text-white!"
 >
 	{label}
 </Tabs.Trigger>

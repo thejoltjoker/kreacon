@@ -22,7 +22,7 @@
 
 <section
 	class={cn(
-		'flex flex-col items-center justify-center gap-xl px-sm md:flex-row',
+		'gap-xl px-sm flex flex-col items-center justify-center md:flex-row',
 		alignment === 'center' && 'flex-col'
 	)}
 >
@@ -48,7 +48,7 @@
 	</div>
 	<div
 		class={cn(
-			'flex flex-1 flex-col gap-xl',
+			'gap-xl flex flex-1 flex-col',
 			alignment === 'right' && 'order-1',
 			alignment === 'left' && 'order-2'
 		)}

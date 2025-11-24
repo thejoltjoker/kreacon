@@ -1,6 +1,7 @@
 <!-- TODO Layout for form page, i.e create and update -->
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { resolve } from '$app/paths';
 	import Button from '$lib/components/Button.svelte';
 	import { PencilIcon, PlusIcon } from 'lucide-svelte';
 	import EntityFilterBar from '../_components/EntityFilterBar.svelte';
@@ -10,15 +11,13 @@
 	let { data }: { data: PageData } = $props();
 	// TODO Allow admin to archive category
 	const handleEdit = (id: string) => {
-		goto(`/admin/categories/${id}/edit`);
+		goto(resolve(`/admin/categories/${id}/edit`));
 	};
 </script>
 
 <EntityFilterBar entityName="categories">
 	{#snippet buttons()}
-		<Button href={`/admin/categories/create`} variant="outline" icon={PlusIcon}>
-			Add Category
-		</Button>
+		<Button href="/admin/categories/create" variant="outline" icon={PlusIcon}>Add Category</Button>
 	{/snippet}
 </EntityFilterBar>
 <EntityList

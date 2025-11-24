@@ -3,9 +3,8 @@
 	import type { FormPathLeaves } from 'sveltekit-superforms';
 
 	interface Props {
-		// eslint-disable-next-line no-undef
 		form: SuperForm<T>;
-		// eslint-disable-next-line no-undef
+
 		field: FormPathLeaves<T>;
 		disabled: boolean;
 		type?: 'text' | 'email' | 'url' | 'checkbox';

@@ -2,14 +2,16 @@
 	import { Pagination, type PaginationRootProps } from 'bits-ui';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
+	import { resolve } from '$app/paths';
 	import { cn } from '$lib/utils';
+	import { SvelteURLSearchParams } from 'svelte/reactivity';
 
 	import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-svelte';
 	import { t } from '$lib/i18n';
 
 	let { count, perPage, ...props }: PaginationRootProps = $props();
 
-	let searchParams = $state(new URLSearchParams($page.url.searchParams.toString()));
+	let searchParams = new SvelteURLSearchParams($page.url.searchParams);
 	let pageNum = $derived(Number(searchParams.get('page') ?? 1));
 
 	// TODO Showing loading indicators
@@ -18,10 +20,8 @@
 	// TODO Recovery from failed requests
 
 	const handlePageChange = (p: number) => {
-		const params = new URLSearchParams(searchParams.toString());
-		params.set('page', p.toString());
-		searchParams = params;
-		goto(`?${searchParams.toString()}`);
+		searchParams.set('page', p.toString());
+		goto(resolve(`?${searchParams.toString()}`), { replaceState: true });
 	};
 
 	let rootClassName = cn('flex flex-col items-center pagination', props.class);
@@ -48,13 +48,13 @@
 			<div class="flex items-center gap-2.5">
 				{#each pages as page (page.key)}
 					{#if page.type === 'ellipsis'}
-						<div class="text-foreground-alt select-none font-medium">...</div>
+						<div class="text-foreground-alt font-medium select-none">...</div>
 					{:else}
 						<Pagination.Page
 							{page}
 							class={cn(
 								buttonBaseClass,
-								'data-selected:bg-shade-800 data-selected:text-white data-selected:hover:bg-shade-700'
+								'data-selected:bg-shade-800 data-selected:hover:bg-shade-700 data-selected:text-white'
 							)}
 						>
 							{page.value}
@@ -66,8 +66,8 @@
 				<ChevronRightIcon class="size-6" />
 			</Pagination.NextButton>
 		</div>
-		<p class="text-center text-sm text-shade-300">
-			{$t('Showing')}{' '}
+		<p class="text-shade-300 text-center text-sm">
+			{$t('Showing')}
 			{range.start}-{range.end} of {count}
 		</p>
 	{/snippet}

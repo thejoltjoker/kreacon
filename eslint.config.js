@@ -34,7 +34,8 @@ export default ts.config(
 			'dist/',
 			'node_modules/',
 			'playwright-report/',
-			'test-results/'
+			'test-results/',
+			'**/*.svelte.ts'
 		]
 	},
 	{
@@ -51,6 +52,12 @@ export default ts.config(
 					varsIgnorePattern: '^_',
 					args: 'after-used',
 					argsIgnorePattern: '^_'
+				}
+			],
+			'svelte/no-navigation-without-resolve': [
+				'error',
+				{
+					ignoreLinks: true
 				}
 			]
 		}

@@ -25,11 +25,11 @@
 <section>
 	<SubmittingTo />
 	<Divider class="my-xl" />
-	<div class="flex flex-col gap-xs">
+	<div class="gap-xs flex flex-col">
 		<TextField field="title" label="Title" labelProps={{ class: 'text-2xl font-bold' }} />
 		<p class="text-shade-300">What do you call your masterpiece?</p>
 	</div>
-	<div class="flex flex-col gap-xs">
+	<div class="gap-xs flex flex-col">
 		<SelectField
 			type="single"
 			field="license"

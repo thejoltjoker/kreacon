@@ -26,7 +26,7 @@
 	};
 </script>
 
-<div class="mt-xl inline-flex gap-sm">
+<div class="mt-xl gap-sm inline-flex">
 	<Button variant="outline" type="button" class="flex-1" onclick={previousTab}>Go back</Button>
 	{#if Number(currentTab) < tabsCount}
 		<Button type="button" class="flex-1" onclick={nextTab} disabled={!allowContinue}

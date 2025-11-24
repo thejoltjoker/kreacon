@@ -11,9 +11,11 @@
 	const categories = data.categories;
 </script>
 
-<div class="flex w-full max-w-(--breakpoint-lg) flex-col items-center justify-center gap-xl px-sm py-xl">
+<div
+	class="gap-xl px-sm py-xl flex w-full max-w-(--breakpoint-lg) flex-col items-center justify-center"
+>
 	<Header event={data.event} />
-	<main class="flex w-full flex-col items-center justify-center gap-xl py-xl">
+	<main class="gap-xl py-xl flex w-full flex-col items-center justify-center">
 		<AboutSection event={data.event} />
 		<TimesSection event={data.event} />
 		<RulesSection event={data.event} />
