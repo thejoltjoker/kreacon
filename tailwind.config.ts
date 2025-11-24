@@ -21,22 +21,7 @@ export default {
 				3: '3',
 				4: '4'
 			},
-			maxWidth: {
-				xxs: defaultTheme.spacing['2'],
-				xs: defaultTheme.spacing['3'],
-				sm: defaultTheme.spacing['4'],
-				md: defaultTheme.spacing['6'],
-				lg: defaultTheme.spacing['8'],
-				xl: defaultTheme.spacing['10'],
-				xxl: defaultTheme.spacing['12'],
-				'screen-xs': '400px',
-				'screen-sm': '640px',
-				'screen-md': '768px',
-				'screen-lg': '1024px',
-				'screen-xl': '1280px',
-				'screen-2xl': '1536px',
-				dialog: '500px'
-			},
+
 			width: {
 				sidebar: '20rem',
 				'profile-sidebar': '260px'

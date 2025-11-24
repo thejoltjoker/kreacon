@@ -32,6 +32,22 @@ layer(base);
 	--spacing-reaction: 4rem;
 	--spacing-thumbnail: 10rem;
 
+	/* Max width */
+	--mw-xxs: var(--spacing-2);
+	--mw-xs: var(--spacing-3);
+	--mw-sm: var(--spacing-4);
+	--mw-md: var(--spacing-6);
+	--mw-lg: var(--spacing-8);
+	--mw-xl: var(--spacing-10);
+	--mw-xxl: var(--spacing-12);
+	--mw-screen-xs: 400px;
+	--mw-screen-sm: 640px;
+	--mw-screen-md: 768px;
+	--mw-screen-lg: 1024px;
+	--mw-screen-xl: 1280px;
+	--mw-screen-2xl: 1536px;
+	--mw-dialog: 500px;
+
 	/* Custom border radius values */
 	--radius-3xs: 2px;
 	--radius-2xs: 4px;
