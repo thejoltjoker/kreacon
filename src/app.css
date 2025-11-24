@@ -253,7 +253,7 @@ layer(base);
 
 @layer base {
 	* {
-		@apply focus-visible:outline-shade-400 scroll-smooth focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-solid;
+		@apply focus-visible:outline-shade-400 scroll-smooth focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:outline-2 focus-visible:outline-offset-2;
 	}
 
 	html {
