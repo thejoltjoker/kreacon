@@ -13,7 +13,10 @@
 	import { page } from '$app/stores';
 
 	let { data }: { data: SuperValidated<Infer<ZCreateEventSchema>> } = $props();
-	const superform = superForm(data, { validators: zod4Client(createEventSchema), dataType: 'json' });
+	const superform = superForm(data, {
+		validators: zod4Client(createEventSchema),
+		dataType: 'json'
+	});
 	const { message } = superform;
 </script>
 

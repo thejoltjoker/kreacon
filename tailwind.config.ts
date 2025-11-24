@@ -1,7 +1,6 @@
 import type { Config } from 'tailwindcss';
 import animate from 'tailwindcss-animate';
 import forms from '@tailwindcss/forms';
-import defaultTheme from 'tailwindcss/defaultTheme';
 
 export default {
 	content: ['./src/**/*.{html,js,svelte,ts}'],
