@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import { z } from 'zod';
+import { z } from 'zod/v4';
 import { LogLevelSchema } from './types/LogLevel';
 
 const stringBoolean = z.coerce

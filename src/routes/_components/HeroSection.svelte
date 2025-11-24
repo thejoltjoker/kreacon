@@ -35,11 +35,11 @@
 						status={getEventStatus(event)}
 					/>
 				{/if}
-				<h1 class="max-w-3xl text-4xl text-balance lg:text-7xl">
+				<h1 class="text-4xl text-balance lg:text-7xl">
 					<!-- TODO Use $t() -->
 					{$_('hero.title', { default: 'Show off your creative skills' })}
 				</h1>
-				<p class="max-w-3xl text-neutral-200 lg:text-xl">
+				<p class="text-neutral-200 lg:text-xl">
 					{$t('Join our creative competition and showcase your talent.')}
 					<br />
 					{$t('Let your imagination run wild and stand a chance to win exciting prizes.')}

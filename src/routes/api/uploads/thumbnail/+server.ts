@@ -6,7 +6,7 @@ import { azureUploadBlob } from '$lib/server/azure/storage';
 import { files } from '$lib/server/db/schema';
 import db from '$lib/server/db';
 import { createLogger } from '$lib/helpers/logger';
-import { z } from 'zod';
+import { z } from 'zod/v4';
 import { getAllowedMimeTypes, isAllowedMimeTypeForMedia } from '$lib/helpers/mediaTypes';
 import { isAuthenticated } from '../../../(app)/utils';
 

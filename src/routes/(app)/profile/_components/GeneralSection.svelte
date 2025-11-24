@@ -2,7 +2,7 @@
 	import Form from '$lib/components/Form/GenericForm.svelte';
 	import TextField from '$lib/components/Form/TextField.svelte';
 	import { updateUserSchema } from '$lib/schemas/user';
-	import { zod } from 'sveltekit-superforms/adapters';
+	import { zod4Client } from 'sveltekit-superforms/adapters';
 	import { page } from '$app/stores';
 	import Button from '$lib/components/Button.svelte';
 	import FormMessage from '$lib/components/Form/FormMessage.svelte';
@@ -23,7 +23,7 @@
 		data={$page.data.userForm}
 		options={{
 			resetForm: false,
-			validators: zod(updateUserSchema),
+			validators: zod4Client(updateUserSchema),
 			onResult: ({ result }) => {
 				if (result.type === 'success') {
 					isEditing = false;

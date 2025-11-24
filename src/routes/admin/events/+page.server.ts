@@ -5,7 +5,7 @@ import { sql } from 'drizzle-orm';
 import type { Actions, PageServerLoad } from './$types';
 import { fail } from '@sveltejs/kit';
 import { adminCheck } from '../utils';
-import { z } from 'zod';
+import { z } from 'zod/v4';
 import { StatusCodes } from 'http-status-codes';
 
 export const load = (async ({ locals, url }) => {

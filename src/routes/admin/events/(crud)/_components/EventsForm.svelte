@@ -7,13 +7,13 @@
 	import { createEventSchema, type ZCreateEventSchema } from '$lib/schemas/eventSchema';
 	import type { Infer, SuperValidated } from 'sveltekit-superforms';
 	import { superForm } from 'sveltekit-superforms';
-	import { zod } from 'sveltekit-superforms/adapters';
+	import { zod4Client } from 'sveltekit-superforms/adapters';
 	import CategoriesSection from './CategoriesSection.svelte';
 	import EventRulesSection from './EventRulesSection.svelte';
 	import { page } from '$app/stores';
 
 	let { data }: { data: SuperValidated<Infer<ZCreateEventSchema>> } = $props();
-	const superform = superForm(data, { validators: zod(createEventSchema), dataType: 'json' });
+	const superform = superForm(data, { validators: zod4Client(createEventSchema), dataType: 'json' });
 	const { message } = superform;
 </script>
 
@@ -21,7 +21,7 @@
 	debug={false}
 	{data}
 	dataType="json"
-	options={{ validators: zod(createEventSchema), dataType: 'json' }}
+	options={{ validators: zod4Client(createEventSchema), dataType: 'json' }}
 	onkeydowncapture={(e) => {
 		if (e.key === 'Enter') {
 			e.preventDefault();

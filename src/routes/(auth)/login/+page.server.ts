@@ -8,24 +8,26 @@ import { fail, redirect } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
 import { StatusCodes } from 'http-status-codes';
 import { message, superValidate } from 'sveltekit-superforms';
-import { zod } from 'sveltekit-superforms/adapters';
+import { zod4 } from 'sveltekit-superforms/adapters';
 import type { Actions, PageServerLoad } from './$types';
 import { createLogger } from '$lib/helpers/logger';
+
 const logger = createLogger('login');
+const loginSchemaAdapter = zod4(loginSchema);
 
 export const load = (async (event) => {
 	if (event.locals.user) {
 		return redirect(StatusCodes.TEMPORARY_REDIRECT, '/profile');
 	}
 
-	const form = await superValidate(zod(loginSchema));
+	const form = await superValidate(loginSchemaAdapter);
 
 	return { form, providers };
 }) satisfies PageServerLoad;
 
 export const actions = {
 	login: async (event) => {
-		const form = await superValidate(event.request, zod(loginSchema));
+		const form = await superValidate(event.request, loginSchemaAdapter);
 
 		if (!form.valid) {
 			logger.warn('Form validation failed');

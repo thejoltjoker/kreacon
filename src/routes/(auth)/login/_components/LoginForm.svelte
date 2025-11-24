@@ -7,10 +7,10 @@
 	import { loginSchema, type ZLoginSchema } from '$lib/schemas/loginSchema';
 	import type { SuperValidated, Infer } from 'sveltekit-superforms';
 	import { superForm } from 'sveltekit-superforms';
-	import { zod } from 'sveltekit-superforms/adapters';
+	import { zod4Client } from 'sveltekit-superforms/adapters';
 
 	let { data }: { data: SuperValidated<Infer<ZLoginSchema>> } = $props();
-	const superform = superForm(data, { validators: zod(loginSchema) });
+	const superform = superForm(data, { validators: zod4Client(loginSchema) });
 	const { message, enhance } = superform;
 	const redirect = $page.url.searchParams.get('redirect');
 </script>

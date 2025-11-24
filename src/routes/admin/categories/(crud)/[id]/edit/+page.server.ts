@@ -4,7 +4,7 @@ import { fail, redirect } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
 import { StatusCodes } from 'http-status-codes';
 import kebabCase from 'lodash/kebabCase';
-import { zod } from 'sveltekit-superforms/adapters';
+import { zod4 } from 'sveltekit-superforms/adapters';
 import { superValidate } from 'sveltekit-superforms/server';
 import type { Actions, PageServerLoad } from './$types';
 import { adminCheck } from '../../../../utils';
@@ -17,7 +17,7 @@ export const load = (async ({ params, locals }) => {
 	const data = await db.query.categories.findFirst({
 		where: eq(categories.id, id)
 	});
-	const form = await superValidate(data, zod(createCategorySchema));
+	const form = await superValidate(data, zod4(createCategorySchema));
 	return { form, data };
 }) satisfies PageServerLoad;
 
@@ -25,7 +25,7 @@ export const actions = {
 	default: async ({ request, params, locals }) => {
 		adminCheck(locals);
 		const id = Number(params.id);
-		const form = await superValidate(request, zod(createCategorySchema));
+		const form = await superValidate(request, zod4(createCategorySchema));
 
 		if (!form.valid) {
 			return fail(400, { form });

@@ -4,7 +4,7 @@ import { fail, redirect } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
 import kebabCase from 'lodash/kebabCase';
 import { superValidate } from 'sveltekit-superforms';
-import { zod } from 'sveltekit-superforms/adapters';
+import { zod4 } from 'sveltekit-superforms/adapters';
 import type { PageServerLoad } from './$types';
 import { StatusCodes } from 'http-status-codes';
 import { eventCategories, rules } from '$lib/server/db/schema';
@@ -23,7 +23,7 @@ export const load = (async ({ locals }) => {
 		votingCloseAt: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000),
 		categories: []
 	};
-	const form = await superValidate(initialValues, zod(createEventSchema), {
+	const form = await superValidate(initialValues, zod4(createEventSchema), {
 		id: 'create-event-form'
 	});
 	const categories = await db.query.categories.findMany({
@@ -38,7 +38,7 @@ export const load = (async ({ locals }) => {
 
 export const actions = {
 	default: async ({ request }) => {
-		const form = await superValidate(request, zod(createEventSchema), {
+		const form = await superValidate(request, zod4(createEventSchema), {
 			id: 'create-event-form'
 		});
 

@@ -8,7 +8,7 @@
 	import EntrySection from './EntrySection.svelte';
 	import FilesSection from './FilesSection.svelte';
 	import FinishSection from './FinishSection.svelte';
-	import { zod } from 'sveltekit-superforms/adapters';
+	import { zod4Client } from 'sveltekit-superforms/adapters';
 	import { createEntrySchema } from '$lib/schemas/entry';
 
 	// TODO Improve navigation guard
@@ -48,7 +48,7 @@
 	<GenericForm
 		data={$page.data.form}
 		class="my-3xl gap-xl px-sm md:px-xl"
-		options={{ validators: zod(createEntrySchema) }}
+		options={{ validators: zod4Client(createEntrySchema) }}
 	>
 		<Tabs.List class="flex w-full justify-evenly">
 			{#each tabs as t, index (index)}

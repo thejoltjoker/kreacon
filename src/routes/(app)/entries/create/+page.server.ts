@@ -6,7 +6,7 @@ import { error, redirect } from '@sveltejs/kit';
 import { and, eq } from 'drizzle-orm';
 import { StatusCodes } from 'http-status-codes';
 import { fail, message, superValidate } from 'sveltekit-superforms';
-import { zod } from 'sveltekit-superforms/adapters';
+import { zod4 } from 'sveltekit-superforms/adapters';
 import type { Actions, PageServerLoad } from './$types';
 import { createLogger } from '$lib/helpers/logger';
 import { isAuthenticated } from '../../utils';
@@ -21,7 +21,7 @@ export const load = (async ({ locals }) => {
 
 	logger.info('Loading entry creation page', { userId: locals.user.id });
 
-	const form = await superValidate(zod(createEntrySchema));
+	const form = await superValidate(zod4(createEntrySchema));
 	const now = new Date();
 
 	const userData = await db.query.users.findFirst({
@@ -95,7 +95,7 @@ export const actions = {
 
 		logger.info('Processing entry submission', { userId: locals.user.id });
 		const { user } = locals;
-		const form = await superValidate(request, zod(createEntrySchema));
+		const form = await superValidate(request, zod4(createEntrySchema));
 
 		if (!form.valid) {
 			logger.warn('Invalid form submission', {

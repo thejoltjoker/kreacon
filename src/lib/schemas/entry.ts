@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from 'zod/v4';
 import { licenseEnum } from './license';
 
 export const createEntrySchema = z.object({
