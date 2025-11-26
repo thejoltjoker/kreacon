@@ -67,17 +67,11 @@ jobs:
       - name: Unzip artifact for deployment
         run: unzip release.zip
 
-      - name: Login to Azure
-        uses: azure/login@v2
-        with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_AEBDA7F8AD5048E3BBE76007C873FFED }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_0BA2E0C622DA40129FDE3F2A6DA12B89 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_4E31080CB57C4F40B4BEADADD7787409 }}
-
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'kreacon-dev'
+          app-name: 'kreacon'
           slot-name: 'Production'
           package: .
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_FSD988BB7G7GJNDKASD7 }}
