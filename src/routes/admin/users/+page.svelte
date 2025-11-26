@@ -43,6 +43,7 @@
 		{
 			label: 'Show tickets',
 			icon: TicketIcon,
+			// @ts-expect-error TODO: Find correct solution to use resolve with search params
 			onClick: (value) => goto(resolve(`/admin/tickets?username=${value.username}`))
 		},
 		{

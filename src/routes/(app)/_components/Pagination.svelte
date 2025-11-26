@@ -21,7 +21,10 @@
 
 	const handlePageChange = (p: number) => {
 		searchParams.set('page', p.toString());
-		goto(resolve(`?${searchParams.toString()}`), { replaceState: true });
+		// @ts-expect-error TODO: Find correct solution to use resolve with search params
+		goto(resolve(`?${searchParams.toString()}`), {
+			replaceState: true
+		});
 	};
 
 	let rootClassName = cn('flex flex-col items-center pagination', props.class);

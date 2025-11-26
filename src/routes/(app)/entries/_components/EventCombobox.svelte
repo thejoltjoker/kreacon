@@ -27,6 +27,7 @@
 		const params = new SvelteURLSearchParams($page.url.searchParams);
 		if (event) params.set('event', event);
 		else params.delete('event');
+		// @ts-expect-error TODO Find correct solution to use resolve() with search params
 		goto(resolve(`?${params.toString()}`), { replaceState: true });
 	};
 

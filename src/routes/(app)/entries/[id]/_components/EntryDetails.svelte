@@ -25,7 +25,7 @@
 </section>
 
 <style lang="postcss">
-	@reference "../../../../app.css";
+	@reference "../../../../../app.css";
 
 	h1 {
 		@apply text-2xl font-bold;

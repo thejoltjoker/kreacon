@@ -7,15 +7,14 @@
 	<ul>
 		<li>
 			<a href="/profile" class:active={$page.url.pathname === '/profile'}>{$t('General')}</a>
-			>
 		</li>
 		<li>
-			<a href="/profile/password" class:active={$page.url.pathname === '/profile/password'}
+			<a href="/profile/password" class:active={$page.url.pathname.includes('/profile/password')}
 				>{$t('Password')}</a
 			>
 		</li>
 		<li>
-			<a href="/profile/tickets" class:active={$page.url.pathname === '/profile/tickets'}
+			<a href="/profile/tickets" class:active={$page.url.pathname.includes('/profile/tickets')}
 				>{$t('Tickets')}</a
 			>
 		</li>

@@ -7,7 +7,7 @@
 <section class="w-full">
 	<h2 class="text-h2 font-bold">General Rules</h2>
 	<ul class="text-shade-300 marker:text-primary list-inside list-disc">
-		{#each event.rules as rule (rule.id)}
+		{#each event.rules as rule, index (index)}
 			<li>
 				{rule.text}
 			</li>

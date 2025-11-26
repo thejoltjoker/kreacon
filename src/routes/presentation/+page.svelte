@@ -28,6 +28,7 @@
 	const updateSearchParams = (slide: number) => {
 		const params = new SvelteURLSearchParams($page.url.searchParams);
 		params.set('slide', slide.toString());
+		// @ts-expect-error TODO: Find correct solution to use resolve with search params
 		goto(resolve(`?${params.toString()}`), { replaceState: true });
 	};
 

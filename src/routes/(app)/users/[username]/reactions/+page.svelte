@@ -5,7 +5,7 @@
 </script>
 
 <ul class="grid-cols-reactions-sm gap-sm grid w-full">
-	{#each data.reactions as reaction (reaction.id)}
+	{#each data.reactions as reaction (`${reaction.userId}-${reaction.entryId}-${reaction.value}`)}
 		<li>
 			<a
 				href={`/entries/${reaction.entryId}`}

@@ -1,5 +1,6 @@
 <script lang="ts" module>
 	export interface ReactionListItem {
+		id: string;
 		url: string;
 		image: { src: string; alt: string };
 		value: string;

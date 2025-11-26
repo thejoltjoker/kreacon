@@ -15,6 +15,7 @@
 
 	let reactionListItems: ReactionListItem[] = $derived(
 		reactions?.map((reaction) => ({
+			id: `${reaction.userId}-${reaction.value}`,
 			url: `/users/${reaction.user.username}/reactions`,
 			image: { src: reaction.user.avatar?.url ?? '', alt: `${reaction.user.username} avatar` },
 			value: reaction.value

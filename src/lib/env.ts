@@ -4,10 +4,10 @@ import { LogLevelSchema } from './types/LogLevel';
 
 const stringBoolean = z.coerce
 	.string()
+	.default('false')
 	.transform((val) => {
 		return val === 'true';
-	})
-	.default('false');
+	});
 
 const EnvSchema = z.object({
 	DATABASE_URL: z.string(),
@@ -46,7 +46,7 @@ const result = EnvSchema.safeParse(process.env);
 if (!result.success) {
 	console.error('Environment validation failed:');
 	for (const issue of result.error.issues) {
-		console.error(`- ${issue.path[0]}: ${issue.message}`);
+		console.error(`- ${String(issue.path[0])}: ${issue.message}`);
 	}
 	process.exit(1);
 } else {

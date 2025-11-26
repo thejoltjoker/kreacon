@@ -44,7 +44,8 @@
 <!-- TODO Store state in url -->
 <!-- TODO Redirect to tab 1 if not valid selections -->
 <!-- TODO Show add ticket form if no valid tickets -->
-<Tabs.Root bind:value={currentTab} controlledValue disabled>
+<!-- TODO Check how controlledValue is replaced in bits ui 2 -->
+<Tabs.Root bind:value={currentTab} disabled>
 	<GenericForm
 		data={$page.data.form}
 		class="my-3xl gap-xl px-sm md:px-xl"
