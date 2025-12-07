@@ -1,5 +1,5 @@
 import { isValidMediaType } from '$lib/helpers/mediaTypes';
-import { z } from 'zod';
+import { z } from 'zod/v4';
 
 export const createCategorySchema = z.object({
 	mediaType: z.string().refine((value) => isValidMediaType(value), {

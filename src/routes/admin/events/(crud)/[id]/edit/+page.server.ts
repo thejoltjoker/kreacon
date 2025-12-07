@@ -3,7 +3,7 @@ import { error, fail, redirect } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
 import { StatusCodes } from 'http-status-codes';
 import kebabCase from 'lodash/kebabCase';
-import { zod } from 'sveltekit-superforms/adapters';
+import { zod4 } from 'sveltekit-superforms/adapters';
 import { superValidate } from 'sveltekit-superforms/server';
 import { createEventSchema, type CreateEventSchema } from '$lib/schemas/eventSchema';
 import { eventCategories, events, rules } from '$lib/server/db/schema';
@@ -45,7 +45,7 @@ export const load = (async ({ params, locals }) => {
 		}))
 	};
 
-	const form = await superValidate(formData, zod(createEventSchema), { id: 'edit-event-form' });
+	const form = await superValidate(formData, zod4(createEventSchema), { id: 'edit-event-form' });
 	return { form, categories };
 }) satisfies PageServerLoad;
 
@@ -78,7 +78,7 @@ const generateUniqueSlug = async (
 export const actions = {
 	default: async ({ request, params }) => {
 		const eventId = Number(params.id);
-		const form = await superValidate(request, zod(createEventSchema), {
+		const form = await superValidate(request, zod4(createEventSchema), {
 			id: 'edit-event-form'
 		});
 

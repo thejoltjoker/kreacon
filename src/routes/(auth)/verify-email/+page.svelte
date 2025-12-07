@@ -4,12 +4,14 @@
 </script>
 
 <h1>{$t('Verify Email')}</h1>
-<form class="flex flex-col gap-sm">
+<form class="gap-sm flex flex-col">
 	TODO
 	<Button type="submit">{$t('Verify Email')}</Button>
 </form>
 
 <style lang="postcss">
+	@reference "../../../app.css";
+
 	h1 {
 		@apply text-2xl font-bold;
 	}

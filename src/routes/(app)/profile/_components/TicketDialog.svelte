@@ -27,17 +27,17 @@
 	<Dialog.Portal>
 		<Dialog.Overlay class="fixed inset-0 z-50 bg-black/80" />
 		<Dialog.Content
-			class="card fixed left-1/2 top-1/2 z-50 w-full max-w-[94%] -translate-x-1/2 -translate-y-1/2 overflow-hidden border border-muted-foreground bg-bg p-0 shadow-lg outline-none sm:max-w-screen-sm md:w-full"
+			class="card border-muted-foreground bg-bg fixed top-1/2 left-1/2 z-50 w-full max-w-[94%] -translate-x-1/2 -translate-y-1/2 overflow-hidden border p-0 shadow-lg outline-none sm:max-w-(--breakpoint-sm) md:w-full"
 		>
 			<form method="POST" action="?/addTicket" use:ticketEnhance>
 				<Dialog.Title
-					class="flex h-form w-full flex-col items-center justify-center bg-muted-background font-bold"
+					class="h-form bg-muted-background flex w-full flex-col items-center justify-center font-bold"
 				>
 					Add ticket
 				</Dialog.Title>
-				<Separator.Root class="h-px bg-divider" />
+				<Separator.Root class="bg-divider h-px" />
 
-				<div class="flex flex-col gap-xl p-xl">
+				<div class="gap-xl p-xl flex flex-col">
 					<Dialog.Description class="text-foreground-alt">
 						Add a ticket to your profile. You should have received this in your email.
 					</Dialog.Description>
@@ -68,7 +68,7 @@
 					</div>
 				</div>
 				<Dialog.Close
-					class="focus-visible:ring-foreground absolute right-0 top-0 size-form rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-bg active:scale-98"
+					class="focus-visible:ring-foreground size-form focus-visible:ring-offset-bg absolute top-0 right-0 rounded-md focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none active:scale-98"
 				>
 					<div class="flex items-center justify-center">
 						<XIcon class="text-foreground size-5" />

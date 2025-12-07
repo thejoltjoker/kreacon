@@ -26,9 +26,7 @@
 						<span>
 							{label}
 						</span>
-						<span
-							class="hidden items-center justify-center text-primary group-data-[selected]:flex"
-						>
+						<span class="text-primary hidden items-center justify-center group-data-selected:flex">
 							<DotIcon class="h-form w-form" />
 						</span>
 					</Select.Item>

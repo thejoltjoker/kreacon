@@ -29,7 +29,7 @@
 				<br />
 				<span class="text-destructive">This action cannot be undone!</span>
 			</p>
-			<p class="pt-sm text-sm text-shade-300">
+			<p class="pt-sm text-shade-300 text-sm">
 				Deleting this entry will allow you to submit a new one to the same category and event.
 			</p>
 		{/snippet}

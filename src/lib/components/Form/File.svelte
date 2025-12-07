@@ -8,9 +8,8 @@
 	import { t } from '$lib/i18n';
 
 	interface Props {
-		// eslint-disable-next-line no-undef
 		form: SuperForm<T>;
-		// eslint-disable-next-line no-undef
+
 		field: FormPathLeaves<T>;
 		disabled: boolean;
 		mediaType?: MediaType;
@@ -26,7 +25,7 @@
 	let dropZoneClassName = $derived(
 		cn(
 			'flex min-h-[30vh] aspect-square flex-col items-center justify-center border-2 border-dashed border-muted-foreground rounded-form transition',
-			isDragging && 'bg-squid-950/25 border-primary !text-white'
+			isDragging && 'bg-squid-950/25 border-primary text-white!'
 		)
 	);
 
@@ -67,7 +66,7 @@
 
 {#if $value && $value instanceof FileList && $value.length > 0}
 	<div
-		class="flex items-center justify-center overflow-hidden rounded-form border border-muted-foreground"
+		class="rounded-form border-muted-foreground flex items-center justify-center overflow-hidden border"
 	>
 		<div class="overflow-hidden rounded-lg">
 			<img
@@ -95,7 +94,7 @@
 				<button
 					type="button"
 					onclick={chooseFile}
-					class="text-2xl font-bold text-white underline decoration-secondary"
+					class="decoration-secondary text-2xl font-bold text-white underline"
 				>
 					{$t('Click here to upload a file')}
 				</button>
@@ -107,7 +106,7 @@
 	</div>
 {/if}
 {#if filePreview != null}
-	<div class="mt-md flex justify-between gap-sm">
+	<div class="mt-md gap-sm flex justify-between">
 		<Button variant="outline" onclick={handleRemove}>Remove</Button>
 	</div>
 {:else}

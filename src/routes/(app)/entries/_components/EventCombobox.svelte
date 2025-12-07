@@ -1,8 +1,10 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
+	import { resolve } from '$app/paths';
 	import { Combobox } from 'bits-ui';
 	import { ChevronsUpDownIcon, DotIcon, XCircleIcon } from 'lucide-svelte';
+	import { SvelteURLSearchParams } from 'svelte/reactivity';
 
 	type Item = { value: string; label: string };
 	type Props = {
@@ -22,10 +24,11 @@
 	});
 
 	const handleValueChange = (event: string | undefined) => {
-		const params = new URLSearchParams($page.url.searchParams);
+		const params = new SvelteURLSearchParams($page.url.searchParams);
 		if (event) params.set('event', event);
 		else params.delete('event');
-		goto(`?${params.toString()}`);
+		// @ts-expect-error TODO Find correct solution to use resolve() with search params
+		goto(resolve(`?${params.toString()}`), { replaceState: true });
 	};
 
 	const handleInput = (e: Event & { currentTarget: HTMLInputElement }) => {
@@ -51,7 +54,7 @@
 		onOpenChange={handleOpenChange}
 		onValueChange={handleValueChange}
 	>
-		<div class="input pl-md data-[active]:font-bold" data-active={isActive}>
+		<div class="input pl-md data-active:font-bold" data-active={isActive}>
 			<p class="font-bold">Event:</p>
 			<Combobox.Input
 				bind:ref={inputRef}
@@ -65,7 +68,7 @@
 			</Combobox.Trigger>
 			<button
 				class:hidden={!isActive}
-				class="absolute right-form top-1/2 hidden -translate-y-1/2 text-shade-300"
+				class="right-form text-shade-300 absolute top-1/2 hidden -translate-y-1/2"
 				onclick={handleClear}
 				aria-label="Clear event filter"
 			>
@@ -75,20 +78,18 @@
 		<Combobox.Portal>
 			<Combobox.Content
 				{customAnchor}
-				class="z-30 w-[var(--bits-combobox-anchor-width)] rounded-form border border-muted-background bg-muted-background p-xs"
+				class="rounded-form border-muted-background bg-muted-background p-xs z-30 w-(--bits-combobox-anchor-width) border"
 				sideOffset={10}
 			>
 				{#if filteredItems.length > 0}
-					{#each filteredItems as item}
+					{#each filteredItems as item (item.value)}
 						<Combobox.Item value={item.value} label={item.label} class="combobox-item group">
-							{#snippet children()}
-								{item.label}
-								<span
-									class="hidden items-center justify-center text-primary group-data-[selected]:flex"
-								>
-									<DotIcon class="h-form w-form" />
-								</span>
-							{/snippet}
+							{item.label}
+							<span
+								class="text-primary hidden items-center justify-center group-data-selected:flex"
+							>
+								<DotIcon class="h-form w-form" />
+							</span>
 						</Combobox.Item>
 					{/each}
 				{:else}

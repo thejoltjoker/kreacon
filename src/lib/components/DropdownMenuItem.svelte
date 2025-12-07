@@ -22,10 +22,10 @@
 	}: DropdownMenuItemProps = $props();
 
 	let className = cn(
-		'flex cursor-pointer items-center justify-start gap-sm rounded-sm transition-colors hover:bg-shade-800 data-[highlighted]:bg-shade-800',
+		'flex cursor-pointer items-center justify-start gap-sm rounded-sm transition-colors hover:bg-shade-800 data-highlighted:bg-shade-800',
 
 		href == null && 'py-sm px-sm',
-		'disabled:text-shade-400 data-[disabled]:text-shade-400',
+		'disabled:text-shade-400 data-disabled:text-shade-400',
 		props.class
 	);
 

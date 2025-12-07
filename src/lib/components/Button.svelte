@@ -18,7 +18,7 @@
 				outline: 'border-white bg-background hover:bg-white hover:text-black border text-white',
 				ghost: 'hover:bg-muted-background hover:text-white ring-shade-400',
 				link: 'text-primary underline-offset-4 hover:underline',
-				neutral: 'bg-inherit text-inherit h-fit rounded-none !p-0'
+				neutral: 'bg-inherit text-inherit h-fit rounded-none p-0!'
 			},
 			size: {
 				default: 'h-form px-2xl',

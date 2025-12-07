@@ -1,12 +1,275 @@
-@import url('https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&family=Noto+Color+Emoji&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&family=Noto+Color+Emoji&display=swap')
+layer(base);
 
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+@import 'tailwindcss';
+
+@config '../tailwind.config.ts';
+
+@theme {
+	/* Custom spacing values - these will be available for gap, padding, margin, etc. */
+	--spacing-px: 1px;
+	--spacing-3xs: 2px;
+	--spacing-2xs: 4px;
+	--spacing-xs: 8px;
+	--spacing-sm: 12px;
+	--spacing-md: 16px;
+	--spacing-lg: 20px;
+	--spacing-xl: 24px;
+	--spacing-2xl: 28px;
+	--spacing-3xl: 32px;
+	--spacing-4xl: 36px;
+	--spacing-5xl: 40px;
+	--spacing-6xl: 44px;
+	--spacing-7xl: 48px;
+	--spacing-8xl: 96px;
+	--spacing-form: 48px;
+	--spacing-input-sm: 40px;
+	--spacing-input-md: 48px;
+	--spacing-input-lg: 56px;
+	--spacing-avatar-sm: 48px;
+	--spacing-avatar-md: 64px;
+	--spacing-avatar-lg: 96px;
+	--spacing-reaction: 4rem;
+	--spacing-thumbnail: 10rem;
+
+	/* Max width */
+	--mw-xxs: var(--spacing-2);
+	--mw-xs: var(--spacing-3);
+	--mw-sm: var(--spacing-4);
+	--mw-md: var(--spacing-6);
+	--mw-lg: var(--spacing-8);
+	--mw-xl: var(--spacing-10);
+	--mw-xxl: var(--spacing-12);
+	--mw-screen-xs: 400px;
+	--mw-screen-sm: 640px;
+	--mw-screen-md: 768px;
+	--mw-screen-lg: 1024px;
+	--mw-screen-xl: 1280px;
+	--mw-screen-2xl: 1536px;
+	--mw-dialog: 500px;
+
+	/* Custom border radius values */
+	--radius-3xs: 2px;
+	--radius-2xs: 4px;
+	--radius-xs: 8px;
+	--radius-sm: 12px;
+	--radius-md: 16px;
+	--radius-lg: 20px;
+	--radius-xl: 24px;
+	--radius-2xl: 28px;
+	--radius-3xl: 32px;
+	--radius-4xl: 36px;
+	--radius-5xl: 40px;
+	--radius-6xl: 44px;
+	--radius-7xl: 48px;
+	--radius-form: 12px;
+	--radius-button: 9999px;
+
+	/* Custom font sizes */
+	--font-size-sm: 0.875rem;
+	--font-size-base: 1rem;
+	--font-size-md: 1rem;
+	--font-size-lg: 1.125rem;
+	--font-size-xl: 1.25rem;
+	--font-size-2xl: 1.5rem;
+	--font-size-3xl: 1.75rem;
+	--font-size-4xl: 2rem;
+	--font-size-h1: 2rem;
+	--font-size-h2: 1.75rem;
+	--font-size-h3: 1.5rem;
+	--font-size-h4: 1.25rem;
+	--font-size-h5: 1.125rem;
+	--font-size-h6: 1rem;
+
+	/* Text size utilities (for text-* classes) */
+	--text-sm: 0.875rem;
+	--text-base: 1rem;
+	--text-md: 1rem;
+	--text-lg: 1.125rem;
+	--text-xl: 1.25rem;
+	--text-2xl: 1.5rem;
+	--text-3xl: 1.75rem;
+	--text-4xl: 2rem;
+	--text-h1: 2rem;
+	--text-h2: 1.75rem;
+	--text-h3: 1.5rem;
+	--text-h4: 1.25rem;
+	--text-h5: 1.125rem;
+	--text-h6: 1rem;
+
+	/* Custom colors - shade palette */
+	--color-shade-50: hsl(240 20% 95%);
+	--color-shade-100: hsl(240 15% 77%);
+	--color-shade-200: hsl(240 12% 63%);
+	--color-shade-300: hsl(240 8% 54%);
+	--color-shade-400: hsl(240 7% 40%);
+	--color-shade-500: hsl(240 8% 30%);
+	--color-shade-600: hsl(240 10% 21%);
+	--color-shade-700: hsl(240 10% 16%);
+	--color-shade-800: hsl(240 12% 12%);
+	--color-shade-900: hsl(240 14% 9%);
+	--color-shade-950: hsl(240 15% 7%);
+
+	/* Custom colors - bubblegum palette */
+	--color-bubblegum-50: #fdf2f6;
+	--color-bubblegum-100: #fde6f0;
+	--color-bubblegum-200: #fccee1;
+	--color-bubblegum-300: #fba6c8;
+	--color-bubblegum-400: #f76fa2;
+	--color-bubblegum-500: #ef3576;
+	--color-bubblegum-600: #e0225b;
+	--color-bubblegum-700: #c21443;
+	--color-bubblegum-800: #a01438;
+	--color-bubblegum-900: #861532;
+	--color-bubblegum-950: #520519;
+
+	/* Custom colors - mint palette */
+	--color-mint-50: #effef6;
+	--color-mint-100: #d9ffee;
+	--color-mint-200: #b5fddd;
+	--color-mint-300: #7bfac4;
+	--color-mint-400: #3beda2;
+	--color-mint-500: #16ec92;
+	--color-mint-600: #08b16a;
+	--color-mint-700: #0a8b55;
+	--color-mint-800: #0e6d46;
+	--color-mint-900: #0e593c;
+	--color-mint-950: #01321f;
+
+	/* Custom colors - squid palette */
+	--color-squid-50: #f4f2ff;
+	--color-squid-100: #ece7ff;
+	--color-squid-200: #d9d2ff;
+	--color-squid-300: #bfaeff;
+	--color-squid-400: #9f80ff;
+	--color-squid-500: #824dff;
+	--color-squid-600: #803bff;
+	--color-squid-700: #6516eb;
+	--color-squid-800: #5512c5;
+	--color-squid-900: #4711a1;
+	--color-squid-950: #29076e;
+
+	/* Custom colors - pomodoro palette */
+	--color-pomodoro-50: #fef2f2;
+	--color-pomodoro-100: #fee2e2;
+	--color-pomodoro-200: #fecaca;
+	--color-pomodoro-300: #fca5a5;
+	--color-pomodoro-400: #f87171;
+	--color-pomodoro-500: #ef4444;
+	--color-pomodoro-600: #dc2626;
+	--color-pomodoro-700: #b91c1c;
+	--color-pomodoro-800: #991b1b;
+	--color-pomodoro-900: #7f1d1d;
+	--color-pomodoro-950: #450a0a;
+
+	/* Custom colors - sun palette */
+	--color-sun-50: #fff8eb;
+	--color-sun-100: #fde9c8;
+	--color-sun-200: #fbd28c;
+	--color-sun-300: #f9b450;
+	--color-sun-400: #f8a33b;
+	--color-sun-500: #f1760f;
+	--color-sun-600: #d5540a;
+	--color-sun-700: #b1370c;
+	--color-sun-800: #902b10;
+	--color-sun-900: #762411;
+	--color-sun-950: #440f04;
+
+	/* Custom semantic colors */
+	--color-white: #ffffff;
+	--color-black: #000000;
+	--color-focus: var(--color-squid-300);
+	--color-primary: var(--color-squid-600);
+	--color-primary-light: var(--color-squid-500);
+	--color-primary-dark: var(--color-squid-700);
+	--color-secondary: var(--color-bubblegum-600);
+	--color-secondary-light: var(--color-bubblegum-500);
+	--color-secondary-dark: var(--color-bubblegum-700);
+	--color-tertiary: var(--color-sun-400);
+	--color-tertiary-light: var(--color-sun-400);
+	--color-tertiary-dark: var(--color-sun-700);
+	--color-muted-foreground: var(--color-shade-500);
+	--color-muted-foreground-light: var(--color-shade-400);
+	--color-muted-foreground-alt: var(--color-shade-400);
+	--color-muted-foreground-dark: var(--color-shade-500);
+	--color-muted-background: var(--color-shade-800);
+	--color-muted-background-dark: var(--color-shade-800);
+	--color-muted-background-alt: var(--color-shade-600);
+	--color-text-muted-foreground: var(--color-shade-400);
+	--color-text-muted-foreground-dark: var(--color-shade-400);
+	--color-text-muted-background: var(--color-shade-700);
+	--color-text-muted-background-dark: var(--color-shade-700);
+	--color-divider: var(--color-shade-700);
+	--color-success: var(--color-mint-500);
+	--color-destructive: var(--color-pomodoro-500);
+	--color-error: var(--color-pomodoro-500);
+	--color-bg: var(--color-shade-950);
+	--color-bg-dark: var(--color-shade-950);
+}
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+	*,
+	::after,
+	::before,
+	::backdrop,
+	::file-selector-button {
+		border-color: var(--color-gray-200, currentcolor);
+	}
+}
+
+@utility error {
+	@apply text-destructive;
+}
+
+@utility input-valid {
+	@apply border-success! focus:ring-success!;
+}
+
+@utility input-invalid {
+	@apply border-error! focus:border-error! focus:ring-error!;
+}
+
+@utility card {
+	@apply bg-muted-background p-lg rounded-lg;
+}
+
+@utility combobox {
+	& .input {
+		@apply h-form rounded-form border-muted-foreground bg-bg flex w-full items-center justify-between border text-white data-active:border-white;
+	}
+}
+
+@utility combobox-trigger {
+	@apply size-form absolute top-1/2 right-0 z-30 flex -translate-y-1/2 items-center justify-center;
+}
+
+@utility combobox-item {
+	@apply h-form rounded-form pl-sm hover:bg-muted-foreground! data-highlighted:bg-muted-foreground data-disabled:text-muted-foreground flex cursor-pointer items-center justify-between data-disabled:cursor-default! data-disabled:bg-transparent! data-selected:font-bold data-selected:text-white;
+}
+
+@utility select-trigger {
+	@apply h-form rounded-form border-muted-foreground px-md flex w-full items-center justify-between border text-left text-white data-[state=open]:border-violet-500;
+}
+
+@utility select-content {
+	@apply mt-sm rounded-form border-muted-background bg-muted-background p-xs w-(--bits-select-anchor-width) border;
+}
+
+@utility select-item {
+	@apply h-form rounded-form pl-sm hover:bg-muted-foreground! data-disabled:text-muted-foreground flex cursor-pointer items-center justify-between data-disabled:cursor-default! data-disabled:bg-transparent! data-selected:font-bold;
+}
 
 @layer base {
 	* {
-		@apply scroll-smooth focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-shade-400 focus-visible:ring-0 focus-visible:ring-offset-0;
+		@apply focus-visible:outline-shade-400 scroll-smooth focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:outline-2 focus-visible:outline-offset-2;
 	}
 
 	html {
@@ -51,7 +314,7 @@
 	}
 
 	body {
-		@apply h-full bg-bg text-black dark:bg-bg dark:text-white;
+		@apply bg-bg dark:bg-bg h-full text-black dark:text-white;
 	}
 
 	::selection {
@@ -69,59 +332,16 @@
 	/* input[type='text'], */
 	input[type='email'],
 	input[type='password'] {
-		@apply h-form w-full rounded-sm border border-muted-foreground bg-bg px-3 py-2 focus:border-violet-500 focus:outline-none focus:ring-violet-500;
+		@apply h-form border-muted-foreground bg-bg w-full rounded-sm border px-3 py-2 focus:border-violet-500 focus:ring-violet-500 focus:outline-hidden;
 	}
 	.input {
-		@apply h-form w-full rounded-sm border border-muted-foreground bg-bg px-3 py-2 focus:border-violet-500 focus:outline-none focus:ring-violet-500;
+		@apply h-form border-muted-foreground bg-bg w-full rounded-sm border px-3 py-2 focus:border-violet-500 focus:ring-violet-500 focus:outline-hidden;
 	}
 
 	media-tooltip {
-		--media-font-weight: theme('fontWeight.bold');
-		--media-font-size: theme('fontSize.sm');
-		--media-font-family: theme('fontFamily.sans');
+		--media-font-weight: var(--font-weight-bold);
+		--media-font-size: var(--text-sm);
+		--media-font-family: var(--font-sans);
 		--media-tooltip-background-color: red;
-	}
-}
-
-@layer components {
-	.error {
-		@apply text-destructive;
-	}
-
-	.input-valid {
-		@apply !border-success focus:!ring-success;
-	}
-
-	.input-invalid {
-		@apply !border-error focus:!border-error focus:!ring-error;
-	}
-
-	.card {
-		@apply rounded-lg bg-muted-background p-lg;
-	}
-
-	.combobox {
-		& .input {
-			@apply flex h-form w-full items-center justify-between rounded-form border border-muted-foreground bg-bg text-white data-[active]:border-white;
-		}
-	}
-
-	.combobox-trigger {
-		@apply absolute right-0 top-1/2 z-30 flex size-form -translate-y-1/2 items-center justify-center;
-	}
-
-	.combobox-item {
-		@apply flex h-form cursor-pointer items-center justify-between rounded-form pl-sm hover:!bg-muted-foreground data-[disabled]:!cursor-default data-[disabled]:!bg-transparent data-[highlighted]:bg-muted-foreground data-[selected]:font-bold data-[disabled]:text-muted-foreground data-[selected]:text-white;
-	}
-
-	.select-trigger {
-		@apply flex h-form w-full items-center justify-between rounded-form border border-muted-foreground px-md text-left text-white data-[state=open]:border-violet-500;
-	}
-
-	.select-content {
-		@apply mt-sm w-[var(--bits-select-anchor-width)] rounded-form border border-muted-background bg-muted-background p-xs;
-	}
-	.select-item {
-		@apply flex h-form cursor-pointer items-center justify-between rounded-form pl-sm hover:!bg-muted-foreground data-[disabled]:!cursor-default data-[disabled]:!bg-transparent data-[selected]:font-bold data-[disabled]:text-muted-foreground;
 	}
 }

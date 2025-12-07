@@ -14,7 +14,7 @@
 			<img
 				src={`${entry.media?.url}`}
 				alt={entry.title}
-				class="h-full w-full overflow-hidden rounded-form object-cover object-center"
+				class="rounded-form h-full w-full overflow-hidden object-cover object-center"
 			/>
 		{:else if mediaType === 'video'}
 			<VideoPlayer src={entry.media.url} poster={entry.preview?.url} />

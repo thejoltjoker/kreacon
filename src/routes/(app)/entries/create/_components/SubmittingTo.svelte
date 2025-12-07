@@ -12,7 +12,7 @@
 </script>
 
 {#if event != null && category != null}
-	<p class="text-center text-xl font-bold text-shade-300">
+	<p class="text-shade-300 text-center text-xl font-bold">
 		{$t('Submitting to')} <span class="text-white">{category?.name}</span> in
 		<span class="text-white">{event?.name}</span>
 	</p>

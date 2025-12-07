@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
+	import { resolve } from '$app/paths';
 	import { fade } from 'svelte/transition';
 	import BraggingSlide from './slides/BraggingSlide.svelte';
 	import ChallengesSlide from './slides/ChallengesSlide.svelte';
@@ -9,6 +10,7 @@
 	import IntroSlide from './slides/IntroSlide.svelte';
 	import TechStackSlide from './slides/TechStackSlide.svelte';
 	import WhySlide from './slides/WhySlide.svelte';
+	import { SvelteURLSearchParams } from 'svelte/reactivity';
 
 	const slides: Record<number, typeof IntroSlide> = {
 		0: IntroSlide,
@@ -24,9 +26,10 @@
 	let CurrentSlide = $derived(slides[currentSlideNumber]);
 
 	const updateSearchParams = (slide: number) => {
-		const params = new URLSearchParams($page.url.searchParams);
+		const params = new SvelteURLSearchParams($page.url.searchParams);
 		params.set('slide', slide.toString());
-		goto(`?${params.toString()}`);
+		// @ts-expect-error TODO: Find correct solution to use resolve with search params
+		goto(resolve(`?${params.toString()}`), { replaceState: true });
 	};
 
 	const nextSlide = () => {
@@ -57,7 +60,7 @@
 
 {#key currentSlideNumber}
 	<div
-		class="absolute left-0 top-0 z-[150] flex h-screen w-screen flex-col items-center justify-center"
+		class="absolute top-0 left-0 z-150 flex h-screen w-screen flex-col items-center justify-center"
 		in:fade={{ delay: transitionDuration, duration: transitionDuration }}
 		out:fade={{ duration: transitionDuration }}
 	>
@@ -65,10 +68,10 @@
 	</div>
 {/key}
 <div
-	class="absolute left-0 top-0 z-[100] flex h-screen w-screen flex-col items-center justify-center bg-bg"
+	class="bg-bg absolute top-0 left-0 z-100 flex h-screen w-screen flex-col items-center justify-center"
 ></div>
 <div class="horizon">
 	<div
-		class="fixed bottom-0 left-0 z-[110] h-[50vh] w-screen bg-gradient-to-t from-[hsl(246,30%,9%)]"
+		class="fixed bottom-0 left-0 z-110 h-[50vh] w-screen bg-linear-to-t from-[hsl(246,30%,9%)]"
 	></div>
 </div>

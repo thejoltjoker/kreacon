@@ -3,6 +3,6 @@
 </script>
 
 <!-- TODO Show add ticket form if user has no tickets -->
-<section class="w-full max-w-screen-md">
+<section class="w-full max-w-(--breakpoint-md)">
 	<EntryForm />
 </section>

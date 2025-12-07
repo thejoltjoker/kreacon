@@ -39,7 +39,7 @@
 	const mergedInputProps = $derived(mergeProps(inputProps, { oninput: handleInput }));
 
 	const contentClassName = cn(
-		'w-[var(--bits-combobox-anchor-width)] rounded-form border border-muted-background bg-muted-background p-xs',
+		'w-(--bits-combobox-anchor-width) rounded-form border border-muted-background bg-muted-background p-xs',
 		contentProps?.class
 	);
 	let active = $derived(value != '' ? true : null);
@@ -56,14 +56,10 @@
 			<Combobox.Content {...contentProps} class={contentClassName} sideOffset={10}>
 				{#each filteredItems as item, i (i + item.value)}
 					<Combobox.Item value={item.value} label={item.label} class="combobox-item group">
-						{#snippet children()}
-							{item.label}
-							<span
-								class="hidden items-center justify-center text-primary group-data-[selected]:flex"
-							>
-								<DotIcon class="h-form w-form" />
-							</span>
-						{/snippet}
+						{item.label}
+						<span class="text-primary hidden items-center justify-center group-data-selected:flex">
+							<DotIcon class="h-form w-form" />
+						</span>
 					</Combobox.Item>
 				{:else}
 					<span> No results found </span>

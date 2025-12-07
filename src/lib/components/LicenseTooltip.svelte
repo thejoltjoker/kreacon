@@ -19,18 +19,18 @@
 				{#if open}
 					<div {...props} transition:fly={{ y: 10, duration: 100 }}>
 						<div
-							class="shadow-popover z-10 flex max-w-screen-sm items-center justify-center rounded-form border border-shade-700 bg-shade-900 p-sm text-sm outline-none"
+							class="shadow-popover rounded-form border-shade-700 bg-shade-900 p-sm z-10 flex max-w-(--breakpoint-sm) items-center justify-center border text-sm outline-none"
 						>
-							<div class="flex flex-col gap-sm">
+							<div class="gap-sm flex flex-col">
 								<div class="inline-flex items-center justify-between">
 									<h5 class="text-white">{licenseInfo.code.toUpperCase()}</h5>
 									<LinkIcon class="size-4" />
 								</div>
-								<h6 class="flex items-center gap-xs text-white">
+								<h6 class="gap-xs flex items-center text-white">
 									<ThumbsUpIcon class="size-4" /> Please do
 								</h6>
-								<ul class="flex flex-col gap-sm">
-									{#each licenseInfo.allowed as { title, text }}
+								<ul class="gap-sm flex flex-col">
+									{#each licenseInfo.allowed as { title, text }, i (i)}
 										<li>
 											<p class="text-base font-bold text-white">{title}</p>
 											<p>{text}</p>
@@ -38,11 +38,11 @@
 									{/each}
 								</ul>
 								<Divider />
-								<h6 class="flex items-center gap-xs text-white">
+								<h6 class="gap-xs flex items-center text-white">
 									<AlertCircleIcon class="size-4" /> You must
 								</h6>
-								<ul class="flex flex-col gap-sm">
-									{#each licenseInfo.terms as { title, text }}
+								<ul class="gap-sm flex flex-col">
+									{#each licenseInfo.terms as { title, text }, i (i)}
 										<li>
 											<p class="text-base font-bold text-white">{title}</p>
 											<p>{text}</p>

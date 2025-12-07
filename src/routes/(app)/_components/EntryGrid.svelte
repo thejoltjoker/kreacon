@@ -12,8 +12,8 @@
 	let { entries }: Props = $props();
 </script>
 
-<div class="grid w-full grid-cols-entries gap-sm md:gap-xl">
-	{#each entries as entry}
+<div class="grid-cols-entries gap-sm md:gap-xl grid w-full">
+	{#each entries as entry (entry.id)}
 		<EntryGridItem {entry} />
 	{/each}
 </div>

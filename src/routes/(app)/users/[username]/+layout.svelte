@@ -24,8 +24,8 @@
 </script>
 
 <!-- Profile Header Section -->
-<div class="flex w-full max-w-screen-lg flex-col gap-xl p-sm md:p-xl">
-	<div class="flex items-start gap-sm">
+<div class="gap-xl p-sm md:p-xl flex w-full max-w-(--breakpoint-lg) flex-col">
+	<div class="gap-sm flex items-start">
 		<UserInfo user={data.profileUser} />
 	</div>
 

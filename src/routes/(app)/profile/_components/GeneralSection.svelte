@@ -2,7 +2,7 @@
 	import Form from '$lib/components/Form/GenericForm.svelte';
 	import TextField from '$lib/components/Form/TextField.svelte';
 	import { updateUserSchema } from '$lib/schemas/user';
-	import { zod } from 'sveltekit-superforms/adapters';
+	import { zod4Client } from 'sveltekit-superforms/adapters';
 	import { page } from '$app/stores';
 	import Button from '$lib/components/Button.svelte';
 	import FormMessage from '$lib/components/Form/FormMessage.svelte';
@@ -16,14 +16,14 @@
 
 <!-- TODO Unify wording sign up/sign in or register/log in -->
 
-<section class="flex w-full flex-col gap-sm">
+<section class="gap-sm flex w-full flex-col">
 	<Form
 		invalidateAll={true}
 		action="/profile?/updateUser"
 		data={$page.data.userForm}
 		options={{
 			resetForm: false,
-			validators: zod(updateUserSchema),
+			validators: zod4Client(updateUserSchema),
 			onResult: ({ result }) => {
 				if (result.type === 'success') {
 					isEditing = false;
@@ -35,7 +35,7 @@
 			<h2>General</h2>
 			<EditProfileButton bind:isEditing />
 		</div>
-		<div class="flex flex-col gap-sm">
+		<div class="gap-sm flex flex-col">
 			{#if isEditing}
 				<FileField
 					behavior="managed"
@@ -46,7 +46,7 @@
 				/>
 			{:else}
 				<p class="font-bold">Avatar</p>
-				<div class="flex items-center gap-sm">
+				<div class="gap-sm flex items-center">
 					<Avatar size="md" src={$page.data.user.avatar?.url} alt={$page.data.user.username} />
 				</div>
 			{/if}

@@ -22,7 +22,7 @@
 	)}
 >
 	<button
-		class="flex items-center gap-sm overflow-hidden font-bold transition-colors hover:text-shade-200 disabled:text-white"
+		class="gap-sm hover:text-shade-200 flex items-center overflow-hidden font-bold transition-colors disabled:text-white"
 		onclick={() => handleSortByChange(field.name ?? '')}
 		disabled={!field.sortable}
 	>

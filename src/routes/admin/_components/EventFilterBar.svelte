@@ -15,9 +15,9 @@
 
 <section class="w-full">
 	<div class="mx-auto w-full">
-		<div class="flex items-center gap-sm">
+		<div class="gap-sm flex items-center">
 			<Button href="/admin/events/create" variant="outline" icon={PlusIcon}>Add event</Button>
-			<div class="ml-auto inline-flex items-center gap-sm">
+			<div class="gap-sm ml-auto inline-flex items-center">
 				<!-- <DumbInput icon={SearchIcon} placeholder="Search" /> -->
 				<TextFilter />
 				<SortBySelect items={sortByItems} />
@@ -27,7 +27,9 @@
 </section>
 
 <style lang="postcss">
+	@reference "../../../app.css";
+
 	section {
-		@apply flex items-center justify-between gap-sm border-b border-b-divider px-sm py-sm md:px-xl;
+		@apply gap-sm border-b-divider px-sm py-sm md:px-xl flex items-center justify-between border-b;
 	}
 </style>

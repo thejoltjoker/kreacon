@@ -73,7 +73,7 @@
 	<img src={displayImage} alt="" class="min-h-32 w-full" />
 {/if}
 
-<form class="flex flex-col gap-sm">
+<form class="gap-sm flex flex-col">
 	{#if !displayImage}
 		<!-- svelte-ignore a11y-no-static-element-interactions -->
 		<div
@@ -105,7 +105,7 @@
 			class="hidden"
 		/>
 		{#if displayImage}
-			<div class="mt-md flex justify-between gap-sm">
+			<div class="mt-md gap-sm flex justify-between">
 				<button on:click={handleRemove}>Remove</button>
 			</div>
 		{:else}

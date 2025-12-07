@@ -2,7 +2,7 @@
 	import Button from '$lib/components/Button.svelte';
 </script>
 
-<div class="flex gap-sm">
+<div class="gap-sm flex">
 	<Button>Share</Button>
 	<Button>Vote</Button>
 </div>

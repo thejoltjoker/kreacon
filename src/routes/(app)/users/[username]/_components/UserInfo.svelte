@@ -14,7 +14,7 @@
 	<div>
 		<h2 class="text-3xl font-bold">{user?.username}</h2>
 		<p class="member-since text-shade-300">
-			{$t('Member since')}{' '}
+			{$t('Member since')}
 			{user?.createdAt
 				.toLocaleDateString('en-US', {
 					day: 'numeric',

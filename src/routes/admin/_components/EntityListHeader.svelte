@@ -14,19 +14,19 @@
 </script>
 
 <ul
-	class="flex flex-wrap gap-sm border-b border-b-divider px-xl py-sm first-of-type:pt-sm last-of-type:border-b-0 hover:bg-shade-900"
+	class="gap-sm border-b-divider px-xl py-sm first-of-type:pt-sm hover:bg-shade-900 flex flex-wrap border-b last-of-type:border-b-0"
 >
 	{#if hasThumbnail}
 		<div
-			class="flex size-form min-w-form items-center justify-center overflow-hidden text-shade-400"
+			class="size-form min-w-form text-shade-400 flex items-center justify-center overflow-hidden"
 		>
 			<ImageIcon class="size-5" aria-label={$t('Image')} />
 		</div>
 	{/if}
-	{#each fieldsToRender as field}
+	{#each fieldsToRender as field (field.name)}
 		<EntityListHeaderField {field} {handleSortByChange} />
 	{/each}
-	<li class="flex size-form items-center justify-center text-shade-400">
+	<li class="size-form text-shade-400 flex items-center justify-center">
 		<Settings2Icon class="size-5" />
 	</li>
 </ul>

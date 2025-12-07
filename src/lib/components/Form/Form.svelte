@@ -4,7 +4,6 @@
 	import type { SuperForm } from 'sveltekit-superforms';
 
 	interface Props extends HTMLAttributes<HTMLFormElement> {
-		// eslint-disable-next-line no-undef
 		form: SuperForm<T>;
 		action?: string;
 		children: Snippet;

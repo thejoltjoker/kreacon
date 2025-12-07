@@ -6,21 +6,20 @@
 		poster: string;
 	}
 	let { src, poster }: Props = $props();
-	$inspect(src);
 </script>
 
-<media-controller audio class="w-full rounded-form border border-shade-600 bg-shade-900">
-	<media-poster-image src={poster} class="h-full w-full overflow-hidden rounded-t-form"
+<media-controller audio class="rounded-form border-shade-600 bg-shade-900 w-full border">
+	<media-poster-image src={poster} class="rounded-t-form h-full w-full overflow-hidden"
 	></media-poster-image>
 	<audio slot="media" {src}></audio>
 	<media-control-bar
-		class="flex h-full w-full flex-1 grow items-center border-t border-shade-600 p-sm"
+		class="border-shade-600 p-sm flex h-full w-full flex-1 grow items-center border-t"
 	>
 		<media-play-button
-			class="aspect-square size-form rounded-full border border-white bg-shade-800"
+			class="size-form bg-shade-800 aspect-square rounded-full border border-white"
 		>
 		</media-play-button>
-		<media-time-range class="grow px-sm"></media-time-range>
+		<media-time-range class="px-sm grow"></media-time-range>
 
 		<media-time-display
 			notoggle
@@ -32,6 +31,8 @@
 </media-controller>
 
 <style lang="postcss">
+	@reference "../../app.css";
+
 	media-time-range {
 		--media-range-bar-color: theme('colors.white');
 		--media-range-thumb-opacity: 0;

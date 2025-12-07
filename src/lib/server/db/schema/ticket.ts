@@ -4,7 +4,7 @@ import events from './event';
 import { timestamps } from './shared';
 import users from './user';
 import { createInsertSchema } from 'drizzle-zod';
-import { z } from 'zod';
+import { z } from 'zod/v4';
 
 export const tickets = pgTable(
 	'ticket',

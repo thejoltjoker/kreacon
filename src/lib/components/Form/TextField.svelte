@@ -45,7 +45,7 @@
 	const { value, errors, constraints } = formFieldProxy(superform, field);
 </script>
 
-<div class="flex flex-col gap-xs">
+<div class="gap-xs flex flex-col">
 	<Label.Root for={field} {...labelProps} class={cn('font-bold', labelProps?.class)}>
 		{label}
 	</Label.Root>
@@ -64,17 +64,17 @@
 			<Icon
 				{...iconProps}
 				class={cn(
-					'absolute right-md top-1/2 size-5 -translate-y-1/2 text-muted-foreground transition-all duration-300',
+					'right-md text-muted-foreground absolute top-1/2 size-5 -translate-y-1/2 transition-all duration-300',
 					iconProps?.class
 				)}
 			/>
 		{/if}
 	</span>
 	{#if $errors}
-		<ul class="flex flex-col gap-xs text-sm">
-			{#each $errors as error}
-				<li class="inline-flex items-center gap-2xs">
-					<XCircleIcon class="size-4 text-destructive" />
+		<ul class="gap-xs flex flex-col text-sm">
+			{#each $errors as error, i (i)}
+				<li class="gap-2xs inline-flex items-center">
+					<XCircleIcon class="text-destructive size-4" />
 					{error}
 				</li>
 			{/each}

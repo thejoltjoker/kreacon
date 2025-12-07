@@ -6,7 +6,7 @@ import { adminCheck } from '../../utils';
 import { StatusCodes } from 'http-status-codes';
 import { entryStatus } from '$lib/types/entryStatus';
 import { json } from '@sveltejs/kit';
-import { z } from 'zod';
+import { z } from 'zod/v4';
 
 export const PATCH: RequestHandler = async ({ request, params, locals }) => {
 	adminCheck(locals);

@@ -36,17 +36,17 @@
 			sideOffset={12}
 			{...contentProps}
 			class={cn(
-				'z-40 flex max-h-[80vh] w-[var(--bits-dropdown-anchor-width)] min-w-[200px] flex-col rounded-form border border-shade-600 bg-shade-900 p-xs',
+				'rounded-form border-shade-600 bg-shade-900 p-xs z-40 flex max-h-[80vh] w-(--bits-dropdown-anchor-width) min-w-[200px] flex-col border',
 				contentProps?.class
 			)}
 		>
 			<DropdownMenu.Group aria-label="Actions">
-				{#each actions as { icon: Icon, label, onClick, ...actionItem }}
+				{#each actions as { icon: Icon, label, onClick, ...actionItem }, i (i)}
 					<DropdownMenu.Item
 						{...actionItem}
 						textValue={label}
 						class={cn(
-							'flex cursor-pointer items-center justify-start gap-sm rounded-sm px-md py-sm transition-colors hover:bg-shade-800 data-[highlighted]:bg-shade-800',
+							'gap-sm px-md py-sm hover:bg-shade-800 data-highlighted:bg-shade-800 flex cursor-pointer items-center justify-start rounded-sm transition-colors',
 							actionItem.class
 						)}
 						onclick={() => onClick(item)}
@@ -58,7 +58,7 @@
 				{#if actions.length === 0}
 					<DropdownMenu.Item
 						textValue="No actions available"
-						class="flex items-center justify-start gap-sm  px-md py-sm text-shade-400"
+						class="gap-sm px-md py-sm text-shade-400  flex items-center justify-start"
 					>
 						<InfoIcon class="size-5" />
 						No actions available

@@ -21,7 +21,7 @@
 	const { form, errors, enhance, message } = superForm(data);
 </script>
 
-<form method="POST" use:enhance class="flex w-full flex-col items-center gap-xl">
+<form method="POST" use:enhance class="gap-xl flex w-full flex-col items-center">
 	{JSON.stringify($message)}
 	<DumbInput
 		name="name"
@@ -55,7 +55,7 @@
 			bind:value={$form.slug}
 		/>
 	{/if}
-	<div class="flex w-full flex-col gap-sm">
+	<div class="gap-sm flex w-full flex-col">
 		<label class="mb-0 text-xl font-bold" for="mediaType">Media Type</label>
 		<DumbSelect
 			class="w-full"

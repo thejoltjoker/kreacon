@@ -28,7 +28,7 @@
 	}: Props = $props();
 </script>
 
-<Label.Root for={name} class="flex flex-col gap-xs font-bold">
+<Label.Root for={name} class="gap-xs flex flex-col font-bold">
 	{$t(label)}
 	<div class="relative">
 		<input
@@ -47,25 +47,25 @@
 
 		{#if delayed}
 			<div
-				class="absolute right-xs top-1/2 size-5 -translate-y-1/2 animate-pulse text-muted-foreground"
+				class="right-xs text-muted-foreground absolute top-1/2 size-5 -translate-y-1/2 animate-pulse"
 			>
-				<LoaderCircleIcon class="size-5 animate-spin stroke-muted-foreground stroke-3" />
+				<LoaderCircleIcon class="stroke-muted-foreground size-5 animate-spin stroke-3" />
 			</div>
 		{:else if errors !== undefined}
-			<div class="absolute right-xs top-1/2 size-5 -translate-y-1/2 text-red-500">
+			<div class="right-xs absolute top-1/2 size-5 -translate-y-1/2 text-red-500">
 				<XCircleIcon class="size-5" />
 			</div>
 		{:else if value}
-			<div class="absolute right-xs top-1/2 size-5 -translate-y-1/2 text-green-500">
+			<div class="right-xs absolute top-1/2 size-5 -translate-y-1/2 text-green-500">
 				<CheckCircle2Icon class="size-5" />
 			</div>
 		{/if}
 	</div>
 	{#if errors}
 		{#if Array.isArray(errors)}
-			<ul class="flex flex-col gap-xs">
-				{#each errors as error}
-					<li class="flex items-center gap-xs">
+			<ul class="gap-xs flex flex-col">
+				{#each errors as error, i (i)}
+					<li class="gap-xs flex items-center">
 						<XCircleIcon class="size-5 text-red-500" />
 						<p>{error}</p>
 					</li>

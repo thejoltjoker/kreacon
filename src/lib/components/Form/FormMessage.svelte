@@ -17,7 +17,7 @@
 		superform?: SuperForm<T>;
 	}
 
-	let { superform, ...props }: FormMessageProps = $props();
+	let { superform, ..._props }: FormMessageProps = $props();
 
 	if (superform == null) {
 		superform = getContext<SuperForm<T>>('superform');
@@ -29,6 +29,6 @@
 	let { message } = superform;
 </script>
 
-<div class="flex flex-col gap-xs">
+<div class="gap-xs flex flex-col">
 	<p class={cn($message?.status === 'error' && 'text-destructive')}>{$message?.text}</p>
 </div>

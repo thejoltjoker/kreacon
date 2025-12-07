@@ -32,7 +32,7 @@
 				<Button href="/login?redirect=/entries/{id}">{$t('Vote')}</Button>
 			</Tooltip.Trigger>
 			<Tooltip.Content sideOffset={5}>
-				<div class="z-30 rounded-md bg-muted-background px-3 py-2 text-sm shadow-md">
+				<div class="bg-muted-background z-30 rounded-md px-3 py-2 text-sm shadow-md">
 					{$t('Sign in to vote')}
 				</div>
 			</Tooltip.Content>

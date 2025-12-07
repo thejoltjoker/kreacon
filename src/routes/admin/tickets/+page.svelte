@@ -89,7 +89,7 @@
 		{#snippet description()}
 			Are you sure you want to delete <span class="font-bold">{ticketToDelete?.user.username}</span
 			>'s ticket for <span class="font-bold">{ticketToDelete?.event}</span>?<br />
-			<span class="font-mono text-sm text-shade-400">ID: {ticketToDelete?.id}</span>
+			<span class="text-shade-400 font-mono text-sm">ID: {ticketToDelete?.id}</span>
 			<br />
 			<br />
 			<span class="text-shade-400">This action cannot be undone.</span>

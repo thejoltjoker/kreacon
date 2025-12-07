@@ -3,7 +3,7 @@ import { relations, type InferInsertModel, type InferSelectModel } from 'drizzle
 
 import { pgTable, serial, text, varchar } from 'drizzle-orm/pg-core';
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
-import { z } from 'zod';
+import { z } from 'zod/v4';
 import eventCategories from './eventCategory';
 import { mediaTypeEnum, timestamps } from './shared';
 import { entries } from './entry';

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import './layout.css';
 	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
 	import PageTransition from '$lib/components/PageTransition.svelte';
@@ -16,7 +17,9 @@
 	$effect(() => {
 		if (browser) {
 			const storedLocale = localStorage.getItem('locale');
+
 			locale.set(storedLocale ?? window.navigator.language);
+
 			waitLocale().then(() => {
 				ready = true;
 			});
@@ -40,6 +43,6 @@
 
 <div class="horizon">
 	<div
-		class="fixed bottom-0 left-0 -z-10 h-[50vh] w-screen bg-gradient-to-t from-[hsl(246,30%,9%)]"
+		class="fixed bottom-0 left-0 -z-10 h-[50vh] w-screen bg-linear-to-t from-[hsl(246,30%,9%)]"
 	></div>
 </div>

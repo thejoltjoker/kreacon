@@ -23,7 +23,7 @@
 		{href}
 		class={cn(
 			className,
-			highlightActive && isActive && 'bg-muted-background text-white hover:bg-muted-foreground'
+			highlightActive && isActive && 'bg-muted-background hover:bg-muted-foreground text-white'
 		)}
 		{...props}
 	>

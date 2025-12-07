@@ -10,11 +10,13 @@
 </div>
 
 <style lang="postcss">
+	@reference "../../app.css";
+
 	.wrapper {
-		@apply flex w-full grow flex-col items-center justify-center py-sm;
+		@apply py-sm flex w-full grow flex-col items-center justify-center;
 	}
 
 	.container {
-		@apply flex w-full max-w-[30rem] flex-col gap-md rounded-md border border-shade-600 bg-bg px-md py-xl md:p-2xl;
+		@apply gap-md border-shade-600 bg-bg px-md py-xl md:p-2xl flex w-full max-w-120 flex-col rounded-md border;
 	}
 </style>

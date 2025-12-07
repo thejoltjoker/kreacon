@@ -38,7 +38,6 @@ As for ticket you can use any `UUID` to get a ticket from the external api (`cry
    ```
 
 4. Set up environment variables:
-
    - Copy `.env.example` to `.env`
      - `cp .env.example .env`
    - Update the values as needed

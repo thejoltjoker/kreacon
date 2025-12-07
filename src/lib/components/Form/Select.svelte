@@ -7,9 +7,8 @@
 	import { formFieldProxy, type SuperForm } from 'sveltekit-superforms/client';
 
 	type Props = Omit<SelectSingleRootProps, 'type' | 'value' | 'items'> & {
-		// eslint-disable-next-line no-undef
 		form: SuperForm<T>;
-		// eslint-disable-next-line no-undef
+
 		field: FormPathLeaves<T>;
 		disabled: boolean;
 		items: SelectItemProps[];
@@ -24,33 +23,31 @@
 
 <Select.Root {...rootProps} type="single" bind:value={$value as string} name={field} {disabled}>
 	<Select.Trigger
-		class="flex h-form w-full items-center justify-between rounded-form border border-muted-foreground px-sm text-left data-[state=open]:border-violet-500"
+		class="h-form rounded-form border-muted-foreground px-sm flex w-full items-center justify-between border text-left data-[state=open]:border-violet-500"
 	>
 		<span>{selectedLabel}</span>
 		<ChevronsUpDownIcon class="size-5" />
 	</Select.Trigger>
 	<Select.Portal>
 		<Select.Content
-			class="mt-sm w-[var(--bits-select-anchor-width)] rounded-form border border-muted-background bg-muted-background p-xs"
+			class="mt-sm rounded-form border-muted-background bg-muted-background p-xs w-(--bits-select-anchor-width) border"
 		>
 			<Select.Viewport>
-				{#each items as item}
+				{#each items as item (item.value)}
 					<Select.Item
 						{...item}
 						disabled={item.disabled}
-						class="group flex h-form cursor-pointer items-center justify-between rounded-form pl-sm hover:!bg-muted-foreground data-[disabled]:!cursor-default data-[disabled]:!bg-transparent data-[selected]:font-bold data-[disabled]:text-muted-foreground"
+						class="group h-form rounded-form pl-sm hover:bg-muted-foreground! data-disabled:text-muted-foreground flex cursor-pointer items-center justify-between data-disabled:cursor-default! data-disabled:bg-transparent! data-selected:font-bold"
 					>
 						<span>{item.label}</span>
-						<span
-							class="hidden items-center justify-center text-primary group-data-[selected]:flex"
-						>
+						<span class="text-primary hidden items-center justify-center group-data-selected:flex">
 							<DotIcon class="h-form w-form" />
 						</span>
 					</Select.Item>
 				{/each}
 
 				{#if items.length == 0}
-					<Select.Item value="" class="cursor-pointer rounded-form p-sm hover:bg-muted-background">
+					<Select.Item value="" class="rounded-form p-sm hover:bg-muted-background cursor-pointer">
 						No categories found
 					</Select.Item>
 				{/if}

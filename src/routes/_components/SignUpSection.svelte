@@ -3,29 +3,29 @@
 	import { t } from '$lib/i18n';
 </script>
 
-<section class="w-full border-y border-shade-700 px-md py-8xl">
-	<div class="mx-auto max-w-screen-md text-center">
+<section class="border-shade-700 px-md py-8xl w-full border-y">
+	<div class="mx-auto max-w-(--breakpoint-md) text-center">
 		<h2 class="mb-xl text-4xl font-bold">{$t('Join the community today')}</h2>
-		<p class="mb-3xl text-lg text-shade-300">
+		<p class="mb-3xl text-shade-300 text-lg">
 			{$t('Start sharing your creations with the world. Sign up now and get started in seconds.')}
 		</p>
 
-		<div class="mb-xl flex flex-col justify-center gap-md sm:flex-row">
+		<div class="mb-xl gap-md flex flex-col justify-center sm:flex-row">
 			<input
 				type="email"
 				placeholder={$t('Enter your email')}
-				class="max-w-screen-sm flex-grow rounded-form border border-shade-200 px-lg py-md"
+				class="rounded-form border-shade-200 px-lg py-md max-w-(--breakpoint-sm) grow border"
 				required
 			/>
 			<Button href="/register">{$t('Sign up')}</Button>
 		</div>
 
-		<p class="text-sm text-shade-300">
+		<p class="text-shade-300 text-sm">
 			{$t('By signing up, you agree to our')}
-			<a href="/terms-of-service" class="underline hover:text-primary">{$t('Terms & Conditions')}</a
+			<a href="/terms-of-service" class="hover:text-primary underline">{$t('Terms & Conditions')}</a
 			>
 			{$t('and').toLowerCase()}
-			<a href="/privacy-policy" class="underline hover:text-primary">{$t('Privacy Policy')}</a>.
+			<a href="/privacy-policy" class="hover:text-primary underline">{$t('Privacy Policy')}</a>.
 		</p>
 	</div>
 </section>

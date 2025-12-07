@@ -53,6 +53,8 @@
 </ul>
 
 <style lang="postcss">
+	@reference "../../../../app.css";
+
 	ul {
 		@apply flex flex-col;
 		& li {

@@ -15,6 +15,7 @@
 
 	let reactionListItems: ReactionListItem[] = $derived(
 		reactions?.map((reaction) => ({
+			id: `${reaction.userId}-${reaction.value}`,
 			url: `/users/${reaction.user.username}/reactions`,
 			image: { src: reaction.user.avatar?.url ?? '', alt: `${reaction.user.username} avatar` },
 			value: reaction.value
@@ -48,7 +49,7 @@
 	};
 </script>
 
-<section id="entry-reactions" class="flex flex-col gap-sm">
+<section id="entry-reactions" class="gap-sm flex flex-col">
 	<h4>{$t('Reactions')}</h4>
 	<ReactionsList reactions={reactionListItems} onAddReaction={handleAddReaction} />
 </section>

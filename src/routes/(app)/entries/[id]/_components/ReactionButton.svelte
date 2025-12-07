@@ -31,7 +31,7 @@
 		</Button>
 	</Popover.Trigger>
 	<Popover.Content
-		class="z-30 max-h-[320px] w-fit max-w-[320px] overflow-hidden overflow-y-auto rounded-lg bg-muted-background p-sm"
+		class="bg-muted-background p-sm z-30 max-h-[320px] w-fit max-w-[320px] overflow-hidden overflow-y-auto rounded-lg"
 		sideOffset={5}
 	>
 		{#if user == null}
@@ -42,8 +42,8 @@
 			groupedEmojis
 		{:else}
 			<form method="POST" action="?/react" use:enhance={handleSubmit}>
-				<div class="flex flex-wrap gap-xs">
-					{#each emojis as emoji}
+				<div class="gap-xs flex flex-wrap">
+					{#each emojis as emoji (emoji.emoji)}
 						<Button
 							type="submit"
 							name="reaction"

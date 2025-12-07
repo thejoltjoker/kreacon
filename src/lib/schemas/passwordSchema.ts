@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from 'zod/v4';
 import { hasSpecialCharacter, isCommonPassword } from '../validation/password/passwordValidation';
 
 export const passwordSchema = z

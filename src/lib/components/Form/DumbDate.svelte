@@ -21,27 +21,23 @@
 		inputProps,
 		...props
 	}: Props = $props();
-	let isChanged = $state(false);
-
-	$effect(() => {
-		isChanged = value != null;
-	});
+	let isChanged = $derived(value != null);
 </script>
 
 <DateField.Root bind:value bind:placeholder {...props}>
-	<div class={cn('relative flex w-fit flex-col gap-sm', isChanged && 'text-white', props.class)}>
+	<div class={cn('gap-sm relative flex w-fit flex-col', isChanged && 'text-white', props.class)}>
 		<DateField.Label class="font-bold text-white">{labelText}</DateField.Label>
 		<DateField.Input
 			{name}
 			class={cn(
-				'group flex h-form w-fit select-none items-center rounded-form border border-muted-foreground bg-bg px-xs text-muted-foreground-alt transition-colors focus-within:border-primary focus-within:shadow-sm hover:border-white data-[invalid]:border-destructive',
+				'group h-form rounded-form border-muted-foreground bg-bg px-xs text-muted-foreground-alt focus-within:border-primary data-invalid:border-destructive flex w-fit items-center border transition-colors select-none focus-within:shadow-sm hover:border-white',
 				isChanged && 'border-white',
 				inputProps?.class
 			)}
 			{...inputProps}
 		>
 			{#snippet children({ segments })}
-				{#each segments as { part, value }}
+				{#each segments as { part, value }, i (i)}
 					<div class="inline-block select-none">
 						{#if part === 'literal'}
 							<DateField.Segment {part} class="text-muted-foreground-alt">
@@ -50,7 +46,7 @@
 						{:else}
 							<DateField.Segment
 								{part}
-								class="rounded-xs px-2xs py-2xs focus:bg-muted-background focus:text-white focus-visible:!outline-none focus-visible:!outline-0"
+								class="px-2xs py-2xs focus:bg-muted-background rounded-xs focus:text-white focus-visible:outline-0! focus-visible:outline-none!"
 							>
 								{value}
 							</DateField.Segment>
@@ -61,7 +57,7 @@
 					<Icon
 						{...iconProps}
 						class={cn(
-							'ml-sm mr-2xs size-5 text-muted-foreground transition-colors group-focus-within:text-white',
+							'ml-sm mr-2xs text-muted-foreground size-5 transition-colors group-focus-within:text-white',
 							isChanged && 'text-white',
 							iconProps?.class
 						)}

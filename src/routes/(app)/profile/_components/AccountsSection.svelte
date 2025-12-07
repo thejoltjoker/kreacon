@@ -4,7 +4,7 @@
 	let { accounts = [] }: { accounts: PageData['accounts'] } = $props();
 </script>
 
-<div class="flex w-full flex-col gap-sm">
+<div class="gap-sm flex w-full flex-col">
 	<div class="flex items-center justify-between">
 		<h2>Linked Accounts</h2>
 	</div>
@@ -12,14 +12,14 @@
 	{#if accounts.length === 0}
 		<p>You haven't linked any accounts</p>
 	{:else}
-		<ul class="flex flex-col gap-sm">
-			{#each accounts as account}
+		<ul class="gap-sm flex flex-col">
+			{#each accounts as account (account.providerAccountId)}
 				<li
-					class="flex flex-wrap items-center justify-between gap-sm rounded-md border border-muted-background p-md"
+					class="gap-sm border-muted-background p-md flex flex-wrap items-center justify-between rounded-md border"
 				>
 					<p class="order-1 text-lg font-bold">{account.provider}</p>
 					<p
-						class="text-shade-300-alt order-3 w-full whitespace-pre font-mono text-sm sm:order-2 sm:w-auto"
+						class="text-shade-300-alt order-3 w-full font-mono text-sm whitespace-pre sm:order-2 sm:w-auto"
 					>
 						#{account.providerAccountId}
 					</p>

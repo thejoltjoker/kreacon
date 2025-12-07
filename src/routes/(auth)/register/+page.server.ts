@@ -6,7 +6,7 @@ import { hashPassword } from '$lib/server/utils';
 import { type Actions, fail, redirect } from '@sveltejs/kit';
 import { eq, or } from 'drizzle-orm';
 import { message, setError, superValidate } from 'sveltekit-superforms';
-import { zod } from 'sveltekit-superforms/adapters';
+import { zod4 } from 'sveltekit-superforms/adapters';
 import type { PageServerLoad } from './$types';
 import { StatusCodes } from 'http-status-codes';
 import { registerUserSchema } from '$lib/schemas/user';
@@ -15,14 +15,14 @@ import { createLogger } from '$lib/helpers/logger';
 const logger = createLogger('register');
 
 export const load = (async () => {
-	const form = await superValidate(zod(registerUserSchema));
+	const form = await superValidate(zod4(registerUserSchema));
 	const providers = availableOAuthProviders();
 	return { providers, form };
 }) satisfies PageServerLoad;
 
 export const actions: Actions = {
 	register: async (event) => {
-		const form = await superValidate(event.request, zod(registerUserSchema));
+		const form = await superValidate(event.request, zod4(registerUserSchema));
 		if (!form.valid) {
 			return fail(StatusCodes.BAD_REQUEST, { form });
 		}
@@ -64,7 +64,7 @@ export const actions: Actions = {
 		return redirect(StatusCodes.TEMPORARY_REDIRECT, '/login');
 	},
 	check: async ({ request }) => {
-		const form = await superValidate(request, zod(registerUserSchema.pick({ username: true })));
+		const form = await superValidate(request, zod4(registerUserSchema.pick({ username: true })));
 
 		if (!form.valid) {
 			return fail(StatusCodes.BAD_REQUEST, { form });

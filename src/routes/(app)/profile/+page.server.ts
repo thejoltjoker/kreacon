@@ -3,7 +3,7 @@ import users from '$lib/server/db/schema/user';
 import { fail, redirect } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm/pg-core/expressions';
 import { message, setError, superValidate, type Infer } from 'sveltekit-superforms';
-import { zod } from 'sveltekit-superforms/adapters';
+import { zod4 } from 'sveltekit-superforms/adapters';
 import type { PageServerLoad } from './$types';
 import tickets, { insertTicketSchema } from '$lib/server/db/schema/ticket';
 import { api as ticketClient } from '$lib/server/services/ticket';
@@ -51,7 +51,7 @@ export const load = (async ({ locals }) => {
 			email: userData.email,
 			avatarId: userData.avatarId
 		},
-		zod(updateUserSchema)
+		zod4(updateUserSchema)
 	);
 
 	const tickets = userData.tickets.map((t) => ({
@@ -60,7 +60,7 @@ export const load = (async ({ locals }) => {
 	}));
 
 	const ticketForm = await superValidate<Infer<typeof ticketSchema>, SuperFormMessage>(
-		zod(ticketSchema)
+		zod4(ticketSchema)
 	);
 
 	return { ticketForm, accounts: userData.accounts, tickets, userForm };
@@ -72,7 +72,7 @@ export const actions = {
 			return redirect(StatusCodes.TEMPORARY_REDIRECT, '/login');
 		}
 
-		const form = await superValidate(request, zod(updateUserSchema));
+		const form = await superValidate(request, zod4(updateUserSchema));
 		if (!form.valid) {
 			return fail(400, { form });
 		}
@@ -105,7 +105,7 @@ export const actions = {
 
 		const ticketForm = await superValidate<Infer<typeof ticketSchema>, SuperFormMessage>(
 			request,
-			zod(ticketSchema)
+			zod4(ticketSchema)
 		);
 
 		if (!ticketForm.valid) return fail(400, { ticketForm });

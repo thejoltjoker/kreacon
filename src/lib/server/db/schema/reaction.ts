@@ -4,7 +4,7 @@ import { timestamps } from './shared';
 import { entries } from './entry';
 import users, { type PublicUser } from './user';
 import { createInsertSchema } from 'drizzle-zod';
-import { z } from 'zod';
+import { z } from 'zod/v4';
 
 export const reactions = pgTable(
 	'reaction',

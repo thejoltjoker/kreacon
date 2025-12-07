@@ -1,5 +1,5 @@
 import { azureStorageContainer } from '$lib/types/AzureStorageContainer';
-import { z } from 'zod';
+import { z } from 'zod/v4';
 import mime from 'mime';
 
 export const getUrlSchema = z.object({

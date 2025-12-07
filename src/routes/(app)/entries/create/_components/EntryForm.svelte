@@ -8,7 +8,7 @@
 	import EntrySection from './EntrySection.svelte';
 	import FilesSection from './FilesSection.svelte';
 	import FinishSection from './FinishSection.svelte';
-	import { zod } from 'sveltekit-superforms/adapters';
+	import { zod4Client } from 'sveltekit-superforms/adapters';
 	import { createEntrySchema } from '$lib/schemas/entry';
 
 	// TODO Improve navigation guard
@@ -24,14 +24,14 @@
 {#snippet tab(value: string, label: string)}
 	<div
 		class={cn(
-			'flex flex-1 flex-col items-center gap-sm font-bold text-shade-300',
+			'gap-sm text-shade-300 flex flex-1 flex-col items-center font-bold',
 			currentTab >= value && 'text-white'
 		)}
 	>
 		<Tabs.Trigger
 			{value}
 			class={cn(
-				'flex size-form items-center justify-center rounded-full border border-shade-600 data-[state=active]:bg-white data-[state=active]:text-black',
+				'size-form border-shade-600 flex items-center justify-center rounded-full border data-[state=active]:bg-white data-[state=active]:text-black',
 				currentTab >= value && 'border-white'
 			)}
 		>
@@ -44,14 +44,15 @@
 <!-- TODO Store state in url -->
 <!-- TODO Redirect to tab 1 if not valid selections -->
 <!-- TODO Show add ticket form if no valid tickets -->
-<Tabs.Root bind:value={currentTab} controlledValue disabled>
+<!-- TODO Check how controlledValue is replaced in bits ui 2 -->
+<Tabs.Root bind:value={currentTab} disabled>
 	<GenericForm
 		data={$page.data.form}
 		class="my-3xl gap-xl px-sm md:px-xl"
-		options={{ validators: zod(createEntrySchema) }}
+		options={{ validators: zod4Client(createEntrySchema) }}
 	>
 		<Tabs.List class="flex w-full justify-evenly">
-			{#each tabs as t, index}
+			{#each tabs as t, index (index)}
 				{@render tab(String(index + 1), t)}
 			{/each}
 		</Tabs.List>

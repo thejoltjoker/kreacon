@@ -34,11 +34,11 @@
 {/snippet}
 
 <div
-	class="flex flex-col justify-between gap-xl rounded-form border border-shade-700 p-xl md:flex-row md:items-center"
+	class="gap-xl rounded-form border-shade-700 p-xl flex flex-col justify-between border md:flex-row md:items-center"
 >
-	<div class="flex flex-col gap-sm">
-		<div class="flex flex-col gap-sm">
-			<div class="flex w-full flex-col flex-wrap gap-sm md:flex-row md:items-center md:gap-xl">
+	<div class="gap-sm flex flex-col">
+		<div class="gap-sm flex flex-col">
+			<div class="gap-sm md:gap-xl flex w-full flex-col flex-wrap md:flex-row md:items-center">
 				<h3>
 					<a href="/events/{event.slug}">{event.name}</a>
 				</h3>
@@ -46,9 +46,9 @@
 			</div>
 			<p class="text-shade-300">{event.tagline}</p>
 		</div>
-		<div class="flex h-form flex-wrap items-center gap-sm md:gap-xl">
+		<div class="h-form gap-sm md:gap-xl flex flex-wrap items-center">
 			<div
-				class="inline-flex w-full flex-wrap items-center justify-between gap-xs font-bold md:w-fit"
+				class="gap-xs inline-flex w-full flex-wrap items-center justify-between font-bold md:w-fit"
 			>
 				<p>
 					{formatDateRange(
@@ -59,28 +59,30 @@
 				</p>
 			</div>
 			<a class="group text-shade-300" href="/events/{event.slug}">
-				<span class="text-white transition-colors group-hover:text-squid-400">
+				<span class="group-hover:text-squid-400 text-white transition-colors">
 					{event.eventCategories.length}
 				</span>
 				{$t('categories')}
 			</a>
 			<p class=" text-shade-300">
-				<span class="text-white transition-colors group-hover:text-squid-400">
+				<span class="group-hover:text-squid-400 text-white transition-colors">
 					{event.participants}
 				</span>
 				{$t('Participants')}
 			</p>
 		</div>
 	</div>
-	<div class="flex w-full gap-sm md:w-fit md:flex-col">
+	<div class="gap-sm flex w-full md:w-fit md:flex-col">
 		<Button class="w-full" href="/entries?event={event.id}">{$t('Entries')}</Button>
 		<Button class="w-full" variant="outline" href="/events/{event.slug}">{$t('Rules')}</Button>
 	</div>
 </div>
 
 <style lang="postcss">
+	@reference "../../../../app.css";
+
 	.pill {
-		@apply h-fit w-fit rounded-full border px-sm font-bold text-white;
+		@apply px-sm h-fit w-fit rounded-full border font-bold text-white;
 
 		&.submissions {
 			@apply border-primary text-white;

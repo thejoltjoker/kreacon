@@ -6,8 +6,8 @@
 
 <section class="w-full">
 	<h2 class="text-h2 font-bold">General Rules</h2>
-	<ul class="list-inside list-disc text-shade-300 marker:text-primary">
-		{#each event.rules as rule}
+	<ul class="text-shade-300 marker:text-primary list-inside list-disc">
+		{#each event.rules as rule, index (index)}
 			<li>
 				{rule.text}
 			</li>

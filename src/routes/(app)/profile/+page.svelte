@@ -18,7 +18,7 @@
 	<title>{$t('Profile')}</title>
 </svelte:head>
 
-<main class="flex w-full max-w-screen-md flex-col gap-4xl px-sm pt-xl md:px-xl">
+<main class="gap-4xl px-sm pt-xl md:px-xl flex w-full max-w-(--breakpoint-md) flex-col">
 	<GeneralSection />
 	<Divider />
 	<TicketsSection {tickets} form={data.ticketForm} />

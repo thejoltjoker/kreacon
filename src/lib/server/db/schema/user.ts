@@ -8,7 +8,7 @@ import { roleEnum, timestamps } from './shared';
 import entries from './entry';
 import tickets from './ticket';
 import votes from './vote';
-import { z } from 'zod';
+import { z } from 'zod/v4';
 import { userStatus } from '../../../types/userStatus';
 import files from './file';
 
