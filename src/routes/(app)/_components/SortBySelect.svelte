@@ -22,8 +22,8 @@
 		const params = new SvelteURLSearchParams($page.url.searchParams);
 		params.set('sortBy', sortBy);
 		value = sortBy;
-		// @ts-expect-error TODO Find correct solution to use resolve() with search params
-		goto(resolve(`?${params.toString()}`), { replaceState: true });
+		// @ts-expect-error TODO: Find correct solution to use resolve with search params
+		goto(resolve(`${$page.url.pathname}?${params.toString()}`), { replaceState: true });
 	};
 </script>
 

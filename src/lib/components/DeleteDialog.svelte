@@ -1,3 +1,4 @@
+<!-- TODO Fix with latest bits-ui -->
 <script lang="ts">
 	import Button from '$lib/components/Button.svelte';
 	import Divider from '$lib/components/Divider.svelte';
