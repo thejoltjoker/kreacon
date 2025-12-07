@@ -1,3 +1,4 @@
+<!-- TODO Fix with latest bits-ui -->
 <script lang="ts">
 	import { licenses, type LicenseCode } from '$lib/schemas/license';
 	import { Tooltip } from 'bits-ui';

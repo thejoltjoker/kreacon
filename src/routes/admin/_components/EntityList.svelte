@@ -41,8 +41,8 @@
 		} else {
 			params.set('sortBy', `${sortBy}_asc`);
 		}
-		// @ts-expect-error TODO Find correct solution to use resolve() with search params
-		goto(resolve(`?${params.toString()}`), { replaceState: true });
+		// @ts-expect-error TODO: Find correct solution to use resolve with search params
+		goto(resolve(`${$page.url.pathname}?${params.toString()}`), { replaceState: true });
 	};
 </script>
 

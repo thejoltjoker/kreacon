@@ -38,8 +38,11 @@
 		} else {
 			params.delete('category');
 		}
-		// @ts-expect-error TODO Find correct solution to use resolve() with search params
-		goto(resolve(`?${params.toString()}`), { keepFocus: true, replaceState: true });
+		// @ts-expect-error TODO: Find correct solution to use resolve with search params
+		goto(resolve(`${$page.url.pathname}?${params.toString()}`), {
+			keepFocus: true,
+			replaceState: true
+		});
 	};
 
 	let categoriesListRef = $state<HTMLElement | null>(null);

@@ -18,8 +18,8 @@
 		const params = new SvelteURLSearchParams($page.url.searchParams);
 		if (search != null && search !== '') params.set('q', search);
 		else params.delete('q');
-		// @ts-expect-error TODO Find correct solution to use resolve() with search params
-		await goto(resolve(`?${params.toString()}`), { replaceState: true });
+		// @ts-expect-error TODO: Find correct solution to use resolve with search params
+		await goto(resolve(`${$page.url.pathname}?${params.toString()}`), { replaceState: true });
 		inputRef?.focus();
 		isLoading = false;
 	});

@@ -22,7 +22,7 @@
 	const handlePageChange = (p: number) => {
 		searchParams.set('page', p.toString());
 		// @ts-expect-error TODO: Find correct solution to use resolve with search params
-		goto(resolve(`?${searchParams.toString()}`), {
+		goto(resolve(`${$page.url.pathname}?${searchParams.toString()}`), {
 			replaceState: true
 		});
 	};
