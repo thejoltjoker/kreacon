@@ -59,6 +59,8 @@ jobs:
       - name: Install Playwright Browsers
         if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: npx playwright install --with-deps
+      - name: Generate SvelteKit types
+        run: npx svelte-kit sync
       - name: Run migrations
         env:
           DB_MIGRATING: true
