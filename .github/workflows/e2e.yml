@@ -11,14 +11,26 @@ concurrency:
 
 jobs:
   e2e:
-    environment:
-      name: 'Test'
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: test
+          POSTGRES_PASSWORD: test
+          POSTGRES_DB: kreacon_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     env:
       NODE_ENV: test
-      PUBLIC_BASE_URL: ${{ vars.PUBLIC_BASE_URL }}
-      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      PUBLIC_BASE_URL: http://localhost:5173
+      DATABASE_URL: postgresql://test:test@localhost:5432/kreacon_test
       AZURE_STORAGE_ACCOUNT_NAME: ${{ secrets.AZURE_STORAGE_ACCOUNT_NAME }}
       AZURE_STORAGE_ACCOUNT_KEY: ${{ secrets.AZURE_STORAGE_ACCOUNT_KEY }}
       OAUTH_DISCORD_CLIENT_ID: ${{ secrets.OAUTH_DISCORD_CLIENT_ID }}
@@ -30,9 +42,9 @@ jobs:
       TICKET_API_URL: ${{ secrets.TICKET_API_URL }}
     steps:
       - uses: actions/checkout@v4
-      - uses: azure/login@v1
+      - uses: actions/setup-node@v4
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          node-version: 24
       - name: Install dependencies
         run: npm ci
       - name: Get installed Playwright version
@@ -47,22 +59,6 @@ jobs:
       - name: Install Playwright Browsers
         if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: npx playwright install --with-deps
-      - name: Add GitHub Actions IP to PostgreSQL firewall
-        id: add-firewall-rule
-        continue-on-error: true
-        run: |
-          GITHUB_IP=$(curl -s https://api.ipify.org)
-          echo "GitHub IP: $GITHUB_IP"
-          az postgres flexible-server firewall-rule create \
-            --rule-name github-actions-runner \
-            --resource-group ${{vars.AZURE_POSTGRESQL_RESOURCE_GROUP}} \
-            --name ${{vars.AZURE_POSTGRESQL_SERVER_NAME}} \
-            --start-ip-address $GITHUB_IP \
-            --end-ip-address $GITHUB_IP
-          echo "rule_created=true" >> $GITHUB_OUTPUT
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 24
       - name: Run migrations
         env:
           DB_MIGRATING: true
@@ -79,12 +75,3 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 3
-      - name: Remove GitHub Actions IP from PostgreSQL firewall
-        if: always() && steps.add-firewall-rule.outputs.rule_created == 'true'
-        continue-on-error: true
-        run: |
-          az postgres flexible-server firewall-rule delete \
-            --rule-name github-actions-runner \
-            --resource-group "${{ vars.AZURE_POSTGRESQL_RESOURCE_GROUP }}" \
-            --name "${{ vars.AZURE_POSTGRESQL_SERVER_NAME }}" \
-            --yes
