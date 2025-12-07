@@ -109,6 +109,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   [#120](https://github.com/thejoltjoker/kreacon/pull/120)
 - Update node version in actions
   [#121](https://github.com/thejoltjoker/kreacon/pull/121)
+- Update e2e test action on GitHub
+  [#122](https://github.com/thejoltjoker/kreacon/pull/122)
 
 ### Deprecated
 
