@@ -6,7 +6,7 @@
 	import Button from './Button.svelte';
 
 	type Props = AlertDialog.RootProps & {
-		trigger?: Snippet;
+		trigger?: Snippet<[{ props: Record<string, unknown> }]>;
 		title: Snippet;
 		description: Snippet;
 		contentProps?: WithoutChild<AlertDialog.ContentProps>;
@@ -34,7 +34,9 @@
 <AlertDialog.Root bind:open {...restProps}>
 	{#if trigger}
 		<AlertDialog.Trigger>
-			{@render trigger()}
+			{#snippet child({ props })}
+				{@render trigger({ props })}
+			{/snippet}
 		</AlertDialog.Trigger>
 	{/if}
 	<AlertDialog.Portal>
@@ -64,12 +66,30 @@
 			<div class="gap-sm p-xl flex justify-end">
 				<AlertDialog.Cancel>
 					{#snippet child({ props })}
-						<Button variant="muted" {...props} onclick={onCancel}>Cancel</Button>
+						<Button
+							variant="muted"
+							{...props}
+							onclick={(e) => {
+								onCancel?.();
+								(props.onclick as ((e: MouseEvent) => void) | undefined)?.(e);
+							}}
+						>
+							Cancel
+						</Button>
 					{/snippet}
 				</AlertDialog.Cancel>
 				<AlertDialog.Action>
 					{#snippet child({ props })}
-						<Button {variant} {...props} onclick={onConfirm}>{confirmText}</Button>
+						<Button
+							{variant}
+							{...props}
+							onclick={(e) => {
+								onConfirm();
+								(props.onclick as ((e: MouseEvent) => void) | undefined)?.(e);
+							}}
+						>
+							{confirmText}
+						</Button>
 					{/snippet}
 				</AlertDialog.Action>
 			</div>

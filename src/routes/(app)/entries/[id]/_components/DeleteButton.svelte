@@ -33,8 +33,14 @@
 				Deleting this entry will allow you to submit a new one to the same category and event.
 			</p>
 		{/snippet}
-		{#snippet trigger()}
-			<Button type="submit" size="icon" variant="destructive" class="entry-delete-button">
+		{#snippet trigger({ props })}
+			<Button
+				{...props}
+				type="button"
+				size="icon"
+				variant="destructive"
+				class="entry-delete-button"
+			>
 				<TrashIcon />
 			</Button>
 		{/snippet}
