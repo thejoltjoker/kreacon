@@ -71,10 +71,20 @@ test('Single entry page not logged in', async ({ page }) => {
 	const licenseSectionLocator = page.locator('#entry-meta-license');
 	await expect(licenseSectionLocator).toBeVisible();
 	await expect(licenseSectionLocator).toContainText('CC0');
-	const licenseInfoButtonLocator = licenseSectionLocator.locator('.license-info-button');
+	const licenseInfoButtonLocator = licenseSectionLocator.getByRole('button', {
+		name: 'License information'
+	});
 	await expect(licenseInfoButtonLocator).toBeVisible();
+
+	// Hover over the button to trigger tooltip
+	// bits-ui tooltips have delayDuration={100}, so we need to wait for it
 	await licenseInfoButtonLocator.hover();
-	await expect(page.getByText('CC0 Please do Public Domain')).toBeVisible();
+
+	// Wait for tooltip to appear (it renders in a portal)
+	const licenseTooltip = page.getByTestId('license-tooltip');
+	await licenseTooltip.waitFor({ state: 'visible', timeout: 5000 });
+	await expect(licenseTooltip).toContainText('CC0');
+	await expect(licenseTooltip).toContainText('Please do');
 
 	// Reactions link to correct page
 	const reactionsSectionLocator = page.locator('#entry-reactions');
