@@ -105,6 +105,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   [#110](https://github.com/thejoltjoker/kreacon/pull/110)
 - Upgrade to Tailwind CSS v4
   [#118](https://github.com/thejoltjoker/kreacon/pull/118)
+- Setup for deployment to production
+  [#120](https://github.com/thejoltjoker/kreacon/pull/120)
 
 ### Deprecated
 
