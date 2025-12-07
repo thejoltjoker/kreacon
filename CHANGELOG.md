@@ -107,6 +107,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   [#118](https://github.com/thejoltjoker/kreacon/pull/118)
 - Setup for deployment to production
   [#120](https://github.com/thejoltjoker/kreacon/pull/120)
+- Update node version in actions
+  [#121](https://github.com/thejoltjoker/kreacon/pull/121)
 
 ### Deprecated
 
