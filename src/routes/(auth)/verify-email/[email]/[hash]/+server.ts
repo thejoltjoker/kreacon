@@ -43,8 +43,8 @@ export const GET: RequestHandler = async ({ params, url }) => {
 	}
 
 	const now = Date.now();
-	if (now - timestamp > TOKEN_VALIDITY_MS) {
-		logger.error('Token expired');
+	if (timestamp > now || now - timestamp > TOKEN_VALIDITY_MS) {
+		logger.error('Token expired or invalid timestamp');
 		throw error(StatusCodes.UNAUTHORIZED, 'Verification link has expired');
 	}
 
