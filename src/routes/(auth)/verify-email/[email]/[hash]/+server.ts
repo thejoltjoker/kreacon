@@ -49,15 +49,18 @@ export const GET: RequestHandler = async ({ params, url }) => {
 	}
 
 	// TODO Add token binding to user ID for additional security, not only email and timestamp
-
 	const { token: expectedToken } = createVerifyEmailToken(email, timestamp);
 
-	if (expectedToken.length !== hash.length) {
-		logger.error('Invalid token length');
-		throw error(StatusCodes.UNAUTHORIZED, 'Invalid verification link');
-	}
+	const EXPECTED_TOKEN_LENGTH = 64;
+	const expectedBuffer = Buffer.alloc(EXPECTED_TOKEN_LENGTH);
+	const hashBuffer = Buffer.alloc(EXPECTED_TOKEN_LENGTH);
 
-	const isValidToken = crypto.timingSafeEqual(Buffer.from(expectedToken), Buffer.from(hash));
+	Buffer.from(expectedToken).copy(expectedBuffer);
+	Buffer.from(hash).copy(hashBuffer);
+
+	const buffersMatch = crypto.timingSafeEqual(expectedBuffer, hashBuffer);
+
+	const isValidToken = buffersMatch && hash.length === EXPECTED_TOKEN_LENGTH;
 
 	if (!isValidToken) {
 		logger.error('Invalid token');
