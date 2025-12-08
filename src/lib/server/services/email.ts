@@ -6,7 +6,7 @@ import {
 	EmailClient as AzureEmailClient,
 	type EmailMessage as AzureEmailMessage
 } from '@azure/communication-email';
-import { z } from 'zod/v4'
+import { z } from 'zod/v4';
 
 export const emailClient = new AzureEmailClient(AZURE_COMMUNICATION_SERVICES_CONNECTION_STRING);
 

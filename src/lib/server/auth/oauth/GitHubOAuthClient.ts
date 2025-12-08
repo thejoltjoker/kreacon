@@ -25,6 +25,29 @@ export class GithubOAuth extends OAuthBase {
 	}
 
 	async getUser(accessToken: string): Promise<GitHubUserResponse> {
-		return super.getUser(accessToken);
+		const user = await super.getUser(accessToken);
+
+		if (!user.email && this.providerConfig.urls.emails) {
+			const emailsResponse = await fetch(this.providerConfig.urls.emails, {
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+					Accept: 'application/json'
+				}
+			});
+
+			if (emailsResponse.ok) {
+				const emails: Array<{ email: string; primary: boolean; verified: boolean }> =
+					await emailsResponse.json();
+				const primaryEmail =
+					emails.find((e) => e.primary && e.verified) ||
+					emails.find((e) => e.verified) ||
+					emails[0];
+				if (primaryEmail) {
+					user.email = primaryEmail.email;
+				}
+			}
+		}
+
+		return user;
 	}
 }
