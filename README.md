@@ -97,14 +97,14 @@ After creating your Azure Storage account, you need to configure it properly:
 
    # Option 2: Use environment variables (if you need to use a key)
 
-   export AZURE_STORAGE_ACCOUNT="youraccount"
+   export AZURE*STORAGE_ACCOUNT="youraccount"
    export AZURE_STORAGE_KEY="your-key-here"
    az storage cors add \
     --services b \
     --methods DELETE GET HEAD MERGE OPTIONS POST PUT PATCH \
     --origins "http://localhost:5173" \
-    --allowed-headers "_" \
-    --exposed-headers "_" \
+    --allowed-headers "*" \
+    --exposed-headers "\_" \
     --max-age 3600
 
    # For production, change the origin:
