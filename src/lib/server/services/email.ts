@@ -6,7 +6,10 @@ import {
 	EmailClient as AzureEmailClient,
 	type EmailMessage as AzureEmailMessage
 } from '@azure/communication-email';
+import { createLogger } from '$lib/helpers/logger';
 import { z } from 'zod/v4';
+
+const logger = createLogger('email');
 
 export const emailClient = new AzureEmailClient(AZURE_COMMUNICATION_SERVICES_CONNECTION_STRING);
 
@@ -48,7 +51,7 @@ export class EmailBase {
 			z.string().email().parse(address);
 			return true;
 		} catch (err) {
-			console.warn(err);
+			logger.warn('Invalid email address format', { address, error: err });
 			return false;
 		}
 	}
