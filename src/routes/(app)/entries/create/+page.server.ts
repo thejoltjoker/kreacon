@@ -9,7 +9,7 @@ import { fail, message, superValidate } from 'sveltekit-superforms';
 import { zod4 } from 'sveltekit-superforms/adapters';
 import type { Actions, PageServerLoad } from './$types';
 import { createLogger } from '$lib/helpers/logger';
-import { isAuthenticated } from '../../utils';
+import { isAuthenticated, isEmailVerified } from '../../utils';
 
 const logger = createLogger('entries/create');
 
@@ -17,6 +17,11 @@ export const load = (async ({ locals }) => {
 	if (!isAuthenticated(locals) || locals.user == null) {
 		logger.warn('Unauthorized access attempt to entry creation page');
 		redirect(StatusCodes.TEMPORARY_REDIRECT, '/login?redirect=/entries/create');
+	}
+
+	if (!isEmailVerified(locals)) {
+		logger.warn(`Unverified user ${locals.user.id} attempted to access entry creation page`);
+		redirect(StatusCodes.TEMPORARY_REDIRECT, '/verify-email');
 	}
 
 	logger.info('Loading entry creation page', { userId: locals.user.id });
@@ -91,6 +96,11 @@ export const actions = {
 				ip: request.headers.get('x-forwarded-for') || 'unknown'
 			});
 			redirect(StatusCodes.MOVED_TEMPORARILY, '/login?redirect=/entries/create');
+		}
+
+		if (!isEmailVerified(locals)) {
+			logger.warn(`Unverified user ${locals.user.id} attempted to submit entry`);
+			return fail(StatusCodes.FORBIDDEN, { error: 'Email verification required' });
 		}
 
 		logger.info('Processing entry submission', { userId: locals.user.id });
