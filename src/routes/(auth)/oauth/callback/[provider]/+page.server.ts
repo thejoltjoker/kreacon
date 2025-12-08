@@ -45,7 +45,6 @@ export const load = (async (event) => {
 	const oauthToken = await client.getAccessToken(code);
 	logger.info('OAuth token', { oauthToken });
 
-	// Get user info
 	const userInfo = await client.getUser(oauthToken.access_token);
 	logger.info('User info', { userInfo });
 
@@ -59,7 +58,8 @@ export const load = (async (event) => {
 			.values({
 				username: randomString(),
 				password: await hashPassword(crypto.randomUUID()),
-				email: userInfo.email
+				email: userInfo.email,
+				emailVerifiedAt: new Date()
 			})
 			.returning();
 	}
