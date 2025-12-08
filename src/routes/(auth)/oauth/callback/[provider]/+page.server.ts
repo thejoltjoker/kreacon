@@ -48,6 +48,14 @@ export const load = (async (event) => {
 	const userInfo = await client.getUser(oauthToken.access_token);
 	logger.info('User info', { userInfo });
 
+	if (!userInfo.email) {
+		logger.error('OAuth provider did not return email address', { provider, userId: userInfo.id });
+		throw error(
+			StatusCodes.BAD_REQUEST,
+			'Email address is required. Please ensure your OAuth account has a verified email.'
+		);
+	}
+
 	let user = await db.query.users.findFirst({
 		where: eq(users.email, userInfo.email)
 	});

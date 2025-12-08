@@ -63,7 +63,13 @@ export const load = (async ({ locals }) => {
 		zod4(ticketSchema)
 	);
 
-	return { ticketForm, accounts: userData.accounts, tickets, userForm };
+	return {
+		ticketForm,
+		accounts: userData.accounts,
+		tickets,
+		userForm,
+		user: { emailVerifiedAt: userData.emailVerifiedAt }
+	};
 }) satisfies PageServerLoad;
 
 export const actions = {
