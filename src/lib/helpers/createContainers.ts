@@ -1,9 +1,6 @@
 import 'dotenv/config';
-import {
-	BlobServiceClient,
-	StorageSharedKeyCredential,
-	PublicAccessType
-} from '@azure/storage-blob';
+import { BlobServiceClient, StorageSharedKeyCredential } from '@azure/storage-blob';
+import type { PublicAccessType } from '@azure/storage-blob';
 
 const ACCOUNT_NAME = process.env.AZURE_STORAGE_ACCOUNT_NAME;
 const ACCOUNT_KEY = process.env.AZURE_STORAGE_ACCOUNT_KEY;
@@ -53,8 +50,9 @@ async function createContainers() {
 					`✨ Created container '${container.name}' with public access '${container.access}'`
 				);
 			}
-		} catch (err: any) {
-			console.error(`❌ Failed to create/update container '${container.name}':`, err.message);
+		} catch (err: unknown) {
+			const message = err instanceof Error ? err.message : String(err);
+			console.error(`❌ Failed to create/update container '${container.name}':`, message);
 		}
 	}
 
