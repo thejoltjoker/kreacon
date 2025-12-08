@@ -1,27 +1,20 @@
 # Kreacon
 
-## For Mattias
-
-Hi!
-
-It's probably easier to just use the deployed version of the app, a bit of a hassle to get everything set up with Azure.
-As for ticket you can use any `UUID` to get a ticket from the external api (`crypto.randomUUID()` works great for generating a ticket number).
-
 ## Getting Started
 
 ### Prerequisites
 
 - Docker
-- Node.js (v20)
+- Node.js (v24)
 - npm
 - nvm (optional, for switching Node versions)
 
 ### Development Setup
 
-1. Make sure you are using Node 20:
+1. Make sure you are using Node 24:
 
    ```bash
-   nvm use 20 # optional, if you have nvm installed
+   nvm use 24 # optional, if you have nvm installed
    node --version
    ```
 
@@ -67,6 +60,79 @@ As for ticket you can use any `UUID` to get a ticket from the external api (`cry
 - You need to create an Azure Storage account and set the `AZURE_STORAGE_ACCOUNT_KEY` in `.env`
   - [Create Azure Storage Account](https://portal.azure.com/#create/Microsoft.StorageAccount-ARM)
 
+### Azure Storage Setup
+
+After creating your Azure Storage account, you need to configure it properly:
+
+1. **Get your credentials** from Azure Portal:
+   - Navigate to: Storage accounts → [Your Account] → Access keys
+   - Copy the **Storage account name** and **key1** or **key2**
+   - Add them to `.env` (without quotes):
+     ```
+     AZURE_STORAGE_ACCOUNT_NAME=youraccount
+     AZURE_STORAGE_ACCOUNT_KEY=your-key-here
+     ```
+
+2. **Configure network access**:
+   - Go to: Storage accounts → [Your Account] → Networking
+   - Under "Firewall and virtual networks":
+     - Add your development machine's IP address, or
+     - Select "Enabled from all networks" (less secure, only for development)
+   - Click "Save"
+
+3. **Configure CORS** to allow uploads from your app:
+
+   > **Security Note:** Do **not** pass your Azure Storage credentials (`--account-key`, `--account-name`) directly as command-line arguments, as this exposes them in shell history and process lists. Use Azure CLI authentication or environment variables instead.
+
+   # Option 1: Use Azure CLI authentication (recommended)
+
+   az login
+   az storage cors add \
+    --services b \
+    --methods DELETE GET HEAD MERGE OPTIONS POST PUT PATCH \
+    --origins "http://localhost:5173" \
+    --allowed-headers "_" \
+    --exposed-headers "_" \
+    --max-age 3600
+
+   # Option 2: Use environment variables (if you need to use a key)
+
+   export AZURE*STORAGE_ACCOUNT="youraccount"
+   export AZURE_STORAGE_KEY="your-key-here"
+   az storage cors add \
+    --services b \
+    --methods DELETE GET HEAD MERGE OPTIONS POST PUT PATCH \
+    --origins "http://localhost:5173" \
+    --allowed-headers "*" \
+    --exposed-headers "\_" \
+    --max-age 3600
+
+   # For production, change the origin:
+
+   az storage cors add \
+    --services b \
+    --methods DELETE GET HEAD MERGE OPTIONS POST PUT PATCH \
+    --origins "https://your-domain.com" \
+    --allowed-headers "_" \
+    --exposed-headers "_" \
+    --max-age 3600
+
+4. **Create required containers**:
+
+   ```bash
+   npm run setup:azure
+   # Or manually: npx tsx src/lib/helpers/createContainers.ts
+   ```
+
+   This will create the following containers with public blob access:
+   - `uploads` - Main upload container
+   - `previews` - Preview images
+   - `thumbnails` - Thumbnail images
+   - `avatars` - User avatars
+   - `video-entries` - Video submissions
+   - `image-entries` - Image submissions
+   - `audio-entries` - Audio submissions
+
 ## Building
 
 To create a production version of your app:
@@ -98,6 +164,7 @@ npm run build
 | `lint`           | Lint code                               |
 | `logbook`        | Generate logbook entry                  |
 | `prepare`        | Husky                                   |
+| `setup:azure`    | Create Azure Storage containers         |
 | `swa:build`      | Build for Azure Static Web Apps         |
 | `swa:deploy`     | Deploy to Azure Static Web Apps         |
 | `swa:start`      | Start Azure Static Web Apps             |
@@ -171,8 +238,6 @@ OAUTH_GITHUB_REDIRECT_URI=https://your-production-domain.com/auth/github/callbac
 ```
 
 ## TODO
-
-- [ ] Remove `For Mattias` from the README
 
 ### Profile
 

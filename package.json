@@ -1,6 +1,6 @@
 {
 	"name": "kreacon",
-	"version": "0.2.14",
+	"version": "0.2.15",
 	"private": true,
 	"scripts": {
 		"dev": "vite dev",
@@ -31,7 +31,8 @@
 		"test:unit": "cross-env NODE_ENV=test vitest",
 		"test": "cross-env NODE_ENV=test npm run db:reset && npm run test:unit -- --run && npm run test:e2e",
 		"i18n:translate": "tsx src/lib/i18n/translate.ts",
-		"i18n:check": "tsx src/lib/i18n/check.ts"
+		"i18n:check": "tsx src/lib/i18n/check.ts",
+		"setup:azure": "tsx src/lib/helpers/createContainers.ts"
 	},
 	"dependencies": {
 		"@azure/communication-email": "^1.1.0",
