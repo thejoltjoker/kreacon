@@ -7,7 +7,7 @@ import db from '$lib/server/db';
 import { createLogger } from '$lib/helpers/logger';
 import { z } from 'zod/v4';
 import { getAllowedMimeTypes, isAllowedMimeTypeForMedia } from '$lib/helpers/mediaTypes';
-import { isAuthenticated } from '../../../(app)/utils';
+import { isAuthenticated, isEmailVerified } from '../../../(app)/utils';
 import type { RequestHandler } from './$types';
 
 const logger = createLogger('api/uploads/avatar');
@@ -34,6 +34,11 @@ export const PUT: RequestHandler = async ({ request, locals, url }) => {
 	if (!isAuthenticated(locals)) {
 		logger.warn('Unauthorized attempt to upload avatar');
 		return error(StatusCodes.UNAUTHORIZED, { message: 'Unauthorized' });
+	}
+
+	if (!isEmailVerified(locals)) {
+		logger.warn(`Unverified user ${locals.user?.id} attempted to upload avatar`);
+		return error(StatusCodes.FORBIDDEN, { message: 'Email verification required' });
 	}
 
 	const fileId = request.headers.get('x-file-id') ?? crypto.randomUUID();

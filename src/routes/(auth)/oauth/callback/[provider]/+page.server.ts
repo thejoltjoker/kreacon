@@ -45,9 +45,16 @@ export const load = (async (event) => {
 	const oauthToken = await client.getAccessToken(code);
 	logger.info('OAuth token', { oauthToken });
 
-	// Get user info
 	const userInfo = await client.getUser(oauthToken.access_token);
 	logger.info('User info', { userInfo });
+
+	if (!userInfo.email) {
+		logger.error('OAuth provider did not return email address', { provider, userId: userInfo.id });
+		throw error(
+			StatusCodes.BAD_REQUEST,
+			'Email address is required. Please ensure your OAuth account has a verified email.'
+		);
+	}
 
 	let user = await db.query.users.findFirst({
 		where: eq(users.email, userInfo.email)
@@ -59,9 +66,17 @@ export const load = (async (event) => {
 			.values({
 				username: randomString(),
 				password: await hashPassword(crypto.randomUUID()),
-				email: userInfo.email
+				email: userInfo.email,
+				emailVerifiedAt: new Date()
 			})
 			.returning();
+	} else if (!user.emailVerifiedAt) {
+		[user] = await db
+			.update(users)
+			.set({ emailVerifiedAt: new Date() })
+			.where(eq(users.id, user.id))
+			.returning();
+		logger.info(`Verified email for existing user ${user.id} via OAuth`);
 	}
 
 	await db

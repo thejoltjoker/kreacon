@@ -16,10 +16,13 @@ const EnvSchema = z.object({
 	OAUTH_GITHUB_CLIENT_ID: z.string(),
 	OAUTH_GITHUB_CLIENT_SECRET: z.string(),
 	OAUTH_GITHUB_REDIRECT_URI: z.string(),
-	TICKET_API_URL: z.string().url(),
+	TICKET_API_URL: z.url(),
 	OAUTH_DISCORD_CLIENT_ID: z.string(),
 	AZURE_STORAGE_ACCOUNT_NAME: z.string(),
 	AZURE_STORAGE_ACCOUNT_KEY: z.string(),
+	EMAIL_VERIFICATION_SECRET: z.string(),
+	AZURE_COMMUNICATION_SERVICES_CONNECTION_STRING: z.string(),
+	AZURE_COMMUNICATION_SERVICES_SENDER_ADDRESS: z.email(),
 	// Optional
 	BODY_SIZE_LIMIT: z.coerce
 		.number()

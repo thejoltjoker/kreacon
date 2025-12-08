@@ -10,6 +10,8 @@
 	import Avatar from '$lib/components/Avatar.svelte';
 	import FileField from '$lib/components/Form/FileField.svelte';
 	import { env } from '$env/dynamic/public';
+	import Badge from '$lib/components/Badge.svelte';
+	import { Label } from 'bits-ui';
 
 	let isEditing: boolean = $state(false);
 </script>
@@ -58,7 +60,24 @@
 			variant={isEditing ? 'default' : 'ghost'}
 			disabled={!isEditing}
 		/>
-		<TextField type="text" field="email" label="Email" readonly variant="ghost" />
+		<div class="gap-xs flex flex-col">
+			<Label.Root for="email" class="gap-xs flex items-center font-bold">
+				Email
+				{#if $page.data.user?.emailVerifiedAt}
+					<Badge variant="success" size="sm">Verified</Badge>
+				{:else}
+					<Badge variant="neutral" size="sm">Unverified</Badge>
+				{/if}
+			</Label.Root>
+			<TextField
+				type="text"
+				field="email"
+				label=""
+				readonly
+				variant="ghost"
+				labelProps={{ class: 'hidden' }}
+			/>
+		</div>
 		{#if isEditing}
 			<div>
 				<Button type="submit">Update</Button>

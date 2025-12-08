@@ -8,22 +8,25 @@ export const seed = async (db: db) => {
 	await Promise.all(
 		users.map(async (user) => {
 			const avatarId = crypto.randomUUID();
-			const [avatar] = await db
-				.insert(schema.files)
-				.values({
-					id: avatarId,
-					url: user.picture,
-					type: 'image/webp',
-					name: avatarId + user.picture,
-					size: 0
-				})
-				.returning();
+			let avatar: { id: string } | undefined;
+			if (user.picture) {
+				[avatar] = await db
+					.insert(schema.files)
+					.values({
+						id: avatarId,
+						url: user.picture,
+						type: 'image/webp',
+						name: avatarId + user.picture,
+						size: 0
+					})
+					.returning();
+			}
 			await db
 				.insert(schema.users)
 				.values({
 					...user,
-					avatarId: avatar.id,
-					emailVerifiedAt: new Date(user.emailVerifiedAt),
+					avatarId: avatar?.id,
+					emailVerifiedAt: user.emailVerifiedAt ? new Date(user.emailVerifiedAt) : null,
 					role: user.role as UserRole,
 					password: await hashPassword(user.password)
 				})

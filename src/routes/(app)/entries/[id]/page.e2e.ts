@@ -190,3 +190,5 @@ test('Own single entry page logged in', async ({ page }) => {
 	await page.getByRole('button', { name: 'Cancel' }).click();
 	await expect(page.getByText('Delete entry Close')).not.toBeVisible();
 });
+
+// TODO Add tests for email verification requirement

@@ -7,7 +7,7 @@ import { and, eq, sql } from 'drizzle-orm';
 import type { PageServerLoad } from './$types';
 import votes, { insertVoteSchema } from '$lib/server/db/schema/vote';
 import { StatusCodes } from 'http-status-codes';
-import { isAuthenticated } from '../../utils';
+import { isAuthenticated, isEmailVerified } from '../../utils';
 import { createLogger } from '$lib/helpers/logger';
 import { isBetweenDates } from '$lib/helpers/isBetweenDates';
 const logger = createLogger('/entries/[id]');
@@ -113,6 +113,11 @@ export const actions = {
 			return fail(StatusCodes.UNAUTHORIZED, { error: 'Not signed in' });
 		}
 
+		if (!isEmailVerified(locals)) {
+			logger.warn(`Unverified user ${locals.user.id} attempted to vote on entry ID: ${params.id}`);
+			return fail(StatusCodes.FORBIDDEN, { error: 'Email verification required' });
+		}
+
 		try {
 			const entryId = params.id;
 			const userId = locals.user.id;
@@ -156,6 +161,13 @@ export const actions = {
 			return fail(StatusCodes.UNAUTHORIZED, { error: 'Not signed in' });
 		}
 
+		if (!isEmailVerified(locals)) {
+			logger.warn(
+				`Unverified user ${locals.user.id} attempted to unvote on entry ID: ${params.id}`
+			);
+			return fail(StatusCodes.FORBIDDEN, { error: 'Email verification required' });
+		}
+
 		try {
 			const entryId = params.id;
 			const userId = locals.user.id;
@@ -177,6 +189,11 @@ export const actions = {
 		if (!isAuthenticated(locals) || !locals.user) {
 			logger.warn(`Unauthorized reaction attempt on entry ID: ${params.id}`);
 			return fail(StatusCodes.UNAUTHORIZED, { error: 'Not signed in' });
+		}
+
+		if (!isEmailVerified(locals)) {
+			logger.warn(`Unverified user ${locals.user.id} attempted to react on entry ID: ${params.id}`);
+			return fail(StatusCodes.FORBIDDEN, { error: 'Email verification required' });
 		}
 
 		try {
@@ -216,6 +233,12 @@ export const actions = {
 			logger.warn(`Unauthorized delete attempt on entry ID: ${params.id}`);
 			return fail(StatusCodes.UNAUTHORIZED, { error: 'Not signed in' });
 		}
+
+		if (!isEmailVerified(locals)) {
+			logger.warn(`Unverified user ${locals.user.id} attempted to delete entry ID: ${params.id}`);
+			return fail(StatusCodes.FORBIDDEN, { error: 'Email verification required' });
+		}
+
 		logger.info(`User ${locals.user.id} attempting to delete entry ID: ${params.id}`);
 
 		const entryId = params.id;

@@ -11,6 +11,7 @@ import type { PageServerLoad } from './$types';
 import { StatusCodes } from 'http-status-codes';
 import { registerUserSchema } from '$lib/schemas/user';
 import { createLogger } from '$lib/helpers/logger';
+import { sendEmailVerification } from '$lib/server/auth/verifyEmail';
 
 const logger = createLogger('register');
 
@@ -60,7 +61,8 @@ export const actions: Actions = {
 			logger.error('Failed to register user', e);
 			return message(form, { text: 'Something went wrong', status: 'error' });
 		}
-		// await sendEmailVerification(email.toString());
+		// TODO: Handle email send failures (e.g., retry logic, error reporting)
+		await sendEmailVerification(email.toString());
 		return redirect(StatusCodes.TEMPORARY_REDIRECT, '/login');
 	},
 	check: async ({ request }) => {
