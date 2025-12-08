@@ -61,7 +61,7 @@ export const actions: Actions = {
 			logger.error('Failed to register user', e);
 			return message(form, { text: 'Something went wrong', status: 'error' });
 		}
-		// TODO Send verification email
+		// TODO: Handle email send failures (e.g., retry logic, error reporting)
 		await sendEmailVerification(email.toString());
 		return redirect(StatusCodes.TEMPORARY_REDIRECT, '/login');
 	},
