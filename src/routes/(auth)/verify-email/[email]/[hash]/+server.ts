@@ -1,23 +1,70 @@
-import { createVerifyEmailToken } from '$lib/server/auth/verifyEmail';
+import { createVerifyEmailToken, TOKEN_VALIDITY_MS } from '$lib/server/auth/verifyEmail';
 import { db } from '$lib/server/db';
 import { users } from '$lib/server/db/schema';
+import { selectUserSchema } from '$lib/server/db/schema/user';
 import { error, redirect } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
 import type { RequestHandler } from './$types';
 import { createLogger } from '$lib/helpers/logger';
 import { StatusCodes } from 'http-status-codes';
+import crypto from 'crypto';
 
 const logger = createLogger('verify-email');
 
-export const GET: RequestHandler = async ({ params }) => {
-	const { email, hash } = params;
-	logger.info('Verifying email', { email, hash });
-	const token = await createVerifyEmailToken(email);
-	if (token !== hash) {
-		logger.error('Invalid token');
-		throw error(401, 'Invalid token');
+const emailSchema = selectUserSchema.shape.email;
+
+export const GET: RequestHandler = async ({ params, url }) => {
+	const { email: rawEmail, hash } = params;
+	const timestampParam = url.searchParams.get('t');
+
+	// TODO Add rate limiting to prevent brute force attacks
+
+	// TODO Remove sensitive data from logs
+	logger.info('Email verification attempt');
+
+	let email: string;
+	try {
+		email = decodeURIComponent(rawEmail);
+		emailSchema.parse(email);
+	} catch (err) {
+		logger.error('Invalid email format');
+		throw error(StatusCodes.UNAUTHORIZED, 'Invalid verification link');
 	}
 
+	if (!timestampParam) {
+		logger.error('Missing timestamp parameter');
+		throw error(StatusCodes.UNAUTHORIZED, 'Invalid verification link');
+	}
+
+	const timestamp = parseInt(timestampParam, 10);
+	if (isNaN(timestamp)) {
+		logger.error('Invalid timestamp parameter');
+		throw error(StatusCodes.UNAUTHORIZED, 'Invalid verification link');
+	}
+
+	const now = Date.now();
+	if (now - timestamp > TOKEN_VALIDITY_MS) {
+		logger.error('Token expired');
+		throw error(StatusCodes.UNAUTHORIZED, 'Verification link has expired');
+	}
+
+	// TODO Add token binding to user ID for additional security, not only email and timestamp
+
+	const { token: expectedToken } = createVerifyEmailToken(email, timestamp);
+
+	if (expectedToken.length !== hash.length) {
+		logger.error('Invalid token length');
+		throw error(StatusCodes.UNAUTHORIZED, 'Invalid verification link');
+	}
+
+	const isValidToken = crypto.timingSafeEqual(Buffer.from(expectedToken), Buffer.from(hash));
+
+	if (!isValidToken) {
+		logger.error('Invalid token');
+		throw error(StatusCodes.UNAUTHORIZED, 'Invalid verification link');
+	}
+
+	// TODO Store used tokens in database and reject if already used
 	const updatedUser = await db
 		.update(users)
 		.set({ emailVerifiedAt: new Date() })
@@ -26,9 +73,9 @@ export const GET: RequestHandler = async ({ params }) => {
 
 	if (!updatedUser || updatedUser.length === 0) {
 		logger.error('User not found');
-		throw error(404, 'User not found');
+		throw error(StatusCodes.UNAUTHORIZED, 'Invalid verification link');
 	}
 
-	logger.info('Email verified');
+	logger.info('Email verified successfully');
 	throw redirect(StatusCodes.TEMPORARY_REDIRECT, '/');
 };

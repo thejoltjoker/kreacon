@@ -62,6 +62,13 @@ export const load = (async (event) => {
 				emailVerifiedAt: new Date()
 			})
 			.returning();
+	} else if (!user.emailVerifiedAt) {
+		[user] = await db
+			.update(users)
+			.set({ emailVerifiedAt: new Date() })
+			.where(eq(users.id, user.id))
+			.returning();
+		logger.info(`Verified email for existing user ${user.id} via OAuth`);
 	}
 
 	await db

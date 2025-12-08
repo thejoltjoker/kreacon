@@ -1,17 +1,24 @@
-import { AZURE_COMMUNICATION_SERVICES_SENDER_ADDRESS, JWT_SIGNATURE } from '$env/static/private';
+import { AZURE_COMMUNICATION_SERVICES_SENDER_ADDRESS } from '$env/static/private';
 import { Email, type EmailMessage } from '$lib/server/services/email';
 import crypto from 'crypto';
 import template from '../../../assets/verify-email-template.html?raw';
+import env from '$lib/env';
 
-export const createVerifyEmailToken = (email: string) => {
-	const authString = `${JWT_SIGNATURE}:${email}`;
-	return crypto.createHash('sha256').update(authString).digest('hex');
+export const TOKEN_VALIDITY_MS = 24 * 60 * 60 * 1000;
+
+export const createVerifyEmailToken = (email: string, timestamp?: number) => {
+	const ts = timestamp ?? Date.now();
+
+	const authString = `${env.EMAIL_VERIFICATION_SECRET}:${email}:${ts}`;
+	const token = crypto.createHash('sha256').update(authString).digest('hex');
+	return { token, timestamp: ts };
 };
 
 export const createVerifyEmailLink = (email: string): string => {
-	const token = createVerifyEmailToken(email);
+	const { token, timestamp } = createVerifyEmailToken(email);
 	const uriEncodedEmail = encodeURIComponent(email);
-	const url = `http://${process.env.PUBLIC_BASE_URL ?? 'localhost:5173'}/verify-email/${uriEncodedEmail}/${token}`;
+	const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
+	const url = `${protocol}://${process.env.PUBLIC_BASE_URL ?? 'localhost:5173'}/verify-email/${uriEncodedEmail}/${token}?t=${timestamp}`;
 	return url;
 };
 
