@@ -85,34 +85,37 @@ After creating your Azure Storage account, you need to configure it properly:
    > **Security Note:** Do **not** pass your Azure Storage credentials (`--account-key`, `--account-name`) directly as command-line arguments, as this exposes them in shell history and process lists. Use Azure CLI authentication or environment variables instead.
 
    # Option 1: Use Azure CLI authentication (recommended)
+
    az login
    az storage cors add \
-     --services b \
-     --methods DELETE GET HEAD MERGE OPTIONS POST PUT PATCH \
-     --origins "http://localhost:5173" \
-     --allowed-headers "*" \
-     --exposed-headers "*" \
-     --max-age 3600
+    --services b \
+    --methods DELETE GET HEAD MERGE OPTIONS POST PUT PATCH \
+    --origins "http://localhost:5173" \
+    --allowed-headers "_" \
+    --exposed-headers "_" \
+    --max-age 3600
 
    # Option 2: Use environment variables (if you need to use a key)
+
    export AZURE_STORAGE_ACCOUNT="youraccount"
    export AZURE_STORAGE_KEY="your-key-here"
    az storage cors add \
-     --services b \
-     --methods DELETE GET HEAD MERGE OPTIONS POST PUT PATCH \
-     --origins "http://localhost:5173" \
-     --allowed-headers "*" \
-     --exposed-headers "*" \
-     --max-age 3600
+    --services b \
+    --methods DELETE GET HEAD MERGE OPTIONS POST PUT PATCH \
+    --origins "http://localhost:5173" \
+    --allowed-headers "_" \
+    --exposed-headers "_" \
+    --max-age 3600
 
    # For production, change the origin:
+
    az storage cors add \
-     --services b \
-     --methods DELETE GET HEAD MERGE OPTIONS POST PUT PATCH \
-     --origins "https://your-domain.com" \
-     --allowed-headers "*" \
-     --exposed-headers "*" \
-     --max-age 3600
+    --services b \
+    --methods DELETE GET HEAD MERGE OPTIONS POST PUT PATCH \
+    --origins "https://your-domain.com" \
+    --allowed-headers "_" \
+    --exposed-headers "_" \
+    --max-age 3600
 
 4. **Create required containers**:
 
