@@ -118,7 +118,7 @@ After creating your Azure Storage account, you need to configure it properly:
 
    ```bash
    npm run setup:azure
-   # Or manually: npx tsx scripts/create-containers.ts
+   # Or manually: npx tsx src/lib/helpers/createContainers.ts
    ```
 
    This will create the following containers with public blob access:
