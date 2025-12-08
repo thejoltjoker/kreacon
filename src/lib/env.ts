@@ -20,6 +20,7 @@ const EnvSchema = z.object({
 	OAUTH_DISCORD_CLIENT_ID: z.string(),
 	AZURE_STORAGE_ACCOUNT_NAME: z.string(),
 	AZURE_STORAGE_ACCOUNT_KEY: z.string(),
+	EMAIL_VERIFICATION_SECRET: z.string(),
 	// Optional
 	BODY_SIZE_LIMIT: z.coerce
 		.number()
