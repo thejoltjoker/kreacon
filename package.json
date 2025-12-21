@@ -57,7 +57,7 @@
 		"http-status-codes": "^2.3.0",
 		"lodash": "^4.17.21",
 		"lucide-svelte": "^0.554.0",
-		"media-chrome": "^4.16.0",
+		"media-chrome": "^4.16.1",
 		"mime": "^4.1.0",
 		"object.groupby": "^1.0.3",
 		"pg": "^8.16.3",
