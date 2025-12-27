@@ -52,9 +52,9 @@
 				items={licenses}
 			/>
 			<div class="text-shade-300">
-				Confused? Use <Link href="https://chooser-beta.creativecommons.org" target="_blank">
-					this tool
-				</Link> to help you pick a license.
+				{$t('Confused? Use')} <Link href="https://chooser-beta.creativecommons.org" target="_blank">
+					{$t('this tool')}
+				</Link> {$t('to help you pick a license.')}
 			</div>
 		</div>
 	</div>
