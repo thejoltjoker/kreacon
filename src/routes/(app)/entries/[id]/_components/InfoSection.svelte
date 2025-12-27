@@ -22,6 +22,11 @@
 	} = $props();
 </script>
 
+{#if entry.description}
+	<section id="entry-description" class="gap-xs flex flex-col">
+		<p class="text-shade-300">{entry.description}</p>
+	</section>
+{/if}
 <section id="entry-info" class="gap-lg flex items-center justify-between text-gray-500">
 	<div id="entry-meta" class="gap-lg flex flex-1 flex-wrap items-center text-lg">
 		<p><span class="text-white">{entry.views}</span> {$t('Views')}</p>
