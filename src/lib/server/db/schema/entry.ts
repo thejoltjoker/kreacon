@@ -26,6 +26,7 @@ export const entries = pgTable(
 		ticketId: varchar('ticket_id', { length: 255 }).notNull(),
 		status: entryStatusEnum('status').notNull().default('draft'),
 		title: varchar({ length: 255 }).notNull(),
+		description: varchar({ length: 1024 }),
 		views: integer().notNull().default(0),
 		license: licenseEnum('license').notNull(),
 		// Files

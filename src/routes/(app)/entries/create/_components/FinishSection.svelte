@@ -9,6 +9,7 @@
 	import type { SuperForm } from 'sveltekit-superforms';
 	import SubmittingTo from './SubmittingTo.svelte';
 	import Divider from '$lib/components/Divider.svelte';
+	import { t } from '$lib/i18n';
 	let { isValid = $bindable() }: { isValid: boolean } = $props();
 	const licenses: StyledSelectItem[] = licenseCode.map((code) => ({
 		label: code.toUpperCase(),
@@ -27,7 +28,17 @@
 	<Divider class="my-xl" />
 	<div class="gap-xs flex flex-col">
 		<TextField field="title" label="Title" labelProps={{ class: 'text-2xl font-bold' }} />
-		<p class="text-shade-300">What do you call your masterpiece?</p>
+		<p class="text-shade-300">{$t('What do you call your masterpiece?')}</p>
+	</div>
+	<div class="gap-xs flex flex-col">
+		<TextField
+			field="description"
+			label="Description"
+			labelProps={{ class: 'text-2xl font-bold' }}
+		/>
+		<p class="text-shade-300">
+			{$t('Describe your creative process, give a shoutout to your mom or bribe the voters.')}
+		</p>
 	</div>
 	<div class="gap-xs flex flex-col">
 		<SelectField
