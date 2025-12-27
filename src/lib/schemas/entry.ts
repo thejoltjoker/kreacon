@@ -13,10 +13,10 @@ export const createEntrySchema = z.object({
 		.optional()
 		.or(z.literal(''))
 		.transform((val) => (val === '' ? undefined : val)),
-	mediaId: z.string().uuid(),
-	thumbnailId: z.string().uuid().optional(),
-	previewId: z.string().uuid(),
-	proofId: z.string().uuid().optional(),
+	mediaId: z.uuid(),
+	thumbnailId: z.uuid().optional(),
+	previewId: z.uuid(),
+	proofId: z.uuid().optional(),
 	license: licenseEnum
 });
 
