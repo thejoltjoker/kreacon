@@ -99,7 +99,7 @@
 	let progress = $state(0);
 	let mode = $state(
 		behavior === 'auto'
-			? typeof $form[field] === 'string'
+			? customUploadUrl != null || typeof $form[field] === 'string'
 				? 'managed'
 				: 'standard'
 			: behavior === 'managed'
@@ -118,7 +118,7 @@
 	let superFieldProxy;
 	if (
 		behavior === 'auto'
-			? typeof $form[field] === 'string'
+			? customUploadUrl != null || typeof $form[field] === 'string'
 				? true
 				: false
 			: behavior === 'managed'
