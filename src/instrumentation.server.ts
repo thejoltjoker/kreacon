@@ -4,7 +4,7 @@ import { PUBLIC_SENTRY_DSN } from '$env/static/public';
 Sentry.init({
 	dsn: PUBLIC_SENTRY_DSN,
 
-	tracesSampleRate: 1.0,
+	tracesSampleRate: import.meta.env.DEV ? 1.0 : 0.2,
 
 	// Enable logs to be sent to Sentry
 	enableLogs: true
