@@ -27,3 +27,6 @@ db-data
 playwright-report/
 .env.test
 src/lib/server/db/seeds/data/users_prod.json
+
+# Sentry Config File
+.env.sentry-build-plugin

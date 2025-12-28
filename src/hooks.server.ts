@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/sveltekit';
 import {
 	deleteSessionTokenCookie,
 	sessionCookieName,
@@ -38,4 +39,5 @@ const handleI18n: Handle = async ({ event, resolve }) => {
 	return resolve(event);
 };
 
-export const handle = sequence(handleI18n, handleAuth);
+export const handle = sequence(Sentry.sentryHandle(), sequence(handleI18n, handleAuth));
+export const handleError = Sentry.handleErrorWithSentry();
