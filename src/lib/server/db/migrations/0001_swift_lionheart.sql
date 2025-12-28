@@ -1,0 +1,1 @@
+ALTER TABLE "entry" ADD COLUMN "description" varchar(1024);

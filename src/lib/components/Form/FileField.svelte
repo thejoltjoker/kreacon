@@ -5,7 +5,11 @@
 
 <script lang="ts" generics="T extends Record<string, unknown>">
 	import { env } from '$env/dynamic/public';
-	import { getExtensionsForMedia, getMimeTypesForMedia } from '$lib/helpers/mediaTypes';
+	import {
+		getExtensionsForMedia,
+		getMimeTypesForMedia,
+		isAllowedMimeTypeForMedia
+	} from '$lib/helpers/mediaTypes';
 	import { t } from '$lib/i18n';
 	import { type MediaType, type MimeType } from '$lib/types/mediaTypes';
 	import { cn } from '$lib/utils';
@@ -99,7 +103,7 @@
 	let progress = $state(0);
 	let mode = $state(
 		behavior === 'auto'
-			? typeof $form[field] === 'string'
+			? customUploadUrl != null || typeof $form[field] === 'string'
 				? 'managed'
 				: 'standard'
 			: behavior === 'managed'
@@ -114,11 +118,12 @@
 	let blobUrl: string | undefined = $state();
 	let uploadUrl: string | undefined = $state(customUploadUrl);
 	let fileId: string = $state(crypto.randomUUID());
+	let validationError: string | undefined = $state();
 
 	let superFieldProxy;
 	if (
 		behavior === 'auto'
-			? typeof $form[field] === 'string'
+			? customUploadUrl != null || typeof $form[field] === 'string'
 				? true
 				: false
 			: behavior === 'managed'
@@ -148,26 +153,53 @@
 		isDragging = false;
 	};
 
+	async function validateFile(file: File): Promise<boolean> {
+		const fileType = await fileTypeFromBlob(file);
+
+		if (!fileType) {
+			validationError = `Unable to determine file type. Please upload a valid ${mediaType} file.`;
+			return false;
+		}
+
+		if (!isAllowedMimeTypeForMedia(fileType.mime, mediaType)) {
+			validationError = `Invalid file type. Expected ${mediaType} file, but got ${fileType.mime}. Supported extensions: ${extensions.join(', ')}`;
+			return false;
+		}
+
+		validationError = undefined;
+		return true;
+	}
+
 	async function processFiles() {
 		if (!files || files.length === 0) return;
 
+		const file = files[0];
+
+		const isValid = await validateFile(file);
+		if (!isValid) {
+			currentState = 'error';
+			return;
+		}
+
 		currentState = 'uploading';
+
 		// TODO Generate checksum
 		if (uploadUrl == null) {
-			const sas = await getUploadUrl(files[0]);
+			const sas = await getUploadUrl(file);
 			fileId = sas.fileId;
 			blobUrl = sas.url;
 			uploadUrl = sas.url;
 		}
 
 		try {
-			await uploadFile(uploadUrl, files[0]);
+			await uploadFile(uploadUrl, file);
 			onUploadComplete?.(fileId);
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			$value = fileId as any; //TODO Fix proper types
+
+			($value as string) = fileId;
 			currentState = 'complete';
 		} catch (error) {
 			console.error(error);
+			validationError = 'Upload failed. Please try again.';
 			currentState = 'error';
 		}
 	}
@@ -175,15 +207,26 @@
 	const onFileDrop = async (event: DragEvent) => {
 		event.preventDefault();
 		isDragging = false;
-		currentState = 'ready';
 		const input = event.dataTransfer;
 
 		if (input?.files && input.files.length > 0) {
-			$value = input.files;
 			files = input.files;
-		}
-		if (mode != 'standard') {
-			await processFiles();
+
+			const isValid = await validateFile(files[0]);
+			if (!isValid) {
+				currentState = 'error';
+				files = undefined;
+
+				if (fileInput) fileInput.value = '';
+				return;
+			}
+
+			if (mode === 'standard') {
+				$value = input.files;
+				currentState = 'ready';
+			} else {
+				await processFiles();
+			}
 		}
 	};
 
@@ -210,12 +253,13 @@
 
 	const reset = () => {
 		files = undefined;
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		$value = mode === 'standard' ? (undefined as unknown as FileList) : ('' as any);
 		currentState = 'idle';
 		progress = 0;
 		uploadUrl = customUploadUrl;
 		fileId = crypto.randomUUID();
+		validationError = undefined;
+
+		($value as FileList | string | undefined) = undefined;
 	};
 
 	const getBlobName = async (file: File) => {
@@ -293,7 +337,22 @@
 		}
 	) => {
 		files = event.currentTarget.files;
-		await processFiles();
+		if (!files || files.length === 0) return;
+
+		const isValid = await validateFile(files[0]);
+		if (!isValid) {
+			currentState = 'error';
+			files = undefined;
+
+			event.currentTarget.value = '';
+			return;
+		}
+
+		if (mode === 'managed') {
+			await processFiles();
+		} else {
+			currentState = 'ready';
+		}
 	};
 
 	$effect(() => {
@@ -321,6 +380,10 @@
 		<p><span class="text-tertiary">progress:</span> {progress ?? typeof progress}</p>
 		<p><span class="text-tertiary">value:</span> {JSON.stringify($value) ?? typeof $value}</p>
 		<p><span class="text-tertiary">xhr:</span> {xhr ?? typeof xhr}</p>
+		<p>
+			<span class="text-tertiary">validationError:</span>
+			{validationError ?? typeof validationError}
+		</p>
 
 		<p class="text-shade-400"># props</p>
 		<p><span class="text-tertiary">behavior:</span> {behavior ?? typeof behavior}</p>
@@ -404,7 +467,7 @@
 					<p class="text-shade-300 text-sm">Upload complete</p>
 				{:else if currentState === 'error'}
 					<p class="font-bold text-white">{files?.[0]?.name ?? 'Unknown'}</p>
-					<p class="text-shade-300 text-sm">Upload failed</p>
+					<p class="text-destructive text-sm">{validationError ?? 'Upload failed'}</p>
 				{/if}
 			</div>
 			<div class={cn('ml-auto', isDragging && 'hidden')}>
@@ -460,14 +523,22 @@
 		</p>
 		<p class="text-shade-300 text-sm">Max. {maxFileSize / 1024 / 1024} MB</p>
 	</div>
-	{#if $errors}
+	{#if $errors || validationError}
 		<ul class="gap-xs flex flex-col text-sm">
-			{#each $errors as error, i (i)}
+			{#if validationError}
 				<li class="gap-2xs inline-flex items-center">
 					<XCircleIcon class="text-destructive size-4" />
-					{error}
+					{validationError}
 				</li>
-			{/each}
+			{/if}
+			{#if $errors && currentState !== 'idle'}
+				{#each $errors as error, i (i)}
+					<li class="gap-2xs inline-flex items-center">
+						<XCircleIcon class="text-destructive size-4" />
+						{error}
+					</li>
+				{/each}
+			{/if}
 		</ul>
 	{/if}
 

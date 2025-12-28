@@ -26,5 +26,4 @@ static/uploads/
 db-data
 playwright-report/
 .env.test
-
-users_prod.json
+src/lib/server/db/seeds/data/users_prod.json

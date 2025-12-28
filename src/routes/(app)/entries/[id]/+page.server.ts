@@ -30,7 +30,8 @@ export const load = (async ({ params, locals }) => {
 				views: true,
 				createdAt: true,
 				status: true,
-				license: true
+				license: true,
+				description: true
 			},
 			with: {
 				media: {
