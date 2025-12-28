@@ -324,9 +324,10 @@ describe('sendEmailVerification', () => {
 	it('should include verification link in email body', async () => {
 		await sendEmailVerification(testEmail);
 
-		const emailCall = vi.mocked(Email).mock.calls[0][0];
-		expect(emailCall.body).toContain('verify-email');
-		expect(emailCall.body).toContain(encodeURIComponent(testEmail));
+		const emailCall = vi.mocked(Email).mock.calls[0]?.[0];
+		expect(emailCall).toBeDefined();
+		expect(emailCall?.body).toContain('verify-email');
+		expect(emailCall?.body).toContain(encodeURIComponent(testEmail));
 	});
 
 	it('should handle email sending errors', async () => {
