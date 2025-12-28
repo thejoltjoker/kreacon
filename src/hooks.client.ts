@@ -1,11 +1,12 @@
 import { handleErrorWithSentry, replayIntegration } from '@sentry/sveltekit';
 import * as Sentry from '@sentry/sveltekit';
 import { PUBLIC_SENTRY_DSN } from '$env/static/public';
+import { dev } from '$app/environment';
 
 Sentry.init({
 	dsn: PUBLIC_SENTRY_DSN,
 
-	tracesSampleRate: 1.0,
+	tracesSampleRate: dev ? 1.0 : 0.2,
 
 	// Enable logs to be sent to Sentry
 	enableLogs: true,
@@ -21,9 +22,9 @@ Sentry.init({
 	// If you don't want to use Session Replay, just remove the line below:
 	integrations: [replayIntegration()],
 
-	// Enable sending user PII (Personally Identifiable Information)
-	// https://docs.sentry.io/platforms/javascript/guides/sveltekit/configuration/options/#sendDefaultPii
-	sendDefaultPii: true
+	// Disable sending user PII (Personally Identifiable Information) by default.
+	// See: https://docs.sentry.io/platforms/javascript/guides/sveltekit/configuration/options/#sendDefaultPii
+	sendDefaultPii: false
 });
 
 // If you have a custom error handler, pass it to `handleErrorWithSentry`
