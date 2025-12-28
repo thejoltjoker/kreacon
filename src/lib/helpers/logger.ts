@@ -49,12 +49,6 @@ class Logger {
 			console.debug(formattedMessage, data);
 		}
 
-		// Send to Sentry
-		Sentry.captureMessage(`[${this.context}] ${message}`, {
-			level: 'debug',
-			extra: data
-		});
-
 		// AZURE CODE (kept for reference):
 		// if (azureAppInsights != null) {
 		// 	azureAppInsights.trackTrace({
@@ -70,12 +64,6 @@ class Logger {
 		if (logLevels[currentLogLevel] <= logLevels['info']) {
 			console.info(formattedMessage, data);
 		}
-
-		// Send to Sentry
-		Sentry.captureMessage(`[${this.context}] ${message}`, {
-			level: 'info',
-			extra: data
-		});
 
 		// AZURE CODE (kept for reference):
 		// if (azureAppInsights != null) {
