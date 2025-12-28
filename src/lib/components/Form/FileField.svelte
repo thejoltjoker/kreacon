@@ -162,7 +162,7 @@
 		}
 
 		if (!isAllowedMimeTypeForMedia(fileType.mime, mediaType)) {
-			validationError = `Invalid file type. Expected ${mediaType} file, but got ${fileType.mime}. Supported types: ${extensions.join(', ')}`;
+			validationError = `Invalid file type. Expected ${mediaType} file, but got ${fileType.mime}. Supported extensions: ${extensions.join(', ')}`;
 			return false;
 		}
 
