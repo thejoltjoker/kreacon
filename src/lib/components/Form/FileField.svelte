@@ -215,6 +215,7 @@
 			const isValid = await validateFile(files[0]);
 			if (!isValid) {
 				currentState = 'error';
+				files = undefined; // Clear files to prevent invalid file from being submitted
 				return;
 			}
 
@@ -339,11 +340,16 @@
 		const isValid = await validateFile(files[0]);
 		if (!isValid) {
 			currentState = 'error';
+			files = undefined; // Clear files to prevent invalid file from being submitted
+			// Also clear the input element's files
+			event.currentTarget.value = '';
 			return;
 		}
 
 		if (mode === 'managed') {
 			await processFiles();
+		} else {
+			currentState = 'ready';
 		}
 	};
 
