@@ -6,8 +6,8 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
 	plugins: [
 		sentrySvelteKit({
-			org: 'beacon-jc',
-			project: 'javascript-sveltekit'
+			org: process.env.SENTRY_ORG ?? 'beacon-jc',
+			project: process.env.SENTRY_PROJECT ?? 'javascript-sveltekit'
 		}),
 		tailwindcss(),
 		sveltekit()
