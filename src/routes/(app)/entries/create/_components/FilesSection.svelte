@@ -13,6 +13,7 @@
 			.pick({
 				mediaId: true,
 				thumbnailId: true,
+				previewId: true,
 				proofId: true
 			})
 			.safeParse($form).success;

@@ -78,6 +78,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   [#128](https://github.com/thejoltjoker/kreacon/pull/128)
 - Add proof file and description field to entries
   [#136](https://github.com/thejoltjoker/kreacon/pull/136)
+- Add file validation to drop zone
+  [#138](https://github.com/thejoltjoker/kreacon/pull/138)
 
 ### Changed
 
