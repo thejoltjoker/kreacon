@@ -79,6 +79,11 @@ export const GET: RequestHandler = async ({ params, url }) => {
 		throw error(StatusCodes.UNAUTHORIZED, 'Invalid verification link');
 	}
 
+	if (updatedUser.length > 1) {
+		logger.error('Multiple users updated - data integrity issue', { count: updatedUser.length });
+		throw error(StatusCodes.INTERNAL_SERVER_ERROR, 'An unexpected error occurred');
+	}
+
 	logger.info('Email verified successfully');
 	throw redirect(StatusCodes.TEMPORARY_REDIRECT, '/');
 };

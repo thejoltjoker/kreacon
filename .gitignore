@@ -26,3 +26,5 @@ static/uploads/
 db-data
 playwright-report/
 .env.test
+
+users_prod.json
