@@ -198,6 +198,7 @@ TICKET_API_URL=<ticket-api-url>
 BODY_SIZE_LIMIT=10485760
 AZURE_STORAGE_ACCOUNT_NAME=<azure-storage-account-name>
 AZURE_STORAGE_ACCOUNT_KEY=<azure-storage-account-key>
+PUBLIC_SENTRY_DSN=<your-sentry-dsn>
 ```
 
 ### .env.test.local

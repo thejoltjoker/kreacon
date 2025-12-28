@@ -23,7 +23,7 @@ const EnvSchema = z.object({
 	EMAIL_VERIFICATION_SECRET: z.string(),
 	AZURE_COMMUNICATION_SERVICES_CONNECTION_STRING: z.string(),
 	AZURE_COMMUNICATION_SERVICES_SENDER_ADDRESS: z.email(),
-	SENTRY_DSN: z.string(),
+	PUBLIC_SENTRY_DSN: z.string(),
 	// Optional
 	BODY_SIZE_LIMIT: z.coerce
 		.number()
