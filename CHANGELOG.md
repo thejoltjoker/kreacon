@@ -143,6 +143,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   [#111](https://github.com/thejoltjoker/kreacon/pull/111)
 - Make sure e2e tests pass after the upgrade of dependencies
   [#125](https://github.com/thejoltjoker/kreacon/pull/125)
+- Add Azure Communication secrets to CI actions
+  [#139](https://github.com/thejoltjoker/kreacon/pull/139)
 
 ### Security
 
