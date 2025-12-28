@@ -33,11 +33,6 @@ export const PUT: RequestHandler = async ({ request, locals, url }) => {
 	}
 
 	const fileId = request.headers.get('x-file-id') ?? crypto.randomUUID();
-	const originalName =
-		url.searchParams.get('blobName') ?? request.headers.get('x-ms-blob-name') ?? 'unknown';
-	const nameWithoutExtension =
-		originalName.substring(0, originalName.lastIndexOf('.')) ?? originalName;
-	// const blobName = `${nameWithoutExtension}.webp`;
 	const blobName =
 		url.searchParams.get('blobName') ?? request.headers.get('x-ms-blob-name') ?? 'unknown';
 
