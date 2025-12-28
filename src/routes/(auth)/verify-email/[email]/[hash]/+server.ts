@@ -27,7 +27,7 @@ export const GET: RequestHandler = async ({ params, url }) => {
 		email = decodeURIComponent(rawEmail);
 		emailSchema.parse(email);
 	} catch (err) {
-		logger.error('Invalid email format');
+		logger.error('Invalid email format', { error: err });
 		throw error(StatusCodes.UNAUTHORIZED, 'Invalid verification link');
 	}
 

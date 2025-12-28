@@ -5,17 +5,16 @@ import {
 	sendEmailVerification,
 	TOKEN_VALIDITY_MS
 } from './verifyEmail';
-import { Email } from '$lib/server/services/email';
+import { Email, type EmailMessage } from '$lib/server/services/email';
 
-// Mock the Email service
 vi.mock('$lib/server/services/email', () => {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const MockEmail = vi.fn(function (this: any) {
 		this.send = vi.fn().mockResolvedValue(undefined);
 	});
 	return { Email: MockEmail };
 });
 
-// Mock environment variables
 vi.mock('$env/static/private', () => ({
 	AZURE_COMMUNICATION_SERVICES_SENDER_ADDRESS: 'noreply@test.com'
 }));
@@ -149,7 +148,6 @@ describe('createVerifyEmailToken', () => {
 				tokens.add(token);
 			}
 
-			// All tokens should be unique
 			expect(tokens.size).toBe(100);
 		});
 
@@ -160,7 +158,6 @@ describe('createVerifyEmailToken', () => {
 				tokens.add(token);
 			}
 
-			// All tokens should be unique
 			expect(tokens.size).toBe(100);
 		});
 
@@ -168,7 +165,6 @@ describe('createVerifyEmailToken', () => {
 			const email = 'john.doe@example.com';
 			const { token } = createVerifyEmailToken(email, testTimestamp);
 
-			// Token should not contain any part of the email
 			expect(token.toLowerCase()).not.toContain('john');
 			expect(token.toLowerCase()).not.toContain('doe');
 			expect(token.toLowerCase()).not.toContain('example');
@@ -200,13 +196,11 @@ describe('createVerifyEmailLink', () => {
 			const link = createVerifyEmailLink(testEmail);
 			const url = new URL(link);
 
-			// Check path structure: /verify-email/{email}/{token}
 			const pathParts = url.pathname.split('/');
 			expect(pathParts[1]).toBe('verify-email');
 			expect(pathParts[2]).toBe(encodeURIComponent(testEmail));
-			expect(pathParts[3]).toHaveLength(64); // SHA-256 hex
+			expect(pathParts[3]).toHaveLength(64);
 
-			// Check timestamp query parameter
 			const timestamp = url.searchParams.get('t');
 			expect(timestamp).toBeTruthy();
 			expect(Number(timestamp)).toBeGreaterThan(0);
@@ -235,7 +229,7 @@ describe('createVerifyEmailLink', () => {
 			const link = createVerifyEmailLink(specialEmail);
 
 			expect(link).toContain(encodeURIComponent(specialEmail));
-			expect(link).not.toContain('+'); // + should be encoded
+			expect(link).not.toContain('+');
 		});
 
 		it('should handle email with spaces (invalid but should encode)', () => {
@@ -243,7 +237,7 @@ describe('createVerifyEmailLink', () => {
 			const link = createVerifyEmailLink(emailWithSpace);
 
 			expect(link).toContain(encodeURIComponent(emailWithSpace));
-			expect(link).not.toContain(' '); // Space should be encoded
+			expect(link).not.toContain(' ');
 		});
 
 		it('should handle international characters in email', () => {
@@ -320,7 +314,7 @@ describe('sendEmailVerification', () => {
 	it('should include correct email message properties', async () => {
 		await sendEmailVerification(testEmail);
 
-		const emailCall = vi.mocked(Email).mock.calls[0][0];
+		const emailCall = vi.mocked(Email).mock.calls[0][0] as EmailMessage;
 		expect(emailCall.from).toBe('noreply@test.com');
 		expect(emailCall.to).toBe(testEmail);
 		expect(emailCall.subject).toBe('Verify your email');
@@ -337,6 +331,7 @@ describe('sendEmailVerification', () => {
 
 	it('should handle email sending errors', async () => {
 		const mockError = new Error('Email service unavailable');
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		vi.mocked(Email).mockImplementationOnce(function (this: any) {
 			this.send = vi.fn().mockRejectedValue(mockError);
 		});
@@ -362,10 +357,8 @@ describe('integration: token validation workflow', () => {
 		const email = 'user@example.com';
 		const timestamp = Date.now();
 
-		// Generate token
 		const { token: generatedToken } = createVerifyEmailToken(email, timestamp);
 
-		// Simulate server validation
 		const { token: validationToken } = createVerifyEmailToken(email, timestamp);
 
 		expect(generatedToken).toBe(validationToken);
@@ -394,7 +387,7 @@ describe('integration: token validation workflow', () => {
 	});
 
 	it('should validate token expiration correctly', () => {
-		const timestamp = Date.now() - TOKEN_VALIDITY_MS - 1000; // Expired by 1 second
+		const timestamp = Date.now() - TOKEN_VALIDITY_MS - 1000;
 		const now = Date.now();
 
 		const isExpired = now - timestamp > TOKEN_VALIDITY_MS;
@@ -402,11 +395,10 @@ describe('integration: token validation workflow', () => {
 	});
 
 	it('should accept tokens within validity period', () => {
-		const timestamp = Date.now() - TOKEN_VALIDITY_MS + 60000; // Valid for 1 more minute
+		const timestamp = Date.now() - TOKEN_VALIDITY_MS + 60000;
 		const now = Date.now();
 
 		const isValid = now - timestamp <= TOKEN_VALIDITY_MS;
 		expect(isValid).toBe(true);
 	});
 });
-
