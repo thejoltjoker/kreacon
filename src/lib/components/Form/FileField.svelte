@@ -194,8 +194,8 @@
 		try {
 			await uploadFile(uploadUrl, file);
 			onUploadComplete?.(fileId);
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			$value = fileId as any; //TODO Fix proper types
+
+			($value as string) = fileId;
 			currentState = 'complete';
 		} catch (error) {
 			console.error(error);
@@ -215,7 +215,9 @@
 			const isValid = await validateFile(files[0]);
 			if (!isValid) {
 				currentState = 'error';
-				files = undefined; // Clear files to prevent invalid file from being submitted
+				files = undefined;
+
+				if (fileInput) fileInput.value = '';
 				return;
 			}
 
@@ -251,13 +253,13 @@
 
 	const reset = () => {
 		files = undefined;
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		$value = mode === 'standard' ? (undefined as unknown as FileList) : ('' as any);
 		currentState = 'idle';
 		progress = 0;
 		uploadUrl = customUploadUrl;
 		fileId = crypto.randomUUID();
 		validationError = undefined;
+
+		($value as FileList | string | undefined) = undefined;
 	};
 
 	const getBlobName = async (file: File) => {
@@ -340,8 +342,8 @@
 		const isValid = await validateFile(files[0]);
 		if (!isValid) {
 			currentState = 'error';
-			files = undefined; // Clear files to prevent invalid file from being submitted
-			// Also clear the input element's files
+			files = undefined;
+
 			event.currentTarget.value = '';
 			return;
 		}
@@ -529,7 +531,7 @@
 					{validationError}
 				</li>
 			{/if}
-			{#if $errors}
+			{#if $errors && currentState !== 'idle'}
 				{#each $errors as error, i (i)}
 					<li class="gap-2xs inline-flex items-center">
 						<XCircleIcon class="text-destructive size-4" />
