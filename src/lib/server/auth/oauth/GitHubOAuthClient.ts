@@ -39,9 +39,7 @@ export class GithubOAuth extends OAuthBase {
 				const emails: Array<{ email: string; primary: boolean; verified: boolean }> =
 					await emailsResponse.json();
 				const primaryEmail =
-					emails.find((e) => e.primary && e.verified) ||
-					emails.find((e) => e.verified) ||
-					emails[0];
+					emails.find((e) => e.primary && e.verified) || emails.find((e) => e.verified);
 				if (primaryEmail) {
 					user.email = primaryEmail.email;
 				}

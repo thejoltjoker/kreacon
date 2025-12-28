@@ -53,13 +53,21 @@ export const actions: Actions = {
 
 		try {
 			await sendEmailVerification(email);
-			logger.info(`Verification email resent for: ${email}`);
+			logger.info(`Verification email resent successfully for: ${email}`);
 			return message(form, {
 				text: 'If an account with that email exists, a verification email has been sent.',
 				status: 'success'
 			});
 		} catch (error) {
-			logger.error(`Failed to resend verification email for: ${email}`, error);
+			logger.error(`Failed to resend verification email for: ${email}`, {
+				error: error instanceof Error ? error.message : String(error),
+				stack: error instanceof Error ? error.stack : undefined,
+				userId: user.id,
+				timestamp: new Date().toISOString()
+			});
+
+			// TODO: Consider implementing a retry mechanism or email queue
+
 			return message(form, {
 				text: 'If an account with that email exists, a verification email has been sent.',
 				status: 'success'

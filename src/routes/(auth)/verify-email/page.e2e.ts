@@ -245,3 +245,76 @@ test('Invalid email format in URL is rejected', async ({ page }) => {
 	// Should return 401 Unauthorized
 	expect(response?.status()).toBe(401);
 });
+
+test('Future timestamp is rejected', async ({ page }) => {
+	// Create token with timestamp in the future
+	const futureTimestamp = Date.now() + 60000; // 1 minute in the future
+	const { token } = createVerifyEmailToken(TEST_EMAIL, futureTimestamp);
+	const encodedEmail = encodeURIComponent(TEST_EMAIL);
+	const verificationUrl = `/verify-email/${encodedEmail}/${token}?t=${futureTimestamp}`;
+
+	// Navigate to verification URL
+	const response = await page.goto(verificationUrl, { waitUntil: 'networkidle' });
+
+	// Should return 401 Unauthorized
+	expect(response?.status()).toBe(401);
+
+	// Verify email was NOT verified in database
+	const user = await db.query.users.findFirst({
+		where: eq(users.email, TEST_EMAIL)
+	});
+	expect(user?.emailVerifiedAt).toBeNull();
+});
+
+test('Non-existent user verification attempt is rejected', async ({ page }) => {
+	const timestamp = Date.now();
+	const { token } = createVerifyEmailToken(TEST_EMAIL_NONEXISTENT, timestamp);
+	const encodedEmail = encodeURIComponent(TEST_EMAIL_NONEXISTENT);
+	const verificationUrl = `/verify-email/${encodedEmail}/${token}?t=${timestamp}`;
+
+	// Navigate to verification URL
+	const response = await page.goto(verificationUrl, { waitUntil: 'networkidle' });
+
+	// Should return 401 Unauthorized (user not found)
+	expect(response?.status()).toBe(401);
+});
+
+test('Concurrent verification attempts with same token', async ({ page, context }) => {
+	const timestamp = Date.now();
+	const { token } = createVerifyEmailToken(TEST_EMAIL, timestamp);
+	const encodedEmail = encodeURIComponent(TEST_EMAIL);
+	const verificationUrl = `/verify-email/${encodedEmail}/${token}?t=${timestamp}`;
+
+	// Create a second page in the same context to simulate concurrent requests
+	const page2 = await context.newPage();
+
+	try {
+		// Attempt to verify the same email concurrently
+		const [response1, response2] = await Promise.all([
+			page.goto(verificationUrl),
+			page2.goto(verificationUrl)
+		]);
+
+		// Both should succeed (idempotent operation)
+		// One or both should redirect to home
+		const status1 = response1?.status();
+		const status2 = response2?.status();
+
+		// At least one should succeed with a redirect
+		expect(status1 === 307 || status2 === 307).toBeTruthy();
+
+		// Verify email was verified in database
+		const user = await db.query.users.findFirst({
+			where: eq(users.email, TEST_EMAIL)
+		});
+		expect(user?.emailVerifiedAt).not.toBeNull();
+
+		// Verify only one user was updated (defensive check from the code)
+		const allUsersWithEmail = await db.query.users.findMany({
+			where: eq(users.email, TEST_EMAIL)
+		});
+		expect(allUsersWithEmail.length).toBe(1);
+	} finally {
+		await page2.close();
+	}
+});
