@@ -25,5 +25,13 @@
 		"emailVerifiedAt": "2024-02-20T00:00:00.000Z",
 		"picture": "/images/wilma.flintstone.png",
 		"role": "user"
+	},
+	{
+		"id": "bec16ee6-b400-4543-ac4c-d887de13a2bf",
+		"email": "not.verified@example.com",
+		"username": "not_verified",
+		"password": "password",
+		"emailVerifiedAt": null,
+		"role": "user"
 	}
 ]

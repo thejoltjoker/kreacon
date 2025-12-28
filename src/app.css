@@ -318,7 +318,7 @@ layer(base);
 	}
 
 	::selection {
-		@apply bg-white text-black;
+		@apply bg-white text-black dark:bg-white;
 	}
 
 	.debug {

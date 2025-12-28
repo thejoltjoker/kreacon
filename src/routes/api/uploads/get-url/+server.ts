@@ -6,13 +6,18 @@ import { error, json } from '@sveltejs/kit';
 import { StatusCodes } from 'http-status-codes';
 import type { RequestHandler } from './$types';
 import { getUrlSchema } from './schema';
-import { isAuthenticated } from '../../../(app)/utils';
+import { isAuthenticated, isEmailVerified } from '../../../(app)/utils';
 
 const logger = createLogger('api/uploads/get-url');
 
 export const POST: RequestHandler = async ({ request, locals }) => {
 	if (!isAuthenticated(locals)) {
 		return error(StatusCodes.UNAUTHORIZED, { message: 'Unauthorized' });
+	}
+
+	if (!isEmailVerified(locals)) {
+		logger.warn(`Unverified user ${locals.user?.id} attempted to get upload URL`);
+		return error(StatusCodes.FORBIDDEN, { message: 'Email verification required' });
 	}
 	const data = await request.json();
 

@@ -12,6 +12,7 @@ export interface OAuthProviderConfig {
 		auth: string;
 		token: string;
 		user: string;
+		emails?: string;
 	};
 	clientId: string;
 	clientSecret: string;
@@ -27,11 +28,12 @@ export const isOAuthProvider = (value: string): value is OAuthProvider => {
 
 export const providerConfig: Record<OAuthProvider, OAuthProviderConfig> = {
 	github: {
-		scopes: ['read:user'],
+		scopes: ['read:user', 'user:email'],
 		urls: {
 			auth: 'https://github.com/login/oauth/authorize',
 			token: 'https://github.com/login/oauth/access_token',
-			user: 'https://api.github.com/user'
+			user: 'https://api.github.com/user',
+			emails: 'https://api.github.com/user/emails'
 		},
 		clientId: env.OAUTH_GITHUB_CLIENT_ID ?? '',
 		clientSecret: env.OAUTH_GITHUB_CLIENT_SECRET ?? '',

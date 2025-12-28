@@ -1,127 +1,130 @@
-// import {
-// 	AZURE_COMMUNICATION_SERVICES_SENDER_ADDRESS,
-// 	AZURE_COMMUNICATION_SERVICES_CONNECTION_STRING
-// } from '$env/static/private';
-// import {
-// 	EmailClient as AzureEmailClient,
-// 	type EmailMessage as AzureEmailMessage
-// } from '@azure/communication-email';
-// import { z } from 'zod/v4'
+import {
+	AZURE_COMMUNICATION_SERVICES_SENDER_ADDRESS,
+	AZURE_COMMUNICATION_SERVICES_CONNECTION_STRING
+} from '$env/static/private';
+import {
+	EmailClient as AzureEmailClient,
+	type EmailMessage as AzureEmailMessage
+} from '@azure/communication-email';
+import { createLogger } from '$lib/helpers/logger';
+import { z } from 'zod/v4';
 
-// export const emailClient = new AzureEmailClient(AZURE_COMMUNICATION_SERVICES_CONNECTION_STRING);
+const logger = createLogger('email');
 
-// export type EmailServices = 'azure';
+export const emailClient = new AzureEmailClient(AZURE_COMMUNICATION_SERVICES_CONNECTION_STRING);
 
-// export type EmailMessage = {
-// 	from: string;
-// 	to: string;
-// 	subject: string;
-// 	body: string;
-// };
+export type EmailServices = 'azure';
 
-// export class EmailBase {
-// 	private _from: string = '';
-// 	private _to: string = '';
-// 	private _subject: string = '';
-// 	private _body: string = '';
-// 	public service: EmailServices;
+export type EmailMessage = {
+	from: string;
+	to: string;
+	subject: string;
+	body: string;
+};
 
-// 	constructor(service?: EmailServices, message?: EmailMessage) {
-// 		this.service = service ?? 'azure';
-// 		if (message) {
-// 			this._from = message.from;
-// 			this._to = message.to;
-// 			this._subject = message.subject;
-// 			this._body = message.body;
-// 		}
-// 	}
+export class EmailBase {
+	private _from: string = '';
+	private _to: string = '';
+	private _subject: string = '';
+	private _body: string = '';
+	public service: EmailServices;
 
-// 	fromObject(email: { from: string; to: string; subject: string; body: string }) {
-// 		this._from = email.from;
-// 		this._to = email.to;
-// 		this._subject = email.subject;
-// 		this._body = email.body;
-// 	}
+	constructor(service?: EmailServices, message?: EmailMessage) {
+		this.service = service ?? 'azure';
+		if (message) {
+			this._from = message.from;
+			this._to = message.to;
+			this._subject = message.subject;
+			this._body = message.body;
+		}
+	}
 
-// 	static validateAddress(address: string) {
-// 		try {
-// 			z.string().email().parse(address);
-// 			return true;
-// 		} catch (err) {
-// 			console.warn(err);
-// 			return false;
-// 		}
-// 	}
+	fromObject(email: { from: string; to: string; subject: string; body: string }) {
+		this._from = email.from;
+		this._to = email.to;
+		this._subject = email.subject;
+		this._body = email.body;
+	}
 
-// 	set from(address: string) {
-// 		if (EmailBase.validateAddress(address)) {
-// 			this._from = address;
-// 		}
-// 	}
+	static validateAddress(address: string) {
+		try {
+			z.string().email().parse(address);
+			return true;
+		} catch (err) {
+			logger.warn('Invalid email address format', { address, error: err });
+			return false;
+		}
+	}
 
-// 	get from(): string {
-// 		return this._from;
-// 	}
+	set from(address: string) {
+		if (EmailBase.validateAddress(address)) {
+			this._from = address;
+		}
+	}
 
-// 	set to(address: string) {
-// 		if (EmailBase.validateAddress(address)) {
-// 			this._to = address;
-// 		}
-// 	}
+	get from(): string {
+		return this._from;
+	}
 
-// 	get to(): string {
-// 		return this._to;
-// 	}
+	set to(address: string) {
+		if (EmailBase.validateAddress(address)) {
+			this._to = address;
+		}
+	}
 
-// 	set subject(subject: string) {
-// 		this._subject = subject;
-// 	}
+	get to(): string {
+		return this._to;
+	}
 
-// 	get subject(): string {
-// 		return this._subject;
-// 	}
+	set subject(subject: string) {
+		this._subject = subject;
+	}
 
-// 	set body(body: string) {
-// 		this._body = body;
-// 	}
+	get subject(): string {
+		return this._subject;
+	}
 
-// 	get body(): string {
-// 		return this._body;
-// 	}
+	set body(body: string) {
+		this._body = body;
+	}
 
-// 	async _sendAzure() {
-// 		const emailMessage: AzureEmailMessage = {
-// 			senderAddress: AZURE_COMMUNICATION_SERVICES_SENDER_ADDRESS,
-// 			content: {
-// 				subject: this.subject,
-// 				html: this.body
-// 			},
-// 			recipients: {
-// 				to: [{ address: this.to }]
-// 			}
-// 		};
+	get body(): string {
+		return this._body;
+	}
 
-// 		const poller = await emailClient.beginSend(emailMessage);
-// 		const result = await poller.pollUntilDone();
+	async _sendAzure() {
+		const emailMessage: AzureEmailMessage = {
+			senderAddress: AZURE_COMMUNICATION_SERVICES_SENDER_ADDRESS,
+			content: {
+				subject: this.subject,
+				html: this.body
+			},
+			recipients: {
+				to: [{ address: this.to }]
+			}
+		};
 
-// 		return result;
-// 	}
+		const poller = await emailClient.beginSend(emailMessage);
+		const result = await poller.pollUntilDone();
 
-// 	async send() {
-// 		switch (this.service) {
-// 			case 'azure':
-// 				return this._sendAzure();
-// 			default:
-// 				throw new Error('Invalid email service');
-// 		}
-// 	}
-// }
+		return result;
+	}
 
-// export class AzureEmail extends EmailBase {
-// 	constructor(message?: EmailMessage) {
-// 		super('azure', message);
-// 	}
-// }
+	async send() {
+		switch (this.service) {
+			case 'azure':
+				return this._sendAzure();
+			default:
+				throw new Error('Invalid email service');
+		}
+	}
+}
 
-// // Set the general email service
-// export const Email = AzureEmail;
+export class AzureEmail extends EmailBase {
+	constructor(message?: EmailMessage) {
+		super('azure', message);
+	}
+}
+
+// Set the general email service
+export const Email = AzureEmail;

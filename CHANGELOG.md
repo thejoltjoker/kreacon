@@ -74,6 +74,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   [#98](https://github.com/thejoltjoker/kreacon/pull/98)
 - Custom fields in admin panel
   [#103](https://github.com/thejoltjoker/kreacon/pull/103)
+- Add email verification
+  [#127](https://github.com/thejoltjoker/kreacon/pull/127)
 - Setup Azure Storage containers
   [#128](https://github.com/thejoltjoker/kreacon/pull/128)
 - Add proof file and description field to entries

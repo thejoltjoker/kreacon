@@ -10,7 +10,7 @@ import { api as ticketClient } from '$lib/server/services/ticket';
 import { events } from '$lib/server/db/schema';
 import type { SuperFormMessage } from '$lib/types/SuperFormMessage';
 import { StatusCodes } from 'http-status-codes';
-import { authCheck } from '../utils';
+import { authCheck, isEmailVerified } from '../utils';
 import { updateUserSchema } from '$lib/schemas/user';
 
 const ticketSchema = insertTicketSchema.pick({ id: true });
@@ -63,7 +63,13 @@ export const load = (async ({ locals }) => {
 		zod4(ticketSchema)
 	);
 
-	return { ticketForm, accounts: userData.accounts, tickets, userForm };
+	return {
+		ticketForm,
+		accounts: userData.accounts,
+		tickets,
+		userForm,
+		user: { emailVerifiedAt: userData.emailVerifiedAt }
+	};
 }) satisfies PageServerLoad;
 
 export const actions = {
@@ -71,6 +77,15 @@ export const actions = {
 		if (!locals.user || !locals.session) {
 			return redirect(StatusCodes.TEMPORARY_REDIRECT, '/login');
 		}
+
+		// TODO Have a second think about whether to require email verification for this action
+		// if (!isEmailVerified(locals)) {
+		// 	const form = await superValidate(request, zod4(updateUserSchema));
+		// 	return fail(StatusCodes.FORBIDDEN, {
+		// 		form,
+		// 		error: 'Email verification required'
+		// 	});
+		// }
 
 		const form = await superValidate(request, zod4(updateUserSchema));
 		if (!form.valid) {
@@ -85,6 +100,7 @@ export const actions = {
 			return setError(form, 'username', 'Username unavailable.');
 		}
 
+		// TODO Allow user to update email
 		// if (await db.query.users.findFirst({ where: eq(users.email, form.data.email ?? '') })) {
 		// 	return setError(form, 'email', 'Email unavailable.');
 		// }
@@ -101,6 +117,17 @@ export const actions = {
 	addTicket: async ({ request, locals }) => {
 		if (!locals.user || !locals.session) {
 			return redirect(StatusCodes.TEMPORARY_REDIRECT, '/login');
+		}
+
+		if (!isEmailVerified(locals)) {
+			const ticketForm = await superValidate<Infer<typeof ticketSchema>, SuperFormMessage>(
+				request,
+				zod4(ticketSchema)
+			);
+			return fail(StatusCodes.FORBIDDEN, {
+				ticketForm,
+				error: 'Email verification required'
+			});
 		}
 
 		const ticketForm = await superValidate<Infer<typeof ticketSchema>, SuperFormMessage>(
