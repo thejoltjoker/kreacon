@@ -36,6 +36,7 @@ jobs:
       OAUTH_GITHUB_REDIRECT_URI: ${{ secrets.OAUTH_GITHUB_REDIRECT_URI }}
       TICKET_API_URL: ${{ secrets.TICKET_API_URL }}
       PUBLIC_BASE_URL: ${{ vars.PUBLIC_BASE_URL }}
+      PUBLIC_SENTRY_DSN: ${{ vars.PUBLIC_SENTRY_DSN }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -69,6 +70,7 @@ jobs:
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
       EMAIL_VERIFICATION_SECRET: ${{ secrets.EMAIL_VERIFICATION_SECRET }}
       BASE_URL: ${{ secrets.BASE_URL }}
+      PUBLIC_SENTRY_DSN: ${{ vars.PUBLIC_SENTRY_DSN }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4

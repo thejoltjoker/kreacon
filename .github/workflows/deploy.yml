@@ -16,6 +16,7 @@ jobs:
       name: 'Production'
     env:
       PUBLIC_BASE_URL: ${{ vars.PUBLIC_BASE_URL }}
+      PUBLIC_SENTRY_DSN: ${{ vars.PUBLIC_SENTRY_DSN }}
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
       NODE_OPTIONS: '--max-old-space-size=4096 --trace-warnings'
       EMAIL_VERIFICATION_SECRET: ${{ secrets.EMAIL_VERIFICATION_SECRET }}

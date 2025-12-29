@@ -30,6 +30,7 @@ jobs:
     env:
       NODE_ENV: test
       PUBLIC_BASE_URL: http://localhost:5173
+      PUBLIC_SENTRY_DSN: ${{ vars.PUBLIC_SENTRY_DSN }}
       DATABASE_URL: postgresql://test:test@localhost:5432/kreacon_test
       AZURE_STORAGE_ACCOUNT_NAME: ${{ secrets.AZURE_STORAGE_ACCOUNT_NAME }}
       AZURE_STORAGE_ACCOUNT_KEY: ${{ secrets.AZURE_STORAGE_ACCOUNT_KEY }}

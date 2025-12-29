@@ -1,6 +1,5 @@
 import { db } from '$lib/server/db';
 import { entries } from '$lib/server/db/schema';
-
 import reactions, { insertReactionSchema } from '$lib/server/db/schema/reaction';
 import { fail, redirect } from '@sveltejs/kit';
 import { and, eq, sql } from 'drizzle-orm';
@@ -20,6 +19,7 @@ export const load = (async ({ params, locals }) => {
 			.update(entries)
 			.set({ views: sql`${entries.views} + 1` })
 			.where(eq(entries.id, id));
+
 		logger.info(`Incremented view count for entry ID: ${id}`);
 
 		return await tx.query.entries.findFirst({

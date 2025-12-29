@@ -1,6 +1,6 @@
 {
 	"name": "kreacon",
-	"version": "0.2.18",
+	"version": "0.2.19",
 	"private": true,
 	"scripts": {
 		"dev": "vite dev",
@@ -42,6 +42,7 @@
 		"@internationalized/date": "^3.10.1",
 		"@microsoft/applicationinsights-web": "^3.3.10",
 		"@node-rs/xxhash": "^1.7.6",
+		"@sentry/sveltekit": "^10.32.1",
 		"@sveltejs/adapter-node": "^5.4.0",
 		"@sveltejs/kit": "^2.49.2",
 		"@tailwindcss/postcss": "^4.1.18",
