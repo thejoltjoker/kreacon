@@ -49,6 +49,13 @@ class Logger {
 			console.debug(formattedMessage, data);
 		}
 
+		Sentry.addBreadcrumb({
+			category: this.context,
+			message: message,
+			level: 'debug',
+			data: data
+		});
+
 		// AZURE CODE (kept for reference):
 		// if (azureAppInsights != null) {
 		// 	azureAppInsights.trackTrace({
@@ -64,6 +71,13 @@ class Logger {
 		if (logLevels[currentLogLevel] <= logLevels['info']) {
 			console.info(formattedMessage, data);
 		}
+
+		Sentry.addBreadcrumb({
+			category: this.context,
+			message: message,
+			level: 'info',
+			data: data
+		});
 
 		// AZURE CODE (kept for reference):
 		// if (azureAppInsights != null) {
@@ -81,10 +95,27 @@ class Logger {
 			console.warn(formattedMessage, data);
 		}
 
-		// Send to Sentry
-		Sentry.captureMessage(`[${this.context}] ${message}`, {
+		Sentry.addBreadcrumb({
+			category: this.context,
+			message: message,
 			level: 'warning',
-			extra: data
+			data: data
+		});
+
+		Sentry.captureMessage(message, {
+			level: 'warning',
+			tags: {
+				logger_context: this.context,
+				log_level: 'warn'
+			},
+			contexts: {
+				logger: {
+					context: this.context,
+					timestamp: new Date().toISOString()
+				}
+			},
+			extra: data,
+			fingerprint: [this.context, message]
 		});
 
 		// AZURE CODE (kept for reference):
@@ -103,20 +134,51 @@ class Logger {
 			console.error(formattedMessage, data);
 		}
 
-		// Send to Sentry
+		Sentry.addBreadcrumb({
+			category: this.context,
+			message: message,
+			level: 'error',
+			data: data
+		});
+
 		if (data instanceof Error) {
 			Sentry.captureException(data, {
+				tags: {
+					logger_context: this.context,
+					log_level: 'error',
+					error_type: data.name
+				},
 				contexts: {
 					logger: {
 						context: this.context,
-						message: message
+						message: message,
+						timestamp: new Date().toISOString()
 					}
 				},
-				extra: { originalMessage: message }
+				extra: {
+					originalMessage: message,
+					errorStack: data.stack,
+					...this.extractErrorDetails(data)
+				},
+				fingerprint: [this.context, data.name, message]
 			});
 		} else {
-			Sentry.captureException(new Error(`[${this.context}] ${message}`), {
-				extra: data
+			const error = new Error(message);
+			error.name = `${this.context}Error`;
+
+			Sentry.captureException(error, {
+				tags: {
+					logger_context: this.context,
+					log_level: 'error'
+				},
+				contexts: {
+					logger: {
+						context: this.context,
+						timestamp: new Date().toISOString()
+					}
+				},
+				extra: data,
+				fingerprint: [this.context, message]
 			});
 		}
 
@@ -127,6 +189,21 @@ class Logger {
 		// 		properties: data
 		// 	});
 		// }
+	}
+
+	private extractErrorDetails(error: Error): Record<string, any> {
+		const details: Record<string, any> = {
+			errorName: error.name,
+			errorMessage: error.message
+		};
+
+		Object.keys(error).forEach((key) => {
+			if (key !== 'stack' && key !== 'message' && key !== 'name') {
+				details[key] = (error as any)[key];
+			}
+		});
+
+		return details;
 	}
 }
 
