@@ -8,7 +8,7 @@ Sentry.init({
 
 	tracesSampleRate: import.meta.env.DEV ? 1.0 : 0.2,
 
-	integrations: [Sentry.prismaIntegration(), Sentry.postgresIntegration()],
+	integrations: [Sentry.postgresIntegration()],
 
 	enableLogs: true,
 
