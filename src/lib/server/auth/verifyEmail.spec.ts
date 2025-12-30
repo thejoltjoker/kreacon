@@ -19,6 +19,14 @@ vi.mock('$env/static/private', () => ({
 	AZURE_COMMUNICATION_SERVICES_SENDER_ADDRESS: 'noreply@test.com'
 }));
 
+vi.mock('$lib/env', () => ({
+	default: {
+		EMAIL_VERIFICATION_SECRET: 'test-secret',
+		NODE_ENV: 'development',
+		PUBLIC_BASE_URL: 'localhost:5173'
+	}
+}));
+
 describe('createVerifyEmailToken', () => {
 	const testEmail = 'test@example.com';
 	const testTimestamp = 1609459200000; // 2021-01-01T00:00:00.000Z
@@ -175,15 +183,6 @@ describe('createVerifyEmailToken', () => {
 describe('createVerifyEmailLink', () => {
 	const testEmail = 'test@example.com';
 
-	beforeEach(() => {
-		vi.stubEnv('NODE_ENV', 'development');
-		vi.stubEnv('PUBLIC_BASE_URL', 'localhost:5173');
-	});
-
-	afterEach(() => {
-		vi.unstubAllEnvs();
-	});
-
 	describe('link format', () => {
 		it('should generate a valid URL with encoded email', () => {
 			const link = createVerifyEmailLink(testEmail);
@@ -206,17 +205,19 @@ describe('createVerifyEmailLink', () => {
 			expect(Number(timestamp)).toBeGreaterThan(0);
 		});
 
-		it('should use https in production', () => {
-			vi.stubEnv('NODE_ENV', 'production');
+		it('should use https in production', async () => {
+			const env = await import('$lib/env');
+			vi.mocked(env.default).NODE_ENV = 'production';
 
 			const link = createVerifyEmailLink(testEmail);
 
 			expect(link).toMatch(/^https:\/\//);
+
+			// Reset
+			vi.mocked(env.default).NODE_ENV = 'development';
 		});
 
 		it('should use http in development', () => {
-			vi.stubEnv('NODE_ENV', 'development');
-
 			const link = createVerifyEmailLink(testEmail);
 
 			expect(link).toMatch(/^http:\/\//);
@@ -272,20 +273,28 @@ describe('createVerifyEmailLink', () => {
 	});
 
 	describe('base URL configuration', () => {
-		it('should use PUBLIC_BASE_URL when set', () => {
-			vi.stubEnv('PUBLIC_BASE_URL', 'example.com');
+		it('should use PUBLIC_BASE_URL when set', async () => {
+			const env = await import('$lib/env');
+			vi.mocked(env.default).PUBLIC_BASE_URL = 'example.com';
 
 			const link = createVerifyEmailLink(testEmail);
 
 			expect(link).toContain('example.com');
+
+			// Reset
+			vi.mocked(env.default).PUBLIC_BASE_URL = 'localhost:5173';
 		});
 
-		it('should default to localhost:5173 when PUBLIC_BASE_URL is not set', () => {
-			vi.stubEnv('PUBLIC_BASE_URL', undefined);
+		it('should default to localhost:5173 when PUBLIC_BASE_URL is not set', async () => {
+			const env = await import('$lib/env');
+			vi.mocked(env.default).PUBLIC_BASE_URL = '';
 
 			const link = createVerifyEmailLink(testEmail);
 
 			expect(link).toContain('localhost:5173');
+
+			// Reset
+			vi.mocked(env.default).PUBLIC_BASE_URL = 'localhost:5173';
 		});
 	});
 });
@@ -295,12 +304,6 @@ describe('sendEmailVerification', () => {
 
 	beforeEach(() => {
 		vi.clearAllMocks();
-		vi.stubEnv('NODE_ENV', 'development');
-		vi.stubEnv('PUBLIC_BASE_URL', 'localhost:5173');
-	});
-
-	afterEach(() => {
-		vi.unstubAllEnvs();
 	});
 
 	it('should create and send an email with verification link', async () => {
