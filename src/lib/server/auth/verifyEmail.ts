@@ -8,7 +8,6 @@ export const TOKEN_VALIDITY_MS = 24 * 60 * 60 * 1000;
 
 export const createVerifyEmailToken = (email: string, timestamp?: number) => {
 	const ts = timestamp ?? Date.now();
-
 	const authString = `${env.EMAIL_VERIFICATION_SECRET}:${email}:${ts}`;
 	const token = crypto.createHash('sha256').update(authString).digest('hex');
 	return { token, timestamp: ts };
@@ -17,8 +16,9 @@ export const createVerifyEmailToken = (email: string, timestamp?: number) => {
 export const createVerifyEmailLink = (email: string): string => {
 	const { token, timestamp } = createVerifyEmailToken(email);
 	const uriEncodedEmail = encodeURIComponent(email);
-	const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
-	const url = `${protocol}://${process.env.PUBLIC_BASE_URL ?? 'localhost:5173'}/verify-email/${uriEncodedEmail}/${token}?t=${timestamp}`;
+	const protocol = env.NODE_ENV === 'production' ? 'https' : 'http';
+	const baseUrl = env.PUBLIC_BASE_URL || 'localhost:5173';
+	const url = `${protocol}://${baseUrl}/verify-email/${uriEncodedEmail}/${token}?t=${timestamp}`;
 	return url;
 };
 

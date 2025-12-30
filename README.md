@@ -180,7 +180,7 @@ npm run build
 ### .env
 
 ```
-BASE_URL=http://localhost:5173
+PUBLIC_BASE_URL=localhost:5173
 DATABASE_URL=postgresql://root:mysecretpassword@localhost:5432/kreacon
 DB_HOST=localhost
 DB_NAME=kreacon
@@ -229,7 +229,7 @@ Used when deploying to production. Update the following variables to use your ho
 ```
 NODE_ENV=production
 DATABASE_URL=postgresql://<username>:<password>@<host>:5432/<database>
-BASE_URL=https://your-production-domain.com
+PUBLIC_BASE_URL=your-production-domain.com
 AZURE_POSTGRESQL_SERVER_NAME=<server-name>
 AZURE_POSTGRESQL_RESOURCE_GROUP=<resource-group>
 

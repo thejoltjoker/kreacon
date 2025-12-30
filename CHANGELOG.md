@@ -147,6 +147,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   [#125](https://github.com/thejoltjoker/kreacon/pull/125)
 - Add Azure Communication secrets to CI actions
   [#139](https://github.com/thejoltjoker/kreacon/pull/139)
+- Fix bug with verify email link leading to localhost
+  [#142](https://github.com/thejoltjoker/kreacon/pull/142)
 
 ### Security
 
