@@ -207,14 +207,17 @@ describe('createVerifyEmailLink', () => {
 
 		it('should use https in production', async () => {
 			const env = await import('$lib/env');
-			vi.mocked(env.default).NODE_ENV = 'production';
+			const originalNodeEnv = vi.mocked(env.default).NODE_ENV;
 
-			const link = createVerifyEmailLink(testEmail);
+			try {
+				vi.mocked(env.default).NODE_ENV = 'production';
 
-			expect(link).toMatch(/^https:\/\//);
+				const link = createVerifyEmailLink(testEmail);
 
-			// Reset
-			vi.mocked(env.default).NODE_ENV = 'development';
+				expect(link).toMatch(/^https:\/\//);
+			} finally {
+				vi.mocked(env.default).NODE_ENV = originalNodeEnv;
+			}
 		});
 
 		it('should use http in development', () => {
