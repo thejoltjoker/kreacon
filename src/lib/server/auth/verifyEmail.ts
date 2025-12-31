@@ -3,7 +3,6 @@ import { Email, type EmailMessage } from '$lib/server/services/email';
 import crypto from 'crypto';
 import template from '../../../assets/verify-email-template.html?raw';
 import env from '$lib/env';
-import { createPublicUrl } from '$lib/utils';
 
 export const TOKEN_VALIDITY_MS = 24 * 60 * 60 * 1000;
 
