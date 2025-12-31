@@ -17,7 +17,9 @@ export const createVerifyEmailToken = (email: string, timestamp?: number) => {
 export const createVerifyEmailLink = (email: string): string => {
 	const { token, timestamp } = createVerifyEmailToken(email);
 	const uriEncodedEmail = encodeURIComponent(email);
-	const url = createPublicUrl(`/verify-email/${uriEncodedEmail}/${token}?t=${timestamp}`);
+	const protocol = env.NODE_ENV === 'production' ? 'https' : 'http';
+	const baseUrl = env.PUBLIC_BASE_URL || 'localhost:5173';
+	const url = `${protocol}://${baseUrl}/verify-email/${uriEncodedEmail}/${token}?t=${timestamp}`;
 	return url;
 };
 

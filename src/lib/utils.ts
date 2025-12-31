@@ -1,5 +1,5 @@
 import { dev } from '$app/environment';
-import { PUBLIC_BASE_URL } from '$env/static/public';
+import { env } from '$env/dynamic/public';
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
@@ -16,7 +16,7 @@ export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
  */
 export const createPublicUrl = (path: string): string => {
 	const protocol = dev ? 'http' : 'https';
-	const baseUrl = PUBLIC_BASE_URL || 'localhost:5173';
+	const baseUrl = env.PUBLIC_BASE_URL || 'localhost:5173';
 	const url = `${protocol}://${baseUrl}${path}`;
 	return url;
 };

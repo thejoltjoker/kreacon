@@ -14,10 +14,6 @@
 	import EditProfileButton from './EditProfileButton.svelte';
 
 	let isEditing: boolean = $state(false);
-
-	const getCustomUploadUrl = (): string => {
-		return createPublicUrl('/api/uploads/avatar');
-	};
 </script>
 
 <!-- TODO Unify wording sign up/sign in or register/log in -->
@@ -48,7 +44,7 @@
 					field="avatarId"
 					label="Avatar"
 					mediaType="image"
-					customUploadUrl={getCustomUploadUrl()}
+					customUploadUrl={createPublicUrl('/api/uploads/avatar')}
 				/>
 			{:else}
 				<p class="font-bold">Avatar</p>
