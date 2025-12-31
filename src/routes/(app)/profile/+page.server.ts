@@ -68,7 +68,12 @@ export const load = (async ({ locals }) => {
 		accounts: userData.accounts,
 		tickets,
 		userForm,
-		user: { emailVerifiedAt: userData.emailVerifiedAt }
+		user: {
+			emailVerifiedAt: userData.emailVerifiedAt,
+			avatar: userData.avatar,
+			username: userData.username,
+			role: userData.role
+		}
 	};
 }) satisfies PageServerLoad;
 
