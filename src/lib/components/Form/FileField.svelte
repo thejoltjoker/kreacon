@@ -12,7 +12,7 @@
 	} from '$lib/helpers/mediaTypes';
 	import { t } from '$lib/i18n';
 	import { type MediaType, type MimeType } from '$lib/types/mediaTypes';
-	import { cn } from '$lib/utils';
+	import { cn, createPublicUrl } from '$lib/utils';
 	import { Label } from 'bits-ui';
 	import snakeCase from 'lodash/snakeCase';
 	import {
@@ -287,7 +287,7 @@
 
 		const parsed = getUrlSchema.parse(data);
 
-		const response = await fetch(`${env.PUBLIC_BASE_URL ?? ''}/api/uploads/get-url`, {
+		const response = await fetch(createPublicUrl('/api/uploads/get-url'), {
 			method: 'POST',
 			body: JSON.stringify(parsed)
 		});

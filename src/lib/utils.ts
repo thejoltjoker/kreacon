@@ -1,4 +1,22 @@
+import { dev } from '$app/environment';
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+import env from './env';
 
 export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
+
+/**
+ * Constructs a fully qualified public URL for a given path, based on app environment.
+ *
+ * - Uses `https` protocol in production, otherwise `http` in development.
+ * - Uses the `PUBLIC_BASE_URL` from environment variables as the base domain, or falls back to `localhost:5173` if unset.
+ *
+ * @param {string} path - The path to append to the base URL (should start with a slash, e.g., '/api/route').
+ * @returns {string} The constructed absolute URL, e.g., 'https://example.com/api/route'
+ */
+export const createPublicUrl = (path: string): string => {
+	const protocol = dev ? 'http' : 'https';
+	const baseUrl = env.PUBLIC_BASE_URL || 'localhost:5173';
+	const url = `${protocol}://${baseUrl}${path}`;
+	return url;
+};

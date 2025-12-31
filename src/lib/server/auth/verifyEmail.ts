@@ -3,6 +3,7 @@ import { Email, type EmailMessage } from '$lib/server/services/email';
 import crypto from 'crypto';
 import template from '../../../assets/verify-email-template.html?raw';
 import env from '$lib/env';
+import { createPublicUrl } from '../utils';
 
 export const TOKEN_VALIDITY_MS = 24 * 60 * 60 * 1000;
 
@@ -16,9 +17,7 @@ export const createVerifyEmailToken = (email: string, timestamp?: number) => {
 export const createVerifyEmailLink = (email: string): string => {
 	const { token, timestamp } = createVerifyEmailToken(email);
 	const uriEncodedEmail = encodeURIComponent(email);
-	const protocol = env.NODE_ENV === 'production' ? 'https' : 'http';
-	const baseUrl = env.PUBLIC_BASE_URL || 'localhost:5173';
-	const url = `${protocol}://${baseUrl}/verify-email/${uriEncodedEmail}/${token}?t=${timestamp}`;
+	const url = createPublicUrl(`/verify-email/${uriEncodedEmail}/${token}?t=${timestamp}`);
 	return url;
 };
 

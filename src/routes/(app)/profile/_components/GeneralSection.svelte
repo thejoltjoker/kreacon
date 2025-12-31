@@ -1,19 +1,23 @@
 <script lang="ts">
+	import { page } from '$app/stores';
+	import Avatar from '$lib/components/Avatar.svelte';
+	import Badge from '$lib/components/Badge.svelte';
+	import Button from '$lib/components/Button.svelte';
+	import FileField from '$lib/components/Form/FileField.svelte';
+	import FormMessage from '$lib/components/Form/FormMessage.svelte';
 	import Form from '$lib/components/Form/GenericForm.svelte';
 	import TextField from '$lib/components/Form/TextField.svelte';
 	import { updateUserSchema } from '$lib/schemas/user';
-	import { zod4Client } from 'sveltekit-superforms/adapters';
-	import { page } from '$app/stores';
-	import Button from '$lib/components/Button.svelte';
-	import FormMessage from '$lib/components/Form/FormMessage.svelte';
-	import EditProfileButton from './EditProfileButton.svelte';
-	import Avatar from '$lib/components/Avatar.svelte';
-	import FileField from '$lib/components/Form/FileField.svelte';
-	import { env } from '$env/dynamic/public';
-	import Badge from '$lib/components/Badge.svelte';
+	import { createPublicUrl } from '$lib/utils';
 	import { Label } from 'bits-ui';
+	import { zod4Client } from 'sveltekit-superforms/adapters';
+	import EditProfileButton from './EditProfileButton.svelte';
 
 	let isEditing: boolean = $state(false);
+
+	const getCustomUploadUrl = (): string => {
+		return createPublicUrl('/api/uploads/avatar');
+	};
 </script>
 
 <!-- TODO Unify wording sign up/sign in or register/log in -->
@@ -44,7 +48,7 @@
 					field="avatarId"
 					label="Avatar"
 					mediaType="image"
-					customUploadUrl={`${env.PUBLIC_BASE_URL ?? ''}/api/uploads/avatar`}
+					customUploadUrl={getCustomUploadUrl()}
 				/>
 			{:else}
 				<p class="font-bold">Avatar</p>
