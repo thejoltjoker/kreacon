@@ -17,9 +17,16 @@ export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
  */
 export const createPublicUrl = (path: string): string => {
 	let baseUrl = env.PUBLIC_BASE_URL || 'localhost:5173';
+	// Normalize: remove trailing slashes and protocol prefix.
 	baseUrl = baseUrl.replace(/\/+$/, '');
 	baseUrl = baseUrl.replace(/^https?:\/\//, '');
 
+	// Validate: baseUrl must not contain a path component (only host[:port] is allowed).
+	if (baseUrl.includes('/')) {
+		throw new Error(
+			`PUBLIC_BASE_URL must not include a path component. Received: "${env.PUBLIC_BASE_URL}"`
+		);
+	}
 	if (!path.startsWith('/')) {
 		path = '/' + path;
 	}
