@@ -6,6 +6,7 @@
 	import { goto, invalidateAll } from '$app/navigation';
 	import { resolve } from '$app/paths';
 	import type { UserStatus } from '$lib/types/userStatus';
+	import UserRoleField from '../_components/customFields/UserRoleField.svelte';
 
 	let { data }: { data: PageData } = $props();
 	let users = $derived(
@@ -33,7 +34,7 @@
 	fields={[
 		{ name: 'username', minScreen: 'all', sortable: true },
 		{ name: 'email', minScreen: 'sm', sortable: false },
-		{ name: 'role', minScreen: 'xl', sortable: true },
+		{ name: 'role', minScreen: 'xl', sortable: true, customField: UserRoleField },
 		{ name: 'tickets', minScreen: 'lg', sortable: false },
 		{ name: 'entries', minScreen: 'md', sortable: false },
 		{ name: 'status', minScreen: 'xl', sortable: false },

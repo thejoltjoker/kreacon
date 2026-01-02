@@ -10,6 +10,7 @@ import tickets from './ticket';
 import votes from './vote';
 import { z } from 'zod/v4';
 import { userStatus } from '../../../types/userStatus';
+import { userRoles } from '../../../types/userRoles';
 import files from './file';
 
 export const userStatusEnum = pgEnum('status', userStatus);
@@ -45,7 +46,7 @@ export const insertUserSchema = createInsertSchema(users).merge(registerUserSche
 
 export const updateUserSchema = insertUserSchema
 	.partial()
-	.merge(z.object({ status: z.enum(userStatus) }));
+	.merge(z.object({ status: z.enum(userStatus), role: z.enum(userRoles) }));
 
 export const selectUserSchema = createSelectSchema(users);
 
