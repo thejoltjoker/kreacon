@@ -59,21 +59,29 @@ test('Admin should be able to change user roles', async ({ page }) => {
 	// Verify current role is "user"
 	await expect(roleSelect).toContainText('User');
 
-	// Click the role select to open dropdown
+	// Click the role select to open dropdown and wait for the PATCH request
 	await roleSelect.click();
-
+	const updatePromise = page.waitForResponse(
+		(response) =>
+			response.url().includes('/admin/users/alice_smith') && response.request().method() === 'PATCH'
+	);
+	
 	// Select "Admin" from the dropdown
 	await page.getByRole('option', { name: 'Admin' }).click();
 
-	// Wait for the update to complete and verify the change
-	await page.waitForTimeout(500); // Give time for the API call
+	// Wait for the update to complete
+	await updatePromise;
 	await expect(roleSelect).toContainText('Admin');
 
 	// Change it back to "user"
 	await roleSelect.click();
+	const updatePromise2 = page.waitForResponse(
+		(response) =>
+			response.url().includes('/admin/users/alice_smith') && response.request().method() === 'PATCH'
+	);
 	await page.getByRole('option', { name: 'User' }).click();
 
 	// Verify it changed back
-	await page.waitForTimeout(500);
+	await updatePromise2;
 	await expect(roleSelect).toContainText('User');
 });

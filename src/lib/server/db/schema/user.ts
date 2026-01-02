@@ -46,7 +46,7 @@ export const insertUserSchema = createInsertSchema(users).merge(registerUserSche
 
 export const updateUserSchema = insertUserSchema
 	.partial()
-	.merge(z.object({ status: z.enum(userStatus), role: z.enum(userRoles) }));
+	.merge(z.object({ status: z.enum(userStatus), role: z.enum(userRoles) }).partial());
 
 export const selectUserSchema = createSelectSchema(users);
 
