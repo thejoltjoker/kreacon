@@ -37,3 +37,43 @@ test('Admin should be able to manage users', async ({ page }) => {
 	await page.getByRole('menuitem', { name: 'Ban user' }).click();
 	await expect(listItemLocator.locator('div:nth-child(7)').first()).toContainText('banned');
 });
+
+test('Admin should be able to change user roles', async ({ page }) => {
+	// Login as admin
+	await page.goto('/login');
+	await page.locator('input[name="email"]').fill('john.doe@example.com');
+	await page.locator('input[name="password"]').fill('password');
+	await page.keyboard.press('Enter');
+	await page.getByRole('button', { name: 'john_doe' }).click();
+
+	// Go to admin users page
+	await page.goto('/admin/users');
+	const entityListLocator = page.locator('.entity-list');
+
+	// Find alice_smith's list item
+	const aliceListItem = entityListLocator.locator('li', { hasText: 'alice_smith' });
+
+	// Find the role select dropdown (it should be in div:nth-child(4) based on field order)
+	const roleSelect = aliceListItem.locator('button.select-trigger').first();
+
+	// Verify current role is "user"
+	await expect(roleSelect).toContainText('User');
+
+	// Click the role select to open dropdown
+	await roleSelect.click();
+
+	// Select "Admin" from the dropdown
+	await page.getByRole('option', { name: 'Admin' }).click();
+
+	// Wait for the update to complete and verify the change
+	await page.waitForTimeout(500); // Give time for the API call
+	await expect(roleSelect).toContainText('Admin');
+
+	// Change it back to "user"
+	await roleSelect.click();
+	await page.getByRole('option', { name: 'User' }).click();
+
+	// Verify it changed back
+	await page.waitForTimeout(500);
+	await expect(roleSelect).toContainText('User');
+});
