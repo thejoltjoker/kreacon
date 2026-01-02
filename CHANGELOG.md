@@ -151,6 +151,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   [#142](https://github.com/thejoltjoker/kreacon/pull/142)
 - Show profile picture on profile page
   [#144](https://github.com/thejoltjoker/kreacon/pull/144)
+- Fix bug with createPublicUrl function
+  [#146](https://github.com/thejoltjoker/kreacon/pull/146)
 
 ### Security
 

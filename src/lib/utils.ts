@@ -10,13 +10,16 @@ export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
  *
  * - Uses `https` protocol in production, otherwise `http` in development.
  * - Uses the `PUBLIC_BASE_URL` from environment variables as the base domain, or falls back to `localhost:5173` if unset.
+ * - Automatically strips protocol, path components, and trailing slashes from the base URL.
  *
  * @param {string} path - The path to append to the base URL (should start with a slash, e.g., '/api/route').
  * @returns {string} The constructed absolute URL, e.g., 'https://example.com/api/route'
  */
 export const createPublicUrl = (path: string): string => {
+	const rawBaseUrl = env.PUBLIC_BASE_URL || 'localhost:5173';
+	const host = new URL(rawBaseUrl.startsWith('http') ? rawBaseUrl : `http://${rawBaseUrl}`).host;
+	const normalizedPath = path.startsWith('/') ? path : `/${path}`;
+
 	const protocol = dev ? 'http' : 'https';
-	const baseUrl = env.PUBLIC_BASE_URL || 'localhost:5173';
-	const url = `${protocol}://${baseUrl}${path}`;
-	return url;
+	return `${protocol}://${host}${normalizedPath}`;
 };
