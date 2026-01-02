@@ -33,7 +33,13 @@ export const createPublicUrl = (path: string): string => {
 
 	const protocol = dev ? 'http' : 'https';
 
-	const url = new URL(path, `${protocol}://${baseUrl}`);
-
-	return url.toString();
+	try {
+		const url = new URL(path, `${protocol}://${baseUrl}`);
+		return url.toString();
+	} catch (error) {
+		const message = error instanceof Error ? error.message : String(error);
+		throw new Error(
+			`Failed to construct public URL from base '${baseUrl}' and path '${path}': ${message}`
+		);
+	}
 };
