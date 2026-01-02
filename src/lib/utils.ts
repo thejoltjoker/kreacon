@@ -10,36 +10,16 @@ export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
  *
  * - Uses `https` protocol in production, otherwise `http` in development.
  * - Uses the `PUBLIC_BASE_URL` from environment variables as the base domain, or falls back to `localhost:5173` if unset.
- * - Properly handles baseUrl with or without protocol/trailing slashes.
+ * - Automatically strips protocol, path components, and trailing slashes from the base URL.
  *
  * @param {string} path - The path to append to the base URL (should start with a slash, e.g., '/api/route').
  * @returns {string} The constructed absolute URL, e.g., 'https://example.com/api/route'
  */
 export const createPublicUrl = (path: string): string => {
-	let baseUrl = env.PUBLIC_BASE_URL || 'localhost:5173';
-	// Normalize: remove trailing slashes and protocol prefix.
-	baseUrl = baseUrl.replace(/\/+$/, '');
-	baseUrl = baseUrl.replace(/^https?:\/\//, '');
-
-	// Validate: baseUrl must not contain a path component (only host[:port] is allowed).
-	if (baseUrl.includes('/')) {
-		throw new Error(
-			`PUBLIC_BASE_URL must not include a path component. Received: "${env.PUBLIC_BASE_URL}"`
-		);
-	}
-	if (!path.startsWith('/')) {
-		path = '/' + path;
-	}
+	const rawBaseUrl = env.PUBLIC_BASE_URL || 'localhost:5173';
+	const host = new URL(rawBaseUrl.startsWith('http') ? rawBaseUrl : `http://${rawBaseUrl}`).host;
+	const normalizedPath = path.startsWith('/') ? path : `/${path}`;
 
 	const protocol = dev ? 'http' : 'https';
-
-	try {
-		const url = new URL(path, `${protocol}://${baseUrl}`);
-		return url.toString();
-	} catch (error) {
-		const message = error instanceof Error ? error.message : String(error);
-		throw new Error(
-			`Failed to construct public URL from base '${baseUrl}' and path '${path}': ${message}`
-		);
-	}
+	return `${protocol}://${host}${normalizedPath}`;
 };
