@@ -15,23 +15,35 @@
 	}));
 
 	let selectedRole = $state<string>(item.role as string);
+	let isUpdating = $state(false);
 
-	const handleRoleChange = async (newRole: UserRole) => {
-		await fetch(`/admin/users/${item.username}`, {
-			method: 'PATCH',
-			body: JSON.stringify({ role: newRole })
-		});
-		await invalidateAll();
-	};
-
-	$effect(() => {
-		if (selectedRole !== item.role) {
-			handleRoleChange(selectedRole as UserRole);
+	const handleRoleChange = async (newValue: string | undefined) => {
+		if (!newValue || newValue === item.role || isUpdating) return;
+		
+		isUpdating = true;
+		try {
+			const response = await fetch(`/admin/users/${item.username}`, {
+				method: 'PATCH',
+				body: JSON.stringify({ role: newValue as UserRole }),
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			});
+			
+			if (response.ok) {
+				await invalidateAll();
+			}
+		} finally {
+			isUpdating = false;
 		}
-	});
+	};
 </script>
 
 {#snippet valueSnippet(value: UserRole)}
-	<Select bind:value={selectedRole} items={roleOptions} />
+	<Select 
+		bind:value={selectedRole} 
+		items={roleOptions}
+		onValueChange={handleRoleChange}
+	/>
 {/snippet}
 <EntityListField {field} {item} {valueSnippet} />
