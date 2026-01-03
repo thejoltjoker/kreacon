@@ -1,11 +1,13 @@
 import env from '$lib/env';
-import z from 'zod/v4';
+import { z } from 'zod/v4';
 
-export interface ValidatedTicket {
-	id: string;
-	event: string;
-	slug: string;
-}
+export const ValidatedTicketSchema = z.object({
+	id: z.string(),
+	event: z.string(),
+	slug: z.string()
+});
+
+export type ValidatedTicket = z.infer<typeof ValidatedTicketSchema>;
 
 export const api: {
 	validate: (ticketId: string) => Promise<ValidatedTicket | undefined>;
@@ -40,7 +42,13 @@ export const api: {
 			return undefined;
 		}
 
-		const data: ValidatedTicket = await response.json();
-		return data;
+		const jsonData = await response.json();
+		const validationResult = ValidatedTicketSchema.safeParse(jsonData);
+
+		if (!validationResult.success) {
+			return undefined;
+		}
+
+		return validationResult.data;
 	}
 };
