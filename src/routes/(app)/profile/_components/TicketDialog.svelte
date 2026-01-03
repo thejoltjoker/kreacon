@@ -17,10 +17,17 @@
 		form: ticketForm,
 		errors: ticketErrors,
 		enhance: ticketEnhance,
-		message: ticketMessage
+		message: ticketMessage,
+		reset: resetForm
 	} = superForm(form, {
 		resetForm: true,
 		invalidateAll: true
+	});
+
+	$effect(() => {
+		if (isOpen) {
+			resetForm();
+		}
 	});
 </script>
 
