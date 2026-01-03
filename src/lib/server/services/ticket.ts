@@ -30,25 +30,29 @@ export const api: {
 			headers['Authorization'] = `Bearer ${env.TICKET_API_SECRET}`;
 		}
 
-		const response = await fetch(`${env.TICKET_API_URL}/tickets/validate`, {
-			method: 'POST',
-			headers,
-			body: JSON.stringify({
-				bookingNumber: ticketId
-			})
-		});
+		try {
+			const response = await fetch(`${env.TICKET_API_URL}/tickets/validate`, {
+				method: 'POST',
+				headers,
+				body: JSON.stringify({
+					bookingNumber: ticketId
+				})
+			});
 
-		if (!response.ok) {
+			if (!response.ok) {
+				return undefined;
+			}
+
+			const jsonData = await response.json();
+			const validationResult = ValidatedTicketSchema.safeParse(jsonData);
+
+			if (!validationResult.success) {
+				return undefined;
+			}
+
+			return validationResult.data;
+		} catch {
 			return undefined;
 		}
-
-		const jsonData = await response.json();
-		const validationResult = ValidatedTicketSchema.safeParse(jsonData);
-
-		if (!validationResult.success) {
-			return undefined;
-		}
-
-		return validationResult.data;
 	}
 };
