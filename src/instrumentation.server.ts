@@ -5,8 +5,9 @@ Sentry.init({
 	dsn: PUBLIC_SENTRY_DSN,
 
 	environment: import.meta.env.MODE || 'production',
-
-	tracesSampleRate: import.meta.env.DEV ? 1.0 : 0.2,
+	// TODO Change back to reasonable sample rate when we have more data
+	// tracesSampleRate: import.meta.env.DEV ? 1.0 : 0.2,
+	tracesSampleRate: 1.0,
 
 	integrations: [Sentry.postgresIntegration()],
 
