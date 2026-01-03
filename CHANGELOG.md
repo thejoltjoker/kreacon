@@ -84,6 +84,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   [#138](https://github.com/thejoltjoker/kreacon/pull/138)
 - Add admin ability to toggle user admin and role
   [#149](https://github.com/thejoltjoker/kreacon/pull/149)
+- Add `superadmin` role
+  [#151](https://github.com/thejoltjoker/kreacon/pull/151)
 
 ### Changed
 
