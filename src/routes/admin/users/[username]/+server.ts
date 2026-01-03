@@ -15,14 +15,8 @@ export const PATCH: RequestHandler = async ({ params, locals, request }) => {
 	try {
 		const updateData = updateUserSchema.parse(body);
 
-		if (updateData.role !== undefined && locals.user?.username === username) {
-			return json(
-				{ error: 'Cannot modify your own admin status' },
-				{ status: StatusCodes.FORBIDDEN }
-			);
-		}
-
-		if (updateData.role !== undefined && locals.user?.role === 'admin') {
+		// Prevent admin users from modifying any attributes of superadmin users
+		if (locals.user?.role === 'admin') {
 			const targetUser = await db.query.users.findFirst({
 				where: eq(users.username, username),
 				columns: { role: true }
@@ -34,6 +28,13 @@ export const PATCH: RequestHandler = async ({ params, locals, request }) => {
 					{ status: StatusCodes.FORBIDDEN }
 				);
 			}
+		}
+
+		if (updateData.role !== undefined && locals.user?.username === username) {
+			return json(
+				{ error: 'Cannot modify your own admin status' },
+				{ status: StatusCodes.FORBIDDEN }
+			);
 		}
 
 		await db.update(users).set(updateData).where(eq(users.username, username));

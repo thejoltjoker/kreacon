@@ -21,6 +21,10 @@
 	);
 
 	const handleToggleBan = async (user: (typeof users)[number]) => {
+		if (currentUser?.role === 'admin' && user.role === 'superadmin') {
+			console.error('Admin users cannot modify superadmin users');
+			return;
+		}
 		const status: UserStatus = user.status === 'banned' ? 'active' : 'banned';
 		await fetch(`/admin/users/${user.username}`, {
 			method: 'PATCH',
@@ -82,7 +86,9 @@
 			icon: BanIcon,
 			onClick: (value) => handleToggleBan(value),
 			class: 'text-destructive',
-			isHidden: (user: (typeof users)[number]) => currentUser?.username === user.username
+			isHidden: (user: (typeof users)[number]) =>
+				currentUser?.username === user.username ||
+				(currentUser?.role === 'admin' && user.role === 'superadmin')
 		}
 	]}
 	pagination={data.pagination}
