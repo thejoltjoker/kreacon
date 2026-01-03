@@ -1,4 +1,4 @@
-import { createLogger } from '$lib/helpers/logger';
+import { createBackendLogger } from '$lib/server/logger';
 import { randomString } from '$lib/helpers/randomString';
 import { createSession, generateSessionToken, setSessionTokenCookie } from '$lib/server/auth';
 import { getOAuthClient } from '$lib/server/auth/oauth/getOAuthClient';
@@ -11,7 +11,7 @@ import { eq } from 'drizzle-orm';
 import { StatusCodes } from 'http-status-codes';
 import type { PageServerLoad } from './$types';
 
-const logger = createLogger('oauth/callback');
+const logger = createBackendLogger('oauth/callback');
 export const load = (async (event) => {
 	const { url, params, cookies } = event;
 	const provider = params.provider;

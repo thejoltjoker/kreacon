@@ -1,10 +1,10 @@
 import { env } from '$env/dynamic/private';
-import { createLogger } from '$lib/helpers/logger';
+import { createBackendLogger } from '$lib/server/logger';
 import { redirect } from '@sveltejs/kit';
 import type { OAuthAccessTokenResponse } from '../../../types/OAuthAccessTokenResponse';
 import { StatusCodes } from 'http-status-codes';
 
-const logger = createLogger('oauth');
+const logger = createBackendLogger('oauth');
 
 export interface OAuthProviderConfig {
 	scopes: string[];

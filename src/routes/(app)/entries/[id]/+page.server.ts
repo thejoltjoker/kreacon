@@ -7,9 +7,9 @@ import type { PageServerLoad } from './$types';
 import votes, { insertVoteSchema } from '$lib/server/db/schema/vote';
 import { StatusCodes } from 'http-status-codes';
 import { isAuthenticated, isEmailVerified } from '../../utils';
-import { createLogger } from '$lib/helpers/logger';
+import { createBackendLogger } from '$lib/server/logger';
 import { isBetweenDates } from '$lib/helpers/isBetweenDates';
-const logger = createLogger('/entries/[id]');
+const logger = createBackendLogger('/entries/[id]');
 export const load = (async ({ params, locals }) => {
 	const { id } = params;
 	logger.info(`Loading entry with ID: ${id}`);

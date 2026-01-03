@@ -1,6 +1,6 @@
 import env from '$lib/env';
 import { xxhash } from '$lib/helpers/hashing';
-import { createLogger } from '$lib/helpers/logger';
+import { createBackendLogger } from '$lib/server/logger';
 import type { AzureStorageContainer } from '$lib/types/AzureStorageContainer';
 import {
 	BlobSASPermissions,
@@ -13,7 +13,7 @@ import { fileTypeFromBuffer } from 'file-type';
 import sharp from 'sharp';
 import type { InsertFile } from '../db/schema/file';
 
-const logger = createLogger('azure-storage');
+const logger = createBackendLogger('azure-storage');
 
 export const DEFAULT_STORAGE_CONTAINER: AzureStorageContainer = 'uploads';
 

@@ -10,10 +10,10 @@ import { zod4 } from 'sveltekit-superforms/adapters';
 import type { PageServerLoad } from './$types';
 import { StatusCodes } from 'http-status-codes';
 import { registerUserSchema } from '$lib/schemas/user';
-import { createLogger } from '$lib/helpers/logger';
+import { createBackendLogger } from '$lib/server/logger';
 import { sendEmailVerification } from '$lib/server/auth/verifyEmail';
 
-const logger = createLogger('register');
+const logger = createBackendLogger('register');
 
 export const load = (async () => {
 	const form = await superValidate(zod4(registerUserSchema));

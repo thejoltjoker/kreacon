@@ -6,11 +6,11 @@ import { message, superValidate } from 'sveltekit-superforms';
 import { zod4 } from 'sveltekit-superforms/adapters';
 import type { Actions, PageServerLoad } from './$types';
 import { StatusCodes } from 'http-status-codes';
-import { createLogger } from '$lib/helpers/logger';
+import { createBackendLogger } from '$lib/server/logger';
 import { sendEmailVerification } from '$lib/server/auth/verifyEmail';
 import { resendEmailSchema } from '$lib/schemas/verifyEmail';
 
-const logger = createLogger('verify-email');
+const logger = createBackendLogger('verify-email');
 
 export const load = (async ({ locals }) => {
 	if (locals.user?.emailVerifiedAt) {

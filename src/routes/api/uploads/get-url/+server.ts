@@ -1,4 +1,4 @@
-import { createLogger } from '$lib/helpers/logger';
+import { createBackendLogger } from '$lib/server/logger';
 import { generateBlobSasUrl } from '$lib/server/azure/storage';
 import db from '$lib/server/db';
 import { files } from '$lib/server/db/schema';
@@ -8,7 +8,7 @@ import type { RequestHandler } from './$types';
 import { getUrlSchema } from './schema';
 import { isAuthenticated, isEmailVerified } from '../../../(app)/utils';
 
-const logger = createLogger('api/uploads/get-url');
+const logger = createBackendLogger('api/uploads/get-url');
 
 export const POST: RequestHandler = async ({ request, locals }) => {
 	if (!isAuthenticated(locals)) {
