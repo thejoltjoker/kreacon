@@ -133,6 +133,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   [#159](https://github.com/thejoltjoker/kreacon/pull/159)
 - Update sentry integration to use unreasonable sample rates
   [#160](https://github.com/thejoltjoker/kreacon/pull/160)
+- Temporary logging for figuring out issues with file uploads
+  [#161](https://github.com/thejoltjoker/kreacon/pull/161)
 
 ### Deprecated
 
