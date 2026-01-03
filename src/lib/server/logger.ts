@@ -1,5 +1,5 @@
 // Server side logger
-import { Sentry } from './services/sentry';
+import { Sentry } from '../services/sentry';
 
 const dev = process.env.NODE_ENV !== 'production';
 

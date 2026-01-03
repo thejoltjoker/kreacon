@@ -16,12 +16,12 @@ const logger = createBackendLogger('entries/create');
 export const load = (async ({ locals }) => {
 	if (!isAuthenticated(locals) || locals.user == null) {
 		logger.warn('Unauthorized access attempt to entry creation page');
-		redirect(StatusCodes.TEMPORARY_REDIRECT, '/login?redirect=/entries/create');
+		throw redirect(StatusCodes.TEMPORARY_REDIRECT, '/login?redirect=/entries/create');
 	}
 
 	if (!isEmailVerified(locals)) {
 		logger.warn(`Unverified user ${locals.user.id} attempted to access entry creation page`);
-		redirect(StatusCodes.TEMPORARY_REDIRECT, '/verify-email');
+		throw redirect(StatusCodes.TEMPORARY_REDIRECT, '/verify-email');
 	}
 
 	logger.info('Loading entry creation page', { userId: locals.user.id });
@@ -45,7 +45,7 @@ export const load = (async ({ locals }) => {
 
 	if (!userData) {
 		logger.error('User data not found for authenticated user', { userId: locals.user.id });
-		redirect(StatusCodes.TEMPORARY_REDIRECT, '/login?redirect=/entries/create');
+		throw redirect(StatusCodes.TEMPORARY_REDIRECT, '/login?redirect=/entries/create');
 	}
 
 	const userTickets =
@@ -95,7 +95,7 @@ export const actions = {
 			logger.warn('Unauthorized submission attempt', {
 				ip: request.headers.get('x-forwarded-for') || 'unknown'
 			});
-			redirect(StatusCodes.MOVED_TEMPORARILY, '/login?redirect=/entries/create');
+			throw redirect(StatusCodes.MOVED_TEMPORARILY, '/login?redirect=/entries/create');
 		}
 
 		if (!isEmailVerified(locals)) {
@@ -198,7 +198,7 @@ export const actions = {
 			return error(StatusCodes.INTERNAL_SERVER_ERROR, { message: 'Failed to create entry' });
 		}
 		if (id != null) {
-			redirect(StatusCodes.SEE_OTHER, `/entries/${id}`);
+			throw redirect(StatusCodes.SEE_OTHER, `/entries/${id}`);
 		}
 
 		// TODO Remove permissions from blob store
