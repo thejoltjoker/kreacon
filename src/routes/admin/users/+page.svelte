@@ -34,6 +34,12 @@
 			console.error('Cannot toggle your own admin status');
 			return;
 		}
+
+		if (currentUser?.role === 'admin' && user.role === 'superadmin') {
+			console.error('Admin users cannot modify superadmin users');
+			return;
+		}
+
 		const newRole = user.role === 'admin' ? 'user' : 'admin';
 		await fetch(`/admin/users/${user.username}`, {
 			method: 'PATCH',
@@ -65,7 +71,9 @@
 		{
 			label: 'Toggle admin',
 			icon: ShieldIcon,
-			onClick: (value) => handleToggleAdmin(value)
+			onClick: (value) => handleToggleAdmin(value),
+			isHidden: (user: (typeof users)[number]) =>
+				currentUser?.role === 'admin' && user.role === 'superadmin'
 		},
 		{
 			label: (user: (typeof users)[number]) =>

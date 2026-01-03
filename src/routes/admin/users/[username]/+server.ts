@@ -22,6 +22,20 @@ export const PATCH: RequestHandler = async ({ params, locals, request }) => {
 			);
 		}
 
+		if (updateData.role !== undefined && locals.user?.role === 'admin') {
+			const targetUser = await db.query.users.findFirst({
+				where: eq(users.username, username),
+				columns: { role: true }
+			});
+
+			if (targetUser?.role === 'superadmin') {
+				return json(
+					{ error: 'Admin users cannot modify superadmin users' },
+					{ status: StatusCodes.FORBIDDEN }
+				);
+			}
+		}
+
 		await db.update(users).set(updateData).where(eq(users.username, username));
 		return new Response(null, { status: StatusCodes.NO_CONTENT });
 	} catch (error) {
