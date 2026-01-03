@@ -1,5 +1,6 @@
-import type { PageServerLoad } from './$types';
 import db from '$lib/server/db';
+import { desc, sql } from 'drizzle-orm';
+import type { PageServerLoad } from './$types';
 
 export const load = (async () => {
 	const now = new Date();
@@ -11,7 +12,10 @@ export const load = (async () => {
 			eventCategories: { columns: { categoryId: true } }
 		},
 		orderBy(fields, { asc }) {
-			return [asc(fields.submissionsOpenAt)];
+			return [
+				desc(sql`CASE WHEN ${fields.slug} ILIKE 'beacon%' THEN 1 ELSE 0 END`),
+				asc(fields.submissionsOpenAt)
+			];
 		}
 	});
 
