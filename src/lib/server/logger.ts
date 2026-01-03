@@ -1,6 +1,7 @@
 // Server side logger
-import { dev } from '$app/environment';
 import { Sentry } from './services/sentry';
+
+const dev = process.env.NODE_ENV !== 'production';
 
 export type LogLevel = 'debug' | 'info' | 'warn' | 'error';
 
