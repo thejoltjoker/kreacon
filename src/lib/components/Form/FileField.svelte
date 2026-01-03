@@ -39,6 +39,7 @@
 	import Button from '../Button.svelte';
 	import { getEnctype } from './enctype.svelte';
 	import { fileTypeFromBlob } from 'file-type';
+	import * as Sentry from '@sentry/sveltekit';
 
 	// TODO Default file type
 
@@ -154,20 +155,55 @@
 	};
 
 	async function validateFile(file: File): Promise<boolean> {
-		const fileType = await fileTypeFromBlob(file);
+		try {
+			const fileType = await fileTypeFromBlob(file);
 
-		if (!fileType) {
-			validationError = `Unable to determine file type. Please upload a valid ${mediaType} file.`;
+			if (!fileType) {
+				const error = `Unable to determine file type. Please upload a valid ${mediaType} file.`;
+				const errorObj = new Error(error);
+				console.error('[FileUpload] Validation error:', error, { file, mediaType });
+				Sentry.captureException(errorObj, {
+					tags: { component: 'FileField', errorType: 'validation' },
+					extra: { file: { name: file.name, size: file.size, type: file.type }, mediaType }
+				});
+				validationError = error;
+				return false;
+			}
+
+			if (!isAllowedMimeTypeForMedia(fileType.mime, mediaType)) {
+				const error = `Invalid file type. Expected ${mediaType} file, but got ${fileType.mime}. Supported extensions: ${extensions.join(', ')}`;
+				const errorObj = new Error(error);
+				console.error('[FileUpload] Validation error:', error, {
+					file,
+					fileType: fileType.mime,
+					mediaType,
+					extensions
+				});
+				Sentry.captureException(errorObj, {
+					tags: { component: 'FileField', errorType: 'validation' },
+					extra: {
+						file: { name: file.name, size: file.size, type: file.type },
+						fileType: fileType.mime,
+						mediaType,
+						extensions
+					}
+				});
+				validationError = error;
+				return false;
+			}
+
+			validationError = undefined;
+			return true;
+		} catch (error) {
+			console.error('[FileUpload] Validation error (exception):', error, { file, mediaType });
+			const errorObj = error instanceof Error ? error : new Error(String(error));
+			Sentry.captureException(errorObj, {
+				tags: { component: 'FileField', errorType: 'validation-exception' },
+				extra: { file: { name: file.name, size: file.size, type: file.type }, mediaType }
+			});
+			validationError = `Validation failed: ${error instanceof Error ? error.message : String(error)}`;
 			return false;
 		}
-
-		if (!isAllowedMimeTypeForMedia(fileType.mime, mediaType)) {
-			validationError = `Invalid file type. Expected ${mediaType} file, but got ${fileType.mime}. Supported extensions: ${extensions.join(', ')}`;
-			return false;
-		}
-
-		validationError = undefined;
-		return true;
 	}
 
 	async function processFiles() {
@@ -183,22 +219,40 @@
 
 		currentState = 'uploading';
 
-		// TODO Generate checksum
-		if (uploadUrl == null) {
-			const sas = await getUploadUrl(file);
-			fileId = sas.fileId;
-			blobUrl = sas.url;
-			uploadUrl = sas.url;
-		}
-
 		try {
+			// TODO Generate checksum
+			if (uploadUrl == null) {
+				const sas = await getUploadUrl(file);
+				fileId = sas.fileId;
+				blobUrl = sas.url;
+				uploadUrl = sas.url;
+			}
+
 			await uploadFile(uploadUrl, file);
 			onUploadComplete?.(fileId);
 
 			($value as string) = fileId;
 			currentState = 'complete';
 		} catch (error) {
-			console.error(error);
+			const errorContext = {
+				file,
+				fileId,
+				uploadUrl,
+				blobUrl,
+				currentState
+			};
+			console.error('[FileUpload] Error in processFiles:', error, errorContext);
+			const errorObj = error instanceof Error ? error : new Error(String(error));
+			Sentry.captureException(errorObj, {
+				tags: { component: 'FileField', errorType: 'process-files' },
+				extra: {
+					file: { name: file.name, size: file.size, type: file.type },
+					fileId,
+					uploadUrl,
+					blobUrl,
+					currentState
+				}
+			});
 			validationError = 'Upload failed. Please try again.';
 			currentState = 'error';
 		}
@@ -272,29 +326,88 @@
 	};
 
 	const getUploadUrl = async (file: File) => {
-		const result = await fileTypeFromBlob(file);
-		if (result == null) {
-			throw new Error('Failed to identify file type');
+		try {
+			const result = await fileTypeFromBlob(file);
+			if (result == null) {
+				const error = new Error('Failed to identify file type');
+				console.error('[FileUpload] Failed to identify file type:', error, { file, fileId });
+				Sentry.captureException(error, {
+					tags: { component: 'FileField', errorType: 'file-type-identification' },
+					extra: { file: { name: file.name, size: file.size, type: file.type }, fileId }
+				});
+				throw error;
+			}
+			const { mime } = result;
+			const data: GetUrlSchema = {
+				uuid: fileId,
+				container: 'uploads',
+				name: await getBlobName(file),
+				type: mime,
+				size: file.size
+			};
+
+			const parsed = getUrlSchema.parse(data);
+
+			const response = await fetch(createPublicUrl('/api/uploads/get-url'), {
+				method: 'POST',
+				body: JSON.stringify(parsed)
+			});
+
+			if (!response.ok) {
+				let errorMessage = `Failed to get upload URL: ${response.status} ${response.statusText}`;
+				let errorData: unknown;
+				try {
+					errorData = await response.json();
+					errorMessage = (errorData as { message?: string })?.message || errorMessage;
+					console.error('[FileUpload] Failed to get upload URL:', {
+						status: response.status,
+						statusText: response.statusText,
+						error: errorData,
+						file,
+						fileId,
+						requestData: parsed
+					});
+				} catch {
+					const errorText = await response.text();
+					errorData = errorText;
+					console.error('[FileUpload] Failed to get upload URL:', {
+						status: response.status,
+						statusText: response.statusText,
+						errorText,
+						file,
+						fileId,
+						requestData: parsed
+					});
+				}
+				const error = new Error(errorMessage);
+				Sentry.captureException(error, {
+					tags: {
+						component: 'FileField',
+						errorType: 'get-upload-url',
+						httpStatus: response.status
+					},
+					extra: {
+						file: { name: file.name, size: file.size, type: file.type },
+						fileId,
+						requestData: parsed,
+						response: { status: response.status, statusText: response.statusText, error: errorData }
+					}
+				});
+				throw error;
+			}
+
+			const responseData: { url: string; fileId: string } = await response.json();
+
+			return responseData;
+		} catch (error) {
+			console.error('[FileUpload] Error in getUploadUrl:', error, { file, fileId });
+			const errorObj = error instanceof Error ? error : new Error(String(error));
+			Sentry.captureException(errorObj, {
+				tags: { component: 'FileField', errorType: 'get-upload-url-exception' },
+				extra: { file: { name: file.name, size: file.size, type: file.type }, fileId }
+			});
+			throw error;
 		}
-		const { mime } = result;
-		const data: GetUrlSchema = {
-			uuid: fileId,
-			container: 'uploads',
-			name: await getBlobName(file),
-			type: mime,
-			size: file.size
-		};
-
-		const parsed = getUrlSchema.parse(data);
-
-		const response = await fetch(createPublicUrl('/api/uploads/get-url'), {
-			method: 'POST',
-			body: JSON.stringify(parsed)
-		});
-
-		const responseData: { url: string; fileId: string } = await response.json();
-
-		return responseData;
 	};
 
 	const uploadFile = async (url: string, file: File): Promise<void> => {
@@ -319,12 +432,75 @@
 					progress = 100;
 					resolve(xhr.response);
 				} else {
-					reject(new Error(`Upload failed with status ${xhr.status}`));
+					const error = new Error(`Upload failed with status ${xhr.status}`);
+					const errorContext = {
+						status: xhr.status,
+						statusText: xhr.statusText,
+						responseText: xhr.responseText,
+						responseURL: xhr.responseURL,
+						file,
+						fileId,
+						blobName,
+						url
+					};
+					console.error('[FileUpload] Upload failed (onload):', errorContext);
+					Sentry.captureException(error, {
+						tags: { component: 'FileField', errorType: 'upload-failed', httpStatus: xhr.status },
+						extra: {
+							file: { name: file.name, size: file.size, type: file.type },
+							fileId,
+							blobName,
+							url,
+							response: {
+								status: xhr.status,
+								statusText: xhr.statusText,
+								responseText: xhr.responseText,
+								responseURL: xhr.responseURL
+							}
+						}
+					});
+					reject(error);
 				}
 			};
 
 			xhr.onerror = () => {
-				reject(new Error('Upload failed'));
+				const error = new Error('Upload failed due to network error');
+				const errorContext = {
+					status: xhr?.status,
+					statusText: xhr?.statusText,
+					readyState: xhr?.readyState,
+					file,
+					fileId,
+					blobName,
+					url
+				};
+				console.error('[FileUpload] Upload failed (onerror):', errorContext);
+				Sentry.captureException(error, {
+					tags: { component: 'FileField', errorType: 'upload-network-error' },
+					extra: {
+						file: { name: file.name, size: file.size, type: file.type },
+						fileId,
+						blobName,
+						url,
+						xhr: { status: xhr?.status, statusText: xhr?.statusText, readyState: xhr?.readyState }
+					}
+				});
+				reject(error);
+			};
+
+			xhr.onabort = () => {
+				const error = new Error('Upload aborted');
+				console.error('[FileUpload] Upload aborted:', { file, fileId, blobName, url });
+				Sentry.captureException(error, {
+					tags: { component: 'FileField', errorType: 'upload-aborted' },
+					extra: {
+						file: { name: file.name, size: file.size, type: file.type },
+						fileId,
+						blobName,
+						url
+					}
+				});
+				reject(error);
 			};
 
 			xhr.send(file);
