@@ -5,10 +5,10 @@ import type { RequestHandler } from './$types';
 import { insertTicketSchema } from '$lib/server/db/schema/ticket';
 import { json } from '@sveltejs/kit';
 import { StatusCodes } from 'http-status-codes';
-import { createLogger } from '$lib/helpers/logger';
+import { createBackendLogger } from '$lib/server/logger';
 import { adminCheck } from '../../utils';
 
-const logger = createLogger('admin/tickets/[id]');
+const logger = createBackendLogger('admin/tickets/[id]');
 
 export const DELETE: RequestHandler = async ({ params, locals }) => {
 	adminCheck(locals);

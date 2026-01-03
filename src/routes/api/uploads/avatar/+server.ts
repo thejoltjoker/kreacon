@@ -4,13 +4,13 @@ import sharp from 'sharp';
 import { azureUploadBlob } from '$lib/server/azure/storage';
 import { files } from '$lib/server/db/schema';
 import db from '$lib/server/db';
-import { createLogger } from '$lib/helpers/logger';
+import { createBackendLogger } from '$lib/server/logger';
 import { z } from 'zod/v4';
 import { getAllowedMimeTypes, isAllowedMimeTypeForMedia } from '$lib/helpers/mediaTypes';
 import { isAuthenticated, isEmailVerified } from '../../../(app)/utils';
 import type { RequestHandler } from './$types';
 
-const logger = createLogger('api/uploads/avatar');
+const logger = createBackendLogger('api/uploads/avatar');
 
 const avatarConfig = {
 	maxWidth: 320,

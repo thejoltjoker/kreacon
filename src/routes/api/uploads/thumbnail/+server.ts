@@ -5,12 +5,12 @@ import sharp from 'sharp';
 import { azureUploadBlob } from '$lib/server/azure/storage';
 import { files } from '$lib/server/db/schema';
 import db from '$lib/server/db';
-import { createLogger } from '$lib/helpers/logger';
+import { createBackendLogger } from '$lib/server/logger';
 import { z } from 'zod/v4';
 import { getAllowedMimeTypes, isAllowedMimeTypeForMedia } from '$lib/helpers/mediaTypes';
 import { isAuthenticated, isEmailVerified } from '../../../(app)/utils';
 
-const logger = createLogger('api/uploads/thumbnail');
+const logger = createBackendLogger('api/uploads/thumbnail');
 
 const thumbnailConfig = {
 	maxWidth: 1920,

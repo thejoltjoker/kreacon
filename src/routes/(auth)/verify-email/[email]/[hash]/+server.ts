@@ -5,11 +5,11 @@ import { selectUserSchema } from '$lib/server/db/schema/user';
 import { error, redirect } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
 import type { RequestHandler } from './$types';
-import { createLogger } from '$lib/helpers/logger';
+import { createBackendLogger } from '$lib/server/logger';
 import { StatusCodes } from 'http-status-codes';
 import crypto from 'crypto';
 
-const logger = createLogger('verify-email');
+const logger = createBackendLogger('verify-email');
 
 const emailSchema = selectUserSchema.shape.email;
 

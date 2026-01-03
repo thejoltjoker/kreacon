@@ -10,9 +10,9 @@ import { StatusCodes } from 'http-status-codes';
 import { message, superValidate } from 'sveltekit-superforms';
 import { zod4 } from 'sveltekit-superforms/adapters';
 import type { Actions, PageServerLoad } from './$types';
-import { createLogger } from '$lib/helpers/logger';
+import { createBackendLogger } from '$lib/server/logger';
 
-const logger = createLogger('login');
+const logger = createBackendLogger('login');
 const loginSchemaAdapter = zod4(loginSchema);
 
 export const load = (async (event) => {

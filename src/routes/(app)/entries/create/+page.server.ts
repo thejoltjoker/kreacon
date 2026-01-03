@@ -8,10 +8,10 @@ import { StatusCodes } from 'http-status-codes';
 import { fail, message, superValidate } from 'sveltekit-superforms';
 import { zod4 } from 'sveltekit-superforms/adapters';
 import type { Actions, PageServerLoad } from './$types';
-import { createLogger } from '$lib/helpers/logger';
+import { createBackendLogger } from '$lib/server/logger';
 import { isAuthenticated, isEmailVerified } from '../../utils';
 
-const logger = createLogger('entries/create');
+const logger = createBackendLogger('entries/create');
 
 export const load = (async ({ locals }) => {
 	if (!isAuthenticated(locals) || locals.user == null) {

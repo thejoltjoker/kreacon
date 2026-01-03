@@ -6,10 +6,10 @@ import {
 	EmailClient as AzureEmailClient,
 	type EmailMessage as AzureEmailMessage
 } from '@azure/communication-email';
-import { createLogger } from '$lib/helpers/logger';
+import { createBackendLogger } from '$lib/server/logger';
 import { z } from 'zod/v4';
 
-const logger = createLogger('email');
+const logger = createBackendLogger('email');
 
 export const emailClient = new AzureEmailClient(AZURE_COMMUNICATION_SERVICES_CONNECTION_STRING);
 

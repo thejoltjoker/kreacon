@@ -1,7 +1,7 @@
-import { createLogger } from '$lib/helpers/logger';
+import { createBackendLogger } from '$lib/server/logger';
 import { StatusCodes } from 'http-status-codes';
 import type { RequestHandler } from './$types';
-const logger = createLogger('client-error');
+const logger = createBackendLogger('client-error');
 
 export const POST: RequestHandler = async (event) => {
 	// TODO Rate limit

@@ -129,6 +129,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   [#140](https://github.com/thejoltjoker/kreacon/pull/140)
 - Update ticket api validation for Beacon 2026 event
   [#153](https://github.com/thejoltjoker/kreacon/pull/153)
+- Reimplement logger for frontend and backend and update sentry integration
+  [#159](https://github.com/thejoltjoker/kreacon/pull/159)
 
 ### Deprecated
 

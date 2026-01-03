@@ -1,11 +1,11 @@
 import { dev } from '$app/environment';
 import { getOAuthClient } from '$lib/server/auth/oauth/getOAuthClient';
 import { isOAuthProvider, type OAuthProvider } from '$lib/server/auth/oauth/OAuthClient';
-import { createLogger } from '$lib/helpers/logger';
+import { createBackendLogger } from '$lib/server/logger';
 import { redirect } from '@sveltejs/kit';
 import { StatusCodes } from 'http-status-codes';
 import type { PageServerLoad } from './$types';
-const logger = createLogger('auth/login');
+const logger = createBackendLogger('auth/login');
 export const load = (async ({ params, cookies }) => {
 	const { provider } = params;
 

@@ -1,8 +1,8 @@
+import { createBackendLogger } from '$lib/server/logger';
 import { promises as fs } from 'fs';
 import path from 'path';
-import { createLogger } from './logger';
 
-const logger = createLogger('saveFile');
+const logger = createBackendLogger('saveFile');
 export const saveFile = async (file: File) => {
 	// TODO Save file to static/uploads folder
 	const uploadsDir = path.resolve('static/uploads');

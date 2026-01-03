@@ -4,12 +4,12 @@ import type { RequestHandler } from './$types';
 import { azureUploadBlob } from '$lib/server/azure/storage';
 import { files } from '$lib/server/db/schema';
 import db from '$lib/server/db';
-import { createLogger } from '$lib/helpers/logger';
+import { createBackendLogger } from '$lib/server/logger';
 import { z } from 'zod/v4';
 import { getAllowedMimeTypes, isAllowedMimeTypeForMedia } from '$lib/helpers/mediaTypes';
 import { isAuthenticated } from '../../../(app)/utils';
 
-const logger = createLogger('api/uploads/proof');
+const logger = createBackendLogger('api/uploads/proof');
 
 const proofConfig = {
 	maxFileSize: 512 * 1024 * 1024 // 512MB

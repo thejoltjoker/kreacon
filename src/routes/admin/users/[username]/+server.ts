@@ -6,8 +6,8 @@ import { json } from '@sveltejs/kit';
 import { StatusCodes } from 'http-status-codes';
 import { adminCheck } from '../../utils';
 import { updateUserSchema } from '$lib/server/db/schema/user';
-import { createLogger } from '$lib/helpers/logger';
-const logger = createLogger('admin/users/[username]/+server.ts');
+import { createBackendLogger } from '$lib/server/logger';
+const logger = createBackendLogger('admin/users/[username]/+server.ts');
 export const PATCH: RequestHandler = async ({ params, locals, request }) => {
 	adminCheck(locals);
 	const { username } = params;

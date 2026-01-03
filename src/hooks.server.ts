@@ -14,7 +14,6 @@ const handleAuth: Handle = async ({ event, resolve }) => {
 	if (!sessionToken) {
 		event.locals.user = null;
 		event.locals.session = null;
-		Sentry.setUser(null);
 		return resolve(event);
 	}
 
@@ -28,18 +27,6 @@ const handleAuth: Handle = async ({ event, resolve }) => {
 	event.locals.user = user;
 	event.locals.session = session;
 
-	if (user) {
-		Sentry.setUser({
-			id: user.id,
-			username: user.username
-		});
-
-		Sentry.setTag('user_status', user.status);
-		Sentry.setTag('email_verified', user.emailVerifiedAt ? 'true' : 'false');
-	} else {
-		Sentry.setUser(null);
-	}
-
 	return resolve(event);
 };
 
@@ -52,18 +39,5 @@ const handleI18n: Handle = async ({ event, resolve }) => {
 	return resolve(event);
 };
 
-const handleSentryContext: Handle = async ({ event, resolve }) => {
-	Sentry.setContext('request', {
-		method: event.request.method,
-		url: event.url.pathname,
-		query_present: event.url.search ? 'yes' : 'no'
-	});
-
-	Sentry.setTag('route', event.route.id ?? 'unknown');
-	Sentry.setTag('method', event.request.method);
-
-	return resolve(event);
-};
-
-export const handle = sequence(Sentry.sentryHandle(), handleSentryContext, handleI18n, handleAuth);
+export const handle = sequence(Sentry.sentryHandle(), handleI18n, handleAuth);
 export const handleError = Sentry.handleErrorWithSentry();
