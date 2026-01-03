@@ -5,7 +5,7 @@ import { eq } from 'drizzle-orm';
 import { message, setError, superValidate, type Infer } from 'sveltekit-superforms';
 import { zod4 } from 'sveltekit-superforms/adapters';
 import type { PageServerLoad } from './$types';
-import tickets, { insertTicketSchema } from '$lib/server/db/schema/ticket';
+import tickets from '$lib/server/db/schema/ticket';
 import { api as ticketClient } from '$lib/server/services/ticket';
 import { events } from '$lib/server/db/schema';
 import type { SuperFormMessage } from '$lib/types/SuperFormMessage';
