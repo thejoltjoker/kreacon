@@ -19,6 +19,8 @@ export const load = (async ({ locals, url }) => {
 				user: { columns: { username: true } },
 				category: { columns: { name: true } },
 				preview: { columns: { url: true } },
+				media: { columns: { url: true, name: true } },
+				proof: { columns: { url: true, name: true } },
 				event: { columns: { id: true, name: true } }
 			},
 			where(fields) {
@@ -76,6 +78,10 @@ export const load = (async ({ locals, url }) => {
 			event: entry.event.name,
 			status: entry.status,
 			thumbnailUrl: entry.preview.url,
+			mediaUrl: entry.media?.url,
+			mediaName: entry.media?.name,
+			proofUrl: entry.proof?.url,
+			proofName: entry.proof?.name,
 			createdAt: entry.createdAt
 		})),
 		events: Array.from(
