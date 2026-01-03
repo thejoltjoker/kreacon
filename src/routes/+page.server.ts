@@ -13,6 +13,7 @@ export const load = (async () => {
 		},
 		orderBy(fields, { asc }) {
 			return [
+				// events with slugs starting with "beacon" are featured and should be shown first.
 				desc(sql`CASE WHEN ${fields.slug} ILIKE 'beacon%' THEN 1 ELSE 0 END`),
 				asc(fields.submissionsOpenAt)
 			];
