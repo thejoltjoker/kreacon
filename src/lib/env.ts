@@ -24,8 +24,8 @@ const EnvSchema = z.object({
 	AZURE_COMMUNICATION_SERVICES_CONNECTION_STRING: z.string(),
 	AZURE_COMMUNICATION_SERVICES_SENDER_ADDRESS: z.email(),
 	PUBLIC_SENTRY_DSN: z.string(),
+	TICKET_API_SECRET: z.string(),
 	// Optional
-	TICKET_API_SECRET: z.string().default('kreacon-ticket-api-secret'),
 	BODY_SIZE_LIMIT: z.coerce
 		.number()
 		.optional()
