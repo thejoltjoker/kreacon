@@ -1,3 +1,4 @@
+<!-- TODO Improve ticket fetching logic/ux/ui -->
 <script lang="ts">
 	import Button from '$lib/components/Button.svelte';
 	import DumbInput from '$lib/components/Form/DumbInput.svelte';
@@ -16,10 +17,17 @@
 		form: ticketForm,
 		errors: ticketErrors,
 		enhance: ticketEnhance,
-		message: ticketMessage
+		message: ticketMessage,
+		reset: resetForm
 	} = superForm(form, {
 		resetForm: true,
 		invalidateAll: true
+	});
+
+	$effect(() => {
+		if (isOpen) {
+			resetForm();
+		}
 	});
 </script>
 

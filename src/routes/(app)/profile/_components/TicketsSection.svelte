@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Button from '$lib/components/Button.svelte';
-	import { CheckCircle2Icon, PlusIcon } from 'lucide-svelte';
+	import { CircleCheckIcon, PlusIcon } from 'lucide-svelte';
 	import type { PageData } from '../$types';
 	import TicketDialog from './TicketDialog.svelte';
 	let {
@@ -29,7 +29,7 @@
 				>
 					<p class="order-1 text-lg font-bold">{ticket.event?.name}</p>
 					<div class="order-2 size-5 sm:order-3 sm:ml-auto">
-						<CheckCircle2Icon class="text-success size-5" />
+						<CircleCheckIcon class="text-success size-5" />
 					</div>
 					<p
 						class="text-shade-300-alt order-3 w-full font-mono text-sm whitespace-pre sm:order-2 sm:w-auto"
