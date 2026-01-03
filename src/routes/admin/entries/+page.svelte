@@ -85,11 +85,13 @@
 			onClick: (value) => handleReject(value),
 			class: '[&_svg]:text-secondary'
 		},
+		// TODO create e2e test
 		{
 			label: 'Download media',
 			icon: DownloadIcon,
 			onClick: (value) => handleDownloadMedia(value)
 		},
+		// TODO create e2e test
 		{
 			label: 'Download proof',
 			icon: DownloadIcon,
