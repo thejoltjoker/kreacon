@@ -161,6 +161,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   [#144](https://github.com/thejoltjoker/kreacon/pull/144)
 - Fix bug with createPublicUrl function
   [#146](https://github.com/thejoltjoker/kreacon/pull/146)
+- Make media type validation case-insensitive and add more Sentry logging
+  [#157](https://github.com/thejoltjoker/kreacon/pull/157)
 
 ### Security
 
