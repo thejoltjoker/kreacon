@@ -36,4 +36,17 @@ test('Admin should be able to manage users', async ({ page }) => {
 	await listItemActionsLocator.click();
 	await page.getByRole('menuitem', { name: 'Ban user' }).click();
 	await expect(listItemLocator.locator('div:nth-child(7)').first()).toContainText('banned');
+
+	// Toggle admin
+	await page.goto('/admin/users');
+	const roleLocator = listItemLocator.locator('div:nth-child(3)').first();
+	await expect(roleLocator).toContainText('user');
+	await listItemActionsLocator.click();
+	await page.getByRole('menuitem', { name: 'Toggle admin' }).click();
+	await expect(roleLocator).toContainText('admin');
+
+	// Toggle back to user
+	await listItemActionsLocator.click();
+	await page.getByRole('menuitem', { name: 'Toggle admin' }).click();
+	await expect(roleLocator).toContainText('user');
 });
