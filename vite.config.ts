@@ -1,13 +1,13 @@
 import { sentrySvelteKit } from '@sentry/sveltekit';
-import { defineConfig } from 'vitest/config';
 import { sveltekit } from '@sveltejs/kit/vite';
 import tailwindcss from '@tailwindcss/vite';
+import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
 	plugins: [
 		sentrySvelteKit({
-			org: process.env.SENTRY_ORG ?? 'beacon-jc',
-			project: process.env.SENTRY_PROJECT ?? 'javascript-sveltekit'
+			org: 'beacon-jc',
+			project: 'javascript-sveltekit'
 		}),
 		tailwindcss(),
 		sveltekit()
