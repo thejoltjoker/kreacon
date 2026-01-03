@@ -27,30 +27,43 @@
 		invalidateAll();
 	};
 
-	const handleDownloadMedia = (entry: PageData['entries'][number]) => {
-		if (!entry.mediaUrl) {
-			console.warn('No media URL available for entry', entry.id);
+	const downloadEntryFile = (
+		url: string | null | undefined,
+		filename: string | null | undefined,
+		fallbackFilename: string,
+		missingMessage: string,
+		entryId: PageData['entries'][number]['id']
+	) => {
+		if (!url) {
+			console.warn(missingMessage, entryId);
 			return;
 		}
 		const link = document.createElement('a');
-		link.href = entry.mediaUrl;
-		link.download = entry.mediaName ?? `entry-${entry.id}-media`;
+		link.href = url;
+		link.download = filename ?? fallbackFilename;
 		document.body.appendChild(link);
 		link.click();
 		document.body.removeChild(link);
 	};
 
+	const handleDownloadMedia = (entry: PageData['entries'][number]) => {
+		downloadEntryFile(
+			entry.mediaUrl,
+			entry.mediaName ?? null,
+			`entry-${entry.id}-media`,
+			'No media URL available for entry',
+			entry.id
+		);
+	};
+
 	const handleDownloadProof = (entry: PageData['entries'][number]) => {
-		if (!entry.proofUrl) {
-			console.warn('No proof URL available for entry', entry.id);
-			return;
-		}
-		const link = document.createElement('a');
-		link.href = entry.proofUrl;
-		link.download = entry.proofName ?? `entry-${entry.id}-proof`;
-		document.body.appendChild(link);
-		link.click();
-		document.body.removeChild(link);
+		downloadEntryFile(
+			entry.proofUrl,
+			entry.proofName ?? null,
+			`entry-${entry.id}-proof`,
+			'No proof URL available for entry',
+			entry.id
+		);
 	};
 </script>
 
