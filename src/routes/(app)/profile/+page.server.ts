@@ -1,7 +1,7 @@
 import { db } from '$lib/server/db';
 import users from '$lib/server/db/schema/user';
 import { fail, redirect } from '@sveltejs/kit';
-import { eq } from 'drizzle-orm/pg-core/expressions';
+import { eq } from 'drizzle-orm';
 import { message, setError, superValidate, type Infer } from 'sveltekit-superforms';
 import { zod4 } from 'sveltekit-superforms/adapters';
 import type { PageServerLoad } from './$types';
@@ -12,8 +12,9 @@ import type { SuperFormMessage } from '$lib/types/SuperFormMessage';
 import { StatusCodes } from 'http-status-codes';
 import { authCheck, isEmailVerified } from '../utils';
 import { updateUserSchema } from '$lib/schemas/user';
+import { z } from 'zod/v4';
 
-const ticketSchema = insertTicketSchema.pick({ id: true });
+const ticketSchema = z.object({ id: z.string().min(1).max(255) });
 
 export const load = (async ({ locals }) => {
 	authCheck(locals, '/login');
@@ -148,9 +149,23 @@ export const actions = {
 			return setError(ticketForm, 'id', 'Ticket is invalid.');
 		}
 
-		const event = await db.query.events.findFirst({
-			where: eq(events.name, validatedTicket.event)
-		});
+		if (!validatedTicket.slug && !validatedTicket.event) {
+			return setError(ticketForm, 'id', 'Ticket is invalid.');
+		}
+
+		let event;
+
+		if (validatedTicket.slug) {
+			event = await db.query.events.findFirst({
+				where: eq(events.slug, validatedTicket.slug)
+			});
+		}
+
+		if (!event && validatedTicket.event) {
+			event = await db.query.events.findFirst({
+				where: eq(events.name, validatedTicket.event)
+			});
+		}
 
 		if (!event) {
 			return setError(ticketForm, 'id', 'Ticket is invalid.');
