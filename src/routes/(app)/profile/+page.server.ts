@@ -13,6 +13,7 @@ import { StatusCodes } from 'http-status-codes';
 import { authCheck, isEmailVerified } from '../utils';
 import { updateUserSchema } from '$lib/schemas/user';
 import { z } from 'zod/v4';
+import type { SelectEvent } from '$lib/server/db/schema/event';
 
 const ticketSchema = z.object({ id: z.string().min(1).max(255) });
 
@@ -153,7 +154,7 @@ export const actions = {
 			return setError(ticketForm, 'id', 'Ticket is invalid.');
 		}
 
-		let event;
+		let event: SelectEvent | undefined;
 
 		if (validatedTicket.slug) {
 			event = await db.query.events.findFirst({
