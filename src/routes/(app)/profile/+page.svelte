@@ -10,7 +10,8 @@
 
 	let { data }: PageProps = $props();
 
-	let { tickets, accounts } = data;
+	const tickets = $derived(data.tickets);
+	const accounts = $derived(data.accounts);
 	// TODO Allow user image upload
 </script>
 
