@@ -65,29 +65,6 @@ export default {
 			}
 		}
 	},
-	safelist: [
-		'media-tooltip',
-		'border-red-500',
-		'border-green-500',
-		'border-violet-500',
-		'focus:ring-red-500',
-		'focus:ring-green-500',
-		'focus:ring-violet-500',
-		'invalid',
-		'valid',
-		'bg-white',
-		'bg-black',
-		'input-valid',
-		'input-invalid',
-		'max-w-(--breakpoint-lg)',
-		'max-w-(--breakpoint-md)',
-		'border-white',
-		'border',
-		'list-inside',
-		'list-disc',
-		'[&_ul]:list-disc',
-		'[&_ul]:list-inside'
-	],
 	darkMode: 'selector',
 	plugins: [forms, animate]
 } as Config;
