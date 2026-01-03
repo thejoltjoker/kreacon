@@ -39,5 +39,5 @@ const handleI18n: Handle = async ({ event, resolve }) => {
 	return resolve(event);
 };
 
-export const handle = sequence(Sentry.sentryHandle(), sequence(handleI18n, handleAuth));
+export const handle = sequence(Sentry.sentryHandle(), handleI18n, handleAuth);
 export const handleError = Sentry.handleErrorWithSentry();
