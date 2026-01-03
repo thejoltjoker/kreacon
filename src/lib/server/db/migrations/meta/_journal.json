@@ -15,6 +15,13 @@
 			"when": 1766851382406,
 			"tag": "0001_swift_lionheart",
 			"breakpoints": true
+		},
+		{
+			"idx": 2,
+			"version": "7",
+			"when": 1767423400011,
+			"tag": "0002_charming_umar",
+			"breakpoints": true
 		}
 	]
 }

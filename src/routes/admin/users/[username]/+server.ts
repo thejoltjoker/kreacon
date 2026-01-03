@@ -15,6 +15,21 @@ export const PATCH: RequestHandler = async ({ params, locals, request }) => {
 	try {
 		const updateData = updateUserSchema.parse(body);
 
+		// Prevent admin users from modifying any attributes of superadmin users
+		if (locals.user?.role === 'admin') {
+			const targetUser = await db.query.users.findFirst({
+				where: eq(users.username, username),
+				columns: { role: true }
+			});
+
+			if (targetUser?.role === 'superadmin') {
+				return json(
+					{ error: 'Admin users cannot modify superadmin users' },
+					{ status: StatusCodes.FORBIDDEN }
+				);
+			}
+		}
+
 		if (updateData.role !== undefined && locals.user?.username === username) {
 			return json(
 				{ error: 'Cannot modify your own admin status' },

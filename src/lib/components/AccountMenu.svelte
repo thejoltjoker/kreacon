@@ -41,7 +41,7 @@
 	</DropdownMenuItem>
 
 	<DropdownMenuSeparator />
-	{#if user.role === 'admin'}
+	{#if user.role === 'admin' || user.role === 'superadmin'}
 		<DropdownMenuItem href="/admin" icon={ShieldIcon} class="min-w-48">
 			<span>{$t('Admin')}</span>
 		</DropdownMenuItem>

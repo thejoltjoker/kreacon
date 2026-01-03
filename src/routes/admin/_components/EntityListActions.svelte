@@ -6,6 +6,8 @@
 		icon: typeof IconType;
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		onClick: (item: any) => void;
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		isHidden?: (item: any) => boolean;
 	}
 	type Props = DropdownMenu.RootProps & {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -42,20 +44,23 @@
 			)}
 		>
 			<DropdownMenu.Group aria-label="Actions">
-				{#each actions as { icon: Icon, label, onClick, ...actionItem }, i (i)}
+				{#each actions as { icon: Icon, label, onClick, isHidden: isHiddenValue, ...actionItem }, i (i)}
 					{@const labelText = typeof label === 'function' ? label(item) : label}
-					<DropdownMenu.Item
-						{...actionItem}
-						textValue={labelText}
-						class={cn(
-							'gap-sm px-md py-sm hover:bg-shade-800 data-highlighted:bg-shade-800 flex cursor-pointer items-center justify-start rounded-sm transition-colors',
-							actionItem.class
-						)}
-						onclick={() => onClick(item)}
-					>
-						<Icon class="size-5" />
-						{labelText}
-					</DropdownMenu.Item>
+					{@const isHidden = isHiddenValue ? isHiddenValue(item) : false}
+					{#if !isHidden}
+						<DropdownMenu.Item
+							{...actionItem}
+							textValue={labelText}
+							class={cn(
+								'gap-sm px-md py-sm hover:bg-shade-800 data-highlighted:bg-shade-800 flex cursor-pointer items-center justify-start rounded-sm transition-colors',
+								actionItem.class
+							)}
+							onclick={() => onClick(item)}
+						>
+							<Icon class="size-5" />
+							{labelText}
+						</DropdownMenu.Item>
+					{/if}
 				{/each}
 				{#if actions.length === 0}
 					<DropdownMenu.Item
