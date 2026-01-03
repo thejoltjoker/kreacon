@@ -56,13 +56,15 @@ export const PUT: RequestHandler = async ({ request, locals, url }) => {
 		});
 
 		const buffer = await request.arrayBuffer();
-		const type = request.headers.get('content-type');
-		const name = blobName;
+		const rawType = request.headers.get('content-type');
 
-		if (!type) {
+		if (!rawType) {
 			logger.warn('Missing content-type header');
 			return error(StatusCodes.BAD_REQUEST, { message: 'Missing content-type header' });
 		}
+
+		const type = rawType.toLowerCase();
+		const name = blobName;
 
 		const file = new File([buffer], name, { type });
 
@@ -73,7 +75,8 @@ export const PUT: RequestHandler = async ({ request, locals, url }) => {
 			return error(StatusCodes.BAD_REQUEST, { message: issues });
 		}
 
-		const processedBuffer = await sharp(buffer)
+		const sharpBuffer = Buffer.from(buffer);
+		const processedBuffer = await sharp(sharpBuffer)
 			.resize(avatarConfig.maxWidth, avatarConfig.maxHeight, {
 				withoutEnlargement: true
 			})
@@ -101,7 +104,21 @@ export const PUT: RequestHandler = async ({ request, locals, url }) => {
 			}
 		});
 	} catch (err) {
-		logger.error('Failed to process avatar:', { error: err, fileId });
-		return error(StatusCodes.INTERNAL_SERVER_ERROR, { message: 'Failed to process avatar' });
+		const errorObj = err instanceof Error ? err : new Error(String(err));
+
+		Object.assign(errorObj, {
+			fileId,
+			contentType: request.headers.get('content-type'),
+			bufferSize: request.headers.get('content-length'),
+			blobName,
+			originalName
+		});
+
+		logger.error('Failed to process avatar', errorObj);
+
+		const errorMessage = errorObj.message;
+		return error(StatusCodes.INTERNAL_SERVER_ERROR, {
+			message: `Failed to process avatar: ${errorMessage}`
+		});
 	}
 };

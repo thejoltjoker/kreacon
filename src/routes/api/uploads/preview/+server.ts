@@ -56,13 +56,15 @@ export const PUT: RequestHandler = async ({ request, locals, url }) => {
 		});
 
 		const buffer = await request.arrayBuffer();
-		const type = request.headers.get('content-type');
-		const name = blobName;
+		const rawType = request.headers.get('content-type');
 
-		if (!type) {
+		if (!rawType) {
 			logger.warn('Missing content-type header');
 			return error(StatusCodes.BAD_REQUEST, { message: 'Missing content-type header' });
 		}
+
+		const type = rawType.toLowerCase();
+		const name = blobName;
 
 		const file = new File([buffer], name, { type });
 
