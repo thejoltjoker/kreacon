@@ -108,7 +108,7 @@ export const PUT: RequestHandler = async ({ request, locals, url }) => {
 
 		Object.assign(errorObj, {
 			fileId,
-			contentType: request.headers.get('content-type'),
+			contentType: request.headers.get('content-type')?.toLowerCase() ?? undefined,
 			bufferSize: request.headers.get('content-length'),
 			blobName,
 			originalName
