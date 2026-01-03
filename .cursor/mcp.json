@@ -1,7 +1,7 @@
 {
-	"mcpServers": {
-		"Sentry": {
-			"url": "https://mcp.sentry.dev/mcp/beacon-jc/javascript-sveltekit"
-		}
-	}
+  "mcpServers": {
+    "Sentry": {
+      "url": "https://mcp.sentry.dev/mcp/beacon-jc/javascript-sveltekit"
+    }
+  }
 }
