@@ -86,6 +86,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   [#149](https://github.com/thejoltjoker/kreacon/pull/149)
 - Add `superadmin` role
   [#151](https://github.com/thejoltjoker/kreacon/pull/151)
+- Add download links for entries in admin ui
+  [#155](https://github.com/thejoltjoker/kreacon/pull/155)
 
 ### Changed
 
