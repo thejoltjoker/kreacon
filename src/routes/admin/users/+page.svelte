@@ -1,13 +1,16 @@
 <script lang="ts">
-	import type { PageData } from './$types';
-	import EntityList from '../_components/EntityList.svelte';
-	import { BanIcon, TicketIcon } from 'lucide-svelte';
-	import EntityFilterBar from '../_components/EntityFilterBar.svelte';
 	import { goto, invalidateAll } from '$app/navigation';
 	import { resolve } from '$app/paths';
+	import { page } from '$app/stores';
 	import type { UserStatus } from '$lib/types/userStatus';
+	import { BanIcon, ShieldIcon, TicketIcon } from 'lucide-svelte';
+	import EntityFilterBar from '../_components/EntityFilterBar.svelte';
+	import EntityList from '../_components/EntityList.svelte';
+	import type { PageData } from './$types';
 
 	let { data }: { data: PageData } = $props();
+	const currentUser = $derived($page.data.user);
+
 	let users = $derived(
 		data.users.map((user) => ({
 			...user,
@@ -17,11 +20,24 @@
 		}))
 	);
 
-	const handleBan = async (user: (typeof users)[number]) => {
-		const status: UserStatus = 'banned';
+	const handleToggleBan = async (user: (typeof users)[number]) => {
+		const status: UserStatus = user.status === 'banned' ? 'active' : 'banned';
 		await fetch(`/admin/users/${user.username}`, {
 			method: 'PATCH',
 			body: JSON.stringify({ status })
+		});
+		await invalidateAll();
+	};
+
+	const handleToggleAdmin = async (user: (typeof users)[number]) => {
+		if (currentUser?.username === user.username) {
+			console.error('Cannot toggle your own admin status');
+			return;
+		}
+		const newRole = user.role === 'admin' ? 'user' : 'admin';
+		await fetch(`/admin/users/${user.username}`, {
+			method: 'PATCH',
+			body: JSON.stringify({ role: newRole })
 		});
 		await invalidateAll();
 	};
@@ -47,9 +63,15 @@
 			onClick: (value) => goto(resolve(`/admin/tickets?username=${value.username}`))
 		},
 		{
-			label: 'Ban user',
+			label: 'Toggle admin',
+			icon: ShieldIcon,
+			onClick: (value) => handleToggleAdmin(value)
+		},
+		{
+			label: (user: (typeof users)[number]) =>
+				user.status === 'banned' ? 'Unban user' : 'Ban user',
 			icon: BanIcon,
-			onClick: (value) => handleBan(value),
+			onClick: (value) => handleToggleBan(value),
 			class: 'text-destructive'
 		}
 	]}

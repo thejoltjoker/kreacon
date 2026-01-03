@@ -1,7 +1,8 @@
 <!-- TODO Replace `any` with generic? -->
 <script lang="ts" module>
 	export interface EntityListActionItem extends DropdownMenuItemProps {
-		label: string;
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		label: string | ((item: any) => string);
 		icon: typeof IconType;
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		onClick: (item: any) => void;
@@ -42,9 +43,10 @@
 		>
 			<DropdownMenu.Group aria-label="Actions">
 				{#each actions as { icon: Icon, label, onClick, ...actionItem }, i (i)}
+					{@const labelText = typeof label === 'function' ? label(item) : label}
 					<DropdownMenu.Item
 						{...actionItem}
-						textValue={label}
+						textValue={labelText}
 						class={cn(
 							'gap-sm px-md py-sm hover:bg-shade-800 data-highlighted:bg-shade-800 flex cursor-pointer items-center justify-start rounded-sm transition-colors',
 							actionItem.class
@@ -52,7 +54,7 @@
 						onclick={() => onClick(item)}
 					>
 						<Icon class="size-5" />
-						{label}
+						{labelText}
 					</DropdownMenu.Item>
 				{/each}
 				{#if actions.length === 0}

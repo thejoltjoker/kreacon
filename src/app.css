@@ -5,6 +5,30 @@ layer(base);
 
 @config '../tailwind.config.ts';
 
+@source inline('media-tooltip');
+@source inline('border-red-500');
+@source inline('border-green-500');
+@source inline('border-violet-500');
+@source inline('{focus:,}ring-red-500');
+@source inline('{focus:,}ring-green-500');
+@source inline('{focus:,}ring-violet-500');
+@source inline('invalid');
+@source inline('valid');
+@source inline('bg-white');
+@source inline('bg-black');
+@source inline('input-valid');
+@source inline('input-invalid');
+@source inline('max-w-(--breakpoint-lg)');
+@source inline('max-w-(--breakpoint-md)');
+@source inline('border-white');
+@source inline('border');
+@source inline('list-inside');
+@source inline('list-disc');
+@source inline('[&_ul]:list-disc');
+@source inline('[&_ul]:list-inside');
+@source inline('text-destructive');
+@source inline('text-success');
+
 @theme {
 	/* Custom spacing values - these will be available for gap, padding, margin, etc. */
 	--spacing-px: 1px;
