@@ -26,7 +26,6 @@ layer(base);
 @source inline('list-disc');
 @source inline('[&_ul]:list-disc');
 @source inline('[&_ul]:list-inside');
-@source inline('text-{destructive,success}');
 @source inline('text-destructive');
 @source inline('text-success');
 

@@ -38,6 +38,7 @@ test('Admin should be able to manage users', async ({ page }) => {
 	await expect(listItemLocator.locator('div:nth-child(7)').first()).toContainText('banned');
 
 	// Toggle admin
+	// TODO Add a test to verify that an admin cannot toggle their own admin status
 	await page.goto('/admin/users');
 	const roleLocator = listItemLocator.locator('div:nth-child(3)').first();
 	await expect(roleLocator).toContainText('user');
