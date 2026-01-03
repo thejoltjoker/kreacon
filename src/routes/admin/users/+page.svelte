@@ -73,14 +73,16 @@
 			icon: ShieldIcon,
 			onClick: (value) => handleToggleAdmin(value),
 			isHidden: (user: (typeof users)[number]) =>
-				currentUser?.role === 'admin' && user.role === 'superadmin'
+				currentUser?.username === user.username ||
+				(currentUser?.role === 'admin' && user.role === 'superadmin')
 		},
 		{
 			label: (user: (typeof users)[number]) =>
 				user.status === 'banned' ? 'Unban user' : 'Ban user',
 			icon: BanIcon,
 			onClick: (value) => handleToggleBan(value),
-			class: 'text-destructive'
+			class: 'text-destructive',
+			isHidden: (user: (typeof users)[number]) => currentUser?.username === user.username
 		}
 	]}
 	pagination={data.pagination}
