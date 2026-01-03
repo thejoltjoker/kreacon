@@ -3,7 +3,7 @@ import * as Sentry from '@sentry/sveltekit';
 
 Sentry.init({
 	dsn: import.meta.env.PUBLIC_SENTRY_DSN,
-	tracesSampleRate: import.meta.env.DEV ? 1.0 : 1.0,
+	tracesSampleRate: import.meta.env.DEV ? 1.0 : 0.2,
 	enableLogs: true,
 	replaysSessionSampleRate: import.meta.env.DEV ? 1.0 : 0.1,
 	replaysOnErrorSampleRate: 1.0,
