@@ -105,10 +105,11 @@ export const PUT: RequestHandler = async ({ request, locals, url }) => {
 		});
 	} catch (err) {
 		const errorObj = err instanceof Error ? err : new Error(String(err));
+		const normalizedContentType = request.headers.get('content-type')?.toLowerCase() ?? null;
 
 		Object.assign(errorObj, {
 			fileId,
-			contentType: request.headers.get('content-type'),
+			contentType: normalizedContentType,
 			bufferSize: request.headers.get('content-length'),
 			blobName,
 			originalName
