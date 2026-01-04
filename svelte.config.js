@@ -6,7 +6,9 @@ const config = {
 	preprocess: [vitePreprocess(), mdsvex()],
 
 	kit: {
-		adapter: adapter(),
+		adapter: adapter({
+			bodySizeLimit: 50 * 1024 * 1024
+		}),
 
 		experimental: {
 			tracing: {
