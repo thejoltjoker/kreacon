@@ -137,6 +137,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   [#161](https://github.com/thejoltjoker/kreacon/pull/161)
 - Delete old blob when uploading new one
   [#162](https://github.com/thejoltjoker/kreacon/pull/162)
+- Set body size limit to 50MB
+  [#163](https://github.com/thejoltjoker/kreacon/pull/163)
 
 ### Deprecated
 
