@@ -3,6 +3,7 @@
 	"version": "0.2.32",
 	"private": true,
 	"scripts": {
+		"postinstall": "npx playwright install --with-deps chromium",
 		"dev": "vite dev",
 		"build": "vite build",
 		"preview": "vite preview",

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import LicenseTooltip from '$lib/components/LicenseTooltip.svelte';
 
-	import { DownloadIcon } from 'lucide-svelte';
+	import { DownloadIcon, TvMinimalPlayIcon } from 'lucide-svelte';
 
 	import type { PageData } from '../$types';
 	import VoteButton from './VoteButton.svelte';
@@ -39,6 +39,16 @@
 
 	<!-- Actions -->
 	<div id="entry-actions" class="gap-sm flex flex-1 justify-end">
+		{#if user?.role === 'admin' || user?.role === 'superadmin'}
+			<Button
+				variant="outline"
+				size="icon"
+				href={`/api/entries/${entry.id}/cover-image`}
+				download={`entry-${entry.id}-cover.png`}
+			>
+				<TvMinimalPlayIcon />
+			</Button>
+		{/if}
 		<Button
 			variant="outline"
 			size="icon"

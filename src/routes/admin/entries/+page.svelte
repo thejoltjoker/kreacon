@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { CircleAlertIcon, CircleCheckIcon, DownloadIcon } from 'lucide-svelte';
+	import { CircleAlertIcon, CircleCheckIcon, DownloadIcon, TvMinimalPlayIcon } from 'lucide-svelte';
 	import EntityFilterBar from '../_components/EntityFilterBar.svelte';
 	import EntityList from '../_components/EntityList.svelte';
 	import type { PageData } from './$types';
@@ -65,6 +65,29 @@
 			entry.id
 		);
 	};
+
+	const handleDownloadCover = async (entry: PageData['entries'][number]) => {
+		try {
+			const response = await fetch(`/api/entries/${entry.id}/cover-image`);
+
+			if (!response.ok) {
+				console.error('Failed to generate cover image:', response.statusText);
+				return;
+			}
+
+			const blob = await response.blob();
+			const url = URL.createObjectURL(blob);
+			const link = document.createElement('a');
+			link.href = url;
+			link.download = `entry-${entry.id}-cover.png`;
+			document.body.appendChild(link);
+			link.click();
+			document.body.removeChild(link);
+			URL.revokeObjectURL(url);
+		} catch (error) {
+			console.error('Error downloading cover image:', error);
+		}
+	};
 </script>
 
 <EntityFilterBar entityName="entries">
@@ -97,6 +120,12 @@
 			icon: CircleAlertIcon,
 			onClick: (value) => handleReject(value),
 			class: '[&_svg]:text-secondary'
+		},
+
+		{
+			label: 'Download cover',
+			icon: TvMinimalPlayIcon,
+			onClick: (value) => handleDownloadCover(value)
 		},
 		// TODO create e2e test
 		{
