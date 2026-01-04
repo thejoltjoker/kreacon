@@ -1,13 +1,14 @@
 import { error } from '@sveltejs/kit';
 import { StatusCodes } from 'http-status-codes';
 import type { RequestHandler } from './$types';
-import { azureUploadBlob } from '$lib/server/azure/storage';
+import { azureUploadBlob, deleteBlobFromUrl } from '$lib/server/azure/storage';
 import { files } from '$lib/server/db/schema';
 import db from '$lib/server/db';
 import { createBackendLogger } from '$lib/server/logger';
 import { z } from 'zod/v4';
 import { getAllowedMimeTypes, isAllowedMimeTypeForMedia } from '$lib/helpers/mediaTypes';
 import { isAuthenticated } from '../../../(app)/utils';
+import { eq } from 'drizzle-orm';
 
 const logger = createBackendLogger('api/uploads/proof');
 
@@ -60,6 +61,14 @@ export const PUT: RequestHandler = async ({ request, locals, url }) => {
 			return error(StatusCodes.BAD_REQUEST, { message: issues });
 		}
 
+		const existingFile = await db.query.files.findFirst({
+			where: eq(files.id, fileId)
+		});
+
+		if (existingFile && existingFile.url) {
+			await deleteBlobFromUrl(existingFile.url);
+		}
+
 		const fileUrl = await azureUploadBlob(blobName, Buffer.from(buffer), type, 'proofs');
 
 		await db
@@ -70,6 +79,15 @@ export const PUT: RequestHandler = async ({ request, locals, url }) => {
 				type: file.type,
 				url: fileUrl,
 				size: buffer.byteLength
+			})
+			.onConflictDoUpdate({
+				target: [files.id],
+				set: {
+					name: file.name,
+					type: file.type,
+					url: fileUrl,
+					size: buffer.byteLength
+				}
 			})
 			.returning();
 
