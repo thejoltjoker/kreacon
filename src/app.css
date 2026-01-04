@@ -229,6 +229,8 @@ layer(base);
 	--color-error: var(--color-pomodoro-500);
 	--color-bg: var(--color-shade-950);
 	--color-bg-dark: var(--color-shade-950);
+
+	--aspect-cover: 2.5 / 1;
 }
 
 /*
