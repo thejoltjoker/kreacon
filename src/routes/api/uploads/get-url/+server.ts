@@ -1,5 +1,5 @@
 import { createBackendLogger } from '$lib/server/logger';
-import { generateBlobSasUrl } from '$lib/server/azure/storage';
+import { generateBlobSasUrl, deleteBlobFromUrl } from '$lib/server/azure/storage';
 import db from '$lib/server/db';
 import { files } from '$lib/server/db/schema';
 import { error, json } from '@sveltejs/kit';
@@ -7,6 +7,7 @@ import { StatusCodes } from 'http-status-codes';
 import type { RequestHandler } from './$types';
 import { getUrlSchema } from './schema';
 import { isAuthenticated, isEmailVerified } from '../../../(app)/utils';
+import { eq } from 'drizzle-orm';
 
 const logger = createBackendLogger('api/uploads/get-url');
 
@@ -33,6 +34,14 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 	const baseUrl = sasUrl.split('?')[0];
 
 	try {
+		const existingFile = await db.query.files.findFirst({
+			where: eq(files.id, data.uuid)
+		});
+
+		if (existingFile && existingFile.url && existingFile.url !== baseUrl) {
+			await deleteBlobFromUrl(existingFile.url);
+		}
+
 		const [file] = await db
 			.insert(files)
 			.values({
@@ -42,6 +51,16 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 				url: baseUrl,
 				size: data.size,
 				checksum: data.checksum
+			})
+			.onConflictDoUpdate({
+				target: [files.id],
+				set: {
+					name: data.name,
+					type: data.type,
+					url: baseUrl,
+					size: data.size,
+					checksum: data.checksum
+				}
 			})
 			.returning();
 

@@ -137,9 +137,6 @@ export const uploadBuffer = async (
 
 // Client
 export const upload = {
-	thumbnail: async (file: File) => {
-		return await uploadFile(file);
-	},
 	video: async (file: File) => {
 		return await uploadFile(file);
 	},
@@ -197,4 +194,28 @@ export const compressImageBlob = async (
 	};
 
 	return result;
+};
+
+export const deleteBlobFromUrl = async (blobUrl: string): Promise<void> => {
+	try {
+		const url = new URL(blobUrl);
+		const pathParts = url.pathname.split('/').filter((part) => part.length > 0);
+
+		if (pathParts.length < 2) {
+			logger.warn(`Invalid blob URL format: ${blobUrl}`);
+			return;
+		}
+
+		const containerName = pathParts[0] as AzureStorageContainer;
+		const blobName = pathParts.slice(1).join('/');
+
+		const blobServiceClient = getBlobServiceClient();
+		const containerClient = blobServiceClient.getContainerClient(containerName);
+		const blobClient = containerClient.getBlobClient(blobName);
+
+		await blobClient.delete();
+		logger.info(`Deleted blob ${blobName} from container ${containerName}`);
+	} catch (err: unknown) {
+		logger.warn(`Failed to delete blob from URL ${blobUrl}:`, err);
+	}
 };

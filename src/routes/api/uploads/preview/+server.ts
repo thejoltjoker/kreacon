@@ -2,13 +2,14 @@ import { error } from '@sveltejs/kit';
 import { StatusCodes } from 'http-status-codes';
 import type { RequestHandler } from './$types';
 import sharp from 'sharp';
-import { azureUploadBlob } from '$lib/server/azure/storage';
+import { azureUploadBlob, deleteBlobFromUrl } from '$lib/server/azure/storage';
 import { files } from '$lib/server/db/schema';
 import db from '$lib/server/db';
 import { createBackendLogger } from '$lib/server/logger';
 import { z } from 'zod/v4';
 import { getAllowedMimeTypes, isAllowedMimeTypeForMedia } from '$lib/helpers/mediaTypes';
 import { isAuthenticated, isEmailVerified } from '../../../(app)/utils';
+import { eq } from 'drizzle-orm';
 
 const logger = createBackendLogger('api/uploads/preview');
 
@@ -90,6 +91,14 @@ export const PUT: RequestHandler = async ({ request, locals, url }) => {
 			.webp({ quality: previewConfig.quality })
 			.toBuffer();
 
+		const existingFile = await db.query.files.findFirst({
+			where: eq(files.id, fileId)
+		});
+
+		if (existingFile && existingFile.url) {
+			await deleteBlobFromUrl(existingFile.url);
+		}
+
 		const url = await azureUploadBlob(blobName, processedBuffer, 'image/webp', 'previews');
 
 		await db
@@ -100,6 +109,15 @@ export const PUT: RequestHandler = async ({ request, locals, url }) => {
 				type: file.type,
 				url: url,
 				size: processedBuffer.length
+			})
+			.onConflictDoUpdate({
+				target: [files.id],
+				set: {
+					name: file.name,
+					type: file.type,
+					url: url,
+					size: processedBuffer.length
+				}
 			})
 			.returning();
 

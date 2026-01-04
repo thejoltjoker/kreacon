@@ -264,6 +264,10 @@
 		const input = event.dataTransfer;
 
 		if (input?.files && input.files.length > 0) {
+			fileId = crypto.randomUUID();
+			uploadUrl = customUploadUrl;
+			blobUrl = undefined;
+
 			files = input.files;
 
 			const isValid = await validateFile(files[0]);
@@ -514,6 +518,10 @@
 	) => {
 		files = event.currentTarget.files;
 		if (!files || files.length === 0) return;
+
+		fileId = crypto.randomUUID();
+		uploadUrl = customUploadUrl;
+		blobUrl = undefined;
 
 		const isValid = await validateFile(files[0]);
 		if (!isValid) {
