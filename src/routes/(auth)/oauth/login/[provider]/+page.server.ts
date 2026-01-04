@@ -23,7 +23,7 @@ export const load = (async ({ params, cookies }) => {
 	cookies.set('oauth_state', client.state, {
 		path: '/oauth/callback',
 		httpOnly: true,
-		secure: dev ?? true,
+		secure: !dev,
 		maxAge: 60 * 10 // 10 minutes
 	});
 

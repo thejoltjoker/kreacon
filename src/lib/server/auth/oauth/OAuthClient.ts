@@ -68,13 +68,22 @@ export class OAuthBase {
 			const response = await fetch(request);
 
 			if (!response.ok) {
-				throw new Error('Network response was not ok');
+				const errorBody = await response.text();
+				logger.error('OAuth API request failed', {
+					status: response.status,
+					statusText: response.statusText,
+					url,
+					body: errorBody
+				});
+				throw new Error(
+					`OAuth API request failed: ${response.status} ${response.statusText}. Body: ${errorBody}`
+				);
 			}
 
 			const data: T = await response.json();
 			return data;
 		} catch (error) {
-			logger.error('Error fetching access token:', { error });
+			logger.error('Error in OAuth post request:', { error, url });
 			throw error;
 		}
 	}
