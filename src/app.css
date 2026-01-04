@@ -28,6 +28,7 @@ layer(base);
 @source inline('[&_ul]:list-inside');
 @source inline('text-destructive');
 @source inline('text-success');
+@source inline('render-pixelated');
 
 @theme {
 	/* Custom spacing values - these will be available for gap, padding, margin, etc. */
@@ -291,6 +292,13 @@ layer(base);
 
 @utility select-item {
 	@apply h-form rounded-form pl-sm hover:bg-muted-foreground! data-disabled:text-muted-foreground flex cursor-pointer items-center justify-between data-disabled:cursor-default! data-disabled:bg-transparent! data-selected:font-bold;
+}
+
+@utility render-pixelated {
+	image-rendering: -webkit-optimize-contrast;
+	image-rendering: -moz-crisp-edges;
+	image-rendering: crisp-edges;
+	image-rendering: pixelated;
 }
 
 @layer base {

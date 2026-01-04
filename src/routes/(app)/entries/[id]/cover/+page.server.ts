@@ -1,7 +1,6 @@
 import { isBetweenDates } from '$lib/helpers/isBetweenDates';
 import { db } from '$lib/server/db';
 import { entries } from '$lib/server/db/schema';
-import votes from '$lib/server/db/schema/vote';
 import { createBackendLogger } from '$lib/server/logger';
 import { eq, sql } from 'drizzle-orm';
 import type { PageServerLoad } from './$types';

@@ -64,12 +64,15 @@
 								/>
 							{/if}
 						</span>
+						<!-- Pixelated rendering for Oldschool Graphics category because it's pixel art -->
 						<img
 							src={`${entry?.preview?.url}`}
 							alt={entry?.title}
 							class={cn(
 								'text-shade-300 z-10 h-full w-full object-cover object-center',
-								entry.status === 'rejected' && 'opacity-80 grayscale'
+								entry.status === 'rejected' && 'opacity-80 grayscale',
+								entry.category?.name?.toLowerCase().includes('oldschool graphics') &&
+									'render-pixelated'
 							)}
 						/>
 					</a>

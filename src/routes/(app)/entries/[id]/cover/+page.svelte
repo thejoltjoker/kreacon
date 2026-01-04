@@ -3,11 +3,7 @@
 	import type { PageProps } from './$types';
 	import { createPublicUrl } from '$lib/utils';
 	import QRCode from 'qrcode';
-	import Avatar from '$lib/components/Avatar.svelte';
-	import Button from '$lib/components/Button.svelte';
-	import { t } from '$lib/i18n';
-	import { formatRelativeTime } from '$lib/helpers/formatRelativeTime';
-	import { ArrowRightIcon } from 'lucide-svelte';
+	import { cn } from '$lib/utils';
 
 	let { data }: PageProps = $props();
 	let entry = $derived(data.entry);
@@ -71,7 +67,10 @@
 	<div class="image-wrapper z-10">
 		<div class="image">
 			<img
-				class="h-full w-full object-cover opacity-25"
+				class={cn(
+					'h-full w-full object-cover opacity-25',
+					entry?.category?.name?.toLowerCase().includes('oldschool graphics') && 'render-pixelated'
+				)}
 				src={`${data.entry?.media?.url}`}
 				alt={data.entry?.title}
 			/>
