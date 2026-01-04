@@ -19,7 +19,12 @@ export const load = (async (event) => {
 	const state = url.searchParams.get('state');
 
 	try {
-		logger.info('OAuth callback', { provider, code, state, hasStoredState: !!cookies.get('oauth_state') });
+		logger.info('OAuth callback', {
+			provider,
+			code,
+			state,
+			hasStoredState: !!cookies.get('oauth_state')
+		});
 
 		if (!provider) {
 			return error(400, 'Missing provider');
@@ -45,7 +50,7 @@ export const load = (async (event) => {
 
 		const client = getOAuthClient(provider as OAuthProvider);
 		logger.info('Getting OAuth access token', { provider });
-		
+
 		const oauthToken = await client.getAccessToken(code);
 		logger.info('OAuth token received', { hasAccessToken: !!oauthToken.access_token });
 
@@ -53,7 +58,10 @@ export const load = (async (event) => {
 		logger.info('User info received', { email: userInfo.email, userId: userInfo.id });
 
 		if (!userInfo.email) {
-			logger.error('OAuth provider did not return email address', { provider, userId: userInfo.id });
+			logger.error('OAuth provider did not return email address', {
+				provider,
+				userId: userInfo.id
+			});
 			throw error(
 				StatusCodes.BAD_REQUEST,
 				'Email address is required. Please ensure your OAuth account has a verified email.'
@@ -98,9 +106,9 @@ export const load = (async (event) => {
 		logger.info('OAuth login successful', { userId: user.id, provider });
 		throw redirect(StatusCodes.TEMPORARY_REDIRECT, '/profile');
 	} catch (err) {
-		logger.error('OAuth callback error', { 
-			error: err, 
-			provider, 
+		logger.error('OAuth callback error', {
+			error: err,
+			provider,
 			errorMessage: err instanceof Error ? err.message : String(err),
 			errorStack: err instanceof Error ? err.stack : undefined
 		});
