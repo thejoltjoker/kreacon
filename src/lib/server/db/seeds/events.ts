@@ -93,6 +93,7 @@ export const seed = async (db: db) => {
 				event.tickets?.map(async (ticket) => {
 					const userId = await getUserId(db, ticket.username);
 					await db.insert(schema.tickets).values({
+						code: 'TEST-TICKET-CODE',
 						userId,
 						eventId: insertedEvent.id
 					});

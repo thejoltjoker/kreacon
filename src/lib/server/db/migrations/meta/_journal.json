@@ -22,6 +22,13 @@
 			"when": 1767423400011,
 			"tag": "0002_charming_umar",
 			"breakpoints": true
+		},
+		{
+			"idx": 3,
+			"version": "7",
+			"when": 1767574514582,
+			"tag": "0003_third_may_parker",
+			"breakpoints": true
 		}
 	]
 }

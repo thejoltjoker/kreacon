@@ -1,11 +1,12 @@
 <script lang="ts">
 	import { invalidateAll } from '$app/navigation';
-	import { CopyIcon, TrashIcon } from 'lucide-svelte';
+	import AlertDialog from '$lib/components/AlertDialog.svelte';
+	import Button from '$lib/components/Button.svelte';
+	import { CopyIcon, PlusIcon, TrashIcon } from 'lucide-svelte';
 	import EventCombobox from '../../(app)/entries/_components/EventCombobox.svelte';
 	import EntityFilterBar from '../_components/EntityFilterBar.svelte';
 	import EntityList from '../_components/EntityList.svelte';
 	import type { PageData } from './$types';
-	import AlertDialog from '$lib/components/AlertDialog.svelte';
 
 	let { data }: { data: PageData } = $props();
 
@@ -36,6 +37,9 @@
 
 <EntityFilterBar entityName="tickets">
 	{#snippet buttons()}
+		<!-- TODO allow admin to add ticket -->
+		<!-- <Button href="/admin/tickets/create" variant="outline" icon={PlusIcon}>Add Ticket</Button> -->
+
 		<EventCombobox
 			items={data.events.map((event) => ({
 				label: event.name,
