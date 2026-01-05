@@ -86,13 +86,13 @@
 	{
 		"name": "Game",
 		"slug": "game",
-		"mediaType": "executable",
+		"mediaType": "video",
 		"description": "Interactive fun takes center stage. Whether it is fast arcade action, clever puzzles, or experimental gameplay, impress the crowd with something they can play."
 	},
 	{
 		"name": "Interactive",
 		"slug": "interactive",
-		"mediaType": "executable",
+		"mediaType": "video",
 		"description": "Not just something to watch. Games, toys, experiments, and playful ideas where the audience gets to take control."
 	}
 ]

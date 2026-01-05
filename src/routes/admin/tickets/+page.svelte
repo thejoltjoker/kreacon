@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { invalidateAll } from '$app/navigation';
+	import AlertDialog from '$lib/components/AlertDialog.svelte';
 	import { CopyIcon, TrashIcon } from 'lucide-svelte';
 	import EventCombobox from '../../(app)/entries/_components/EventCombobox.svelte';
 	import EntityFilterBar from '../_components/EntityFilterBar.svelte';
 	import EntityList from '../_components/EntityList.svelte';
 	import type { PageData } from './$types';
-	import AlertDialog from '$lib/components/AlertDialog.svelte';
 
 	let { data }: { data: PageData } = $props();
 
@@ -15,6 +15,7 @@
 	const handleCopyDetails = (value: PageData['tickets'][number]) => {
 		const details = JSON.stringify({
 			id: value.id,
+			code: value.code,
 			event: value.event.name,
 			email: value.user.email,
 			username: value.user.username
@@ -35,6 +36,9 @@
 
 <EntityFilterBar entityName="tickets">
 	{#snippet buttons()}
+		<!-- TODO allow admin to add ticket -->
+		<!-- <Button href="/admin/tickets/create" variant="outline" icon={PlusIcon}>Add Ticket</Button> -->
+
 		<EventCombobox
 			items={data.events.map((event) => ({
 				label: event.name,
@@ -51,7 +55,7 @@
 		event: ticket.event.name
 	}))}
 	fields={[
-		{ name: 'id', minScreen: 'all', sortable: false },
+		{ name: 'code', minScreen: 'all', sortable: false },
 		{ name: 'event', minScreen: 'md', sortable: false },
 		{ name: 'email', minScreen: 'lg', sortable: false },
 		{ name: 'username', minScreen: 'sm', sortable: false }
@@ -89,7 +93,7 @@
 		{#snippet description()}
 			Are you sure you want to delete <span class="font-bold">{ticketToDelete?.user.username}</span
 			>'s ticket for <span class="font-bold">{ticketToDelete?.event}</span>?<br />
-			<span class="text-shade-400 font-mono text-sm">ID: {ticketToDelete?.id}</span>
+			<span class="text-shade-400 font-mono text-sm">Code: {ticketToDelete?.code}</span>
 			<br />
 			<br />
 			<span class="text-shade-400">This action cannot be undone.</span>

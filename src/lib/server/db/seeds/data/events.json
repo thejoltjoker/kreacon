@@ -190,7 +190,6 @@
 					{
 						"text": "The entry must run on the official party hardware without installation or configuration."
 					},
-					{ "text": "Keyboard and or gamepad input only." },
 					{
 						"text": "The entry must not crash, freeze, or require a restart during normal use (unless it's a feature)."
 					},

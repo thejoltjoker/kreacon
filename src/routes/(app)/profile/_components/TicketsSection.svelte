@@ -34,7 +34,7 @@
 					<p
 						class="text-shade-300-alt order-3 w-full font-mono text-sm whitespace-pre sm:order-2 sm:w-auto"
 					>
-						{ticket.id}
+						{ticket.code}
 					</p>
 				</li>
 			{/each}
