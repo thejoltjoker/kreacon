@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { CircleAlertIcon, CircleCheckIcon, DownloadIcon } from 'lucide-svelte';
+	import { CircleAlertIcon, CircleCheckIcon, DownloadIcon, TvMinimalPlayIcon } from 'lucide-svelte';
 	import EntityFilterBar from '../_components/EntityFilterBar.svelte';
 	import EntityList from '../_components/EntityList.svelte';
 	import type { PageData } from './$types';
@@ -7,6 +7,7 @@
 	import type { EntryStatus } from '$lib/types/entryStatus';
 	import { invalidateAll } from '$app/navigation';
 	import EntryStatusField from '../_components/customFields/EntryStatusField.svelte';
+	import { downloadEntryCover } from '$lib/helpers/downloadEntryCover';
 
 	let { data }: { data: PageData } = $props();
 
@@ -65,6 +66,14 @@
 			entry.id
 		);
 	};
+
+	const handleDownloadCover = async (entry: PageData['entries'][number]) => {
+		try {
+			await downloadEntryCover(entry.id);
+		} catch (error) {
+			console.error('Error downloading cover image:', error);
+		}
+	};
 </script>
 
 <EntityFilterBar entityName="entries">
@@ -72,6 +81,8 @@
 		<EventCombobox
 			items={data.events.map((event) => ({ label: event.name, value: event.id.toString() }))}
 		/>
+		<!-- TODO Create download all cover functionality -->
+		<!-- <Button variant="outline" icon={TvMinimalPlayIcon}>Download covers</Button> -->
 	{/snippet}
 </EntityFilterBar>
 <!-- TODO Show text filter by event -->
@@ -97,6 +108,12 @@
 			icon: CircleAlertIcon,
 			onClick: (value) => handleReject(value),
 			class: '[&_svg]:text-secondary'
+		},
+
+		{
+			label: 'Download cover',
+			icon: TvMinimalPlayIcon,
+			onClick: (value) => handleDownloadCover(value)
 		},
 		// TODO create e2e test
 		{

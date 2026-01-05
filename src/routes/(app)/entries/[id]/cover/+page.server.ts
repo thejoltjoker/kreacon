@@ -1,0 +1,70 @@
+import { db } from '$lib/server/db';
+import { entries } from '$lib/server/db/schema';
+import { createBackendLogger } from '$lib/server/logger';
+import { eq } from 'drizzle-orm';
+import type { PageServerLoad } from './$types';
+const logger = createBackendLogger('/entries/[id]');
+export const load = (async ({ params, locals }) => {
+	const { id } = params;
+	logger.info(`Loading entry with ID: ${id}`);
+
+	const result = await db.transaction(async (tx) => {
+		return await tx.query.entries.findFirst({
+			where: eq(entries.id, id),
+			columns: {
+				id: true,
+				title: true,
+				views: true,
+				createdAt: true,
+				status: true,
+				license: true,
+				description: true
+			},
+			with: {
+				media: {
+					columns: {
+						url: true,
+						type: true,
+						name: true
+					}
+				},
+				category: {
+					columns: {
+						id: true,
+						name: true
+					}
+				},
+				event: {
+					columns: {
+						name: true,
+						id: true,
+						votingOpenAt: true,
+						votingCloseAt: true
+					}
+				},
+				preview: {
+					columns: {
+						url: true
+					}
+				},
+				user: {
+					columns: {
+						username: true
+					},
+					with: {
+						avatar: { columns: { url: true } }
+					}
+				}
+			}
+		});
+	});
+
+	if (!result) {
+		logger.warn(`Entry with ID: ${id} not found`);
+	}
+
+	const title = result?.event
+		? { text: result.event.name, href: `/entries?event=${result.event.id}` }
+		: { text: 'Entries', href: '/entries' };
+	return { entry: result, user: locals.user, title };
+}) satisfies PageServerLoad;

@@ -2,6 +2,7 @@
 	import AudioPlayer from '$lib/components/AudioPlayer.svelte';
 	import VideoPlayer from '$lib/components/VideoPlayer.svelte';
 	import { getMediaTypeForMime } from '$lib/helpers/mediaTypes';
+	import { cn } from '$lib/utils';
 	import type { PageData } from '../$types';
 
 	let { entry }: { entry: NonNullable<PageData['entry']> } = $props();
@@ -14,7 +15,10 @@
 			<img
 				src={`${entry.media?.url}`}
 				alt={entry.title}
-				class="rounded-form h-full w-full overflow-hidden object-cover object-center"
+				class={cn(
+					'rounded-form h-full w-full overflow-hidden object-cover object-center',
+					entry.category?.name?.toLowerCase().includes('oldschool graphics') && 'render-pixelated'
+				)}
 			/>
 		{:else if mediaType === 'video'}
 			<VideoPlayer src={entry.media.url} poster={entry.preview?.url} />

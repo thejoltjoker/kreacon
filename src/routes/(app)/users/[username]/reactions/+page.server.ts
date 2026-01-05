@@ -23,7 +23,12 @@ export const load = (async ({ params, url }) => {
 					id: true
 				},
 				with: {
-					preview: true
+					preview: true,
+					category: {
+						columns: {
+							name: true
+						}
+					}
 				}
 			}
 		},

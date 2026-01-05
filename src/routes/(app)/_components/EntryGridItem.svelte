@@ -5,6 +5,7 @@
 	import type { Entry } from '$lib/server/db/schema/entry';
 	import type { PublicUser } from '$lib/server/db/schema/user';
 	import StatusIcon from '../entries/_components/StatusIcon.svelte';
+	import { cn } from '$lib/utils';
 
 	interface Props {
 		entry: Entry & { category: Category; preview: SelectFile; user: PublicUser };
@@ -19,7 +20,10 @@
 			<img
 				src={`${entry.preview.url}`}
 				alt={entry.title}
-				class="h-full w-full object-cover object-center"
+				class={cn(
+					'h-full w-full object-cover object-center',
+					entry.category?.name?.toLowerCase().includes('oldschool graphics') && 'render-pixelated'
+				)}
 			/>
 		</a>
 	</div>

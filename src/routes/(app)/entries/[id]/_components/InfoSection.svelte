@@ -1,13 +1,14 @@
 <script lang="ts">
 	import LicenseTooltip from '$lib/components/LicenseTooltip.svelte';
 
-	import { DownloadIcon } from 'lucide-svelte';
+	import { DownloadIcon, TvMinimalPlayIcon, LoaderCircleIcon } from 'lucide-svelte';
 
 	import type { PageData } from '../$types';
 	import VoteButton from './VoteButton.svelte';
 	import Button from '$lib/components/Button.svelte';
 	import { t } from '$lib/i18n';
 	import DeleteButton from './DeleteButton.svelte';
+	import { downloadEntryCover } from '$lib/helpers/downloadEntryCover';
 
 	let {
 		entry,
@@ -20,6 +21,21 @@
 		isVoted: boolean;
 		isOpenForVoting: boolean;
 	} = $props();
+
+	let isDownloadingCover = $state(false);
+
+	async function handleCoverDownload(e: MouseEvent) {
+		e.preventDefault();
+		isDownloadingCover = true;
+
+		try {
+			await downloadEntryCover(entry.id);
+		} catch (error) {
+			console.error('Error downloading cover image:', error);
+		} finally {
+			isDownloadingCover = false;
+		}
+	}
 </script>
 
 {#if entry.description}
@@ -39,6 +55,20 @@
 
 	<!-- Actions -->
 	<div id="entry-actions" class="gap-sm flex flex-1 justify-end">
+		{#if user?.role === 'admin' || user?.role === 'superadmin'}
+			<Button
+				variant="outline"
+				size="icon"
+				onclick={handleCoverDownload}
+				disabled={isDownloadingCover}
+			>
+				{#if isDownloadingCover}
+					<LoaderCircleIcon class="animate-spin" />
+				{:else}
+					<TvMinimalPlayIcon />
+				{/if}
+			</Button>
+		{/if}
 		<Button
 			variant="outline"
 			size="icon"
