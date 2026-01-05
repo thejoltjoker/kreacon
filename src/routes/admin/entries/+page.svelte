@@ -1,5 +1,12 @@
 <script lang="ts">
-	import { CircleAlertIcon, CircleCheckIcon, DownloadIcon, TvMinimalPlayIcon } from 'lucide-svelte';
+	import Button from '$lib/components/Button.svelte';
+	import {
+		CircleAlertIcon,
+		CircleCheckIcon,
+		DownloadIcon,
+		PlusIcon,
+		TvMinimalPlayIcon
+	} from 'lucide-svelte';
 	import EntityFilterBar from '../_components/EntityFilterBar.svelte';
 	import EntityList from '../_components/EntityList.svelte';
 	import type { PageData } from './$types';
@@ -95,6 +102,8 @@
 		<EventCombobox
 			items={data.events.map((event) => ({ label: event.name, value: event.id.toString() }))}
 		/>
+		<!-- TODO Create download all cover functionality -->
+		<!-- <Button variant="outline" icon={TvMinimalPlayIcon}>Download covers</Button> -->
 	{/snippet}
 </EntityFilterBar>
 <!-- TODO Show text filter by event -->

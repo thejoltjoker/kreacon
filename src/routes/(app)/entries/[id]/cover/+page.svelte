@@ -82,7 +82,7 @@
 	@reference "../../../../../app.css";
 
 	#letterbox {
-		border: 1px dashed var(--color-shade-300);
+		/* border: 1px dashed var(--color-shade-300); */
 		@apply aspect-cover gap-xl absolute top-[50%] left-[50%] flex w-full -translate-x-1/2 -translate-y-1/2 flex-row items-center justify-center text-center;
 	}
 	#cover-container {
@@ -93,6 +93,6 @@
 		@apply h-full w-full overflow-hidden;
 	}
 	.image {
-		@apply -m-[5%] h-[110%] w-[110%] blur-[25px];
+		@apply -mt-[5%] -ml-[5%] h-[110%] w-[110%] blur-[25px];
 	}
 </style>
