@@ -15,6 +15,7 @@
 	const handleCopyDetails = (value: PageData['tickets'][number]) => {
 		const details = JSON.stringify({
 			id: value.id,
+			code: value.code,
 			event: value.event.name,
 			email: value.user.email,
 			username: value.user.username
@@ -51,7 +52,7 @@
 		event: ticket.event.name
 	}))}
 	fields={[
-		{ name: 'id', minScreen: 'all', sortable: false },
+		{ name: 'code', minScreen: 'all', sortable: false },
 		{ name: 'event', minScreen: 'md', sortable: false },
 		{ name: 'email', minScreen: 'lg', sortable: false },
 		{ name: 'username', minScreen: 'sm', sortable: false }
@@ -89,7 +90,7 @@
 		{#snippet description()}
 			Are you sure you want to delete <span class="font-bold">{ticketToDelete?.user.username}</span
 			>'s ticket for <span class="font-bold">{ticketToDelete?.event}</span>?<br />
-			<span class="text-shade-400 font-mono text-sm">ID: {ticketToDelete?.id}</span>
+			<span class="text-shade-400 font-mono text-sm">Code: {ticketToDelete?.code}</span>
 			<br />
 			<br />
 			<span class="text-shade-400">This action cannot be undone.</span>

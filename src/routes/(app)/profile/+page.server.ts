@@ -30,7 +30,7 @@ export const load = (async ({ locals }) => {
 			avatar: { columns: { url: true } },
 			accounts: { columns: { provider: true, providerAccountId: true } },
 			tickets: {
-				columns: { id: true },
+				columns: { id: true, code: true },
 				with: {
 					event: {
 						columns: {
@@ -58,6 +58,7 @@ export const load = (async ({ locals }) => {
 
 	const tickets = userData.tickets.map((t) => ({
 		id: t.id,
+		code: t.code,
 		event: t.event
 	}));
 
@@ -174,7 +175,7 @@ export const actions = {
 
 		try {
 			await db.insert(tickets).values({
-				id: validatedTicket.id,
+				code: validatedTicket.id,
 				userId: locals.user.id,
 				eventId: event.id
 			});
