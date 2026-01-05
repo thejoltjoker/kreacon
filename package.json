@@ -1,6 +1,6 @@
 {
 	"name": "kreacon",
-	"version": "0.2.37",
+	"version": "0.2.38",
 	"private": true,
 	"scripts": {
 		"postinstall": "node -e \"if (process.env.SKIP_PLAYWRIGHT_INSTALL !== '1') { require('child_process').execSync('npx playwright install --with-deps chromium', { stdio: 'inherit' }); }\"",
