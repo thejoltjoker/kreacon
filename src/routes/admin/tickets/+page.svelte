@@ -1,8 +1,7 @@
 <script lang="ts">
 	import { invalidateAll } from '$app/navigation';
 	import AlertDialog from '$lib/components/AlertDialog.svelte';
-	import Button from '$lib/components/Button.svelte';
-	import { CopyIcon, PlusIcon, TrashIcon } from 'lucide-svelte';
+	import { CopyIcon, TrashIcon } from 'lucide-svelte';
 	import EventCombobox from '../../(app)/entries/_components/EventCombobox.svelte';
 	import EntityFilterBar from '../_components/EntityFilterBar.svelte';
 	import EntityList from '../_components/EntityList.svelte';
