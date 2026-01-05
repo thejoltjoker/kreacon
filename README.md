@@ -30,6 +30,23 @@
    npm install
    ```
 
+   > **Note:** By default, `npm install` will automatically install Playwright Chromium with dependencies, which can be slow and consume significant disk space. To skip this in development or CI, set the `SKIP_PLAYWRIGHT_INSTALL=1` environment variable:
+   >
+   > ```bash
+   > SKIP_PLAYWRIGHT_INSTALL=1 npm install
+   > ```
+   >
+   > In GitHub Actions, add it to your workflow:
+   >
+   > ```yaml
+   > - name: Install dependencies
+   >   env:
+   >     SKIP_PLAYWRIGHT_INSTALL: 1
+   >   run: npm install
+   > ```
+   >
+   > Playwright will still be installed when needed for running tests (`npm run test:e2e`).
+
 4. Set up environment variables:
    - Copy `.env.example` to `.env`
      - `cp .env.example .env`

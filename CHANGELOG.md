@@ -88,6 +88,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   [#151](https://github.com/thejoltjoker/kreacon/pull/151)
 - Add download links for entries in admin ui
   [#155](https://github.com/thejoltjoker/kreacon/pull/155)
+- Add cover image generation endpoint for entries
+  [#169](https://github.com/thejoltjoker/kreacon/pull/169)
 
 ### Changed
 

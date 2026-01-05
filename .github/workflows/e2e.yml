@@ -51,6 +51,8 @@ jobs:
         with:
           node-version: 24
       - name: Install dependencies
+        env:
+          SKIP_PLAYWRIGHT_INSTALL: 1
         run: npm ci
       - name: Get installed Playwright version
         id: playwright-version

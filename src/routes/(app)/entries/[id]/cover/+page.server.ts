@@ -1,4 +1,3 @@
-import { isBetweenDates } from '$lib/helpers/isBetweenDates';
 import { db } from '$lib/server/db';
 import { entries } from '$lib/server/db/schema';
 import { createBackendLogger } from '$lib/server/logger';
@@ -71,12 +70,8 @@ export const load = (async ({ params, locals }) => {
 		logger.warn(`Entry with ID: ${id} not found`);
 	}
 
-	const isVoted = Boolean(result?.votes && result?.votes.length > 0);
-	const isOpenForVoting =
-		result && isBetweenDates(new Date(), result.event.votingOpenAt, result.event.votingCloseAt);
-
 	const title = result?.event
 		? { text: result.event.name, href: `/entries?event=${result.event.id}` }
 		: { text: 'Entries', href: '/entries' };
-	return { entry: result, user: locals.user, isVoted, title, isOpenForVoting };
+	return { entry: result, user: locals.user, title };
 }) satisfies PageServerLoad;
