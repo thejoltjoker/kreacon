@@ -82,5 +82,17 @@
 		"slug": "genai-music",
 		"mediaType": "audio",
 		"description": "Music created primarily with artificial intelligence. Your track should showcase the capabilities of AI in generating or enhancing musical compositions."
+	},
+	{
+		"name": "Game",
+		"slug": "game",
+		"mediaType": "video",
+		"description": "Interactive fun takes center stage. Whether it is fast arcade action, clever puzzles, or experimental gameplay, impress the crowd with something they can play."
+	},
+	{
+		"name": "Interactive",
+		"slug": "interactive",
+		"mediaType": "video",
+		"description": "Not just something to watch. Games, toys, experiments, and playful ideas where the audience gets to take control."
 	}
 ]

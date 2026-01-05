@@ -12,6 +12,9 @@ export const tickets = pgTable(
 		id: varchar({ length: 255 })
 			.primaryKey()
 			.$defaultFn(() => crypto.randomUUID()),
+		code: varchar({ length: 255 })
+			.notNull()
+			.$defaultFn(() => crypto.randomUUID()),
 		userId: uuid('user_id').notNull(),
 		eventId: integer('event_id').notNull(),
 		...timestamps

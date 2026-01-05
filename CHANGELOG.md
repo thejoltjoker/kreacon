@@ -139,6 +139,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   [#162](https://github.com/thejoltjoker/kreacon/pull/162)
 - Set body size limit to 50MB
   [#163](https://github.com/thejoltjoker/kreacon/pull/163)
+- Add more logging to discord oauth for debugging
+  [#166](https://github.com/thejoltjoker/kreacon/pull/166)
+- Allow ticket code to be reused by multiple users
+  [#168](https://github.com/thejoltjoker/kreacon/pull/168)
 
 ### Deprecated
 

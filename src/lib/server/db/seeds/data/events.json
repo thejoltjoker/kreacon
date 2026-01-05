@@ -181,6 +181,24 @@
 		],
 		"categories": [
 			{
+				"name": "Interactive",
+				"prizes": [],
+				"rules": [
+					{ "text": "All General Rules apply." },
+					{ "text": "The submission must be an interactive real-time application." },
+					{ "text": "Maximum play time is 5 minutes for a typical session." },
+					{
+						"text": "The entry must run on the official party hardware without installation or configuration."
+					},
+					{
+						"text": "The entry must not crash, freeze, or require a restart during normal use (unless it's a feature)."
+					},
+					{
+						"text": "Include a short readme describing interaction, controls, and any special requirements."
+					}
+				]
+			},
+			{
 				"name": "Combined Demo",
 				"prizes": [],
 				"rules": [
