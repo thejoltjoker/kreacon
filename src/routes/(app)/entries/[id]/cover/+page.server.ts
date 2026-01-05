@@ -10,13 +10,6 @@ export const load = (async ({ params, locals }) => {
 	logger.info(`Loading entry with ID: ${id}`);
 
 	const result = await db.transaction(async (tx) => {
-		await tx
-			.update(entries)
-			.set({ views: sql`${entries.views} + 1` })
-			.where(eq(entries.id, id));
-
-		logger.info(`Incremented view count for entry ID: ${id}`);
-
 		return await tx.query.entries.findFirst({
 			where: eq(entries.id, id),
 			columns: {
