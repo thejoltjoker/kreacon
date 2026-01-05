@@ -29,6 +29,12 @@
 
 		try {
 			const response = await fetch(`/api/entries/${entry.id}/cover-image`);
+			if (!response.ok) {
+				console.error(
+					`Failed to download cover image for entry ${entry.id}: ${response.status} ${response.statusText}`
+				);
+				return;
+			}
 			const blob = await response.blob();
 			const url = window.URL.createObjectURL(blob);
 			const a = document.createElement('a');
