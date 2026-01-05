@@ -1,12 +1,5 @@
 <script lang="ts">
-	import Button from '$lib/components/Button.svelte';
-	import {
-		CircleAlertIcon,
-		CircleCheckIcon,
-		DownloadIcon,
-		PlusIcon,
-		TvMinimalPlayIcon
-	} from 'lucide-svelte';
+	import { CircleAlertIcon, CircleCheckIcon, DownloadIcon, TvMinimalPlayIcon } from 'lucide-svelte';
 	import EntityFilterBar from '../_components/EntityFilterBar.svelte';
 	import EntityList from '../_components/EntityList.svelte';
 	import type { PageData } from './$types';

@@ -1,7 +1,7 @@
 import { db } from '$lib/server/db';
 import { entries } from '$lib/server/db/schema';
 import { createBackendLogger } from '$lib/server/logger';
-import { eq, sql } from 'drizzle-orm';
+import { eq } from 'drizzle-orm';
 import type { PageServerLoad } from './$types';
 const logger = createBackendLogger('/entries/[id]');
 export const load = (async ({ params, locals }) => {

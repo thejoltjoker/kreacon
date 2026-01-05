@@ -35,7 +35,9 @@
 			<div class="gap-sm flex flex-col items-center justify-center">
 				<img
 					src={qrCodeUrl}
-					alt={entry?.title ? `QR code linking to entry "${entry.title}"` : 'QR code linking to entry details'}
+					alt={entry?.title
+						? `QR code linking to entry "${entry.title}"`
+						: 'QR code linking to entry details'}
 					class="z-30 h-64 w-64 rounded bg-white p-2"
 				/>
 				<div
