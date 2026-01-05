@@ -1,12 +1,13 @@
 {
 	"name": "kreacon",
-	"version": "0.2.36",
+	"version": "0.2.37",
 	"private": true,
 	"scripts": {
 		"postinstall": "node -e \"if (process.env.SKIP_PLAYWRIGHT_INSTALL !== '1') { require('child_process').execSync('npx playwright install --with-deps chromium', { stdio: 'inherit' }); }\"",
 		"dev": "vite dev",
 		"build": "vite build",
 		"preview": "vite preview",
+		"start": "node build",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"commitlint": "commitlint --edit",
@@ -43,6 +44,7 @@
 		"@internationalized/date": "^3.10.1",
 		"@microsoft/applicationinsights-web": "^3.3.10",
 		"@node-rs/xxhash": "^1.7.6",
+		"@playwright/test": "^1.57.0",
 		"@sentry/sveltekit": "^10.32.1",
 		"@sveltejs/adapter-node": "^5.4.0",
 		"@sveltejs/kit": "^2.49.2",
@@ -79,7 +81,6 @@
 	"devDependencies": {
 		"@commitlint/cli": "^20.2.0",
 		"@commitlint/config-conventional": "^20.2.0",
-		"@playwright/test": "^1.57.0",
 		"@sveltejs/adapter-auto": "^7.0.0",
 		"@sveltejs/vite-plugin-svelte": "^6.2.1",
 		"@sveltejs/vite-plugin-svelte-inspector": "^5.0.1",
