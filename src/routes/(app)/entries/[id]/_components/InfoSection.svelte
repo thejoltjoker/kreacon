@@ -1,7 +1,7 @@
 <script lang="ts">
 	import LicenseTooltip from '$lib/components/LicenseTooltip.svelte';
 
-	import { DownloadIcon, TvMinimalPlayIcon } from 'lucide-svelte';
+	import { DownloadIcon, TvMinimalPlayIcon, LoaderCircleIcon } from 'lucide-svelte';
 
 	import type { PageData } from '../$types';
 	import VoteButton from './VoteButton.svelte';
@@ -20,6 +20,28 @@
 		isVoted: boolean;
 		isOpenForVoting: boolean;
 	} = $props();
+
+	let isDownloadingCover = $state(false);
+
+	async function handleCoverDownload(e: MouseEvent) {
+		e.preventDefault();
+		isDownloadingCover = true;
+
+		try {
+			const response = await fetch(`/api/entries/${entry.id}/cover-image`);
+			const blob = await response.blob();
+			const url = window.URL.createObjectURL(blob);
+			const a = document.createElement('a');
+			a.href = url;
+			a.download = `entry-${entry.id}-cover.png`;
+			document.body.appendChild(a);
+			a.click();
+			window.URL.revokeObjectURL(url);
+			document.body.removeChild(a);
+		} finally {
+			isDownloadingCover = false;
+		}
+	}
 </script>
 
 {#if entry.description}
@@ -43,10 +65,14 @@
 			<Button
 				variant="outline"
 				size="icon"
-				href={`/api/entries/${entry.id}/cover-image`}
-				download={`entry-${entry.id}-cover.png`}
+				onclick={handleCoverDownload}
+				disabled={isDownloadingCover}
 			>
-				<TvMinimalPlayIcon />
+				{#if isDownloadingCover}
+					<LoaderCircleIcon class="animate-spin" />
+				{:else}
+					<TvMinimalPlayIcon />
+				{/if}
 			</Button>
 		{/if}
 		<Button
