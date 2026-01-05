@@ -33,7 +33,11 @@
 	<div id="letterbox" class="z-20">
 		<div class="gap-2xl flex flex-row">
 			<div class="gap-sm flex flex-col items-center justify-center">
-				<img src={qrCodeUrl} alt="QR Code" class="z-30 h-64 w-64 rounded bg-white p-2" />
+				<img
+					src={qrCodeUrl}
+					alt={entry?.title ? `QR code linking to entry "${entry.title}"` : 'QR code linking to entry details'}
+					class="z-30 h-64 w-64 rounded bg-white p-2"
+				/>
 				<div
 					class="group px-2xs py-2xs pr-sm inline-flex w-fit items-center gap-3 rounded-full border text-sm font-bold transition-colors"
 				>
