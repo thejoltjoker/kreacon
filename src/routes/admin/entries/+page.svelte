@@ -14,6 +14,7 @@
 	import type { EntryStatus } from '$lib/types/entryStatus';
 	import { invalidateAll } from '$app/navigation';
 	import EntryStatusField from '../_components/customFields/EntryStatusField.svelte';
+	import { downloadEntryCover } from '$lib/helpers/downloadEntryCover';
 
 	let { data }: { data: PageData } = $props();
 
@@ -75,22 +76,7 @@
 
 	const handleDownloadCover = async (entry: PageData['entries'][number]) => {
 		try {
-			const response = await fetch(`/api/entries/${entry.id}/cover-image`);
-
-			if (!response.ok) {
-				console.error('Failed to generate cover image:', response.statusText);
-				return;
-			}
-
-			const blob = await response.blob();
-			const url = URL.createObjectURL(blob);
-			const link = document.createElement('a');
-			link.href = url;
-			link.download = `entry-${entry.id}-cover.png`;
-			document.body.appendChild(link);
-			link.click();
-			document.body.removeChild(link);
-			URL.revokeObjectURL(url);
+			await downloadEntryCover(entry.id);
 		} catch (error) {
 			console.error('Error downloading cover image:', error);
 		}

@@ -8,6 +8,7 @@
 	import Button from '$lib/components/Button.svelte';
 	import { t } from '$lib/i18n';
 	import DeleteButton from './DeleteButton.svelte';
+	import { downloadEntryCover } from '$lib/helpers/downloadEntryCover';
 
 	let {
 		entry,
@@ -28,16 +29,9 @@
 		isDownloadingCover = true;
 
 		try {
-			const response = await fetch(`/api/entries/${entry.id}/cover-image`);
-			const blob = await response.blob();
-			const url = window.URL.createObjectURL(blob);
-			const a = document.createElement('a');
-			a.href = url;
-			a.download = `entry-${entry.id}-cover.png`;
-			document.body.appendChild(a);
-			a.click();
-			window.URL.revokeObjectURL(url);
-			document.body.removeChild(a);
+			await downloadEntryCover(entry.id);
+		} catch (error) {
+			console.error('Error downloading cover image:', error);
 		} finally {
 			isDownloadingCover = false;
 		}
