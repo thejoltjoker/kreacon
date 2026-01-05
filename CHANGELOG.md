@@ -90,6 +90,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   [#155](https://github.com/thejoltjoker/kreacon/pull/155)
 - Add cover image generation endpoint for entries
   [#169](https://github.com/thejoltjoker/kreacon/pull/169)
+- Add QR code page for entries
+  [#172](https://github.com/thejoltjoker/kreacon/pull/172)
 
 ### Changed
 

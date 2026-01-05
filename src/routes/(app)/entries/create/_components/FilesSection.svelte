@@ -40,7 +40,7 @@
 			mediaType="archive"
 			maxFileSize={1024 * 1024 * 512}
 			field="proofId"
-			label="Proof"
+			label="Proof (optional)"
 			labelProps={{ class: 'text-2xl font-bold' }}
 		/>
 	</div>
@@ -58,7 +58,7 @@
 			This is the image that will be portrayed on the website for viewers to enjoy and vote on. Make
 			it pop, but don’t clickbait...
 		</p>
-		<h4>Proof</h4>
+		<h4>Proof (optional)</h4>
 		<p class="text-shade-300">
 			If the category requires it, you will upload a compressed file with suggested proof of
 			authorship here.
