@@ -5,7 +5,7 @@ import { getOAuthClient } from '$lib/server/auth/oauth/getOAuthClient';
 import { isOAuthProvider, type OAuthProvider } from '$lib/server/auth/oauth/OAuthClient';
 import { db } from '$lib/server/db';
 import { accounts, users } from '$lib/server/db/schema';
-import { hashPassword } from '$lib/server/utils';
+import { assignBeacon2026Ticket, hashPassword } from '$lib/server/utils';
 import { error, redirect } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
 import { StatusCodes } from 'http-status-codes';
@@ -83,6 +83,8 @@ export const load = (async (event) => {
 				})
 				.returning();
 			logger.info('Created new user via OAuth', { userId: user.id, provider });
+			// TODO Remove this after Beacon 2026 event
+			await assignBeacon2026Ticket(user.id);
 		} else if (!user.emailVerifiedAt) {
 			[user] = await db
 				.update(users)

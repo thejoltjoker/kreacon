@@ -2,7 +2,7 @@ import { availableOAuthProviders } from '$lib/server/auth/oauth/getOAuthClient';
 import { db } from '$lib/server/db';
 import users from '$lib/server/db/schema/user';
 
-import { hashPassword } from '$lib/server/utils';
+import { assignBeacon2026Ticket, hashPassword } from '$lib/server/utils';
 import { type Actions, fail, redirect } from '@sveltejs/kit';
 import { eq, or } from 'drizzle-orm';
 import { message, setError, superValidate } from 'sveltekit-superforms';
@@ -52,7 +52,21 @@ export const actions: Actions = {
 		}
 
 		try {
-			await db.insert(users).values({ username, email, password: passwordHash }).returning();
+			// await db.insert(users).values({ username, email, password: passwordHash }).returning();
+
+			// TODO Restore above code and remove below code  after Beacon 2026 event
+			const [createdUser] = await db
+				.insert(users)
+				.values({ username, email, password: passwordHash })
+				.returning();
+
+			if (!createdUser) {
+				logger.error('Failed to create user - no user returned');
+				return message(form, { text: 'Something went wrong', status: 'error' });
+			}
+
+			await assignBeacon2026Ticket(createdUser.id);
+			// END Beacon 2026 code
 
 			// const sessionToken = generateSessionToken();
 			// const session = await createSession(sessionToken, createdUser.id);
