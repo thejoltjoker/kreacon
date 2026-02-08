@@ -76,7 +76,7 @@
 		"tailwind-variants": "^3.2.2",
 		"tailwindcss": "^4.1.18",
 		"throttle-debounce": "^5.0.2",
-		"zod": "^4.2.1"
+		"zod": "^4.3.5"
 	},
 	"devDependencies": {
 		"@commitlint/cli": "^20.2.0",
