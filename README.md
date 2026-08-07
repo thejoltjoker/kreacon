@@ -158,6 +158,43 @@ To create a production version of your app:
 npm run build
 ```
 
+## Useful Database Queries
+
+### Get all entries from an event sorted by category and votes
+
+Run this query in pgAdmin or any PostgreSQL client to get all entries from a specific event (e.g., "Beacon 2026"), grouped by category and sorted by vote count:
+
+```sql
+SELECT
+    e.id,
+    e.title,
+    e.status,
+    e.views,
+    e.created_at,
+    COUNT(v.user_id) as vote_count,
+    u.username as author_username,
+    c.name as category_name
+FROM
+    entry e
+INNER JOIN
+    event ev ON e.event_id = ev.id
+LEFT JOIN
+    vote v ON e.id = v.entry_id
+LEFT JOIN
+    "user" u ON e.user_id = u.id
+LEFT JOIN
+    category c ON e.category_id = c.id
+WHERE
+    ev.name = 'Beacon 2026'
+    AND e.status = 'published'
+GROUP BY
+    e.id, e.title, e.status, e.views, e.created_at, u.username, c.name
+ORDER BY
+    c.name ASC, vote_count DESC, e.created_at DESC;
+```
+
+Change the event name in the `WHERE` clause to query different events. Remove the `AND e.status = 'published'` line to include all entries regardless of status.
+
 ## Commands
 
 | Command          | Description                             |
