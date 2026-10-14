@@ -59,11 +59,11 @@ test('Valid verification link successfully verifies email', async ({ page }) => 
 	const encodedEmail = encodeURIComponent(TEST_EMAIL);
 	const verificationUrl = `/verify-email/${encodedEmail}/${token}?t=${timestamp}`;
 
-	// Navigate to verification URL
+	// Navigate to verification URL (Playwright follows the 307 redirect)
 	const response = await page.goto(verificationUrl);
 
-	// Should redirect to home page
-	expect(response?.status()).toBe(307); // Temporary redirect
+	// Should land on home page after redirect
+	expect(response?.status()).toBe(200);
 	await page.waitForURL('/');
 
 	// Verify email was actually verified in database
@@ -295,13 +295,10 @@ test('Concurrent verification attempts with same token', async ({ page, context 
 			page2.goto(verificationUrl)
 		]);
 
-		// Both should succeed (idempotent operation)
-		// One or both should redirect to home
+		// Both should succeed (idempotent); Playwright follows the 307 to home (200)
 		const status1 = response1?.status();
 		const status2 = response2?.status();
-
-		// At least one should succeed with a redirect
-		expect(status1 === 307 || status2 === 307).toBeTruthy();
+		expect(status1 === 200 || status2 === 200).toBeTruthy();
 
 		// Verify email was verified in database
 		const user = await db.query.users.findFirst({
