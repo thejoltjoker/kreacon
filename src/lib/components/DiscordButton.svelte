@@ -4,7 +4,7 @@
 	import DiscordIcon from '#lib/symbols/DiscordIcon.svg?raw';
 </script>
 
-<Button type="button" variant="white" href="/oauth/login/discord">
+<Button type="button" variant="white" href="/oauth/login/discord" data-sveltekit-reload>
 	<span class="icon">
 		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 		{@html DiscordIcon}

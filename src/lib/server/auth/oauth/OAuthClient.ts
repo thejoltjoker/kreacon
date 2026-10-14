@@ -115,7 +115,10 @@ export class OAuthBase {
 
 	authorize(state?: string) {
 		if (state) this.state = state;
-		return redirect(StatusCodes.TEMPORARY_REDIRECT, this.authUrl());
+		const url = this.authUrl();
+		return redirect(StatusCodes.TEMPORARY_REDIRECT, url, {
+			external: [new URL(this.providerConfig.urls.auth).origin]
+		});
 	}
 
 	async getUser(accessToken: string) {
