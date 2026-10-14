@@ -95,7 +95,9 @@ test('Admin should be able to create and edit events', async ({ page }) => {
 	await categoryTrigger.evaluate((el) => el.scrollIntoView({ block: 'center' }));
 	await categoryTrigger.click();
 	await selectDropdownOption(page, 'Archeological Photography');
-	await expect(page.getByRole('heading', { name: 'Category: Archeological Photography' })).toBeVisible();
+	await expect(
+		page.getByRole('heading', { name: 'Category: Archeological Photography' })
+	).toBeVisible();
 	await page.getByRole('button', { name: 'Add Rule' }).nth(1).click();
 	await page
 		.locator('form div')
