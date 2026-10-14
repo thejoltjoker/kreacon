@@ -1,14 +1,14 @@
 <script lang="ts">
-	import LicenseTooltip from '$lib/components/LicenseTooltip.svelte';
+	import LicenseTooltip from '#lib/components/LicenseTooltip.svelte';
 
-	import { DownloadIcon, TvMinimalPlayIcon, LoaderCircleIcon } from 'lucide-svelte';
+	import { DownloadIcon, TvMinimalPlayIcon, LoaderCircleIcon } from '@lucide/svelte';
 
 	import type { PageData } from '../$types';
 	import VoteButton from './VoteButton.svelte';
-	import Button from '$lib/components/Button.svelte';
-	import { t } from '$lib/i18n';
+	import Button from '#lib/components/Button.svelte';
+	import { t } from '#lib/i18n';
 	import DeleteButton from './DeleteButton.svelte';
-	import { downloadEntryCover } from '$lib/helpers/downloadEntryCover';
+	import { downloadEntryCover } from '#lib/helpers/downloadEntryCover';
 
 	let {
 		entry,

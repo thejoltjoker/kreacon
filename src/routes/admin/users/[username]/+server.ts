@@ -1,12 +1,12 @@
-import db from '$lib/server/db';
+import db from '#lib/server/db';
 import { eq } from 'drizzle-orm';
 import type { RequestHandler } from './$types';
-import { users } from '$lib/server/db/schema';
+import { users } from '#lib/server/db/schema';
 import { json } from '@sveltejs/kit';
 import { StatusCodes } from 'http-status-codes';
 import { adminCheck } from '../../utils';
-import { updateUserSchema } from '$lib/server/db/schema/user';
-import { createBackendLogger } from '$lib/server/logger';
+import { updateUserSchema } from '#lib/server/db/schema/user';
+import { createBackendLogger } from '#lib/server/logger';
 const logger = createBackendLogger('admin/users/[username]/+server.ts');
 export const PATCH: RequestHandler = async ({ params, locals, request }) => {
 	adminCheck(locals);

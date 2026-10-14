@@ -3,9 +3,10 @@
 </script>
 
 <script lang="ts" generics="T extends Record<string, unknown>">
-	import { cn } from '$lib/utils';
+	import { cn } from '#lib/utils';
 	import { Label } from 'bits-ui';
-	import { XCircleIcon, type IconProps, type Icon as IconType } from 'lucide-svelte';
+	import { XCircleIcon } from '@lucide/svelte';
+	import type { LucideIcon, LucideProps } from '@lucide/svelte';
 	import { getContext } from 'svelte';
 	import { formFieldProxy, type FormPathLeaves, type SuperForm } from 'sveltekit-superforms';
 	import StyledSelect, { type StyledSelectProps } from './StyledSelect.svelte';
@@ -14,8 +15,8 @@
 		label: string;
 		field: FormPathLeaves<T>;
 		labelProps?: Label.RootProps;
-		icon?: typeof IconType;
-		iconProps?: IconProps;
+		icon?: LucideIcon;
+		iconProps?: LucideProps;
 		placeholder?: string;
 		/**
 		 * Optional SuperForm instance. If not provided, will attempt to get from GenericForm context

@@ -7,9 +7,7 @@ Sentry.init({
 	tracesSampleRate: 1,
 	replaysSessionSampleRate: 0.1,
 	replaysOnErrorSampleRate: 1,
-	integrations: [Sentry.replayIntegration()],
-	enableLogs: true,
-	sendDefaultPii: true
+	integrations: [Sentry.replayIntegration()]
 });
 
 export const handleError = Sentry.handleErrorWithSentry();

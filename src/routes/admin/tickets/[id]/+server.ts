@@ -1,11 +1,11 @@
-import db from '$lib/server/db';
-import { tickets } from '$lib/server/db/schema';
+import db from '#lib/server/db';
+import { tickets } from '#lib/server/db/schema';
 import { eq } from 'drizzle-orm';
 import type { RequestHandler } from './$types';
-import { insertTicketSchema } from '$lib/server/db/schema/ticket';
+import { insertTicketSchema } from '#lib/server/db/schema/ticket';
 import { json } from '@sveltejs/kit';
 import { StatusCodes } from 'http-status-codes';
-import { createBackendLogger } from '$lib/server/logger';
+import { createBackendLogger } from '#lib/server/logger';
 import { adminCheck } from '../../utils';
 
 const logger = createBackendLogger('admin/tickets/[id]');

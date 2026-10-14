@@ -1,10 +1,10 @@
-import db from '$lib/server/db';
-import { entries } from '$lib/server/db/schema';
+import db from '#lib/server/db';
+import { entries } from '#lib/server/db/schema';
 import { eq } from 'drizzle-orm';
 import type { RequestHandler } from './$types';
 import { adminCheck } from '../../utils';
 import { StatusCodes } from 'http-status-codes';
-import { entryStatus } from '$lib/types/entryStatus';
+import { entryStatus } from '#lib/types/entryStatus';
 import { json } from '@sveltejs/kit';
 import { z } from 'zod/v4';
 

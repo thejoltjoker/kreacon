@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { getEventStatus } from './eventStatus';
-import type { SelectEvent } from '$lib/server/db/schema/event';
+import type { SelectEvent } from '#lib/server/db/schema/event';
 
 describe('getEventStatus', () => {
 	const baseEvent: SelectEvent = {

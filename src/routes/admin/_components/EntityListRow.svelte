@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { t } from '$lib/i18n';
+	import { t } from '#lib/i18n';
 	import EntityListActions, { type EntityListActionItem } from './EntityListActions.svelte';
 	import EntityListField from './EntityListField.svelte';
 	import type { Field, Item } from './types';

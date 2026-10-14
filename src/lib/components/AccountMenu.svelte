@@ -1,19 +1,19 @@
 <script lang="ts">
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import {
 		LayoutGridIcon,
 		LogOutIcon,
 		ShieldIcon,
 		TicketIcon,
 		UserCircleIcon
-	} from 'lucide-svelte';
+	} from '@lucide/svelte';
 	import Avatar from './Avatar.svelte';
 	import DropdownMenuItem from './DropdownMenuItem.svelte';
 	import DropdownMenu from './DropdownMenu.svelte';
 	import DropdownMenuSeparator from './DropdownMenuSeparator.svelte';
-	import { t } from '$lib/i18n';
+	import { t } from '#lib/i18n';
 
-	const user = $derived($page.data.user);
+	const user = $derived(page.data.user);
 </script>
 
 <DropdownMenu

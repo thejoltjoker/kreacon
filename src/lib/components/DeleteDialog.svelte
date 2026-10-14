@@ -1,10 +1,10 @@
 <!-- TODO Fix with latest bits-ui -->
 <script lang="ts">
-	import Button from '$lib/components/Button.svelte';
-	import Divider from '$lib/components/Divider.svelte';
-	import DumbDialog from '$lib/components/DumbDialog.svelte';
-	import DumbInput from '$lib/components/Form/DumbInput.svelte';
-	import { t } from '$lib/i18n';
+	import Button from '#lib/components/Button.svelte';
+	import Divider from '#lib/components/Divider.svelte';
+	import DumbDialog from '#lib/components/DumbDialog.svelte';
+	import DumbInput from '#lib/components/Form/DumbInput.svelte';
+	import { t } from '#lib/i18n';
 	interface Props {
 		entity: string;
 		text: string;

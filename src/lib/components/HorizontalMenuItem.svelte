@@ -1,8 +1,8 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
 	import Button from './Button.svelte';
-	import { page } from '$app/stores';
-	import { cn } from '$lib/utils';
+	import { page } from '$app/state';
+	import { cn } from '#lib/utils';
 	import { getContext } from 'svelte';
 
 	const highlightActive = getContext<boolean>('highlightActive');
@@ -14,7 +14,7 @@
 	}
 	let { href, children, class: className, ...props }: Props = $props();
 
-	const isActive = $derived($page.url.pathname.split('?')[0] === href.split('?')[0]);
+	const isActive = $derived(page.url.pathname.split('?')[0] === href.split('?')[0]);
 </script>
 
 <li>

@@ -8,13 +8,13 @@ const mockEnv = {
 
 let mockDev = true;
 
-vi.mock('$env/dynamic/public', () => ({
-	get env() {
-		return mockEnv;
+vi.mock('$app/env/public', () => ({
+	get PUBLIC_BASE_URL() {
+		return mockEnv.PUBLIC_BASE_URL;
 	}
 }));
 
-vi.mock('$app/environment', () => ({
+vi.mock('$app/env', () => ({
 	get dev() {
 		return mockDev;
 	}

@@ -4,15 +4,15 @@
 </script>
 
 <script lang="ts" generics="T extends Record<string, unknown>">
-	import { env } from '$env/dynamic/public';
+	import { PUBLIC_MAX_UPLOAD_SIZE } from '$app/env/public';
 	import {
 		getExtensionsForMedia,
 		getMimeTypesForMedia,
 		isAllowedMimeTypeForMedia
-	} from '$lib/helpers/mediaTypes';
-	import { t } from '$lib/i18n';
-	import { type MediaType, type MimeType } from '$lib/types/mediaTypes';
-	import { cn, createPublicUrl } from '$lib/utils';
+	} from '#lib/helpers/mediaTypes';
+	import { t } from '#lib/i18n';
+	import { type MediaType, type MimeType } from '#lib/types/mediaTypes';
+	import { cn, createPublicUrl } from '#lib/utils';
 	import { Label } from 'bits-ui';
 	import snakeCase from 'lodash/snakeCase';
 	import {
@@ -25,7 +25,7 @@
 		UploadIcon,
 		XCircleIcon,
 		XIcon
-	} from 'lucide-svelte';
+	} from '@lucide/svelte';
 	import 'media-chrome';
 	import { getContext } from 'svelte';
 	import type { HTMLInputAttributes } from 'svelte/elements';
@@ -82,7 +82,7 @@
 		label,
 		mediaType,
 		behavior = 'auto',
-		maxFileSize = Number(env.PUBLIC_MAX_UPLOAD_SIZE) || 10 * 1024 * 1024,
+		maxFileSize = Number(PUBLIC_MAX_UPLOAD_SIZE) || 10 * 1024 * 1024,
 		debug = false,
 		customUploadUrl,
 		...props

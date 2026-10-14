@@ -5,10 +5,10 @@ import {
 	sendEmailVerification,
 	TOKEN_VALIDITY_MS
 } from './verifyEmail';
-import { Email, type EmailMessage } from '$lib/server/services/email';
-import type { EnvSchema } from '$lib/env';
+import { Email, type EmailMessage } from '#lib/server/services/email';
+import type { EnvSchema } from '#lib/env';
 
-vi.mock('$lib/server/services/email', () => {
+vi.mock('#lib/server/services/email', () => {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const MockEmail = vi.fn(function (this: any) {
 		this.send = vi.fn().mockResolvedValue(undefined);
@@ -16,11 +16,11 @@ vi.mock('$lib/server/services/email', () => {
 	return { Email: MockEmail };
 });
 
-vi.mock('$env/static/private', () => ({
+vi.mock('$app/env/private', () => ({
 	AZURE_COMMUNICATION_SERVICES_SENDER_ADDRESS: 'noreply@test.com'
 }));
 
-vi.mock('$lib/env', () => ({
+vi.mock('#lib/env', () => ({
 	default: {
 		EMAIL_VERIFICATION_SECRET: 'test-secret',
 		NODE_ENV: 'development',
@@ -183,11 +183,11 @@ describe('createVerifyEmailToken', () => {
 
 describe('createVerifyEmailLink', () => {
 	const testEmail = 'test@example.com';
-	let envModule: typeof import('$lib/env');
+	let envModule: typeof import('#lib/env');
 	let originalEnv: Partial<EnvSchema>;
 
 	beforeEach(async () => {
-		envModule = await import('$lib/env');
+		envModule = await import('#lib/env');
 
 		originalEnv = { ...envModule.default };
 	});

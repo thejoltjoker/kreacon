@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Select, type SelectSingleRootProps, type WithoutChildren } from 'bits-ui';
-	import { ChevronsUpDownIcon, DotIcon } from 'lucide-svelte';
+	import { ChevronsUpDownIcon, DotIcon } from '@lucide/svelte';
 
 	type Props = Omit<WithoutChildren<SelectSingleRootProps>, 'type'> & {
 		placeholder?: string;

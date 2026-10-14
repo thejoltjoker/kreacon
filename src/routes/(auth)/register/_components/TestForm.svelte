@@ -1,7 +1,7 @@
 <script lang="ts">
-	import Button from '$lib/components/Button.svelte';
-	import Form from '$lib/components/Form.svelte';
-	import TextField from '$lib/components/FormInput.svelte';
+	import Button from '#lib/components/Button.svelte';
+	import Form from '#lib/components/Form.svelte';
+	import TextField from '#lib/components/FormInput.svelte';
 
 	export let data;
 </script>

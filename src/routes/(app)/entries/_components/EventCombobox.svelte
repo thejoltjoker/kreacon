@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import { resolve } from '$app/paths';
 	import { Combobox } from 'bits-ui';
-	import { ChevronsUpDownIcon, DotIcon, XCircleIcon } from 'lucide-svelte';
+	import { ChevronsUpDownIcon, DotIcon, XCircleIcon } from '@lucide/svelte';
 	import { SvelteURLSearchParams } from 'svelte/reactivity';
 
 	type Item = { value: string; label: string };
@@ -14,7 +14,7 @@
 
 	let customAnchor = $state<HTMLElement>();
 	let inputRef = $state<HTMLInputElement | null>(null);
-	let value = $state($page.url.searchParams.get('event') ?? '');
+	let value = $state(page.url.searchParams.get('event') ?? '');
 	let searchValue = $state('');
 	let isActive = $derived(value === '' || value === null ? undefined : true);
 
@@ -24,11 +24,11 @@
 	});
 
 	const handleValueChange = (event: string | undefined) => {
-		const params = new SvelteURLSearchParams($page.url.searchParams);
+		const params = new SvelteURLSearchParams(page.url.searchParams.toString());
 		if (event) params.set('event', event);
 		else params.delete('event');
 		// @ts-expect-error TODO: Find correct solution to use resolve with search params
-		goto(resolve(`${$page.url.pathname}?${params.toString()}`), { replaceState: true });
+		goto(resolve(`${page.url.pathname}?${params.toString()}`), { replace: true });
 	};
 
 	const handleInput = (e: Event & { currentTarget: HTMLInputElement }) => {

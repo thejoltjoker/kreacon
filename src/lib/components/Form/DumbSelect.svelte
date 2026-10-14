@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { cn } from '$lib/utils';
+	import { cn } from '#lib/utils';
 	import { Select, type WithoutChildren } from 'bits-ui';
-	import { CheckIcon, ChevronDownIcon, ChevronsUpDownIcon, ChevronUpIcon } from 'lucide-svelte';
+	import { CheckIcon, ChevronDownIcon, ChevronsUpDownIcon, ChevronUpIcon } from '@lucide/svelte';
 
 	type Props = WithoutChildren<Select.RootProps> & {
 		placeholder?: string;

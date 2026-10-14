@@ -1,6 +1,6 @@
 <script lang="ts">
-	import Divider from '$lib/components/Divider.svelte';
-	import { t } from '$lib/i18n';
+	import Divider from '#lib/components/Divider.svelte';
+	import { t } from '#lib/i18n';
 	import AccountsSection from './_components/AccountsSection.svelte';
 	import GeneralSection from './_components/GeneralSection.svelte';
 	import TicketsSection from './_components/TicketsSection.svelte';

@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { page } from '$app/stores';
-	import Button from '$lib/components/Button.svelte';
-	import TextField from '$lib/components/Form/TextField.svelte';
-	import Link from '$lib/components/Link.svelte';
-	import { t } from '$lib/i18n';
-	import { loginSchema, type ZLoginSchema } from '$lib/schemas/loginSchema';
+	import { page } from '$app/state';
+	import Button from '#lib/components/Button.svelte';
+	import TextField from '#lib/components/Form/TextField.svelte';
+	import Link from '#lib/components/Link.svelte';
+	import { t } from '#lib/i18n';
+	import { loginSchema, type ZLoginSchema } from '#lib/schemas/loginSchema';
 	import type { SuperValidated, Infer } from 'sveltekit-superforms';
 	import { superForm } from 'sveltekit-superforms';
 	import { zod4Client } from 'sveltekit-superforms/adapters';
@@ -12,7 +12,7 @@
 	let { data }: { data: SuperValidated<Infer<ZLoginSchema>> } = $props();
 	const superform = superForm(data, { validators: zod4Client(loginSchema) });
 	const { message, enhance } = superform;
-	const redirect = $page.url.searchParams.get('redirect');
+	const redirect = page.url.searchParams.get('redirect');
 </script>
 
 <form method="POST" action="/login?/login" use:enhance class="gap-xl flex w-full flex-col">

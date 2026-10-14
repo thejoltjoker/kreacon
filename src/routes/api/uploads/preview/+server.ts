@@ -2,12 +2,12 @@ import { error } from '@sveltejs/kit';
 import { StatusCodes } from 'http-status-codes';
 import type { RequestHandler } from './$types';
 import sharp from 'sharp';
-import { azureUploadBlob, deleteBlobFromUrl } from '$lib/server/azure/storage';
-import { files } from '$lib/server/db/schema';
-import db from '$lib/server/db';
-import { createBackendLogger } from '$lib/server/logger';
+import { azureUploadBlob, deleteBlobFromUrl } from '#lib/server/azure/storage';
+import { files } from '#lib/server/db/schema';
+import db from '#lib/server/db';
+import { createBackendLogger } from '#lib/server/logger';
 import { z } from 'zod/v4';
-import { getAllowedMimeTypes, isAllowedMimeTypeForMedia } from '$lib/helpers/mediaTypes';
+import { getAllowedMimeTypes, isAllowedMimeTypeForMedia } from '#lib/helpers/mediaTypes';
 import { isAuthenticated, isEmailVerified } from '../../../(app)/utils';
 import { eq } from 'drizzle-orm';
 

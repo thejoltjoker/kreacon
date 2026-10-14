@@ -1,5 +1,5 @@
-import db from '$lib/server/db';
-import { events } from '$lib/server/db/schema';
+import db from '#lib/server/db';
+import { events } from '#lib/server/db/schema';
 import { eq } from 'drizzle-orm';
 import { adminCheck } from '../../../utils';
 import type { RequestHandler } from './$types';

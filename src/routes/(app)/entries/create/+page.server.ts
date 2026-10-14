@@ -1,14 +1,14 @@
-import { createEntrySchema } from '$lib/schemas/entry';
-import db from '$lib/server/db';
-import { tickets, users } from '$lib/server/db/schema';
-import entries from '$lib/server/db/schema/entry';
+import { createEntrySchema } from '#lib/schemas/entry';
+import db from '#lib/server/db';
+import { tickets, users } from '#lib/server/db/schema';
+import entries from '#lib/server/db/schema/entry';
 import { error, redirect } from '@sveltejs/kit';
 import { and, eq } from 'drizzle-orm';
 import { StatusCodes } from 'http-status-codes';
 import { fail, message, superValidate } from 'sveltekit-superforms';
 import { zod4 } from 'sveltekit-superforms/adapters';
 import type { Actions, PageServerLoad } from './$types';
-import { createBackendLogger } from '$lib/server/logger';
+import { createBackendLogger } from '#lib/server/logger';
 import { isAuthenticated, isEmailVerified } from '../../utils';
 
 const logger = createBackendLogger('entries/create');
@@ -166,7 +166,7 @@ export const actions = {
 
 		// TODO Get checksum from blob storage
 
-		let id: string | null = null;
+		let id: string | undefined;
 		try {
 			const [result] = await db
 				.insert(entries)

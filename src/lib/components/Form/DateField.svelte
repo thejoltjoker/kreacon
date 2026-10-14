@@ -3,20 +3,20 @@
 </script>
 
 <script lang="ts" generics="T extends Record<string, unknown>">
-	import { cn } from '$lib/utils';
+	import { cn } from '#lib/utils';
 	import { DateField, DatePicker, type WithoutChildrenOrChild } from 'bits-ui';
-	import { XCircleIcon } from 'lucide-svelte';
+	import { XCircleIcon } from '@lucide/svelte';
 	import { getContext } from 'svelte';
 	import { formFieldProxy, type FormPathLeaves, type SuperForm } from 'sveltekit-superforms';
 	import { CalendarDateTime, type DateValue } from '@internationalized/date';
-	import { Icon as IconType, type IconProps } from 'lucide-svelte';
+	import type { LucideIcon, LucideProps } from '@lucide/svelte';
 
 	interface DateFieldProps extends WithoutChildrenOrChild<DateField.RootProps> {
 		label: string;
 		field: FormPathLeaves<T>;
 		labelProps?: DatePicker.LabelProps;
-		icon?: typeof IconType;
-		iconProps?: IconProps;
+		icon?: LucideIcon;
+		iconProps?: LucideProps;
 		class?: string;
 		inputProps?: DateField.InputProps;
 		/**

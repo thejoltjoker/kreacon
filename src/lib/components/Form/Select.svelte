@@ -1,7 +1,7 @@
 <!-- eslint-disable-next-line no-undef -->
 <script lang="ts" generics="T extends Record<string, unknown>">
 	import { Select, type SelectItemProps, type SelectSingleRootProps } from 'bits-ui';
-	import { ChevronsUpDownIcon, DotIcon } from 'lucide-svelte';
+	import { ChevronsUpDownIcon, DotIcon } from '@lucide/svelte';
 	import type { FormPathLeaves } from 'sveltekit-superforms';
 
 	import { formFieldProxy, type SuperForm } from 'sveltekit-superforms/client';

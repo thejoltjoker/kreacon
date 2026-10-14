@@ -1,16 +1,16 @@
 <script lang="ts">
-	import { page } from '$app/stores';
-	import AccountMenu from '$lib/components/AccountMenu.svelte';
-	import Button from '$lib/components/Button.svelte';
-	import HorizontalMenu from '$lib/components/HorizontalMenu.svelte';
-	import HorizontalMenuItem from '$lib/components/HorizontalMenuItem.svelte';
-	import Link from '$lib/components/Link.svelte';
-	import { t } from '$lib/i18n';
-	import { AlignJustifyIcon, HomeIcon, PlusIcon, XIcon } from 'lucide-svelte';
+	import { page } from '$app/state';
+	import AccountMenu from '#lib/components/AccountMenu.svelte';
+	import Button from '#lib/components/Button.svelte';
+	import HorizontalMenu from '#lib/components/HorizontalMenu.svelte';
+	import HorizontalMenuItem from '#lib/components/HorizontalMenuItem.svelte';
+	import Link from '#lib/components/Link.svelte';
+	import { t } from '#lib/i18n';
+	import { AlignJustifyIcon, HomeIcon, PlusIcon, XIcon } from '@lucide/svelte';
 	import { fly } from 'svelte/transition';
-	const user = $derived($page.data.user);
+	const user = $derived(page.data.user);
 	let isMenuOpen = $state(false);
-	let isAdminRoute = $derived($page.url.pathname.startsWith('/admin'));
+	let isAdminRoute = $derived(page.url.pathname.startsWith('/admin'));
 	let { title }: { title?: { text: string; href: string } } = $props();
 
 	let menuItems = $derived(

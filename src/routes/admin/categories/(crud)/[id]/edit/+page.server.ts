@@ -1,5 +1,5 @@
-import db from '$lib/server/db';
-import type { MediaType } from '$lib/types/mediaTypes';
+import db from '#lib/server/db';
+import type { MediaType } from '#lib/types/mediaTypes';
 import { fail, redirect } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
 import { StatusCodes } from 'http-status-codes';
@@ -8,8 +8,8 @@ import { zod4 } from 'sveltekit-superforms/adapters';
 import { superValidate } from 'sveltekit-superforms/server';
 import type { Actions, PageServerLoad } from './$types';
 import { adminCheck } from '../../../../utils';
-import { createCategorySchema } from '$lib/schemas/categorySchema';
-import { categories } from '$lib/server/db/schema';
+import { createCategorySchema } from '#lib/schemas/categorySchema';
+import { categories } from '#lib/server/db/schema';
 
 export const load = (async ({ params, locals }) => {
 	adminCheck(locals);

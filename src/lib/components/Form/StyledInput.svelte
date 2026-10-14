@@ -2,8 +2,8 @@
 	import type { WithElementRef } from 'bits-ui';
 	import type { HTMLAnchorAttributes, HTMLInputAttributes } from 'svelte/elements';
 	import { type VariantProps, tv } from 'tailwind-variants';
-	import { type Icon as IconType } from 'lucide-svelte';
-	import { cn } from '$lib/utils';
+	import type { LucideIcon } from '@lucide/svelte';
+	import { cn } from '#lib/utils';
 
 	export const inputVariants = tv({
 		base: cn('w-full border focus:outline-none'),
@@ -30,7 +30,7 @@
 		WithElementRef<HTMLAnchorAttributes> & {
 			variant?: StyledInputVariant;
 			size?: StyledInputSize;
-			icon?: typeof IconType;
+			icon?: LucideIcon;
 		};
 </script>
 

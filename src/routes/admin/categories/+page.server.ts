@@ -1,7 +1,7 @@
-import { db } from '$lib/server/db';
+import { db } from '#lib/server/db';
 import type { PageServerLoad } from './$types';
 import { count } from 'drizzle-orm/sql/functions';
-import categories from '$lib/server/db/schema/category';
+import categories from '#lib/server/db/schema/category';
 import { adminCheck } from '../utils';
 
 export const load = (async ({ locals, url }) => {

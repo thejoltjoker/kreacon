@@ -1,12 +1,12 @@
-import db from '$lib/server/db';
+import db from '#lib/server/db';
 import { error, fail, redirect } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
 import { StatusCodes } from 'http-status-codes';
 import kebabCase from 'lodash/kebabCase';
 import { zod4 } from 'sveltekit-superforms/adapters';
 import { superValidate } from 'sveltekit-superforms/server';
-import { createEventSchema, type CreateEventSchema } from '$lib/schemas/eventSchema';
-import { eventCategories, events, rules } from '$lib/server/db/schema';
+import { createEventSchema, type CreateEventSchema } from '#lib/schemas/eventSchema';
+import { eventCategories, events, rules } from '#lib/server/db/schema';
 import { adminCheck } from '../../../../utils';
 import type { Actions, PageServerLoad } from './$types';
 

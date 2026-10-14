@@ -1,4 +1,4 @@
-import db from '$lib/server/db';
+import db from '#lib/server/db';
 import { desc, sql } from 'drizzle-orm';
 import type { PageServerLoad } from './$types';
 

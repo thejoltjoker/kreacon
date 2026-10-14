@@ -1,4 +1,4 @@
-import type { MediaType } from '$lib/types/mediaTypes';
+import type { MediaType } from '#lib/types/mediaTypes';
 import { db } from '../../db';
 import * as schema from '../../db/schema';
 import data from './data/categories.json';

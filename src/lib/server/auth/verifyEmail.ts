@@ -1,8 +1,8 @@
-import { AZURE_COMMUNICATION_SERVICES_SENDER_ADDRESS } from '$env/static/private';
-import { Email, type EmailMessage } from '$lib/server/services/email';
+import { AZURE_COMMUNICATION_SERVICES_SENDER_ADDRESS } from '$app/env/private';
+import { Email, type EmailMessage } from '#lib/server/services/email';
 import crypto from 'crypto';
 import template from '../../../assets/verify-email-template.html?raw';
-import env from '$lib/env';
+import env from '#lib/env';
 
 export const TOKEN_VALIDITY_MS = 24 * 60 * 60 * 1000;
 

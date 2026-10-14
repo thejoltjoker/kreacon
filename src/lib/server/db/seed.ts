@@ -1,5 +1,5 @@
-import env from '$lib/env';
-import { createBackendLogger } from '$lib/server/logger';
+import env from '#lib/env';
+import { createBackendLogger } from '#lib/server/logger';
 import { Table, getTableName, sql } from 'drizzle-orm';
 import { db } from './index';
 import * as schema from './schema';

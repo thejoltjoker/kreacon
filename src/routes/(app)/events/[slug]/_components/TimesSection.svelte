@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { type PageData } from '../$types';
 	import { locale } from 'svelte-i18n';
-	import { t } from '$lib/i18n';
+	import { t } from '#lib/i18n';
 
 	let { event }: { event: PageData['event'] } = $props();
 </script>

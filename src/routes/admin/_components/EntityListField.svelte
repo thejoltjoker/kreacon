@@ -4,8 +4,8 @@
 </script>
 
 <script lang="ts" generics="T extends unknown">
-	import { t } from '$lib/i18n';
-	import { cn } from '$lib/utils';
+	import { t } from '#lib/i18n';
+	import { cn } from '#lib/utils';
 	import startCase from 'lodash/startCase';
 	import type { Field, Item } from './types';
 	import type { Snippet } from 'svelte';

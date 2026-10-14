@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import type { PageProps } from './$types';
-	import { createPublicUrl } from '$lib/utils';
+	import { createPublicUrl } from '#lib/utils';
 	import QRCode from 'qrcode';
-	import { cn } from '$lib/utils';
+	import { cn } from '#lib/utils';
 
 	let { data }: PageProps = $props();
 	let entry = $derived(data.entry);

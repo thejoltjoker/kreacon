@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { cn } from '$lib/utils';
+	import { cn } from '#lib/utils';
 	import { Combobox, type WithoutChildrenOrChild, mergeProps } from 'bits-ui';
-	import { ChevronsUpDownIcon, DotIcon } from 'lucide-svelte';
+	import { ChevronsUpDownIcon, DotIcon } from '@lucide/svelte';
 	// TODO Clear combobox button
 	type Item = { value: string; label: string };
 

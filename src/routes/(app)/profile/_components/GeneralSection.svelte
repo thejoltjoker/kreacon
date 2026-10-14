@@ -1,14 +1,14 @@
 <script lang="ts">
-	import { page } from '$app/stores';
-	import Avatar from '$lib/components/Avatar.svelte';
-	import Badge from '$lib/components/Badge.svelte';
-	import Button from '$lib/components/Button.svelte';
-	import FileField from '$lib/components/Form/FileField.svelte';
-	import FormMessage from '$lib/components/Form/FormMessage.svelte';
-	import Form from '$lib/components/Form/GenericForm.svelte';
-	import TextField from '$lib/components/Form/TextField.svelte';
-	import { updateUserSchema } from '$lib/schemas/user';
-	import { createPublicUrl } from '$lib/utils';
+	import { page } from '$app/state';
+	import Avatar from '#lib/components/Avatar.svelte';
+	import Badge from '#lib/components/Badge.svelte';
+	import Button from '#lib/components/Button.svelte';
+	import FileField from '#lib/components/Form/FileField.svelte';
+	import FormMessage from '#lib/components/Form/FormMessage.svelte';
+	import Form from '#lib/components/Form/GenericForm.svelte';
+	import TextField from '#lib/components/Form/TextField.svelte';
+	import { updateUserSchema } from '#lib/schemas/user';
+	import { createPublicUrl } from '#lib/utils';
 	import { Label } from 'bits-ui';
 	import { zod4Client } from 'sveltekit-superforms/adapters';
 	import EditProfileButton from './EditProfileButton.svelte';
@@ -22,7 +22,7 @@
 	<Form
 		invalidateAll={true}
 		action="/profile?/updateUser"
-		data={$page.data.userForm}
+		data={page.data.userForm}
 		options={{
 			resetForm: false,
 			validators: zod4Client(updateUserSchema),
@@ -49,7 +49,7 @@
 			{:else}
 				<p class="font-bold">Avatar</p>
 				<div class="gap-sm flex items-center">
-					<Avatar size="md" src={$page.data.user.avatar?.url} alt={$page.data.user.username} />
+					<Avatar size="md" src={page.data.user.avatar?.url} alt={page.data.user.username} />
 				</div>
 			{/if}
 		</div>
@@ -63,7 +63,7 @@
 		<div class="gap-xs flex flex-col">
 			<Label.Root for="email" class="gap-xs flex items-center font-bold">
 				Email
-				{#if $page.data.user?.emailVerifiedAt}
+				{#if page.data.user?.emailVerifiedAt}
 					<Badge variant="success" size="sm">Verified</Badge>
 				{:else}
 					<Badge variant="neutral" size="sm">Unverified</Badge>

@@ -1,13 +1,18 @@
 <script lang="ts">
-	import { CircleAlertIcon, CircleCheckIcon, DownloadIcon, TvMinimalPlayIcon } from 'lucide-svelte';
+	import {
+		CircleAlertIcon,
+		CircleCheckIcon,
+		DownloadIcon,
+		TvMinimalPlayIcon
+	} from '@lucide/svelte';
 	import EntityFilterBar from '../_components/EntityFilterBar.svelte';
 	import EntityList from '../_components/EntityList.svelte';
 	import type { PageData } from './$types';
 	import EventCombobox from '../../(app)/entries/_components/EventCombobox.svelte';
-	import type { EntryStatus } from '$lib/types/entryStatus';
+	import type { EntryStatus } from '#lib/types/entryStatus';
 	import { invalidateAll } from '$app/navigation';
 	import EntryStatusField from '../_components/customFields/EntryStatusField.svelte';
-	import { downloadEntryCover } from '$lib/helpers/downloadEntryCover';
+	import { downloadEntryCover } from '#lib/helpers/downloadEntryCover';
 
 	let { data }: { data: PageData } = $props();
 

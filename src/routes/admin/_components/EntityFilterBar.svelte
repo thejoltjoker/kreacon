@@ -1,7 +1,7 @@
 <!-- TODO Manually add buttons -->
 <script lang="ts">
-	import Button from '$lib/components/Button.svelte';
-	import { PlusIcon } from 'lucide-svelte';
+	import Button from '#lib/components/Button.svelte';
+	import { PlusIcon } from '@lucide/svelte';
 	import TextFilter from '../../(app)/_components/TextFilter.svelte';
 	import type { Snippet } from 'svelte';
 	let { entityName, buttons }: { entityName: string; buttons?: Snippet | false } = $props();

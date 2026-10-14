@@ -2,7 +2,7 @@
 	import monsterUpload from '../../assets/images/monster-beam-001.png';
 	import monsterShare from '../../assets/images/monster-bones-001.png';
 	import monsterCreate from '../../assets/images/monster-troll-003.png';
-	import { t } from '$lib/i18n';
+	import { t } from '#lib/i18n';
 </script>
 
 {#snippet item(title: string, text: string, imageUrl: string)}

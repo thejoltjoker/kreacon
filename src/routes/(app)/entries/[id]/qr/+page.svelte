@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import type { PageProps } from './$types';
-	import { createPublicUrl } from '$lib/utils';
+	import { createPublicUrl } from '#lib/utils';
 	import QRCode from 'qrcode';
 
 	let { data }: PageProps = $props();

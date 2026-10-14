@@ -1,3 +1,3 @@
-import { Icon as LucideIcon } from 'lucide-svelte';
+import type { LucideIcon } from '@lucide/svelte';
 
-export type IconType = typeof LucideIcon;
+export type IconType = LucideIcon;

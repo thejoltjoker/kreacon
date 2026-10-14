@@ -1,5 +1,5 @@
 // Client side logger
-import { dev } from '$app/environment';
+import { dev } from '$app/env';
 import { Sentry } from './services/sentry';
 
 export type LogLevel = 'debug' | 'info' | 'warn' | 'error';

@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { page } from '$app/stores';
-	import { t } from '$lib/i18n';
+	import { page } from '$app/state';
+	import { t } from '#lib/i18n';
 	import type { Snippet } from 'svelte';
 
 	interface Props {
@@ -8,7 +8,7 @@
 	}
 
 	let { children }: Props = $props();
-	let title = $derived($page.data.title.text ?? 'Kreacon');
+	let title = $derived(page.data.title.text ?? 'Kreacon');
 </script>
 
 <svelte:head>

@@ -1,5 +1,12 @@
-import { env } from '$env/dynamic/private';
-import { createBackendLogger } from '$lib/server/logger';
+import {
+	OAUTH_DISCORD_CLIENT_ID,
+	OAUTH_DISCORD_CLIENT_SECRET,
+	OAUTH_DISCORD_REDIRECT_URI,
+	OAUTH_GITHUB_CLIENT_ID,
+	OAUTH_GITHUB_CLIENT_SECRET,
+	OAUTH_GITHUB_REDIRECT_URI
+} from '$app/env/private';
+import { createBackendLogger } from '#lib/server/logger';
 import { redirect } from '@sveltejs/kit';
 import type { OAuthAccessTokenResponse } from '../../../types/OAuthAccessTokenResponse';
 import { StatusCodes } from 'http-status-codes';
@@ -35,9 +42,9 @@ export const providerConfig: Record<OAuthProvider, OAuthProviderConfig> = {
 			user: 'https://api.github.com/user',
 			emails: 'https://api.github.com/user/emails'
 		},
-		clientId: env.OAUTH_GITHUB_CLIENT_ID ?? '',
-		clientSecret: env.OAUTH_GITHUB_CLIENT_SECRET ?? '',
-		redirectUri: env.OAUTH_GITHUB_REDIRECT_URI ?? ''
+		clientId: OAUTH_GITHUB_CLIENT_ID,
+		clientSecret: OAUTH_GITHUB_CLIENT_SECRET,
+		redirectUri: OAUTH_GITHUB_REDIRECT_URI
 	},
 	discord: {
 		scopes: ['identify', 'email'],
@@ -46,9 +53,9 @@ export const providerConfig: Record<OAuthProvider, OAuthProviderConfig> = {
 			token: 'https://discord.com/api/oauth2/token',
 			user: 'https://discord.com/api/v10/users/@me'
 		},
-		clientId: env.OAUTH_DISCORD_CLIENT_ID ?? '',
-		clientSecret: env.OAUTH_DISCORD_CLIENT_SECRET ?? '',
-		redirectUri: env.OAUTH_DISCORD_REDIRECT_URI ?? ''
+		clientId: OAUTH_DISCORD_CLIENT_ID,
+		clientSecret: OAUTH_DISCORD_CLIENT_SECRET,
+		redirectUri: OAUTH_DISCORD_REDIRECT_URI
 	}
 };
 

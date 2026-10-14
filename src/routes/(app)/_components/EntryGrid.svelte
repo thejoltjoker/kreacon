@@ -1,8 +1,8 @@
 <script lang="ts">
-	import type { Category } from '$lib/server/db/schema/category';
-	import type { SelectFile } from '$lib/server/db/schema/file';
-	import type { Entry } from '$lib/server/db/schema/entry';
-	import type { PublicUser } from '$lib/server/db/schema/user';
+	import type { Category } from '#lib/server/db/schema/category';
+	import type { SelectFile } from '#lib/server/db/schema/file';
+	import type { Entry } from '#lib/server/db/schema/entry';
+	import type { PublicUser } from '#lib/server/db/schema/user';
 	import EntryGridItem from './EntryGridItem.svelte';
 
 	interface Props {

@@ -4,10 +4,9 @@ import {
 	sessionCookieName,
 	setSessionTokenCookie,
 	validateSessionToken
-} from '$lib/server/auth';
-import { type Handle } from '@sveltejs/kit';
+} from '#lib/server/auth';
+import { sequence, type Handle } from '@sveltejs/kit/hooks';
 import { locale } from 'svelte-i18n';
-import { sequence } from '@sveltejs/kit/hooks';
 
 const handleAuth: Handle = async ({ event, resolve }) => {
 	const sessionToken = event.cookies.get(sessionCookieName);

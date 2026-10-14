@@ -1,17 +1,17 @@
 <script lang="ts">
 	import { Pagination, type PaginationRootProps } from 'bits-ui';
 	import { goto } from '$app/navigation';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import { resolve } from '$app/paths';
-	import { cn } from '$lib/utils';
+	import { cn } from '#lib/utils';
 	import { SvelteURLSearchParams } from 'svelte/reactivity';
 
-	import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-svelte';
-	import { t } from '$lib/i18n';
+	import { ChevronLeftIcon, ChevronRightIcon } from '@lucide/svelte';
+	import { t } from '#lib/i18n';
 
 	let { count, perPage, ...props }: PaginationRootProps = $props();
 
-	let searchParams = new SvelteURLSearchParams($page.url.searchParams);
+	let searchParams = new SvelteURLSearchParams(page.url.searchParams.toString());
 	let pageNum = $derived(Number(searchParams.get('page') ?? 1));
 
 	// TODO Showing loading indicators
@@ -22,8 +22,8 @@
 	const handlePageChange = (p: number) => {
 		searchParams.set('page', p.toString());
 		// @ts-expect-error TODO: Find correct solution to use resolve with search params
-		goto(resolve(`${$page.url.pathname}?${searchParams.toString()}`), {
-			replaceState: true
+		goto(resolve(`${page.url.pathname}?${searchParams.toString()}`), {
+			replace: true
 		});
 	};
 

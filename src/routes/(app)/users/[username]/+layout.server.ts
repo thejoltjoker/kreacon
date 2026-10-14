@@ -1,8 +1,8 @@
-import db from '$lib/server/db';
-import users from '$lib/server/db/schema/user';
+import db from '#lib/server/db';
+import users from '#lib/server/db/schema/user';
 import { desc, eq, and } from 'drizzle-orm';
 import type { LayoutServerLoad } from './$types';
-import entries from '$lib/server/db/schema/entry';
+import entries from '#lib/server/db/schema/entry';
 import { StatusCodes } from 'http-status-codes';
 import { error } from '@sveltejs/kit';
 

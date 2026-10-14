@@ -1,4 +1,4 @@
-import { azureStorageContainer } from '$lib/types/AzureStorageContainer';
+import { azureStorageContainer } from '#lib/types/AzureStorageContainer';
 import { z } from 'zod/v4';
 import mime from 'mime';
 

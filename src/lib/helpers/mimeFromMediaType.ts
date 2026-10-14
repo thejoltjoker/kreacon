@@ -1,4 +1,4 @@
-import type { MediaType } from '$lib/types/mediaTypes';
+import type { MediaType } from '#lib/types/mediaTypes';
 
 export const mimeFromMediaType = (mediaType: MediaType) => {
 	if (mediaType === 'image') return 'image/png, image/jpeg, image/gif';

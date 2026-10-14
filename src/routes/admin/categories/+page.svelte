@@ -2,8 +2,8 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
-	import Button from '$lib/components/Button.svelte';
-	import { PencilIcon, PlusIcon } from 'lucide-svelte';
+	import Button from '#lib/components/Button.svelte';
+	import { PencilIcon, PlusIcon } from '@lucide/svelte';
 	import EntityFilterBar from '../_components/EntityFilterBar.svelte';
 	import EntityList from '../_components/EntityList.svelte';
 	import type { PageData } from './$types';
@@ -11,7 +11,7 @@
 	let { data }: { data: PageData } = $props();
 	// TODO Allow admin to archive category
 	const handleEdit = (id: string) => {
-		goto(resolve(`/admin/categories/${id}/edit`));
+		goto(resolve('/admin/categories/(crud)/[id]/edit', { id }));
 	};
 </script>
 

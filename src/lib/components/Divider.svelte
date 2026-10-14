@@ -25,7 +25,7 @@
 
 <script lang="ts">
 	import { Separator } from 'bits-ui';
-	import { cn } from '$lib/utils';
+	import { cn } from '#lib/utils';
 
 	let { children, variant = 'default', class: className }: DividerProps = $props();
 	let classes = dividerVariants({ variant });

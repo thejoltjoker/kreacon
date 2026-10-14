@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
 	import { Dialog, type WithoutChild } from 'bits-ui';
-	import { XIcon } from 'lucide-svelte';
+	import { XIcon } from '@lucide/svelte';
 	import Divider from './Divider.svelte';
 
 	interface Props extends Dialog.RootProps {

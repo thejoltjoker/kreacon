@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { t } from '$lib/i18n';
-	import { locales } from '$lib/i18n/locales';
+	import { t } from '#lib/i18n';
+	import { locales } from '#lib/i18n/locales';
 	import { locale } from 'svelte-i18n';
 
 	const changeLanguage = (lang: string) => {

@@ -1,6 +1,6 @@
 <script lang="ts">
-	import type { EntryStatus } from '$lib/types/entryStatus';
-	import { cn } from '$lib/utils';
+	import type { EntryStatus } from '#lib/types/entryStatus';
+	import { cn } from '#lib/utils';
 
 	let { status }: { status?: EntryStatus } = $props();
 	const border = cn(

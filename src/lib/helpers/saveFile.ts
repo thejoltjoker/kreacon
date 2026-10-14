@@ -1,4 +1,4 @@
-import { createBackendLogger } from '$lib/server/logger';
+import { createBackendLogger } from '#lib/server/logger';
 import { promises as fs } from 'fs';
 import path from 'path';
 

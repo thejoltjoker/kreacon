@@ -1,10 +1,10 @@
 <script lang="ts">
-	import Button from '$lib/components/Button.svelte';
-	import DumbInput from '$lib/components/Form/DumbInput.svelte';
-	import DumbSelect from '$lib/components/Form/DumbSelect.svelte';
-	import { PencilIcon, PlusIcon, UnlockIcon } from 'lucide-svelte';
+	import Button from '#lib/components/Button.svelte';
+	import DumbInput from '#lib/components/Form/DumbInput.svelte';
+	import DumbSelect from '#lib/components/Form/DumbSelect.svelte';
+	import { PencilIcon, PlusIcon, UnlockIcon } from '@lucide/svelte';
 	import type { PageData } from '../create/$types';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import { tick } from 'svelte';
 	interface Category {
 		categoryId: number;
@@ -16,7 +16,7 @@
 	}
 
 	let { category, setCategory }: Props = $props();
-	let { categories } = $page.data as PageData;
+	let { categories } = page.data as PageData;
 
 	let categoriesItems = $derived(
 		categories.map((cat: PageData['categories'][number]) => ({

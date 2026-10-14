@@ -1,10 +1,10 @@
 <script lang="ts">
-	import Divider from '$lib/components/Divider.svelte';
-	import { t } from '$lib/i18n';
+	import Divider from '#lib/components/Divider.svelte';
+	import { t } from '#lib/i18n';
 	import OAuthButtons from '../_components/OAuthButtons.svelte';
 	import RegisterForm from './_components/RegisterForm.svelte';
 	import type { PageData } from './$types';
-	import Link from '$lib/components/Link.svelte';
+	import Link from '#lib/components/Link.svelte';
 
 	let { data }: { data: PageData } = $props();
 </script>

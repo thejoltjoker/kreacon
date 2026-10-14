@@ -5,7 +5,7 @@
 <!-- TODO Change icon when sorting -->
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import { resolve } from '$app/paths';
 	import Pagination from '../../(app)/_components/Pagination.svelte';
 	import { type EntityListActionItem } from './EntityListActions.svelte';
@@ -35,14 +35,14 @@
 	let hasThumbnail = $derived(items.some((i) => i.thumbnailUrl));
 
 	const handleSortByChange = (sortBy: string) => {
-		const params = new SvelteURLSearchParams($page.url.searchParams);
+		const params = new SvelteURLSearchParams(page.url.searchParams.toString());
 		if (params.get('sortBy') === `${sortBy}_asc`) {
 			params.set('sortBy', `${sortBy}_desc`);
 		} else {
 			params.set('sortBy', `${sortBy}_asc`);
 		}
 		// @ts-expect-error TODO: Find correct solution to use resolve with search params
-		goto(resolve(`${$page.url.pathname}?${params.toString()}`), { replaceState: true });
+		goto(resolve(`${page.url.pathname}?${params.toString()}`), { replace: true });
 	};
 </script>
 

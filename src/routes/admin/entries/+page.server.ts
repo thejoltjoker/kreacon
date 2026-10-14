@@ -1,7 +1,7 @@
-import { db } from '$lib/server/db';
+import { db } from '#lib/server/db';
 import type { PageServerLoad } from './$types';
 import { count } from 'drizzle-orm/sql/functions';
-import entries from '$lib/server/db/schema/entry';
+import entries from '#lib/server/db/schema/entry';
 import { eq } from 'drizzle-orm';
 import { adminCheck } from '../utils';
 
