@@ -40,6 +40,8 @@
 {#each $form.categories as _, index (index)}
 	<CategoryInput
 		category={$form.categories[index]}
-		setCategory={(data) => ($form.categories[index] = data)}
+		setCategory={(data) => {
+			$form.categories = $form.categories.map((c, i) => (i === index ? data : c));
+		}}
 	/>
 {/each}

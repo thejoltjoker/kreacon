@@ -155,6 +155,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   [#171](https://github.com/thejoltjoker/kreacon/pull/171)
 - Upgrade dependencies
   [#210](https://github.com/thejoltjoker/kreacon/pull/210)
+- Update app name in deployment workflow
+  [#211](https://github.com/thejoltjoker/kreacon/pull/211)
 
 ### Deprecated
 
