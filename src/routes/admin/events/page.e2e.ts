@@ -98,17 +98,14 @@ test('Admin should be able to create and edit events', async ({ page }) => {
 	await expect(
 		page.getByRole('heading', { name: 'Category: Archeological Photography' })
 	).toBeVisible();
-	await page.getByRole('button', { name: 'Add Rule' }).nth(1).click();
-	await page
-		.locator('form div')
-		.filter({ hasText: 'Category: Archeological Photography' })
-		.locator('input[type="text"]')
-		.fill('First category rule');
-	await page
-		.locator('form div')
-		.filter({ hasText: 'Category: Archeological Photography' })
-		.locator('input[type="text"]')
-		.press('Enter');
+	const archeologyCategory = page
+		.getByRole('heading', { name: 'Category: Archeological Photography' })
+		.locator('..');
+	await archeologyCategory.getByRole('button', { name: 'Add Rule' }).click();
+	const archeologyRule = archeologyCategory.locator('.category-rule').last();
+	await expect(archeologyRule).toBeVisible();
+	await archeologyRule.fill('First category rule');
+	await archeologyRule.press('Enter');
 	await page.getByRole('button', { name: 'Create Event' }).click();
 	await page.waitForURL('/admin/events');
 	const entityListLocator = page.locator('.entity-list');
@@ -138,17 +135,14 @@ test('Admin should be able to create and edit events', async ({ page }) => {
 	await secondCategoryTrigger.click();
 	await selectDropdownOption(page, 'Prehistoric Sounds');
 	await expect(page.getByRole('heading', { name: 'Category: Prehistoric Sounds' })).toBeVisible();
-	await page.getByRole('button', { name: 'Add Rule' }).nth(2).click();
-	await page
-		.locator('form div')
-		.filter({ hasText: 'Category: Prehistoric Sounds' })
-		.locator('input[type="text"]')
-		.fill('added category');
-	await page
-		.locator('form div')
-		.filter({ hasText: 'Category: Prehistoric Sounds' })
-		.locator('input[type="text"]')
-		.press('Enter');
+	const prehistoricCategory = page
+		.getByRole('heading', { name: 'Category: Prehistoric Sounds' })
+		.locator('..');
+	await prehistoricCategory.getByRole('button', { name: 'Add Rule' }).click();
+	const prehistoricRule = prehistoricCategory.locator('.category-rule').last();
+	await expect(prehistoricRule).toBeVisible();
+	await prehistoricRule.fill('added category');
+	await prehistoricRule.press('Enter');
 	await page.getByRole('button', { name: 'Update Event' }).click();
 
 	const itemLocator = page.locator('li').filter({ hasText: 'My test event edited' });

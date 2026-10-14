@@ -33,8 +33,14 @@
 		categories.find((cat: PageData['categories'][number]) => cat.id === category.categoryId)?.name
 	);
 
-	const handleAddRule = async (value: string) => {
-		setCategory({ ...category, rules: [...category.rules, { text: value, isLocked: false }] });
+	const handleAddRule = async (value: string, lockIndex?: number) => {
+		const rules = category.rules.map((rule, i) =>
+			i === lockIndex ? { ...rule, isLocked: true } : rule
+		);
+		setCategory({
+			...category,
+			rules: [...rules, { text: value, isLocked: false }]
+		});
 
 		tick().then(() => {
 			const inputs = rulesContainerRef?.querySelectorAll('.category-rule');
@@ -93,8 +99,7 @@
 					type="text"
 					onkeydowncapture={(e: KeyboardEvent) => {
 						if (e.key === 'Enter') {
-							handleToggleRuleIsLocked(index);
-							handleAddRule('');
+							handleAddRule('', index);
 						}
 					}}
 					oninput={(e) => {
