@@ -1,9 +1,9 @@
 <!-- TODO Improve ticket fetching logic/ux/ui -->
 <script lang="ts">
-	import Button from '$lib/components/Button.svelte';
-	import DumbInput from '$lib/components/Form/DumbInput.svelte';
+	import Button from '#lib/components/Button.svelte';
+	import DumbInput from '#lib/components/Form/DumbInput.svelte';
 	import { Dialog, Separator } from 'bits-ui';
-	import { TicketIcon, XIcon } from 'lucide-svelte';
+	import { TicketIcon, XIcon } from '@lucide/svelte';
 	import { superForm } from 'sveltekit-superforms';
 	import type { PageData } from '../$types';
 

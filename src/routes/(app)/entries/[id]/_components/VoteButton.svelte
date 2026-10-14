@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import Button from '$lib/components/Button.svelte';
+	import Button from '#lib/components/Button.svelte';
 	import { Tooltip } from 'bits-ui';
-	import { t } from '$lib/i18n';
+	import { t } from '#lib/i18n';
 	let {
 		isSignedIn,
 		id,

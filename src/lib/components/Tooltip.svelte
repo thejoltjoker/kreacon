@@ -1,9 +1,10 @@
 <script lang="ts">
-	import { cn } from '$lib/utils';
+	import { cn } from '#lib/utils';
 	import { Tooltip } from 'bits-ui';
 	import { type Snippet } from 'svelte';
 
-	type Props = Tooltip.RootProps & {
+	type Props = Omit<Tooltip.RootProps, 'children'> & {
+		children?: Snippet;
 		trigger: Snippet;
 		tooltipClassName?: string;
 		triggerProps?: Tooltip.TriggerProps;

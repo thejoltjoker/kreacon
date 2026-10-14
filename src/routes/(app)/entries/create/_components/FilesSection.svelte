@@ -1,8 +1,8 @@
 <script lang="ts">
 	import MediaRow from './MediaRow.svelte';
-	import FileField from '$lib/components/Form/FileField.svelte';
-	import Divider from '$lib/components/Divider.svelte';
-	import { createEntrySchema, type CreateEntrySchema } from '$lib/schemas/entry';
+	import FileField from '#lib/components/Form/FileField.svelte';
+	import Divider from '#lib/components/Divider.svelte';
+	import { createEntrySchema, type CreateEntrySchema } from '#lib/schemas/entry';
 	import { getContext } from 'svelte';
 	import type { SuperForm } from 'sveltekit-superforms';
 	import SubmittingTo from './SubmittingTo.svelte';

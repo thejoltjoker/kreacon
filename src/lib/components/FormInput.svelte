@@ -3,7 +3,7 @@
 </script>
 
 <script lang="ts" generics="T extends Record<string, unknown>">
-	import { t } from '$lib/i18n';
+	import { t } from '#lib/i18n';
 
 	import { Label } from 'bits-ui';
 

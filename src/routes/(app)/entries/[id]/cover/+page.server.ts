@@ -1,6 +1,6 @@
-import { db } from '$lib/server/db';
-import { entries } from '$lib/server/db/schema';
-import { createBackendLogger } from '$lib/server/logger';
+import { db } from '#lib/server/db';
+import { entries } from '#lib/server/db/schema';
+import { createBackendLogger } from '#lib/server/logger';
 import { eq } from 'drizzle-orm';
 import type { PageServerLoad } from './$types';
 const logger = createBackendLogger('/entries/[id]');

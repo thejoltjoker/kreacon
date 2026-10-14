@@ -1,6 +1,6 @@
 <script lang="ts">
-	import Button from '$lib/components/Button.svelte';
-	import { CircleCheckIcon, PlusIcon } from 'lucide-svelte';
+	import Button from '#lib/components/Button.svelte';
+	import { CircleCheckIcon, PlusIcon } from '@lucide/svelte';
 	import type { PageData } from '../$types';
 	import TicketDialog from './TicketDialog.svelte';
 	let {

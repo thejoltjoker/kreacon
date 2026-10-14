@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { page } from '$app/stores';
-	import Button from '$lib/components/Button.svelte';
-	import DumbInput from '$lib/components/Form/DumbInput.svelte';
-	import DumbSelect from '$lib/components/Form/DumbSelect.svelte';
-	import { getAllowedExtensions } from '$lib/helpers/mediaTypes';
-	import type { createCategorySchema } from '$lib/schemas/categorySchema';
-	import { MediaTypes, type MediaType } from '$lib/types/mediaTypes';
+	import { page } from '$app/state';
+	import Button from '#lib/components/Button.svelte';
+	import DumbInput from '#lib/components/Form/DumbInput.svelte';
+	import DumbSelect from '#lib/components/Form/DumbSelect.svelte';
+	import { getAllowedExtensions } from '#lib/helpers/mediaTypes';
+	import type { createCategorySchema } from '#lib/schemas/categorySchema';
+	import { MediaTypes, type MediaType } from '#lib/types/mediaTypes';
 	import startCase from 'lodash/startCase';
 
 	import { t } from 'svelte-i18n';
@@ -76,7 +76,7 @@
 	</div>
 
 	<Button type="submit">
-		{#if $page.url.pathname.endsWith('/edit')}
+		{#if page.url.pathname.endsWith('/edit')}
 			Update Category
 		{:else}
 			Create Category

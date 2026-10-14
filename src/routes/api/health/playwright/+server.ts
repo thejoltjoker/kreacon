@@ -1,7 +1,7 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import { chromium } from '@playwright/test';
-import { createBackendLogger } from '$lib/server/logger';
+import { createBackendLogger } from '#lib/server/logger';
 
 const logger = createBackendLogger('api/health/playwright');
 

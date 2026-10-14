@@ -1,6 +1,6 @@
 <script lang="ts">
-	import Button from '$lib/components/Button.svelte';
-	import { UploadIcon } from 'lucide-svelte';
+	import Button from '#lib/components/Button.svelte';
+	import { UploadIcon } from '@lucide/svelte';
 
 	export let imageUrl: string | null = null;
 	export let setImageUrl: (url: string) => void;

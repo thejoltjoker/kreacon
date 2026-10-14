@@ -1,12 +1,12 @@
-import { createBackendLogger } from '$lib/server/logger';
-import { randomString } from '$lib/helpers/randomString';
-import { createSession, generateSessionToken, setSessionTokenCookie } from '$lib/server/auth';
-import { getOAuthClient } from '$lib/server/auth/oauth/getOAuthClient';
-import { isOAuthProvider, type OAuthProvider } from '$lib/server/auth/oauth/OAuthClient';
-import { db } from '$lib/server/db';
-import { accounts, users } from '$lib/server/db/schema';
-import { assignBeacon2026Ticket, hashPassword } from '$lib/server/utils';
-import { error, redirect } from '@sveltejs/kit';
+import { createBackendLogger } from '#lib/server/logger';
+import { randomString } from '#lib/helpers/randomString';
+import { createSession, generateSessionToken, setSessionTokenCookie } from '#lib/server/auth';
+import { getOAuthClient } from '#lib/server/auth/oauth/getOAuthClient';
+import { isOAuthProvider, type OAuthProvider } from '#lib/server/auth/oauth/OAuthClient';
+import { db } from '#lib/server/db';
+import { accounts, users } from '#lib/server/db/schema';
+import { assignBeacon2026Ticket, hashPassword } from '#lib/server/utils';
+import { error, isHttpError, isRedirect, redirect } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
 import { StatusCodes } from 'http-status-codes';
 import type { PageServerLoad } from './$types';
@@ -108,6 +108,8 @@ export const load = (async (event) => {
 		logger.info('OAuth login successful', { userId: user.id, provider });
 		throw redirect(StatusCodes.TEMPORARY_REDIRECT, '/profile');
 	} catch (err) {
+		if (isRedirect(err) || isHttpError(err)) throw err;
+
 		logger.error('OAuth callback error', {
 			error: err,
 			provider,

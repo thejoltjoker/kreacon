@@ -1,9 +1,9 @@
 <script lang="ts">
 	import './layout.css';
-	import { browser } from '$app/environment';
-	import { page } from '$app/stores';
-	import PageTransition from '$lib/components/PageTransition.svelte';
-	import '$lib/i18n';
+	import { browser } from '$app/env';
+	import { page } from '$app/state';
+	import PageTransition from '#lib/components/PageTransition.svelte';
+	import '#lib/i18n';
 	import type { Snippet } from 'svelte';
 	import { locale, waitLocale } from 'svelte-i18n';
 	import '../app.css';
@@ -28,12 +28,12 @@
 </script>
 
 <svelte:head>
-	<title>{$page.data.title.text ?? 'Kreacon'}</title>
+	<title>{page.data.title.text ?? 'Kreacon'}</title>
 </svelte:head>
 
 {#if ready}
 	<div class="flex min-h-screen flex-col">
-		<Navbar title={$page.data.title} />
+		<Navbar title={page.data.title} />
 		<PageTransition key={data.pathname} class="flex min-h-full grow flex-col">
 			{@render children()}
 		</PageTransition>

@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { page } from '$app/stores';
-	import { t } from '$lib/i18n';
+	import { page } from '$app/state';
+	import { t } from '#lib/i18n';
 </script>
 
 <svelte:head>
@@ -8,6 +8,6 @@
 </svelte:head>
 
 <div class="gap-xl flex min-h-full grow flex-col items-center justify-center text-center">
-	<h1 class="text-6xl font-bold">{$page.status}</h1>
-	<h2 class="text-shade-300-alt font-normal">{$page.error?.message}</h2>
+	<h1 class="text-6xl font-bold">{page.status}</h1>
+	<h2 class="text-shade-300-alt font-normal">{page.error?.message}</h2>
 </div>

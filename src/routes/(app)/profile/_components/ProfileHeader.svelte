@@ -1,8 +1,8 @@
 <script lang="ts">
-	import Avatar from '$lib/components/Avatar.svelte';
-	import { page } from '$app/stores';
+	import Avatar from '#lib/components/Avatar.svelte';
+	import { page } from '$app/state';
 
-	const user = $derived($page.data.user);
+	const user = $derived(page.data.user);
 </script>
 
 {#if user}

@@ -3,7 +3,7 @@
 	export interface EntityListActionItem extends DropdownMenuItemProps {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		label: string | ((item: any) => string);
-		icon: typeof IconType;
+		icon: LucideIcon;
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		onClick: (item: any) => void;
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -19,11 +19,11 @@
 </script>
 
 <script lang="ts">
-	import Button from '$lib/components/Button.svelte';
-	import { cn } from '$lib/utils';
+	import Button from '#lib/components/Button.svelte';
+	import { cn } from '#lib/utils';
 	import { DropdownMenu, type DropdownMenuItemProps, type WithoutChild } from 'bits-ui';
-	import type { Icon as IconType } from 'lucide-svelte';
-	import { EllipsisIcon, InfoIcon } from 'lucide-svelte';
+	import type { LucideIcon } from '@lucide/svelte';
+	import { EllipsisIcon, InfoIcon } from '@lucide/svelte';
 
 	let { open = $bindable(false), actions, contentProps, item, ...props }: Props = $props();
 </script>

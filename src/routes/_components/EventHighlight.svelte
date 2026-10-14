@@ -1,6 +1,6 @@
 <script lang="ts">
-	import type { EventStatus } from '$lib/helpers/eventStatus';
-	import { ArrowRightIcon } from 'lucide-svelte';
+	import type { EventStatus } from '#lib/helpers/eventStatus';
+	import { ArrowRightIcon } from '@lucide/svelte';
 
 	let { name, href, status }: { name: string; href: string; status: EventStatus } = $props();
 

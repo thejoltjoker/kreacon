@@ -1,4 +1,4 @@
-import { browser } from '$app/environment';
+import { browser } from '$app/env';
 import { toSnakeCase } from 'drizzle-orm/casing';
 import { _, init, register, waitLocale } from 'svelte-i18n';
 import { derived } from 'svelte/store';

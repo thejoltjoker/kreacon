@@ -29,9 +29,9 @@ import { eq, and } from 'drizzle-orm';
 import { db } from '..';
 import * as schema from '../schema';
 import data from './data/entries.json';
-import type { MediaType } from '$lib/types/mediaTypes';
-import type { EntryStatus } from '$lib/types/entryStatus';
-import type { LicenseCode } from '$lib/schemas/license';
+import type { MediaType } from '#lib/types/mediaTypes';
+import type { EntryStatus } from '#lib/types/entryStatus';
+import type { LicenseCode } from '#lib/schemas/license';
 
 async function getUserIdFromEmail(db: db, email: string) {
 	const user = await db.query.users.findFirst({

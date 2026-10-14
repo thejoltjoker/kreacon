@@ -1,14 +1,14 @@
 <script lang="ts">
-	import { page } from '$app/stores';
-	import type { CreateEntrySchema } from '$lib/schemas/entry';
+	import { page } from '$app/state';
+	import type { CreateEntrySchema } from '#lib/schemas/entry';
 	import { getContext } from 'svelte';
 	import type { SuperForm } from 'sveltekit-superforms/client';
 	import { type PageData } from '../$types';
-	import type { MediaType } from '$lib/types/mediaTypes';
-	import FileField from '$lib/components/Form/FileField.svelte';
+	import type { MediaType } from '#lib/types/mediaTypes';
+	import FileField from '#lib/components/Form/FileField.svelte';
 	let superform = getContext<SuperForm<CreateEntrySchema>>('superform');
 	let { form } = superform;
-	let data = $page.data as PageData;
+	let data = page.data as PageData;
 	let categories: PageData['events'][number]['categories'] = $state([]);
 	$effect(() => {
 		if (form == null) return;

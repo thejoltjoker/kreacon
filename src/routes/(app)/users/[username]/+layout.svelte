@@ -1,12 +1,12 @@
 <script lang="ts">
-	import { page } from '$app/stores';
-	import HorizontalMenu from '$lib/components/HorizontalMenu.svelte';
-	import HorizontalMenuItem from '$lib/components/HorizontalMenuItem.svelte';
+	import { page } from '$app/state';
+	import HorizontalMenu from '#lib/components/HorizontalMenu.svelte';
+	import HorizontalMenuItem from '#lib/components/HorizontalMenuItem.svelte';
 	import type { Snippet } from 'svelte';
 	import SortBySelect from '../../_components/SortBySelect.svelte';
 	import type { LayoutData } from './$types';
 	import UserInfo from './_components/UserInfo.svelte';
-	import { t } from '$lib/i18n';
+	import { t } from '#lib/i18n';
 
 	let { data, children }: { data: LayoutData; children: Snippet } = $props();
 
@@ -33,14 +33,14 @@
 	<nav class="mt-sm md:mt-xl">
 		<HorizontalMenu>
 			<HorizontalMenuItem
-				href="/users/{data.profileUser.username}/entries?sortBy={$page.url.searchParams.get(
+				href="/users/{data.profileUser.username}/entries?sortBy={page.url.searchParams.get(
 					'sortBy'
 				) ?? defaultSortBy}"
 			>
 				{$t('Entries')}
 			</HorizontalMenuItem>
 			<HorizontalMenuItem
-				href="/users/{data.profileUser.username}/reactions?sortBy={$page.url.searchParams.get(
+				href="/users/{data.profileUser.username}/reactions?sortBy={page.url.searchParams.get(
 					'sortBy'
 				) ?? defaultSortBy}"
 			>

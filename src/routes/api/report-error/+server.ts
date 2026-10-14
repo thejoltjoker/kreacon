@@ -1,4 +1,4 @@
-import { createBackendLogger } from '$lib/server/logger';
+import { createBackendLogger } from '#lib/server/logger';
 import { StatusCodes } from 'http-status-codes';
 import type { RequestHandler } from './$types';
 const logger = createBackendLogger('client-error');

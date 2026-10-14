@@ -1,16 +1,21 @@
+import {
+	OAUTH_DISCORD_CLIENT_ID,
+	OAUTH_DISCORD_CLIENT_SECRET,
+	OAUTH_GITHUB_CLIENT_ID,
+	OAUTH_GITHUB_CLIENT_SECRET
+} from '$app/env/private';
 import { DiscordOAuth } from './DiscordOAuthClient';
 import { GithubOAuth } from './GitHubOAuthClient';
 import type { OAuthProvider } from './OAuthClient';
-import { env } from '$env/dynamic/private';
-import { createBackendLogger } from '$lib/server/logger';
+import { createBackendLogger } from '#lib/server/logger';
 
 const logger = createBackendLogger('oauth');
 
 export const availableOAuthProviders = (): OAuthProvider[] => {
 	const providers: OAuthProvider[] = [];
 
-	if (env.OAUTH_GITHUB_CLIENT_ID && env.OAUTH_GITHUB_CLIENT_SECRET) providers.push('github');
-	if (env.OAUTH_DISCORD_CLIENT_ID && env.OAUTH_DISCORD_CLIENT_SECRET) providers.push('discord');
+	if (OAUTH_GITHUB_CLIENT_ID && OAUTH_GITHUB_CLIENT_SECRET) providers.push('github');
+	if (OAUTH_DISCORD_CLIENT_ID && OAUTH_DISCORD_CLIENT_SECRET) providers.push('discord');
 	return providers;
 };
 

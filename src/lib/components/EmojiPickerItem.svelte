@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Emoji } from '$lib/emojis.svelte';
+	import type { Emoji } from '#lib/emojis.svelte';
 	import { Command } from 'bits-ui';
 	interface EmojiPickerItemProps {
 		emoji: Emoji;

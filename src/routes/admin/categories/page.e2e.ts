@@ -44,8 +44,7 @@ test('Admin should be able to create and edit categories', async ({ page }) => {
       - paragraph: image
       - paragraph: Media Type
       - button:
-        - button:
-          - img
+        - button
     `);
 
 	// Edit new category
@@ -80,7 +79,6 @@ test('Admin should be able to create and edit categories', async ({ page }) => {
       - paragraph: video
       - paragraph: Media Type
       - button:
-        - button:
-          - img
+        - button
     `);
 });

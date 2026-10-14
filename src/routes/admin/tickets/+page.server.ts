@@ -1,10 +1,10 @@
-import { db } from '$lib/server/db';
+import { db } from '#lib/server/db';
 import { eq } from 'drizzle-orm';
 import { adminCheck } from '../utils';
 import type { PageServerLoad } from './$types';
-import { tickets, users } from '$lib/server/db/schema';
+import { tickets, users } from '#lib/server/db/schema';
 import { count } from 'drizzle-orm/sql/functions';
-import type { User } from '$lib/server/db/schema/user';
+import type { User } from '#lib/server/db/schema/user';
 
 export const load = (async ({ locals, url }) => {
 	adminCheck(locals);

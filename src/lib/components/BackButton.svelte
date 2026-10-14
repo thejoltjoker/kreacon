@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { ChevronLeftIcon } from 'lucide-svelte';
+	import { ChevronLeftIcon } from '@lucide/svelte';
 	import Button from './Button.svelte';
 
 	const handleClick = () => {

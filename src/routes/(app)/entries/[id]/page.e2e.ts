@@ -124,10 +124,10 @@ test('Single entry page logged in', async ({ page }) => {
         - heading "Reactions" [level=4]
         - list:
           - listitem:
-            - button:
-              - img
+            - button
           - listitem:
             - link "john_doe avatar 🦕":
+              - /url: /users/john_doe/reactions
               - img "john_doe avatar"
               - paragraph: 🦕
         `);
@@ -141,10 +141,10 @@ test('Single entry page logged in', async ({ page }) => {
     - heading "Reactions" [level=4]
     - list:
       - listitem:
-        - button:
-          - img
+        - button
       - listitem:
         - link "john_doe avatar 😊":
+          - /url: /users/john_doe/reactions
           - img "john_doe avatar"
           - paragraph: 😊
     `);

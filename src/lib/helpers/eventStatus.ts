@@ -1,4 +1,4 @@
-import type { SelectEvent } from '$lib/server/db/schema/event';
+import type { SelectEvent } from '#lib/server/db/schema/event';
 
 export type EventStatus = 'submitting' | 'voting' | 'scheduled' | 'closed';
 

@@ -1,9 +1,9 @@
-import db from '$lib/server/db';
-import { users } from '$lib/server/db/schema/user';
+import db from '#lib/server/db';
+import { users } from '#lib/server/db/schema/user';
 import { eq, count } from 'drizzle-orm';
 import type { PageServerLoad } from './$types';
 import { error } from '@sveltejs/kit';
-import { entries } from '$lib/server/db/schema';
+import { entries } from '#lib/server/db/schema';
 import { sql } from 'drizzle-orm';
 import { StatusCodes } from 'http-status-codes';
 

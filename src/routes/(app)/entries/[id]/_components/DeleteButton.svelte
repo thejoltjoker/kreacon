@@ -1,7 +1,7 @@
 <script lang="ts">
-	import AlertDialog from '$lib/components/AlertDialog.svelte';
-	import Button from '$lib/components/Button.svelte';
-	import { TrashIcon } from 'lucide-svelte';
+	import AlertDialog from '#lib/components/AlertDialog.svelte';
+	import Button from '#lib/components/Button.svelte';
+	import { TrashIcon } from '@lucide/svelte';
 	import { type PageData } from '../$types';
 
 	let {

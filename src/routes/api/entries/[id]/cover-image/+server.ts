@@ -1,9 +1,9 @@
 import { error } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import { chromium } from '@playwright/test';
-import { createBackendLogger } from '$lib/server/logger';
+import { createBackendLogger } from '#lib/server/logger';
 import { StatusCodes } from 'http-status-codes';
-import { createPublicUrl } from '$lib/utils';
+import { createPublicUrl } from '#lib/utils';
 import { adminCheck } from '../../../../admin/utils';
 
 const logger = createBackendLogger('api/entries/[id]/cover-image');

@@ -1,5 +1,5 @@
-import { db } from '$lib/server/db';
-import { events } from '$lib/server/db/schema';
+import { db } from '#lib/server/db';
+import { events } from '#lib/server/db/schema';
 import { eq, asc, desc } from 'drizzle-orm';
 import { sql } from 'drizzle-orm';
 import type { Actions, PageServerLoad } from './$types';

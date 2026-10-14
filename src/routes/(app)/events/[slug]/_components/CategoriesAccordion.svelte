@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Accordion } from 'bits-ui';
-	import { ChevronDownIcon } from 'lucide-svelte';
+	import { ChevronDownIcon } from '@lucide/svelte';
 	import type { PageData } from '../$types';
 
 	let { categories }: { categories: PageData['categories'] } = $props();

@@ -12,5 +12,4 @@ export interface DiscordAccessTokenRequestBody extends AccessTokenRequestBase {
 }
 
 export type OAuthAccessTokenRequest =
-	| GitHubAccessTokenRequestParams
-	| DiscordAccessTokenRequestBody;
+	GitHubAccessTokenRequestParams | DiscordAccessTokenRequestBody;

@@ -1,14 +1,14 @@
-import { db } from '$lib/server/db';
-import { entries } from '$lib/server/db/schema';
-import reactions, { insertReactionSchema } from '$lib/server/db/schema/reaction';
+import { db } from '#lib/server/db';
+import { entries } from '#lib/server/db/schema';
+import reactions, { insertReactionSchema } from '#lib/server/db/schema/reaction';
 import { fail, redirect } from '@sveltejs/kit';
 import { and, eq, sql } from 'drizzle-orm';
 import type { PageServerLoad } from './$types';
-import votes, { insertVoteSchema } from '$lib/server/db/schema/vote';
+import votes, { insertVoteSchema } from '#lib/server/db/schema/vote';
 import { StatusCodes } from 'http-status-codes';
 import { isAuthenticated, isEmailVerified } from '../../utils';
-import { createBackendLogger } from '$lib/server/logger';
-import { isBetweenDates } from '$lib/helpers/isBetweenDates';
+import { createBackendLogger } from '#lib/server/logger';
+import { isBetweenDates } from '#lib/helpers/isBetweenDates';
 const logger = createBackendLogger('/entries/[id]');
 export const load = (async ({ params, locals }) => {
 	const { id } = params;

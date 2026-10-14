@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { deserialize, enhance } from '$app/forms';
 	import { invalidateAll } from '$app/navigation';
-	import { t } from '$lib/i18n';
-	import type { SubmitFunction } from '@sveltejs/kit';
+	import { t } from '#lib/i18n';
+	import type { SubmitFunction } from '$app/forms';
 	import type { PageData } from '../$types';
 	import ReactionsList from '../../../_components/ReactionsList.svelte';
 	import type { ReactionListItem } from '../../../_components/ReactionsListItem.svelte';

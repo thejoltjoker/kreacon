@@ -3,7 +3,7 @@
 </script>
 
 <script lang="ts" generics="T extends Record<string, unknown>">
-	import { cn } from '$lib/utils';
+	import { cn } from '#lib/utils';
 	import { setContext, type Snippet } from 'svelte';
 	import type { HTMLFormAttributes } from 'svelte/elements';
 	import type { SuperForm, SuperValidated } from 'sveltekit-superforms';

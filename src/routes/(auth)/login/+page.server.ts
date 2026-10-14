@@ -1,16 +1,16 @@
-import { loginSchema } from '$lib/schemas/loginSchema';
-import { createSession, generateSessionToken, setSessionTokenCookie } from '$lib/server/auth';
-import { providers } from '$lib/server/auth/oauth/OAuthClient';
-import db from '$lib/server/db';
-import users from '$lib/server/db/schema/user';
-import { verifyPassword } from '$lib/server/utils';
+import { loginSchema } from '#lib/schemas/loginSchema';
+import { createSession, generateSessionToken, setSessionTokenCookie } from '#lib/server/auth';
+import { providers } from '#lib/server/auth/oauth/OAuthClient';
+import db from '#lib/server/db';
+import users from '#lib/server/db/schema/user';
+import { verifyPassword } from '#lib/server/utils';
 import { fail, redirect } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
 import { StatusCodes } from 'http-status-codes';
 import { message, superValidate } from 'sveltekit-superforms';
 import { zod4 } from 'sveltekit-superforms/adapters';
 import type { Actions, PageServerLoad } from './$types';
-import { createBackendLogger } from '$lib/server/logger';
+import { createBackendLogger } from '#lib/server/logger';
 
 const logger = createBackendLogger('login');
 const loginSchemaAdapter = zod4(loginSchema);

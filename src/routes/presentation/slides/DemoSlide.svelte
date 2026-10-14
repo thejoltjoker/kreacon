@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Button from '$lib/components/Button.svelte';
+	import Button from '#lib/components/Button.svelte';
 	import image from '../../../assets/images/monster-skeleton-001.png';
 </script>
 

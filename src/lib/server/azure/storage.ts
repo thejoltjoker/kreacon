@@ -1,7 +1,7 @@
-import env from '$lib/env';
-import { xxhash } from '$lib/helpers/hashing';
-import { createBackendLogger } from '$lib/server/logger';
-import type { AzureStorageContainer } from '$lib/types/AzureStorageContainer';
+import env from '#lib/env';
+import { xxhash } from '#lib/helpers/hashing';
+import { createBackendLogger } from '#lib/server/logger';
+import type { AzureStorageContainer } from '#lib/types/AzureStorageContainer';
 import {
 	BlobSASPermissions,
 	BlobServiceClient,

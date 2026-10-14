@@ -1,4 +1,4 @@
-import { deleteSessionTokenCookie, invalidateSession } from '$lib/server/auth';
+import { deleteSessionTokenCookie, invalidateSession } from '#lib/server/auth';
 import { redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import { StatusCodes } from 'http-status-codes';

@@ -3,7 +3,7 @@
 	import type { WithElementRef } from 'bits-ui';
 	import type { HTMLAnchorAttributes, HTMLButtonAttributes } from 'svelte/elements';
 	import { type VariantProps, tv } from 'tailwind-variants';
-	import { type Icon as IconType } from 'lucide-svelte';
+	import type { LucideIcon } from '@lucide/svelte';
 	export const buttonVariants = tv({
 		base: 'ring-offset-shade-900 font-bold inline-flex items-center transition-colors justify-center gap-2 whitespace-nowrap rounded-button transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-5 [&_svg]:shrink-0',
 		variants: {
@@ -41,12 +41,12 @@
 		WithElementRef<HTMLAnchorAttributes> & {
 			variant?: ButtonVariant;
 			size?: ButtonSize;
-			icon?: typeof IconType;
+			icon?: LucideIcon;
 		};
 </script>
 
 <script lang="ts">
-	import { cn } from '$lib/utils.js';
+	import { cn } from '#lib/utils.js';
 
 	let {
 		class: className,

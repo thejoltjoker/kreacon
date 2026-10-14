@@ -1,16 +1,16 @@
 <script lang="ts">
 	// TODO Disallow sorting to be unselected
 	import { goto } from '$app/navigation';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import { resolve } from '$app/paths';
-	import type { Category } from '$lib/server/db/schema/category';
-	import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-svelte';
+	import type { Category } from '#lib/server/db/schema/category';
+	import { ChevronLeftIcon, ChevronRightIcon } from '@lucide/svelte';
 	import { type PageData } from '../$types';
 	import EventCombobox from './EventCombobox.svelte';
 	import SortBySelect from '../../_components/SortBySelect.svelte';
 	import { onMount } from 'svelte';
-	import Button from '$lib/components/Button.svelte';
-	import { t } from '$lib/i18n';
+	import Button from '#lib/components/Button.svelte';
+	import { t } from '#lib/i18n';
 	import { SvelteURLSearchParams } from 'svelte/reactivity';
 
 	const sortByItems: {
@@ -32,16 +32,16 @@
 	);
 
 	const handleCategoryChange = (categoryId: number | null) => {
-		const params = new SvelteURLSearchParams($page.url.searchParams);
+		const params = new SvelteURLSearchParams(page.url.searchParams.toString());
 		if (categoryId) {
 			params.set('category', categoryId.toString());
 		} else {
 			params.delete('category');
 		}
 		// @ts-expect-error TODO: Find correct solution to use resolve with search params
-		goto(resolve(`${$page.url.pathname}?${params.toString()}`), {
-			keepFocus: true,
-			replaceState: true
+		goto(resolve(`${page.url.pathname}?${params.toString()}`), {
+			reset: false,
+			replace: true
 		});
 	};
 
@@ -103,7 +103,7 @@
 		>
 			<li
 				class="px-md hover:bg-muted-background w-fit rounded-full text-nowrap"
-				class:pill={$page.url.searchParams.get('category') == null}
+				class:pill={page.url.searchParams.get('category') == null}
 			>
 				<button onclick={() => handleCategoryChange(null)}>{$t('All')}</button>
 			</li>
@@ -112,7 +112,7 @@
 					<button
 						onclick={() => handleCategoryChange(category.id)}
 						class="hover:bg-muted-background w-fit text-nowrap"
-						class:pill={category.id === Number($page.url.searchParams.get('category'))}
+						class:pill={category.id === Number(page.url.searchParams.get('category'))}
 					>
 						{category.name}
 					</button>

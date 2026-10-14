@@ -1,10 +1,10 @@
 <script lang="ts">
 	import type { PageData } from '../$types';
 	import { locale } from 'svelte-i18n';
-	import Button from '$lib/components/Button.svelte';
-	import { getEventStatus } from '$lib/helpers/eventStatus';
-	import { formatDateRange } from '$lib/helpers/formatDateRange';
-	import { t } from '$lib/i18n';
+	import Button from '#lib/components/Button.svelte';
+	import { getEventStatus } from '#lib/helpers/eventStatus';
+	import { formatDateRange } from '#lib/helpers/formatDateRange';
+	import { t } from '#lib/i18n';
 
 	let { events }: { events: PageData['events'] } = $props();
 	type Event = (typeof events)[number];

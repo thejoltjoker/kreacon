@@ -1,5 +1,5 @@
-import { dev } from '$app/environment';
-import { env } from '$env/dynamic/public';
+import { dev } from '$app/env';
+import { PUBLIC_BASE_URL } from '$app/env/public';
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
@@ -16,7 +16,7 @@ export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
  * @returns {string} The constructed absolute URL, e.g., 'https://example.com/api/route'
  */
 export const createPublicUrl = (path: string): string => {
-	const rawBaseUrl = env.PUBLIC_BASE_URL || 'localhost:5173';
+	const rawBaseUrl = PUBLIC_BASE_URL || 'localhost:5173';
 	const host = new URL(rawBaseUrl.startsWith('http') ? rawBaseUrl : `http://${rawBaseUrl}`).host;
 	const normalizedPath = path.startsWith('/') ? path : `/${path}`;
 

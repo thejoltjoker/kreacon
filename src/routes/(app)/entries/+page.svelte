@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { page } from '$app/stores';
-	import Avatar from '$lib/components/Avatar.svelte';
-	import Badge from '$lib/components/Badge.svelte';
+	import { page } from '$app/state';
+	import Avatar from '#lib/components/Avatar.svelte';
+	import Badge from '#lib/components/Badge.svelte';
 
-	import { t } from '$lib/i18n';
-	import { cn } from '$lib/utils';
-	import { ImageIcon, MusicIcon, VideoIcon } from 'lucide-svelte';
+	import { t } from '#lib/i18n';
+	import { cn } from '#lib/utils';
+	import { ImageIcon, MusicIcon, VideoIcon } from '@lucide/svelte';
 	import Pagination from '../_components/Pagination.svelte';
 	import type { PageData } from './$types';
 	import FilterBar from './_components/FilterBar.svelte';
@@ -16,7 +16,7 @@
 	let categories = $derived(data.categories);
 	let events = $derived(data.events);
 	let totalCount = $derived(Number(data.totalCount));
-	let searchParams = $state(new URLSearchParams($page.url.searchParams.toString()));
+	let searchParams = $state(new URLSearchParams(page.url.searchParams.toString()));
 	let pageNum = $derived(Number(searchParams.get('page') ?? 1));
 
 	// TODO Showing loading indicators

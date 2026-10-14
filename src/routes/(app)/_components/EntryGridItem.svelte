@@ -1,11 +1,11 @@
 <script lang="ts">
-	import Avatar from '$lib/components/Avatar.svelte';
-	import type { Category } from '$lib/server/db/schema/category';
-	import type { SelectFile } from '$lib/server/db/schema/file';
-	import type { Entry } from '$lib/server/db/schema/entry';
-	import type { PublicUser } from '$lib/server/db/schema/user';
+	import Avatar from '#lib/components/Avatar.svelte';
+	import type { Category } from '#lib/server/db/schema/category';
+	import type { SelectFile } from '#lib/server/db/schema/file';
+	import type { Entry } from '#lib/server/db/schema/entry';
+	import type { PublicUser } from '#lib/server/db/schema/user';
 	import StatusIcon from '../entries/_components/StatusIcon.svelte';
-	import { cn } from '$lib/utils';
+	import { cn } from '#lib/utils';
 
 	interface Props {
 		entry: Entry & { category: Category; preview: SelectFile; user: PublicUser };

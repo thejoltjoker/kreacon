@@ -3,9 +3,9 @@
 </script>
 
 <script lang="ts" generics="T extends Record<string, unknown>">
-	import { cn } from '$lib/utils';
+	import { cn } from '#lib/utils';
 	import { Label } from 'bits-ui';
-	import { XCircleIcon } from 'lucide-svelte';
+	import { XCircleIcon } from '@lucide/svelte';
 	import { getContext } from 'svelte';
 	import { formFieldProxy, type FormPathLeaves, type SuperForm } from 'sveltekit-superforms';
 	import type { HTMLTextareaAttributes } from 'svelte/elements';
@@ -61,8 +61,7 @@
 		aria-invalid={$errors ? 'true' : undefined}
 		bind:value={$value}
 		{...$constraints}
-		{...props}
-	></textarea>
+		{...props}></textarea>
 	{#if $errors}
 		<ul class="gap-xs flex flex-col text-sm">
 			{#each $errors as error, i (i)}

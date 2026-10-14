@@ -1,15 +1,15 @@
 <script lang="ts">
 	import { goto, invalidateAll } from '$app/navigation';
 	import { resolve } from '$app/paths';
-	import { page } from '$app/stores';
-	import type { UserStatus } from '$lib/types/userStatus';
-	import { BanIcon, ShieldIcon, TicketIcon } from 'lucide-svelte';
+	import { page } from '$app/state';
+	import type { UserStatus } from '#lib/types/userStatus';
+	import { BanIcon, ShieldIcon, TicketIcon } from '@lucide/svelte';
 	import EntityFilterBar from '../_components/EntityFilterBar.svelte';
 	import EntityList from '../_components/EntityList.svelte';
 	import type { PageData } from './$types';
 
 	let { data }: { data: PageData } = $props();
-	const currentUser = $derived($page.data.user);
+	const currentUser = $derived(page.data.user);
 
 	let users = $derived(
 		data.users.map((user) => ({
@@ -69,7 +69,6 @@
 		{
 			label: 'Show tickets',
 			icon: TicketIcon,
-			// @ts-expect-error TODO: Find correct solution to use resolve with search params
 			onClick: (value) => goto(resolve(`/admin/tickets?username=${value.username}`))
 		},
 		{

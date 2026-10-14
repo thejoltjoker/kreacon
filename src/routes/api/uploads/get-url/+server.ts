@@ -1,7 +1,7 @@
-import { createBackendLogger } from '$lib/server/logger';
-import { generateBlobSasUrl, deleteBlobFromUrl } from '$lib/server/azure/storage';
-import db from '$lib/server/db';
-import { files } from '$lib/server/db/schema';
+import { createBackendLogger } from '#lib/server/logger';
+import { generateBlobSasUrl, deleteBlobFromUrl } from '#lib/server/azure/storage';
+import db from '#lib/server/db';
+import { files } from '#lib/server/db/schema';
 import { error, json } from '@sveltejs/kit';
 import { StatusCodes } from 'http-status-codes';
 import type { RequestHandler } from './$types';

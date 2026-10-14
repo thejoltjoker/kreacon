@@ -1,5 +1,5 @@
 <script lang="ts" module>
-	import { Icon as IconType } from 'lucide-svelte';
+	import type { LucideIcon } from '@lucide/svelte';
 	export type StyledSelectItem = {
 		value: string;
 		label: string;
@@ -10,17 +10,16 @@
 		items: StyledSelectItem[];
 		contentProps?: WithoutChildren<Select.ContentProps>;
 		class?: string;
-		triggerIcon?: typeof IconType;
+		triggerIcon?: LucideIcon;
 		customLabel?: string;
 	} & (
-		| ({ type: 'single' } & SelectSingleRootProps)
-		| ({ type: 'multiple' } & SelectMultipleRootProps)
+		({ type: 'single' } & SelectSingleRootProps) | ({ type: 'multiple' } & SelectMultipleRootProps)
 	);
 </script>
 
 <script lang="ts">
-	import { cn } from '$lib/utils';
-	import { ChevronsUpDownIcon, ChevronUpIcon, ChevronDownIcon, CheckIcon } from 'lucide-svelte';
+	import { cn } from '#lib/utils';
+	import { ChevronsUpDownIcon, ChevronUpIcon, ChevronDownIcon, CheckIcon } from '@lucide/svelte';
 	import {
 		Select,
 		type SelectMultipleRootProps,

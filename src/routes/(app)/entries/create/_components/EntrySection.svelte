@@ -1,16 +1,16 @@
 <script lang="ts">
 	import EventRow from './EventRow.svelte';
 	import CategoryRow from './CategoryRow.svelte';
-	import { page } from '$app/stores';
-	import { createEntrySchema, type CreateEntrySchema } from '$lib/schemas/entry';
+	import { page } from '$app/state';
+	import { createEntrySchema, type CreateEntrySchema } from '#lib/schemas/entry';
 	import type { SuperForm } from 'sveltekit-superforms';
 	import { getContext } from 'svelte';
 	import type { PageData } from '../$types';
-	import Link from '$lib/components/Link.svelte';
+	import Link from '#lib/components/Link.svelte';
 
 	let { isValid = $bindable() }: { isValid: boolean } = $props();
 	let { form } = getContext<SuperForm<CreateEntrySchema>>('superform');
-	let events: PageData['events'] = $state($page.data.events);
+	let events: PageData['events'] = $state(page.data.events);
 	let event = $derived(events?.find((e) => e.eventId?.toString() === $form.eventId.toString()));
 
 	$effect(() => {

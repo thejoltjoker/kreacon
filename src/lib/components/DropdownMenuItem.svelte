@@ -2,15 +2,15 @@
 	import { DropdownMenu } from 'bits-ui';
 
 	export interface DropdownMenuItemProps extends DropdownMenu.ItemProps {
-		icon?: typeof IconType;
+		icon?: LucideIcon;
 		class?: string;
 		href?: string;
 	}
 </script>
 
 <script lang="ts">
-	import { cn } from '$lib/utils';
-	import { type Icon as IconType } from 'lucide-svelte';
+	import { cn } from '#lib/utils';
+	import type { LucideIcon } from '@lucide/svelte';
 
 	let {
 		icon: Icon,

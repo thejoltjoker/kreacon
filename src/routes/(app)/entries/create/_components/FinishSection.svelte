@@ -1,16 +1,16 @@
 <script lang="ts">
-	import SelectField from '$lib/components/Form/SelectField.svelte';
-	import type { StyledSelectItem } from '$lib/components/Form/StyledSelect.svelte';
-	import TextField from '$lib/components/Form/TextField.svelte';
-	import TextAreaField from '$lib/components/Form/TextAreaField.svelte';
-	import Link from '$lib/components/Link.svelte';
-	import { licenseCode } from '$lib/schemas/license';
-	import { createEntrySchema, type CreateEntrySchema } from '$lib/schemas/entry';
+	import SelectField from '#lib/components/Form/SelectField.svelte';
+	import type { StyledSelectItem } from '#lib/components/Form/StyledSelect.svelte';
+	import TextField from '#lib/components/Form/TextField.svelte';
+	import TextAreaField from '#lib/components/Form/TextAreaField.svelte';
+	import Link from '#lib/components/Link.svelte';
+	import { licenseCode } from '#lib/schemas/license';
+	import { createEntrySchema, type CreateEntrySchema } from '#lib/schemas/entry';
 	import { getContext } from 'svelte';
 	import type { SuperForm } from 'sveltekit-superforms';
 	import SubmittingTo from './SubmittingTo.svelte';
-	import Divider from '$lib/components/Divider.svelte';
-	import { t } from '$lib/i18n';
+	import Divider from '#lib/components/Divider.svelte';
+	import { t } from '#lib/i18n';
 	let { isValid = $bindable() }: { isValid: boolean } = $props();
 	const licenses: StyledSelectItem[] = licenseCode.map((code) => ({
 		label: code.toUpperCase(),

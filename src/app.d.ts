@@ -1,6 +1,6 @@
-/// <reference types="svelte-adapter-azure-swa" />
+/// <reference types="@sveltejs/kit" />
 
-import type { SuperFormMessage } from '$lib/types/SuperFormMessage';
+import type { SuperFormMessage } from '#lib/types/SuperFormMessage';
 
 // See https://kit.svelte.dev/docs/types#app
 // for information about these interfaces
@@ -10,8 +10,8 @@ declare global {
 			message: string;
 		}
 		interface Locals {
-			user: import('$lib/server/auth').SessionValidationResult['user'];
-			session: import('$lib/server/auth').SessionValidationResult['session'];
+			user: import('#lib/server/auth').SessionValidationResult['user'];
+			session: import('#lib/server/auth').SessionValidationResult['session'];
 		}
 		// interface PageState {}
 		// interface Platform {}

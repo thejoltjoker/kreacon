@@ -1,6 +1,6 @@
 <script lang="ts">
-	import Button from '$lib/components/Button.svelte';
-	import { PlusIcon } from 'lucide-svelte';
+	import Button from '#lib/components/Button.svelte';
+	import { PlusIcon } from '@lucide/svelte';
 	import SortBySelect from '../../(app)/_components/SortBySelect.svelte';
 	import TextFilter from '../../(app)/_components/TextFilter.svelte';
 

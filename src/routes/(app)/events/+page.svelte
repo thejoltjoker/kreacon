@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { getEventStatus } from '$lib/helpers/eventStatus';
-	import { t } from '$lib/i18n';
+	import { getEventStatus } from '#lib/helpers/eventStatus';
+	import { t } from '#lib/i18n';
 	import type { PageData } from './$types';
 	import EventListItem from './_components/EventListItem.svelte';
 	import capitalize from 'lodash/capitalize';

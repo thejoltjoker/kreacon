@@ -1,17 +1,17 @@
-import { availableOAuthProviders } from '$lib/server/auth/oauth/getOAuthClient';
-import { db } from '$lib/server/db';
-import users from '$lib/server/db/schema/user';
+import { availableOAuthProviders } from '#lib/server/auth/oauth/getOAuthClient';
+import { db } from '#lib/server/db';
+import users from '#lib/server/db/schema/user';
 
-import { assignBeacon2026Ticket, hashPassword } from '$lib/server/utils';
+import { assignBeacon2026Ticket, hashPassword } from '#lib/server/utils';
 import { type Actions, fail, redirect } from '@sveltejs/kit';
 import { eq, or } from 'drizzle-orm';
 import { message, setError, superValidate } from 'sveltekit-superforms';
 import { zod4 } from 'sveltekit-superforms/adapters';
 import type { PageServerLoad } from './$types';
 import { StatusCodes } from 'http-status-codes';
-import { registerUserSchema } from '$lib/schemas/user';
-import { createBackendLogger } from '$lib/server/logger';
-import { sendEmailVerification } from '$lib/server/auth/verifyEmail';
+import { registerUserSchema } from '#lib/schemas/user';
+import { createBackendLogger } from '#lib/server/logger';
+import { sendEmailVerification } from '#lib/server/auth/verifyEmail';
 
 const logger = createBackendLogger('register');
 

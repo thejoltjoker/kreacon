@@ -1,14 +1,14 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import Button from '$lib/components/Button.svelte';
+	import Button from '#lib/components/Button.svelte';
 
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import { Popover } from 'bits-ui';
-	import { SmilePlusIcon } from 'lucide-svelte';
-	import { t } from '$lib/i18n';
-	import type { Emoji } from '$lib/emojis.svelte';
+	import { SmilePlusIcon } from '@lucide/svelte';
+	import { t } from '#lib/i18n';
+	import type { Emoji } from '#lib/emojis.svelte';
 
-	const user = $derived($page.data.user);
+	const user = $derived(page.data.user);
 
 	let {
 		entryId: entryId,

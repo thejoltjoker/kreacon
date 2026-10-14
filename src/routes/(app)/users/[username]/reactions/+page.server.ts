@@ -1,5 +1,5 @@
-import db from '$lib/server/db';
-import { reactions, users } from '$lib/server/db/schema';
+import db from '#lib/server/db';
+import { reactions, users } from '#lib/server/db/schema';
 import { redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import { eq, sql } from 'drizzle-orm';

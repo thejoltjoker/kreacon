@@ -1,7 +1,7 @@
 <script lang="ts">
-	import Avatar from '$lib/components/Avatar.svelte';
-	import Badge from '$lib/components/Badge.svelte';
-	import { formatRelativeTime } from '$lib/helpers/formatRelativeTime';
+	import Avatar from '#lib/components/Avatar.svelte';
+	import Badge from '#lib/components/Badge.svelte';
+	import { formatRelativeTime } from '#lib/helpers/formatRelativeTime';
 	import { type PageData } from '../$types';
 	import DeleteButton from './DeleteButton.svelte';
 	import VoteButton from './VoteButton.svelte';

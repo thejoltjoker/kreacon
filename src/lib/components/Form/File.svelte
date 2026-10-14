@@ -1,11 +1,11 @@
 <script lang="ts" generics="T extends Record<string, unknown>">
 	import { fileFieldProxy, type SuperForm } from 'sveltekit-superforms/client';
 	import type { FormPathLeaves } from 'sveltekit-superforms';
-	import { cn } from '$lib/utils';
+	import { cn } from '#lib/utils';
 	import Button from '../Button.svelte';
-	import type { MediaType } from '$lib/types/mediaTypes';
-	import { mimeFromMediaType } from '$lib/helpers/mimeFromMediaType';
-	import { t } from '$lib/i18n';
+	import type { MediaType } from '#lib/types/mediaTypes';
+	import { mimeFromMediaType } from '#lib/helpers/mimeFromMediaType';
+	import { t } from '#lib/i18n';
 
 	interface Props {
 		form: SuperForm<T>;

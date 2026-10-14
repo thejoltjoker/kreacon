@@ -1,6 +1,6 @@
 <script lang="ts">
-	import Avatar from '$lib/components/Avatar.svelte';
-	import { t } from '$lib/i18n';
+	import Avatar from '#lib/components/Avatar.svelte';
+	import { t } from '#lib/i18n';
 	import type { LayoutData } from '../$types';
 	interface Props {
 		user: LayoutData['profileUser'];

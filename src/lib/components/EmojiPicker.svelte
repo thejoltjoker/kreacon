@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Command, Dialog, type DialogTriggerPropsWithoutHTML } from 'bits-ui';
-	import { groupedEmojis } from '$lib/emojis.svelte';
-	import { ArrowBigDownIcon, ArrowBigUpIcon, InfoIcon } from 'lucide-svelte';
+	import { groupedEmojis } from '#lib/emojis.svelte';
+	import { ArrowBigDownIcon, ArrowBigUpIcon, InfoIcon } from '@lucide/svelte';
 	import type { Snippet } from 'svelte';
 	import Divider from './Divider.svelte';
 	import EmojiPickerItem from './EmojiPickerItem.svelte';

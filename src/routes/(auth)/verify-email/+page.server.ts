@@ -1,14 +1,14 @@
-import { db } from '$lib/server/db';
-import { users } from '$lib/server/db/schema';
+import { db } from '#lib/server/db';
+import { users } from '#lib/server/db/schema';
 import { eq } from 'drizzle-orm';
 import { fail, redirect } from '@sveltejs/kit';
 import { message, superValidate } from 'sveltekit-superforms';
 import { zod4 } from 'sveltekit-superforms/adapters';
 import type { Actions, PageServerLoad } from './$types';
 import { StatusCodes } from 'http-status-codes';
-import { createBackendLogger } from '$lib/server/logger';
-import { sendEmailVerification } from '$lib/server/auth/verifyEmail';
-import { resendEmailSchema } from '$lib/schemas/verifyEmail';
+import { createBackendLogger } from '#lib/server/logger';
+import { sendEmailVerification } from '#lib/server/auth/verifyEmail';
+import { resendEmailSchema } from '#lib/schemas/verifyEmail';
 
 const logger = createBackendLogger('verify-email');
 

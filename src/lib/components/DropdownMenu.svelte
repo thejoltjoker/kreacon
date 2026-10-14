@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { cn } from '$lib/utils';
+	import { cn } from '#lib/utils';
 	import { DropdownMenu, type WithoutChild } from 'bits-ui';
-	import { InfoIcon } from 'lucide-svelte';
+	import { InfoIcon } from '@lucide/svelte';
 	import DropdownMenuItem from './DropdownMenuItem.svelte';
 	import type { Snippet } from 'svelte';
 

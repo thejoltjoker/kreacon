@@ -1,10 +1,10 @@
 <script lang="ts">
-	import Button from '$lib/components/Button.svelte';
-	import type { ZCreateEventSchema } from '$lib/schemas/eventSchema';
-	import { LockOpenIcon, PencilIcon, PlusIcon } from 'lucide-svelte';
+	import Button from '#lib/components/Button.svelte';
+	import type { ZCreateEventSchema } from '#lib/schemas/eventSchema';
+	import { LockOpenIcon, PencilIcon, PlusIcon } from '@lucide/svelte';
 	import { getContext, tick } from 'svelte';
 	import { type Infer, type SuperForm } from 'sveltekit-superforms/client';
-	import DumbInput from '$lib/components/Form/DumbInput.svelte';
+	import DumbInput from '#lib/components/Form/DumbInput.svelte';
 
 	interface EventRulesSectionProps {
 		/**

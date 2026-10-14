@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import { resolve } from '$app/paths';
 	import { fade } from 'svelte/transition';
 	import BraggingSlide from './slides/BraggingSlide.svelte';
@@ -21,15 +21,15 @@
 		5: ChangesSlide,
 		6: DemoSlide
 	};
-	let currentSlideNumber = $state(Number($page.url.searchParams.get('slide') ?? 0));
+	let currentSlideNumber = $state(Number(page.url.searchParams.get('slide') ?? 0));
 	let transitionDuration = 300;
 	let CurrentSlide = $derived(slides[currentSlideNumber]);
 
 	const updateSearchParams = (slide: number) => {
-		const params = new SvelteURLSearchParams($page.url.searchParams);
+		const params = new SvelteURLSearchParams(page.url.searchParams.toString());
 		params.set('slide', slide.toString());
 		// @ts-expect-error TODO: Find correct solution to use resolve with search params
-		goto(resolve(`${$page.url.pathname}?${params.toString()}`), { replaceState: true });
+		goto(resolve(`${page.url.pathname}?${params.toString()}`), { replace: true });
 	};
 
 	const nextSlide = () => {

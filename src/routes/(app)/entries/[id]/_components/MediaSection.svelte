@@ -1,8 +1,8 @@
 <script lang="ts">
-	import AudioPlayer from '$lib/components/AudioPlayer.svelte';
-	import VideoPlayer from '$lib/components/VideoPlayer.svelte';
-	import { getMediaTypeForMime } from '$lib/helpers/mediaTypes';
-	import { cn } from '$lib/utils';
+	import AudioPlayer from '#lib/components/AudioPlayer.svelte';
+	import VideoPlayer from '#lib/components/VideoPlayer.svelte';
+	import { getMediaTypeForMime } from '#lib/helpers/mediaTypes';
+	import { cn } from '#lib/utils';
 	import type { PageData } from '../$types';
 
 	let { entry }: { entry: NonNullable<PageData['entry']> } = $props();

@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { cn } from '$lib/utils';
+	import { cn } from '#lib/utils';
 	import { Label, type LabelRootProps } from 'bits-ui';
-	import { type IconProps, type Icon as IconType } from 'lucide-svelte';
+	import type { LucideIcon, LucideProps } from '@lucide/svelte';
 	import type { Snippet } from 'svelte';
 	import type {
 		HTMLInputAttributes,
@@ -13,8 +13,8 @@
 	interface BaseProps {
 		label?: string | Snippet;
 		labelProps?: Omit<LabelRootProps, 'for'>;
-		icon?: typeof IconType;
-		iconProps?: IconProps;
+		icon?: LucideIcon;
+		iconProps?: LucideProps;
 		errors?: string[];
 		variant?: 'default' | 'ghost';
 		type?: HTMLInputTypeAttribute & HTMLTextAreaElement['type'];
@@ -96,9 +96,7 @@
 				{name}
 				class={className}
 				bind:value
-				bind:this={elementRef}
-			>
-			</textarea>
+				bind:this={elementRef}></textarea>
 			{#if Icon != null}
 				<Icon
 					{...iconProps}

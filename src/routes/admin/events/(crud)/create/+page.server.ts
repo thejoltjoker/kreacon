@@ -1,5 +1,5 @@
-import db from '$lib/server/db';
-import events from '$lib/server/db/schema/event';
+import db from '#lib/server/db';
+import events from '#lib/server/db/schema/event';
 import { fail, redirect } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
 import kebabCase from 'lodash/kebabCase';
@@ -7,8 +7,8 @@ import { superValidate } from 'sveltekit-superforms';
 import { zod4 } from 'sveltekit-superforms/adapters';
 import type { PageServerLoad } from './$types';
 import { StatusCodes } from 'http-status-codes';
-import { eventCategories, rules } from '$lib/server/db/schema';
-import { createEventSchema } from '$lib/schemas/eventSchema';
+import { eventCategories, rules } from '#lib/server/db/schema';
+import { createEventSchema } from '#lib/schemas/eventSchema';
 import { adminCheck } from '../../../utils';
 
 export const load = (async ({ locals }) => {

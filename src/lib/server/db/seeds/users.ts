@@ -1,4 +1,4 @@
-import { hashPassword } from '$lib/server/utils';
+import { hashPassword } from '#lib/server/utils';
 import type { UserRole } from '../../../types/userRoles';
 import { db } from '../../db';
 import * as schema from '../../db/schema';

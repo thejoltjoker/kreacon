@@ -1,10 +1,10 @@
 <script lang="ts">
-	import Button from '$lib/components/Button.svelte';
-	import { t } from '$lib/i18n';
-	import GitHubIcon from '$lib/symbols/GitHubIcon.svg?raw';
+	import Button from '#lib/components/Button.svelte';
+	import { t } from '#lib/i18n';
+	import GitHubIcon from '#lib/symbols/GitHubIcon.svg?raw';
 </script>
 
-<Button type="button" variant="white" href="/oauth/login/github">
+<Button type="button" variant="white" href="/oauth/login/github" data-sveltekit-reload>
 	<span class="icon">
 		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 		{@html GitHubIcon}

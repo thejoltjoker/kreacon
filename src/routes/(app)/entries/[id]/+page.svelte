@@ -1,13 +1,13 @@
 <script lang="ts">
-	import { page } from '$app/stores';
-	import { t } from '$lib/i18n';
+	import { page } from '$app/state';
+	import { t } from '#lib/i18n';
 	import { type PageData } from './$types';
 	import HeaderSection from './_components/HeaderSection.svelte';
 	import InfoSection from './_components/InfoSection.svelte';
 	import MediaSection from './_components/MediaSection.svelte';
 	import ReactionsSection from './_components/ReactionsSection.svelte';
 
-	const user = $derived($page.data.user);
+	const user = $derived(page.data.user);
 
 	let { data }: { data: PageData } = $props();
 	let isVoted = $state(data.isVoted ?? false);

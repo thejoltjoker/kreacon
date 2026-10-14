@@ -1,7 +1,7 @@
-import { db } from '$lib/server/db';
+import { db } from '#lib/server/db';
 import { count } from 'drizzle-orm/sql/functions';
 import type { PageServerLoad } from './$types';
-import entries from '$lib/server/db/schema/entry';
+import entries from '#lib/server/db/schema/entry';
 import { and, eq, or, sql } from 'drizzle-orm';
 
 // TODO Handling invalid page numbers

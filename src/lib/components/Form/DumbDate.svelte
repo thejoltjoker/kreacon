@@ -1,13 +1,13 @@
 <script lang="ts">
-	import { cn } from '$lib/utils';
+	import { cn } from '#lib/utils';
 	import { DateField, type WithoutChildrenOrChild } from 'bits-ui';
-	import { Icon as IconType, type IconProps } from 'lucide-svelte';
+	import type { LucideIcon, LucideProps } from '@lucide/svelte';
 	type Props = WithoutChildrenOrChild<DateField.RootProps> & {
 		labelText: string;
 		name: string;
 		class?: string;
-		icon?: typeof IconType;
-		iconProps?: IconProps;
+		icon?: LucideIcon;
+		iconProps?: LucideProps;
 		inputProps?: DateField.InputProps;
 	};
 

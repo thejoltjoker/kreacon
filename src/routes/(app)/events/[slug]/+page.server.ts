@@ -1,5 +1,5 @@
-import db from '$lib/server/db';
-import { eventCategories, events } from '$lib/server/db/schema';
+import db from '#lib/server/db';
+import { eventCategories, events } from '#lib/server/db/schema';
 import { error } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
 import { StatusCodes } from 'http-status-codes';

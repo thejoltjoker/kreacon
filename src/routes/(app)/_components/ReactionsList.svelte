@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { page } from '$app/stores';
-	import EmojiPicker from '$lib/components/EmojiPicker.svelte';
-	import { t } from '$lib/i18n';
-	import { SmilePlusIcon } from 'lucide-svelte';
+	import { page } from '$app/state';
+	import EmojiPicker from '#lib/components/EmojiPicker.svelte';
+	import { t } from '#lib/i18n';
+	import { SmilePlusIcon } from '@lucide/svelte';
 	import ReactionsListItem, { type ReactionListItem } from './ReactionsListItem.svelte';
 
 	interface ReactionsListProps {
@@ -15,7 +15,7 @@
 </script>
 
 <ul class="grid-cols-reactions-sm gap-sm grid w-full">
-	{#if onAddReaction != null && $page.data.user != null}
+	{#if onAddReaction != null && page.data.user != null}
 		<li>
 			<EmojiPicker handleSubmit={onAddReaction}>
 				{#snippet trigger(props: TriggerProps)}
@@ -39,7 +39,7 @@
 	{#each reactions as reaction (reaction.id)}
 		<ReactionsListItem {reaction} />
 	{/each}
-	{#if reactions.length === 0 && $page.data.user == null}
+	{#if reactions.length === 0 && page.data.user == null}
 		<li class="text-shade-300 text-nowrap">
 			<p>{$t('No reactions yet, sign in to add yours!')}</p>
 		</li>

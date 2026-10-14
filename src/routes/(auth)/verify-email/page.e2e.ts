@@ -1,6 +1,6 @@
-import { db } from '$lib/server/db';
-import { users } from '$lib/server/db/schema';
-import { hashPassword } from '$lib/server/utils';
+import { db } from '#lib/server/db';
+import { users } from '#lib/server/db/schema';
+import { hashPassword } from '#lib/server/utils';
 import { expect, test } from '@playwright/test';
 import crypto from 'crypto';
 import { eq } from 'drizzle-orm';

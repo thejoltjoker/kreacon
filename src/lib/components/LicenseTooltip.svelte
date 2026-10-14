@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { licenses, type LicenseCode } from '$lib/schemas/license';
+	import { licenses, type LicenseCode } from '#lib/schemas/license';
 	import { Tooltip } from 'bits-ui';
-	import { CircleAlertIcon, InfoIcon, LinkIcon, ThumbsUpIcon } from 'lucide-svelte';
+	import { CircleAlertIcon, InfoIcon, LinkIcon, ThumbsUpIcon } from '@lucide/svelte';
 	import Divider from './Divider.svelte';
 
 	let { license }: { license: LicenseCode } = $props();

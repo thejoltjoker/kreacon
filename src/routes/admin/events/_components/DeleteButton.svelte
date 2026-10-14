@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import Button from '$lib/components/Button.svelte';
-	import Divider from '$lib/components/Divider.svelte';
-	import DumbDialog from '$lib/components/DumbDialog.svelte';
-	import DumbInput from '$lib/components/Form/DumbInput.svelte';
-	import { t } from '$lib/i18n';
-	import { TrashIcon } from 'lucide-svelte';
+	import Button from '#lib/components/Button.svelte';
+	import Divider from '#lib/components/Divider.svelte';
+	import DumbDialog from '#lib/components/DumbDialog.svelte';
+	import DumbInput from '#lib/components/Form/DumbInput.svelte';
+	import { t } from '#lib/i18n';
+	import { TrashIcon } from '@lucide/svelte';
 
 	let { eventId = $bindable() }: { eventId: number } = $props();
 

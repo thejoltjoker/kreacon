@@ -1,15 +1,15 @@
 <script lang="ts">
-	import { page } from '$app/stores';
-	import Divider from '$lib/components/Divider.svelte';
-	import GenericForm from '$lib/components/Form/GenericForm.svelte';
-	import { cn } from '$lib/utils';
+	import { page } from '$app/state';
+	import Divider from '#lib/components/Divider.svelte';
+	import GenericForm from '#lib/components/Form/GenericForm.svelte';
+	import { cn } from '#lib/utils';
 	import { Tabs } from 'bits-ui';
 	import ButtonsSection from './ButtonsSection.svelte';
 	import EntrySection from './EntrySection.svelte';
 	import FilesSection from './FilesSection.svelte';
 	import FinishSection from './FinishSection.svelte';
 	import { zod4Client } from 'sveltekit-superforms/adapters';
-	import { createEntrySchema } from '$lib/schemas/entry';
+	import { createEntrySchema } from '#lib/schemas/entry';
 
 	// TODO Improve navigation guard
 	// TODO Use more semantic naming for tabs
@@ -47,7 +47,7 @@
 <!-- TODO Check how controlledValue is replaced in bits ui 2 -->
 <Tabs.Root bind:value={currentTab} disabled>
 	<GenericForm
-		data={$page.data.form}
+		data={page.data.form}
 		class="my-3xl gap-xl px-sm md:px-xl"
 		options={{ validators: zod4Client(createEntrySchema) }}
 	>

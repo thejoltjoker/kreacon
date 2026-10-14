@@ -1,15 +1,15 @@
 <script>
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import { onMount } from 'svelte';
-	import Button from '$lib/components/Button.svelte';
+	import Button from '#lib/components/Button.svelte';
 	import { _ } from 'svelte-i18n';
 	import EventHighlight from './EventHighlight.svelte';
-	import { getEventStatus } from '$lib/helpers/eventStatus';
+	import { getEventStatus } from '#lib/helpers/eventStatus';
 	import { fade } from 'svelte/transition';
 	import monsterImage from '../../assets/images/monster.png';
-	import { t } from '$lib/i18n';
+	import { t } from '#lib/i18n';
 	let event = $derived.by(() => {
-		return $page.data.events[0];
+		return page.data.events[0];
 	});
 
 	let mounted = $state(false);

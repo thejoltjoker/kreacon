@@ -1,6 +1,6 @@
 <script>
-	import Button from '$lib/components/Button.svelte';
-	import { t } from '$lib/i18n';
+	import Button from '#lib/components/Button.svelte';
+	import { t } from '#lib/i18n';
 </script>
 
 <section class="border-shade-700 px-md py-8xl w-full border-y">

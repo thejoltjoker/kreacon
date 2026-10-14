@@ -5,12 +5,12 @@
 	import SignUpSection from './_components/SignUpSection.svelte';
 	import EventsSection from './_components/EventsSection.svelte';
 	import ContentBlock from './_components/ContentBlock.svelte';
-	import Button from '$lib/components/Button.svelte';
+	import Button from '#lib/components/Button.svelte';
 	import cowsFriendsImage from '../assets/images/cows-friends-001.png';
 	import bugOrganImage from '../assets/images/bug-organ-002.png';
 	import skeletonPileImage from '../assets/images/skeleton-pile-001.png';
-	import AnimateOnScroll from '$lib/components/AnimateOnScroll.svelte';
-	import { t } from '$lib/i18n';
+	import AnimateOnScroll from '#lib/components/AnimateOnScroll.svelte';
+	import { t } from '#lib/i18n';
 
 	let { data }: { data: PageData } = $props();
 </script>

@@ -1,9 +1,9 @@
 <script lang="ts">
-	import type { EntryStatus } from '$lib/types/entryStatus';
+	import type { EntryStatus } from '#lib/types/entryStatus';
 	import capitalize from 'lodash/capitalize';
 	import EntityListField from '../EntityListField.svelte';
 	import type { Field, Item } from '../types';
-	import { CircleAlertIcon, CircleCheckIcon, CircleXIcon } from 'lucide-svelte';
+	import { CircleAlertIcon, CircleCheckIcon, CircleXIcon } from '@lucide/svelte';
 
 	let { field, item }: { field: Field; item: Item } = $props();
 </script>

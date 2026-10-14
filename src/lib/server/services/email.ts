@@ -1,12 +1,12 @@
 import {
 	AZURE_COMMUNICATION_SERVICES_SENDER_ADDRESS,
 	AZURE_COMMUNICATION_SERVICES_CONNECTION_STRING
-} from '$env/static/private';
+} from '$app/env/private';
 import {
 	EmailClient as AzureEmailClient,
 	type EmailMessage as AzureEmailMessage
 } from '@azure/communication-email';
-import { createBackendLogger } from '$lib/server/logger';
+import { createBackendLogger } from '#lib/server/logger';
 import { z } from 'zod/v4';
 
 const logger = createBackendLogger('email');

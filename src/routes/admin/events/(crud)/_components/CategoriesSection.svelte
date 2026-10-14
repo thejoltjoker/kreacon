@@ -1,7 +1,7 @@
 <script lang="ts">
-	import Button from '$lib/components/Button.svelte';
-	import type { ZCreateEventSchema } from '$lib/schemas/eventSchema';
-	import { PlusIcon } from 'lucide-svelte';
+	import Button from '#lib/components/Button.svelte';
+	import type { ZCreateEventSchema } from '#lib/schemas/eventSchema';
+	import { PlusIcon } from '@lucide/svelte';
 	import { getContext } from 'svelte';
 	import { type Infer, type SuperForm } from 'sveltekit-superforms/client';
 	import CategoryInput from './CategoryInput.svelte';

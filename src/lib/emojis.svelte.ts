@@ -1,4 +1,4 @@
-import { LightbulbIcon, PawPrintIcon, PizzaIcon, SmileIcon } from 'lucide-svelte';
+import { LightbulbIcon, PawPrintIcon, PizzaIcon, SmileIcon } from '@lucide/svelte';
 
 export interface Emoji {
 	keywords: string[];

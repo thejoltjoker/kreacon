@@ -1,9 +1,9 @@
 <script lang="ts">
-	import Divider from '$lib/components/Divider.svelte';
+	import Divider from '#lib/components/Divider.svelte';
 	import OAuthButtons from '../_components/OAuthButtons.svelte';
 	import type { PageData } from './$types';
 	import LoginForm from './_components/LoginForm.svelte';
-	import { t } from '$lib/i18n';
+	import { t } from '#lib/i18n';
 
 	const { data }: { data: PageData } = $props();
 </script>

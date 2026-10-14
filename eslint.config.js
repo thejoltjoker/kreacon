@@ -25,6 +25,10 @@ export default ts.config(
 			parserOptions: {
 				parser: ts.parser
 			}
+		},
+		rules: {
+			// $bindable + $effect assignments look unused to ESLint
+			'no-useless-assignment': 'off'
 		}
 	},
 	{

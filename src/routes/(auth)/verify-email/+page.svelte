@@ -1,12 +1,12 @@
 <script lang="ts">
-	import Button from '$lib/components/Button.svelte';
-	import { t } from '$lib/i18n';
-	import Form from '$lib/components/Form/GenericForm.svelte';
-	import TextField from '$lib/components/Form/TextField.svelte';
-	import FormMessage from '$lib/components/Form/FormMessage.svelte';
-	import Link from '$lib/components/Link.svelte';
+	import Button from '#lib/components/Button.svelte';
+	import { t } from '#lib/i18n';
+	import Form from '#lib/components/Form/GenericForm.svelte';
+	import TextField from '#lib/components/Form/TextField.svelte';
+	import FormMessage from '#lib/components/Form/FormMessage.svelte';
+	import Link from '#lib/components/Link.svelte';
 	import type { PageData } from './$types';
-	import { resendEmailSchema } from '$lib/schemas/verifyEmail';
+	import { resendEmailSchema } from '#lib/schemas/verifyEmail';
 	import { zod4Client } from 'sveltekit-superforms/adapters';
 
 	let { data }: { data: PageData } = $props();

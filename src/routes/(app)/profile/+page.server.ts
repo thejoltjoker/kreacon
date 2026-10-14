@@ -1,19 +1,19 @@
-import { db } from '$lib/server/db';
-import users from '$lib/server/db/schema/user';
+import { db } from '#lib/server/db';
+import users from '#lib/server/db/schema/user';
 import { fail, redirect } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
 import { message, setError, superValidate, type Infer } from 'sveltekit-superforms';
 import { zod4 } from 'sveltekit-superforms/adapters';
 import type { PageServerLoad } from './$types';
-import tickets from '$lib/server/db/schema/ticket';
-import { api as ticketClient } from '$lib/server/services/ticket';
-import { events } from '$lib/server/db/schema';
-import type { SuperFormMessage } from '$lib/types/SuperFormMessage';
+import tickets from '#lib/server/db/schema/ticket';
+import { api as ticketClient } from '#lib/server/services/ticket';
+import { events } from '#lib/server/db/schema';
+import type { SuperFormMessage } from '#lib/types/SuperFormMessage';
 import { StatusCodes } from 'http-status-codes';
 import { authCheck, isEmailVerified } from '../utils';
-import { updateUserSchema } from '$lib/schemas/user';
+import { updateUserSchema } from '#lib/schemas/user';
 import { z } from 'zod/v4';
-import type { SelectEvent } from '$lib/server/db/schema/event';
+import type { SelectEvent } from '#lib/server/db/schema/event';
 
 const ticketSchema = z.object({ id: z.string().min(1).max(255) });
 

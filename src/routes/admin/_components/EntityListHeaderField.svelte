@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { cn } from '$lib/utils';
+	import { cn } from '#lib/utils';
 	import startCase from 'lodash/startCase';
 	import type { Field } from './types';
-	import { t } from '$lib/i18n';
-	import { ArrowUpDownIcon } from 'lucide-svelte';
+	import { t } from '#lib/i18n';
+	import { ArrowUpDownIcon } from '@lucide/svelte';
 
 	let {
 		field,
