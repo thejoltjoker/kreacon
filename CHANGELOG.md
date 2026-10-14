@@ -153,6 +153,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   [#170](https://github.com/thejoltjoker/kreacon/pull/170)
 - Auto assign ticket to Beacon 2026 event on sign up, temporary solution to allow users to vote for entries
   [#171](https://github.com/thejoltjoker/kreacon/pull/171)
+- Upgrade dependencies
+  [#210](https://github.com/thejoltjoker/kreacon/pull/210)
 
 ### Deprecated
 
