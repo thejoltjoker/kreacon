@@ -1,5 +1,5 @@
 import { defineEnvVars } from '@sveltejs/kit/env';
-
+// TODO Implement actual schema validations
 /**
  * Kit 3 environment variables. Server-side validation also runs via `#lib/env`.
  */
