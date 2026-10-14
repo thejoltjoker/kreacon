@@ -7,7 +7,9 @@ export default defineConfig({
 	plugins: [
 		sentrySvelteKit({
 			org: 'beacon-jc',
-			project: 'javascript-sveltekit'
+			project: 'javascript-sveltekit',
+			// Skip release upload in CI/e2e when no auth token is configured
+			autoUploadSourceMaps: Boolean(process.env.SENTRY_AUTH_TOKEN)
 		}),
 		tailwindcss(),
 		sveltekit()

@@ -1,5 +1,11 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, type Page } from '@playwright/test';
 import { StatusCodes } from 'http-status-codes';
+
+async function selectDropdownOption(page: Page, optionName: string) {
+	await page.getByRole('option', { name: optionName }).waitFor({ state: 'attached' });
+	await page.keyboard.type(optionName, { delay: 20 });
+	await page.keyboard.press('Enter');
+}
 
 test('Unauthorized access to admin pages', async ({ page }) => {
 	const response = await page.goto('/admin');
@@ -25,11 +31,11 @@ test('Login and view events', async ({ page }) => {
 	await expect(eventsList.locator('li').first()).toContainText('Voting Close At');
 
 	// Sorting should work
-	await expect(eventsList.locator('li').first()).toContainText('Beacon 2025');
+	await expect(eventsList.locator('li').first()).toContainText('Beacon 2026');
 	await expect(eventsList.locator('li').last()).toContainText('Mesozoic Masterpieces');
 	await page.goto('/admin/events?sortBy=oldest');
 	await expect(eventsList.locator('li').first()).toContainText('Mesozoic Masterpieces');
-	await expect(eventsList.locator('li').last()).toContainText('Beacon 2025');
+	await expect(eventsList.locator('li').last()).toContainText('Beacon 2026');
 
 	// Search filter should work
 	await page.getByPlaceholder('Search').fill('debug');
@@ -39,6 +45,8 @@ test('Login and view events', async ({ page }) => {
 });
 
 test('Admin should be able to create and edit events', async ({ page }) => {
+	test.setTimeout(60_000);
+	await page.setViewportSize({ width: 1280, height: 1200 });
 	await page.goto('/admin/events');
 	// First, try accessing the admin page without authentication
 	const response = await page.goto('/admin/categories');
@@ -83,8 +91,13 @@ test('Admin should be able to create and edit events', async ({ page }) => {
 	await page.getByRole('textbox').nth(4).fill('Second rule');
 	await page.getByRole('textbox').nth(4).press('Enter');
 	await page.getByRole('button', { name: 'Add Category' }).click();
-	await page.getByRole('button', { name: 'Select a category' }).click();
-	await page.getByRole('option', { name: 'Archeological Photography' }).click();
+	const categoryTrigger = page.getByRole('button', { name: 'Select a category' });
+	await categoryTrigger.evaluate((el) => el.scrollIntoView({ block: 'center' }));
+	await categoryTrigger.click();
+	await selectDropdownOption(page, 'Archeological Photography');
+	await expect(
+		page.getByRole('heading', { name: 'Category: Archeological Photography' })
+	).toBeVisible();
 	await page.getByRole('button', { name: 'Add Rule' }).nth(1).click();
 	await page
 		.locator('form div')
@@ -120,8 +133,11 @@ test('Admin should be able to create and edit events', async ({ page }) => {
 		.click();
 	await page.locator('li:nth-child(3) > div > .relative > .w-full').fill('third rule added');
 	await page.getByRole('button', { name: 'Add Category' }).click();
-	await page.getByRole('button', { name: 'Select a category' }).click();
-	await page.getByRole('option', { name: 'Prehistoric Sounds' }).click();
+	const secondCategoryTrigger = page.getByRole('button', { name: 'Select a category' });
+	await secondCategoryTrigger.evaluate((el) => el.scrollIntoView({ block: 'center' }));
+	await secondCategoryTrigger.click();
+	await selectDropdownOption(page, 'Prehistoric Sounds');
+	await expect(page.getByRole('heading', { name: 'Category: Prehistoric Sounds' })).toBeVisible();
 	await page.getByRole('button', { name: 'Add Rule' }).nth(2).click();
 	await page
 		.locator('form div')

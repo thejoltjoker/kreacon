@@ -76,13 +76,17 @@ test('Single entry page not logged in', async ({ page }) => {
 	});
 	await expect(licenseInfoButtonLocator).toBeVisible();
 
-	// Hover over the button to trigger tooltip
-	// bits-ui tooltips have delayDuration={100}, so we need to wait for it
-	await licenseInfoButtonLocator.hover();
+	// Workaround for tooltip closing during automated scroll/hover events in CI.
+	await licenseInfoButtonLocator.scrollIntoViewIfNeeded();
+	const licenseBox = await licenseInfoButtonLocator.boundingBox();
+	expect(licenseBox).toBeTruthy();
+	await page.mouse.move(
+		licenseBox!.x + licenseBox!.width / 2,
+		licenseBox!.y + licenseBox!.height / 2
+	);
 
-	// Wait for tooltip to appear (it renders in a portal)
 	const licenseTooltip = page.getByTestId('license-tooltip');
-	await licenseTooltip.waitFor({ state: 'visible', timeout: 5000 });
+	await expect(licenseTooltip).toBeVisible();
 	await expect(licenseTooltip).toContainText('CC0');
 	await expect(licenseTooltip).toContainText('Please do');
 

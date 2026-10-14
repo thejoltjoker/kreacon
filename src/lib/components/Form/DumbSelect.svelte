@@ -32,10 +32,13 @@
 	</Select.Trigger>
 	<Select.Portal>
 		<Select.Content
-			sideOffset={12}
+			side="bottom"
+			sideOffset={8}
+			avoidCollisions={true}
+			collisionPadding={16}
 			{...contentProps}
 			class={cn(
-				'rounded-form border-shade-600 bg-shade-900 p-xs z-40 flex max-h-[80vh] w-(--bits-select-anchor-width) flex-col border',
+				'rounded-form border-shade-600 bg-shade-900 p-xs z-40 flex max-h-60 w-(--bits-select-anchor-width) flex-col overflow-hidden border',
 				contentProps?.class
 			)}
 		>
