@@ -92,6 +92,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   [#169](https://github.com/thejoltjoker/kreacon/pull/169)
 - Add QR code page for entries
   [#172](https://github.com/thejoltjoker/kreacon/pull/172)
+- Add SQL queries for winners
+  [#173](https://github.com/thejoltjoker/kreacon/pull/173)
 
 ### Changed
 
