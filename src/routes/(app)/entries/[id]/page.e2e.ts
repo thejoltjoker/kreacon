@@ -76,8 +76,14 @@ test('Single entry page not logged in', async ({ page }) => {
 	});
 	await expect(licenseInfoButtonLocator).toBeVisible();
 
-	// Prefer focus to open tooltips instantly in tests; hover is unreliable in CI
-	await licenseInfoButtonLocator.focus();
+	// Workaround for tooltip closing during automated scroll/hover events in CI.
+	await licenseInfoButtonLocator.scrollIntoViewIfNeeded();
+	const licenseBox = await licenseInfoButtonLocator.boundingBox();
+	expect(licenseBox).toBeTruthy();
+	await page.mouse.move(
+		licenseBox!.x + licenseBox!.width / 2,
+		licenseBox!.y + licenseBox!.height / 2
+	);
 
 	const licenseTooltip = page.getByTestId('license-tooltip');
 	await expect(licenseTooltip).toBeVisible();
