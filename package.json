@@ -90,6 +90,7 @@
 		"@types/eslint": "^9.6.1",
 		"@types/jsonwebtoken": "^9.0.10",
 		"@types/lodash": "^4.17.21",
+		"@types/node": "^26.6.5",
 		"@types/object.groupby": "^1.0.4",
 		"@types/pg": "^8.16.0",
 		"@types/throttle-debounce": "^5.0.2",

@@ -28,8 +28,9 @@ jobs:
           --health-timeout 5s
           --health-retries 5
     env:
+      # Use NODE_ENV=test for runtime, while Playwright server uses NODE_ENV=production to avoid SvelteKit dev bundle issues.
       NODE_ENV: test
-      PUBLIC_BASE_URL: http://localhost:5173
+      PUBLIC_BASE_URL: http://localhost:4173
       PUBLIC_SENTRY_DSN: ${{ vars.PUBLIC_SENTRY_DSN }}
       DATABASE_URL: postgresql://test:test@localhost:5432/kreacon_test
       AZURE_STORAGE_ACCOUNT_NAME: ${{ secrets.AZURE_STORAGE_ACCOUNT_NAME }}
